@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.CORE", "DMS.CORE\DMS.CO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.COMMON", "DMS.COMMON\DMS.COMMON.csproj", "{636CE561-7A0C-4DB9-8FC2-1E11EC98929B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCS.FORM", "VCS.FORM\VCS.FORM.csproj", "{59F8A565-DD23-4AF8-BB3B-0E41469A5121}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{636CE561-7A0C-4DB9-8FC2-1E11EC98929B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{636CE561-7A0C-4DB9-8FC2-1E11EC98929B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{636CE561-7A0C-4DB9-8FC2-1E11EC98929B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F8A565-DD23-4AF8-BB3B-0E41469A5121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F8A565-DD23-4AF8-BB3B-0E41469A5121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F8A565-DD23-4AF8-BB3B-0E41469A5121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F8A565-DD23-4AF8-BB3B-0E41469A5121}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
