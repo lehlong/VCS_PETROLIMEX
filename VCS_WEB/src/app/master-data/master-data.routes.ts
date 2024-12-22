@@ -14,6 +14,7 @@ import { WarehouseComponent } from './warehouse/warehouse.component'
 import { MarketCompetitorComponent } from './market-competitor/market-competitor.component'
 import { PumpRigComponent } from './pump-rig/pump-rig.component'
 import { PumpThroatComponent } from './pump-throat/pump-throat.component'
+import { CameraComponent } from './camera/camera.component'
 export const masterDataRoutes: Routes = [
   { path: 'currency', component: CurrencyComponent },
   { path: 'unit', component: UnitComponent },
@@ -31,5 +32,6 @@ export const masterDataRoutes: Routes = [
   { path: 'market-competitor', component: MarketCompetitorComponent },
   { path: 'pump-rig', component: PumpRigComponent },
   { path: 'pump-throat', component: PumpThroatComponent },
+  { path: 'camera', component: CameraComponent },
 
 ]
