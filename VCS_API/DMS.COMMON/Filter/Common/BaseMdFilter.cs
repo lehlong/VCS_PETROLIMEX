@@ -11,5 +11,7 @@
         public bool? IsDescending { get; set; }
 
         public List<string>? Fields { get; set; }
+        public string? WarehouseCode { get; set; }
+        public string? OrgCode { get; set; }
     }
 }

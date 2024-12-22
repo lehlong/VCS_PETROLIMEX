@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router'
-import { OpinionListComponent } from './opinion-list/opinion-list.component'
-import { ListTablesComponent } from './list-tables/list-tables.component'
+import { OrderDisplayComponent } from './order-display/order-display.component'
+import { GetGoodsDisplayComponent } from './get-goods-display/get-goods-display.component'
 
 export const businessRoutes: Routes = [
-  { path: 'opinion-list/:code', component: OpinionListComponent },
-  { path: 'list-tables/:groupCode/:code', component: ListTablesComponent },
+  { path: 'order-display', component: OrderDisplayComponent },
+  { path: 'get-goods-display', component: GetGoodsDisplayComponent },
 ]

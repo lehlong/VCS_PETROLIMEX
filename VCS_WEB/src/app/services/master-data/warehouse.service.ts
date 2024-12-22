@@ -16,6 +16,10 @@ export class WarehouseService {
     return this.commonService.get('Warehouse/GetAll');
   }
 
+  getByOrg(companyCode : any): Observable<any> {
+    return this.commonService.get(`Warehouse/GetByOrg?companyCode=${companyCode}`);
+  }
+
   createWarehouse(params: any): Observable<any> {
     return this.commonService.post('Warehouse/Insert', params);
   }

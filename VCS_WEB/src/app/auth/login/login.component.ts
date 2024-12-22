@@ -45,10 +45,12 @@ export class LoginComponent {
 
         this.authService.login(credentials).subscribe({
           next: (response) => {
+            
             localStorage.setItem('token', response.accessToken)
             localStorage.setItem('refreshToken', response.refreshToken)
             this.globalService.setUserInfo(response.accountInfo)
             localStorage.setItem('openSidebar', 'true')
+            localStorage.setItem('companyCode', response?.accountInfo?.organizeCode)
             const userName = response?.accountInfo?.userName;
             if (userName) {
               this.globalService.setUserName(userName); // Lưu userName

@@ -1,10 +1,12 @@
+
+
 <nz-layout class="app-layout">
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
-      <h3>TMS</h3>
+      <h3>VCS</h3>
       <!-- <a href="#" target="_blank">
-        <img *ngIf="!isCollapsed" src="assets/img/logo.png" class="w-full" alt="logo" />
+        <img *ngIf="!isCollapsed" src="assets/img/p" class="w-full" alt="logo" />
         <img *ngIf="isCollapsed" src="assets/img/favicon.png" class="w-full img-isCollapsed" alt="logo" />
       </a> -->
     </div>
@@ -53,9 +55,19 @@
             </nz-breadcrumb>
           </div>
         </div>
-        <div>
-          <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft">
-            <nz-avatar nzIcon="user"></nz-avatar><span class="ml-[7px] text-base">{{ getAccountName(userName) }}</span>
+        <div class="header-trigger flex items-center gap-[24px]">
+          <div class="text-change">Công ty</div>
+          <nz-select nzShowSearch nzAllowClear [ngModel]="selectedCompanyCode" nzPlaceHolder="Chọn công ty" style="width: 240px;"
+            (ngModelChange)="companyCodeChange($event)" [nzDisabled]="isDisableSelect">
+            <nz-option *ngFor="let item of lstCompanyCode" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+          <div class="text-change">Kho</div>
+          <nz-select nzShowSearch nzAllowClear [ngModel]="selectedWarehouse" nzPlaceHolder="Chọn kho" style="width: 240px;"
+            (ngModelChange)="warehouseChange($event)">
+            <nz-option *ngFor="let item of lstWarehouse" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+          <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft" style="border: unset; box-shadow: none;">
+            <nz-avatar nzIcon="user"></nz-avatar><span class="ml-[7px] text-base">{{ userName }}</span>
           </button>
           <nz-dropdown-menu #menu="nzDropdownMenu" class="w-[240px]">
             <ul nz-menu class="w-[200px]">

@@ -31,7 +31,7 @@ namespace DMS.BUSINESS.Services.AD
         public async Task<OrganizeDto> BuildDataForTree()
         {
             var lstNode = new List<OrganizeDto>();
-            var rootNode = new OrganizeDto() { Id = "ORG", PId = "-ORG", Name = "Danh Sách Các Đơn Vị", Title = "1.1_  STC", Key = "ORG" };
+            var rootNode = new OrganizeDto() { Id = "ORG", PId = "-ORG", Name = "Danh Sách Các Đơn Vị", Title = "ORG - Danh Sách Các Đơn Vị", Key = "ORG" };
             lstNode.Add(rootNode);
 
             var lstAllOrganize = (await this.GetAll()).OrderBy(x => x.OrderNumber).ToList();
@@ -43,7 +43,7 @@ namespace DMS.BUSINESS.Services.AD
                     Name = Organize.Name,
                     PId = Organize.PId,                                   
                     OrderNumber = Organize.OrderNumber,
-                    Title = $"{Organize.Id}_{Organize.Name}",
+                    Title = $"{Organize.Id} - {Organize.Name}",
                     IsChecked = Organize.IsChecked,
                     IsActive = Organize.IsActive,
                     Key = Organize.Id,

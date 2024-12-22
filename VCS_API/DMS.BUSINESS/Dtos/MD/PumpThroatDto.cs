@@ -7,7 +7,7 @@ using Common;
 
 namespace DMS.CORE.Entities.MD
 {
-    public class AreaDto : BaseMdDto, IMapFrom, IDto
+    public class PumpThroatDto : BaseMdDto, IMapFrom, IDto
     {
         [JsonIgnore]
         [Description("Số thứ tự")]
@@ -19,12 +19,21 @@ namespace DMS.CORE.Entities.MD
 
         [Description("Tên")]
         public string Name { get; set; }
+        [Description("Đơn vị")]
+        public string OrgCode { get; set; }
+        [Description("Kho")]
+        public string WarehouseCode { get; set; }
+
+        [Description("Giàn bơm")]
+        public string PumpRigCode { get; set; }
+
+        [Description("Mặt hàng")]
+        public string GoodsCode { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<TblMdArea, AreaDto>().ReverseMap();
+            profile.CreateMap<TblMdPumpThroat, PumpThroatDto>().ReverseMap();
         }
     }
-
 
 }

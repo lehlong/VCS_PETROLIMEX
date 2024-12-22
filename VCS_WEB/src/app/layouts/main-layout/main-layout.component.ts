@@ -14,6 +14,10 @@ import { SidebarMenuService } from '../../services/sidebar-menu.service'
 import { Router } from '@angular/router'
 import { RouterModule } from '@angular/router'
 import { DropdownService } from '../../services/dropdown/dropdown.service'
+import { ShareModule } from '../../shared/share-module'
+import { OrganizeService } from '../../services/system-manager/organize.service'
+import { WarehouseService } from '../../services/master-data/warehouse.service'
+import { COMPANY_CODE_TAP_DOAN } from '../../shared/constants'
 
 @Component({
   selector: 'app-main-layout',
@@ -29,6 +33,7 @@ import { DropdownService } from '../../services/dropdown/dropdown.service'
     NzAvatarModule,
     NzBreadCrumbModule,
     RouterModule,
+    ShareModule
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
@@ -44,6 +49,17 @@ export class MainLayoutComponent {
   screenWidth: number = window.innerWidth
   listAccount: any[] = []
 
+  lstCompanyCode : any[] = []
+  selectedCompanyCode? : string =localStorage.getItem('companyCode')?.toString()
+
+  lstWarehouse : any[] = []
+  selectedWarehouse? : string =localStorage.getItem('warehouseCode')?.toString()
+
+  _companyCode : any = localStorage.getItem('UserInfo')
+  companyCode = JSON.parse(this._companyCode)?.organizeCode
+
+  isDisableSelect : boolean = this.companyCode.toString() == COMPANY_CODE_TAP_DOAN ? false : true
+
   constructor(
     private globalService: GlobalService,
     private dropdownService: DropdownService,
@@ -51,6 +67,8 @@ export class MainLayoutComponent {
     private router: Router,
     private sidebarMenuService: SidebarMenuService,
     private cdr: ChangeDetectorRef,
+    private _sOrg: OrganizeService,
+    private _sWah : WarehouseService
   ) {
     this.userName = this.globalService.getUserInfo().userName
     this.globalService.rightSubject.subscribe((item) => {
@@ -68,7 +86,6 @@ export class MainLayoutComponent {
       this.cdr.detectChanges()
     })
   }
-
   ngOnDestroy() {
     window.removeEventListener('resize', this.onResize)
   }
@@ -118,6 +135,8 @@ export class MainLayoutComponent {
     this.getSidebarMenu()
     this.currentUrl = this.router.url
     this.getAllAccount();
+    this.getOrganize();
+    this.companyCodeDefault(this.selectedCompanyCode)
   }
 
   logout(): void {
@@ -165,5 +184,45 @@ export class MainLayoutComponent {
   getAccountName(userName: string): string {
     const listAccount = this.listAccount.find(item => item.userName === userName);
     return listAccount ? listAccount.fullName : 'N/A';
+  }
+
+  getOrganize() {
+    this._sOrg.getOrg().subscribe({
+      next: (res : any) => {
+       this.lstCompanyCode = res
+      }
+    })
+  }
+
+  companyCodeDefault(value: any): void {
+    localStorage.setItem('companyCode', value)
+    this._sWah.getByOrg(value).subscribe({
+      next: (res) => {
+        this.lstWarehouse = res  
+        if(this.lstWarehouse.filter(x => x.code == this.selectedWarehouse).length == 0){
+          this.selectedWarehouse = res[0]?.code
+          localStorage.setItem('warehouseCode', res[0]?.code)
+        }
+      }
+    })
+  }
+
+  companyCodeChange(value: any): void {
+    localStorage.setItem('companyCode', value)
+    this._sWah.getByOrg(value).subscribe({
+      next: (res) => {
+        this.lstWarehouse = res  
+        if(this.lstWarehouse.filter(x => x.code == this.selectedWarehouse).length == 0){
+          this.selectedWarehouse = res[0]?.code
+          localStorage.setItem('warehouseCode', res[0]?.code)
+        }
+        window.location.reload();
+      }
+    })
+  }
+  warehouseChange(value: any): void {
+
+    localStorage.setItem('warehouseCode', value)
+    window.location.reload();
   }
 }

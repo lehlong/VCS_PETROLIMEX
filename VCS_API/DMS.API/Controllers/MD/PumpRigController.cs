@@ -1,18 +1,19 @@
-using Common;
+﻿using Microsoft.AspNetCore.Mvc;
 using DMS.API.AppCode.Enum;
 using DMS.API.AppCode.Extensions;
-using DMS.BUSINESS.Dtos.MD;
 using DMS.BUSINESS.Services.MD;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using DMS.CORE.Entities.MD;
+using DMS.BUSINESS.Filter.MD;
+using Common;
 
 namespace DMS.API.Controllers.MD
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WarehouseController(IWarehouseService service) : ControllerBase
+    public class PumpRigController(IPumpRigService service) : ControllerBase
     {
-        public readonly IWarehouseService _service = service;
+        public readonly IPumpRigService _service = service;
+
         [HttpGet("Search")]
         public async Task<IActionResult> Search([FromQuery] BaseFilter filter)
         {
@@ -47,28 +48,13 @@ namespace DMS.API.Controllers.MD
             }
             return Ok(transferObject);
         }
-        [HttpGet("GetByOrg")]
-        public async Task<IActionResult> GetByOrg([FromQuery] string companyCode)
-        {
-            var transferObject = new TransferObject();
-            var result = await _service.GetByOrg(companyCode);
-            if (_service.Status)
-            {
-                transferObject.Data = result;
-            }
-            else
-            {
-                transferObject.Status = false;
-                transferObject.MessageObject.MessageType = MessageType.Error;
-                transferObject.GetMessage("0001", _service);
-            }
-            return Ok(transferObject);
-        }
+
+
         [HttpPost("Insert")]
-        public async Task<IActionResult> Insert([FromBody] WarehouseDto Warehouse)
+        public async Task<IActionResult> Insert([FromBody] PumpRigDto PumpRig)
         {
             var transferObject = new TransferObject();
-            var result = await _service.Add(Warehouse);
+            var result = await _service.Add(PumpRig);
             if (_service.Status)
             {
                 transferObject.Data = result;
@@ -84,11 +70,12 @@ namespace DMS.API.Controllers.MD
             }
             return Ok(transferObject);
         }
+
         [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromBody] WarehouseDto Warehouse)
+        public async Task<IActionResult> Update([FromBody] PumpRigDto PumpRig)
         {
             var transferObject = new TransferObject();
-            await _service.Update(Warehouse);
+            await _service.Update(PumpRig);
             if (_service.Status)
             {
                 transferObject.Status = true;
@@ -103,6 +90,7 @@ namespace DMS.API.Controllers.MD
             }
             return Ok(transferObject);
         }
+
         [HttpDelete("Delete/{code}")]
         public async Task<IActionResult> Delete([FromRoute] string code)
         {
@@ -122,7 +110,6 @@ namespace DMS.API.Controllers.MD
             }
             return Ok(transferObject);
         }
-
         [HttpGet("Export")]
         public async Task<IActionResult> Export([FromQuery] BaseMdFilter filter)
         {
@@ -130,7 +117,7 @@ namespace DMS.API.Controllers.MD
             var result = await _service.Export(filter);
             if (_service.Status)
             {
-                return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DSDP" + DateTime.Now.ToString() + ".xlsx");
+                return File(result, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DSV" + DateTime.Now.ToString() + ".xlsx");
             }
             else
             {
@@ -140,5 +127,6 @@ namespace DMS.API.Controllers.MD
                 return Ok(transferObject);
             }
         }
+
     }
 }

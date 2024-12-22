@@ -1,13 +1,11 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { ShareModule } from '../../shared/share-module'
 import { GlobalService } from '../../services/global.service'
-import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { WAREHOUSE_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
-import { WarehouseFilter } from '../../models/master-data/warehouse.model'
+import { NzTreeComponent, NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree'
+import { OrganizeService } from '../../services/system-manager/organize.service'
 import { WarehouseService } from '../../services/master-data/warehouse.service'
-import { LocalService } from '../../services/master-data/local.service'
 @Component({
   selector: 'app-warehouse',
   standalone: true,
@@ -15,193 +13,91 @@ import { LocalService } from '../../services/master-data/local.service'
   templateUrl: './warehouse.component.html',
   styleUrl: './warehouse.component.scss',
 })
-export class WarehouseComponent {
-  validateForm: FormGroup = this.fb.group({
-    code: ['', [Validators.required]],
-    name: ['', [Validators.required]],
-    isActive: [true, [Validators.required]],
-  })
-
-  isSubmit: boolean = false
+export class WarehouseComponent implements OnInit {
+  @ViewChild('treeCom', { static: false }) treeCom!: NzTreeComponent
+  searchValue = ''
+  nodes: any = []
+  originalNodes: any[] = []
   visible: boolean = false
   edit: boolean = false
-  filter = new WarehouseFilter()
-  paginationResult = new PaginationResult()
-  loading: boolean = false
-  localResult: any[] = []
-  WAREHOUSE_RIGHTS = WAREHOUSE_RIGHTS
-
+  companyCode?: string = localStorage.getItem('companyCode')?.toString()
+  titleParent: string = ''
+  itemEdit: any = {
+    code: '',
+    name: '',
+    orgCode: '',
+    isActive: true
+  }
+  lstWarehouse: any[] = [];
   constructor(
-    private _service: WarehouseService,
-    private _localService: LocalService,
+    private _service: OrganizeService,
+    private _w : WarehouseService,
     private fb: NonNullableFormBuilder,
     private globalService: GlobalService,
     private message: NzMessageService,
   ) {
     this.globalService.setBreadcrumb([
       {
-        name: 'Danh sách thị trường',
-        path: 'master-data/market',
+        name: 'Danh sách kho',
+        path: 'master-data/warehouse',
       },
     ])
-    this.globalService.getLoading().subscribe((value) => {
-      this.loading = value
-    })
-  }
-
-  ngOnDestroy() {
-    this.globalService.setBreadcrumb([])
   }
 
   ngOnInit(): void {
-    this.search()
-    this.getAllLocal()
+    console.log(this.companyCode)
+    this.getLstWarehouse()
   }
 
-  onSortChange(name: string, value: any) {
-    this.filter = {
-      ...this.filter,
-      SortColumn: name,
-      IsDescending: value === 'descend',
-    }
-    this.search()
-  }
-
-  search() {
-    this.isSubmit = false
-    this._service.searchWarehouse(this.filter).subscribe({
-      next: (data) => {
-        this.paginationResult = data
-      },
-      error: (response) => {
-        console.log(response)
-      },
-    })
-  }
-
-  getAllLocal() {
-    this.isSubmit = false
-    this._localService.getall().subscribe({
-      next: (data) => {
-        this.localResult = data
-      },
-      error: (response) => {
-        console.log(response)
-      },
-    })
-  }
-
-  exportExcel() {
-    return this._service
-      .exportExcelWarehouse(this.filter)
-      .subscribe((result: Blob) => {
-        const blob = new Blob([result], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
-        const url = window.URL.createObjectURL(blob)
-        var anchor = document.createElement('a')
-        anchor.download = 'danh-sach-dia-phuong.xlsx'
-        anchor.href = url
-        anchor.click()
-      })
-  }
-
-  isCodeExist(code: string): boolean {
-    return this.paginationResult.data?.some((market: any) => market.code === code)
-  }
-
-  submitForm(): void {
-    this.isSubmit = true
-    if (this.validateForm.valid) {
-      const formData = this.validateForm.getRawValue()
-      console.log(formData);
-
-      if (this.edit) {
-        this._service.updateWarehouse(formData).subscribe({
-          next: (data) => {
-            this.search()
-          },
-          error: (response) => {
-            console.log(response)
-          },
-        })
-      } else {
-        if (this.isCodeExist(formData.code)) {
-          this.message.error(
-            `Mã khu vục ${formData.code} đã tồn tại, vui lòng nhập lại`,
-          )
-          return
-        }
-        this._service.createWarehouse(formData).subscribe({
-          next: (data) => {
-            this.search()
-          },
-          error: (response) => {
-            console.log(response)
-          },
-        })
+  getLstWarehouse(){
+    this._w.getByOrg(this.companyCode).subscribe({
+      next: (res) => {
+        this.lstWarehouse = res;
       }
-    } else {
-      Object.values(this.validateForm.controls).forEach((control) => {
-        if (control.invalid) {
-          control.markAsDirty()
-          control.updateValueAndValidity({ onlySelf: true })
-        }
-      })
-    }
+    })
   }
 
   close() {
     this.visible = false
-    this.resetForm()
+    this.reset()
   }
 
   reset() {
-    this.filter = new WarehouseFilter()
-    this.search()
+    this.itemEdit = {
+      code: '',
+      name: '',
+      orgCode: '',
+      isActive: true
+    }
   }
-
   openCreate() {
-    this.edit = false
+    if(!this.companyCode){
+      this.message.create('warning', `Vui lòng chọn đơn vị`);
+    }else{
+      this.visible = true;
+      this.edit = false;
+    }
+  }
+  openEdit(item : any) {
+    this.itemEdit = item
     this.visible = true
+    this.edit = true
   }
-
-  resetForm() {
-    this.validateForm.reset()
-    this.isSubmit = false
-  }
-
-  deleteItem(code: string | number) {
-    this._service.deleteWarehouse(code).subscribe({
-      next: (data) => {
-        this.search()
-      },
-      error: (response) => {
-        console.log(response)
-      },
-    })
-  }
-
-  openEdit(data: any) {
-    this.validateForm.setValue({
-      code: data.code,
-      name: data.name,
-      isActive: data.isActive,
-    })
-    setTimeout(() => {
-      this.edit = true
-      this.visible = true
-    }, 200)
-  }
-
-  pageSizeChange(size: number): void {
-    this.filter.currentPage = 1
-    this.filter.pageSize = size
-    this.search()
-  }
-
-  pageIndexChange(index: number): void {
-    this.filter.currentPage = index
-    this.search()
+ 
+  submitForm() {
+    this.itemEdit.orgCode = this.companyCode
+    if (this.edit) {
+      this._w.updateWarehouse(this.itemEdit).subscribe({
+        next: (data) => {
+          this.getLstWarehouse();
+        }
+      })
+    } else {
+      this._w.createWarehouse(this.itemEdit).subscribe({
+        next: (data) => {
+          this.getLstWarehouse();
+        }
+      })
+    }
   }
 }

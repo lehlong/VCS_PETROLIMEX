@@ -21,6 +21,8 @@ namespace DMS.BUSINESS.Dtos.MD
 
         [Description("Tên kho")]
         public string Name { get; set; }
+        [Description("Đơn vị")]
+        public string OrgCode { get; set; }
 
         public void Mapping(Profile profile)
         {

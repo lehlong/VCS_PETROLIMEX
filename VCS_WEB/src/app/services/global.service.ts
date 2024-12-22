@@ -14,6 +14,9 @@ export class GlobalService {
   breadcrumbSubject: Subject<boolean> = new Subject<boolean>();
   breadcrumb: any = [];
 
+  orgCode?: string = localStorage.getItem('companyCode')?.toString()
+  warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
+
   constructor() {
     this.loading = new BehaviorSubject<boolean>(false);
     this.rightSubject.subscribe((value) => {
@@ -122,5 +125,9 @@ export class GlobalService {
     if (this.apiCallCount === 0) {
       this.setLoading(false);
     }
+  }
+
+  isValidSelected() {
+    return this.orgCode != 'undefined' && this.warehouseCode != 'undefined' ? false : true;
   }
 }
