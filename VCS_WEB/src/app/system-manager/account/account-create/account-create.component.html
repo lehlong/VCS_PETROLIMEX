@@ -104,12 +104,35 @@
                 nzAllowClear
                 placeholder="Chọn đơn vị"
                 formControlName="organizeCode"
+                [(ngModel)]="selectedOrg"
+                (ngModelChange)="getWareHouse()"
               >
                 <nz-option
                   cdkScrollable
                   *ngFor="let item of orgList"
                   [nzLabel]="item.name"
                   [nzValue]="item.id"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzXs]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-label>Kho hàng</nz-form-label>
+            <nz-form-control nzErrorTip="Không được để trống">
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                placeholder="Chọn kho hàng"
+                formControlName="warehouseCode"
+              >
+                <nz-option
+                  cdkScrollable
+                  *ngFor="let item of warehouseList"
+                  [nzLabel]="item.name"
+                  [nzValue]="item.code"
                 >
                 </nz-option>
               </nz-select>

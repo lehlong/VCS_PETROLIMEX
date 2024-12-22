@@ -6,6 +6,7 @@ import { AccountService } from '../../../services/system-manager/account.service
 import { UserTypeCodes } from '../../../shared/constants/account.constants'
 import { ActivatedRoute } from '@angular/router'
 import { error } from '@ant-design/icons-angular'
+import { WarehouseService } from '../../../services/master-data/warehouse.service'
 
 @Component({
   selector: 'app-account-create',
@@ -29,6 +30,7 @@ export class AccountCreateComponent {
     isActive: [true],
     accountType: ['', [Validators.required]],
     organizeCode: ['', [Validators.required]],
+    warehouseCode: ['', [Validators.required]],
     //partnerId: [''],
   })
 
@@ -38,11 +40,14 @@ export class AccountCreateComponent {
   passwordVisible: boolean = false
   accountType: any[] = []
   orgList: any[] = []
+  warehouseList: any[] = []
+  selectedOrg = ''
 
   constructor(
     private _service: AccountService,
     private fb: NonNullableFormBuilder,
     private dropdownService: DropdownService,
+    private _whService: WarehouseService,
     private route: ActivatedRoute,
   ) { }
 
@@ -95,6 +100,16 @@ export class AccountCreateComponent {
     this.dropdownService.getAllOrg().subscribe({
       next: (data) => {
         this.orgList = data
+      },
+      error: (response) => {
+        console.log(response)
+      },
+    })
+  }
+  getWareHouse() {
+    this._whService.getByOrg(this.selectedOrg).subscribe({
+      next: (data) => {
+        this.warehouseList = data
       },
       error: (response) => {
         console.log(response)

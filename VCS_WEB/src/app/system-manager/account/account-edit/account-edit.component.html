@@ -46,6 +46,17 @@
               </nz-form-control>
             </nz-form-item>
           </div>
+          <div nz-col [nzXs]="24" [nzMd]="12">
+            <nz-form-item>
+              <nz-form-label>Kho hàng</nz-form-label>
+              <nz-form-control nzErrorTip="Không được để trống">
+                <nz-select nzShowSearch nzAllowClear placeholder="Chọn kho hàng" formControlName="warehouseCode">
+                  <nz-option cdkScrollable *ngFor="let item of warehouseList" [nzLabel]="item.name" [nzValue]="item.code">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
           <!-- <div nz-col [nzXs]="24" [nzMd]="12" *ngIf="isShowSelectPartner">
             <nz-form-item>
               <nz-form-label>Chọn đối tác</nz-form-label>

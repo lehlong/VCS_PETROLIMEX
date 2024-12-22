@@ -19,9 +19,9 @@ namespace DMS.CORE.Entities.MD
         [Description("Tên")]
         public string Name { get; set; }
         [Description("Đơn vị")]
-        public string OrgCode { get; set; }
+        public string? OrgCode { get; set; }
         [Description("Kho")]
-        public string WarehouseCode { get; set; }
+        public string? WarehouseCode { get; set; }
         [Description("IP Camera")]
         public string? Ip { get; set; }
         [Description("Tên đăng nhập")]
@@ -37,7 +37,7 @@ namespace DMS.CORE.Entities.MD
         [Description("Camera cổng ra")]
         public bool? IsOut { get; set; }
         [Description("Camera nhận diện")]
-        public string? IsRecognition { get; set; }
+        public bool? IsRecognition { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblMdCamera, CameraDto>().ReverseMap();

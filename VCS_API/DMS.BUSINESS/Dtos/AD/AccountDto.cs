@@ -33,9 +33,10 @@ namespace DMS.BUSINESS.Dtos.AD
         [Description("Loại")]
         public string? AccountType { get; set; }
         public string? OrganizeCode { get; set; }
-       // public int? PartnerId { get; set; }
+        public string? WarehouseCode { get; set; }
+        // public int? PartnerId { get; set; }
 
-      //  public int? DriverId { get; set; }
+        //  public int? DriverId { get; set; }
 
 
 
@@ -71,8 +72,8 @@ namespace DMS.BUSINESS.Dtos.AD
 
         public string? OrganizeCode { get; set; }
 
+        public string? WarehouseCode { get; set; }
 
-     
 
         [JsonIgnore]
         public virtual List<Account_AccountGroupDto> Account_AccountGroups { get; set; }
@@ -105,6 +106,7 @@ namespace DMS.BUSINESS.Dtos.AD
         public string? AccountType { get; set; }
 
         public string? OrganizeCode { get; set; }
+        public string? WarehouseCode { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -128,6 +130,7 @@ namespace DMS.BUSINESS.Dtos.AD
         public string? AccountType { get; set; }
 
         public string? OrganizeCode { get; set; }
+        public string? WarehouseCode { get; set; }
 
         public virtual List<Account_AccountGroupDto> Account_AccountGroups { get; set; }
 
@@ -151,6 +154,7 @@ namespace DMS.BUSINESS.Dtos.AD
 
         public string? Address { get; set; }
         public string? OrganizeCode { get; set; }
+        public string? WarehouseCode { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblAdAccount, AccountPortableDto>().ReverseMap();
@@ -174,6 +178,7 @@ namespace DMS.BUSINESS.Dtos.AD
         public string? AccountType { get; set; }
 
         public string? OrganizeCode { get; set; }
+        public string? WarehouseCode { get; set; }
 
         public virtual List<TblAccount_AccountGroupUpdateGroupDto> Account_AccountGroups { get; set; }
 
@@ -201,6 +206,7 @@ namespace DMS.BUSINESS.Dtos.AD
         public string? AccountType { get; set; }
 
         public string? OrganizeCode { get; set; }
+        public string? WarehouseCode { get; set; }
 
 
         public virtual List<TblAccount_AccountGroupLiteGroupDto> Account_AccountGroups { get; set; }

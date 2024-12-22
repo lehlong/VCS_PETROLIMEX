@@ -45,6 +45,7 @@ export class AccountEditComponent {
     isActive: [true],
     accountType: ['', [Validators.required]],
     organizeCode: ['', [Validators.required]],
+    warehouseCode: ['', [Validators.required]],
     //partnerId: [''],
   })
 
@@ -57,7 +58,7 @@ export class AccountEditComponent {
   // isShowSelectPartner: boolean = false
   accountType: any[] = []
   orgList: any[] = []
-
+  warehouseList: any[] = []
   constructor(
     private _service: AccountService,
     private fb: NonNullableFormBuilder,
@@ -246,6 +247,7 @@ export class AccountEditComponent {
             isActive: data.isActive,
             accountType: data.accountType,
             organizeCode: data.organizeCode,
+            warehouseCode: data.warehouseCode,
             //partnerId: data.partnerId || '',
           })
           //this.isShowSelectPartner = data.accountType === 'KH' ? true : false
