@@ -1,4 +1,4 @@
-<div class="bg-order">
+<div class="bg-order" [ngClass]="isFullscreen ? 'zoom' : ''">
     <div class="order-header">
         <div class="app-header flex justify-between items-center">
             <div class="header-trigger flex items-center gap-[24px]">
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="order-main">
+    <div class="order-main" >
         <table>
 
             <thead>
@@ -24,7 +24,7 @@
                 <th>Ghi chú</th>
               </tr>
             </thead>
-          
+
             <tbody>
               <tr>
                 <td>1</td>
@@ -32,7 +32,7 @@
                 <td>35K154047</td>
                 <td>Hihi</td>
               </tr>
-          
+
               <tr>
                 <td>2</td>
                 <td>Hoả Xuân Huynh</td>

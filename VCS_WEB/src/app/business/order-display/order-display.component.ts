@@ -20,7 +20,18 @@ this.speechNotify();
     utterance.lang = 'vi-VN';
     window.speechSynthesis.speak(utterance);
   }
+
   toggleFullscreen(check : boolean) {
     this.isFullscreen = check;
+    if(check == true){
+      // this.isZoom = true
+      document.documentElement.requestFullscreen()
+    }else{
+      document.exitFullscreen()
+        .then(() => {
+      })
+        .catch(() => {
+      })
+    }
   }
 }

@@ -11,7 +11,6 @@ import { ShareModule } from '../../shared/share-module';
 export class GetGoodsDisplayComponent implements OnInit{
   isFullscreen: boolean = false;
 
-
   ngOnInit(){
 this.speechNotify();
   }
@@ -22,5 +21,15 @@ this.speechNotify();
   }
   toggleFullscreen(check : boolean) {
     this.isFullscreen = check;
+    if(check == true){
+      // this.isZoom = true
+      document.documentElement.requestFullscreen()
+    }else{
+      document.exitFullscreen()
+        .then(() => {
+      })
+        .catch(() => {
+      })
+    }
   }
 }
