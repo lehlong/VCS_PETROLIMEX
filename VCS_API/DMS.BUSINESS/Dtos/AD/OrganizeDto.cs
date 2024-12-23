@@ -33,7 +33,6 @@ namespace DMS.BUSINESS.Dtos.AD
 
         //  public bool? IsLeaf { get; set; } = false;
         public List<OrganizeDto>? Children { get; set; }
-        public List<ListTablesDto>? TreeListTables { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<tblAdOrganize, OrganizeDto>().ReverseMap();

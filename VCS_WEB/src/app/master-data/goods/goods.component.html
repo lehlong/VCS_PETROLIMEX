@@ -18,17 +18,7 @@
           <button (click)="openCreate()" class="!flex !items-center" nzType="primary" nz-button
             [appPermission]="GOODS_RIGHTS.ADD">
             <span nz-icon nzType="plus-circle"></span> Thêm mới
-          </button>
-          <!-- <button
-            (click)="exportExcel()"
-            class="!flex !items-center"
-            nz-button
-            nzType="primary"
-            [appPermission]="LOCAL_RIGHTS.EXCEL"
-            nzDanger
-          >
-            <span nz-icon nzType="file-excel"></span>Tải Excel
-          </button> -->
+          </button> 
         </nz-space>
       </nz-page-header-extra>
     </nz-page-header>
@@ -39,20 +29,14 @@
       <thead>
         <tr>
           <th nzWidth="30px">STT</th>
-          <th [nzSortFn]="true"  nzAlign="center" (nzSortOrderChange)="onSortChange('code', $event)" nzWidth="150px">
+          <th [nzSortFn]="true"  nzAlign="center" (nzSortOrderChange)="onSortChange('code', $event)" nzWidth="220px">
             Mã
           </th>
           <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('name', $event)" >
             Tên
           </th>
-          <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('Type', $event)" >
-            Loại mặt hàng
-          </th>
-          <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('thueBvmt', $event)" nzAlign="center">
-            Mã số thuế
-          </th>
-          <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('createDate', $event)" nzAlign="center">
-            Ngày tạo
+          <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('unitCode', $event)" nzAlign="center">
+            Đơn vị tính
           </th>
           <th [nzSortFn]="true" (nzSortOrderChange)="onSortChange('isActive', $event)" nzAlign="center">
             Trạng thái
@@ -74,14 +58,12 @@
             <a (click)="openEdit(data)">{{ data.code }}</a>
           </td>
           <td >{{ data.name }}</td>
-
-          <td nzAlign="left">
+          <td >{{ data.unitCode }}</td>
+          <!-- <td nzAlign="left">
             <span *ngFor="let item of lstType" >
               <span *ngIf="item.code == data.type">{{ item.name }}</span>
             </span>
-          </td>
-          <td nzAlign="right">{{ data.thueBvmt }}</td>
-          <td nzAlign="center">{{ data.createDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+          </td> -->
           <td nzAlign="center">
             <span [ngClass]="data?.isActive ? '!text-green-500' : '!text-red-500'" nz-icon nzType="check-circle"
               nzTheme="outline"></span>

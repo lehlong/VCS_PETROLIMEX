@@ -40,8 +40,4 @@
     <ProjectReference Include="..\DMS.BUSINESS\DMS.BUSINESS.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Template\" />
-  </ItemGroup>
-
 </Project>

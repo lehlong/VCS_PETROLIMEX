@@ -1,7 +1,6 @@
 ﻿using DMS.CORE.Common;
 using DMS.CORE.Entities.AD;
 using DMS.CORE.Entities.BU;
-using DMS.CORE.Entities.IN;
 using DMS.CORE.Entities.MD;
 
 using Microsoft.AspNetCore.Http;
@@ -111,7 +110,6 @@ namespace DMS.CORE
 
         #region System Manage
         public DbSet<TblAdConfigTemplate> TblAdConfigTemplate { get; set; }
-
         public DbSet<TblAdAccount> TblAdAccount { get; set; }
         public DbSet<TblAdAccountGroup> TblAdAccountGroup { get; set; }
         public DbSet<TblAdMenu> TblAdMenu { get; set; }
@@ -127,66 +125,23 @@ namespace DMS.CORE
         #endregion
 
         #region Master Data
-
         public DbSet<TblMdCamera> TblMdCamera { get; set; }
         public DbSet<TblMdPumpRig> TblMdPumpRig { get; set; }
         public DbSet<TblMdPumpThroat> TblMdPumpThroat { get; set; }
-        public DbSet<TblMdTypeOfGoods> TblMdTypeOfGoods { get; set; }
         public DbSet<TblMdGoods> TblMdGoods { get; set; }
         public DbSet<TblMdWarehouse> TblMdWarehouse { get; set; }
-        public DbSet<TblMdLaiGopDieuTiet> TblMdLaiGopDieuTiet { get; set; }
+       
         public DbSet<TblMdCustomer> TblMdCustomer { get; set; }
-        public DbSet<TblMdCompetitor> TblMdCompetitor { get; set; }
-        public DbSet<TblMdMapPointCustomerGoods> TblMdMapPointCustomerGoods { get; set; }
-        public DbSet<TblMdMarketCompetitor> TblMdMarketCompetitor { get; set; }
-
-        public DbSet<TblMdDeliveryPoint> TblMdDeliveryPoint { get; set; }
-        public DbSet<TblMdGiaGiaoTapDoan> TblMdGiaGiaoTapDoan { get; set; }
+       
+       
         public DbSet<TblMdCustomerType> TblMdCustomerType { get; set; }
 
-        public DbSet<TblMdArea> TblMdArea { get; set; }
-      
+        public DbSet<TblMdArea> TblMdArea { get; set; }      
         public DbSet<TblMdCurrency> tblMdCurrency { get; set; }
         public DbSet<TblMdUnit> tblMdUnit { get; set; }
-
         public DbSet<TblMdLocal> tblMdLocal { get; set; }
-
-        public DbSet<TblMdPeriodTime> tblMdPeriodTime { get; set; }
-       
-        public DbSet<TblMdOpinionType> tblMdOpinionType { get; set; }
-        public DbSet<TblMdTemplateListTables> tblMdTemplateListTables { get; set; }
-        public DbSet<TblMdTemplateListTablesGroups> tblMdTemplateListTablesGroups { get; set; }
-        public DbSet<TblMdTemplateListTablesData> tblMdTemplateListTablesData { get; set; }
-        public DbSet<TblMdAuditPeriod> tblMdAuditPeriods { get; set; }
-        public DbSet<TblMdMgListTablesGroups> tblMdMgListTablesGroup { get; set; }
-        public DbSet<TblMdMgListTables> tblMdMgListTables { get; set; }
-        public DbSet<TblMdMgOpinionList> tblMdMgOpinionList { get; set; }
         public DbSet<TblMdAccountType> tblMdAccountType { get; set; }
-        public DbSet<TblMdListAudit> tblMdListAudit { get; set; }
-        public DbSet<tblMdListAuditHistory> tblMdListAuditHistory { get; set; }
-        public DbSet<TblMdAuditTemplateHistory> tblMdAuditTemplateHistory { get; set; }
-        public DbSet<TblMdOpinionListOrganize> tblMdOpinionListOrganize { get; set; }
-        public DbSet<TblMdAuditPeriodListTables> tblMdAuditPeriodListTables { get; set; }
-        public DbSet<TblMdAuditTemplateListTablesData> tblMdAuditTemplateListTablesData { get; set; }
-        public DbSet<TblMdSalesMethod> TblMdSalesMethod { get; set; }
-        public DbSet<TblMdRetailPrice> TblMdRetailPrice { get; set; }
-        public DbSet<TblMdMarket> TblMdMarket { get; set; }
-
-
-        public DbSet<TblMdTemplateReport> tblMdTemplateReport { get; set; }
-        public DbSet<TblMdTemplateReportElement> tblMdTemplateReportElement { get; set; }
-        public DbSet<TblMdTemplateReportMapping> tblMdTemplateReportMapping { get; set; }
-
-
-
-
-        #endregion
-
-        #region Input
-        public DbSet<TblInVinhCuaLo> TblInVinhCuaLo { get; set; }
-        public DbSet<TblInHeSoMatHang> TblInHeSoMatHang { get; set; }
-        public DbSet<TblInDiscountCompetitor> TblInDiscountCompetitor { get; set; }
-        
+       
         #endregion
 
         #region Common
@@ -194,21 +149,7 @@ namespace DMS.CORE
         public DbSet<TblCmModuleAttachment> TblBuModuleAttachment { get; set; }
         public DbSet<TblCmComment> TblCmComment { get; set; }
         public DbSet<TblCmModuleComment> TblCmModuleComment { get; set; }
-
         #endregion
 
-        #region Business
-        public DbSet<tblBuOpinionList> TblBuOpinionLists { get; set; }
-        public DbSet<TblBuHistoryDownload> TblBuHistoryDownload { get; set; }
-        public DbSet<TblBuHistoryAction> TblBuHistoryAction { get; set; }
-        public DbSet<TblBuListTables> TblBuListTables { get; set; }
-        public DbSet<TblBuCalculateResultList> TblBuCalculateResultList { get; set; }
-        public DbSet<tblBuOpinionDetail> tblBuOpinionDetail { get; set; }
-        public DbSet<tblBuOpinionDetailHistory> tblBuOpinionDetailHistory { get; set; }
-        public DbSet<tblBuPendingOpinionMapping> tblBuPendingOpinionMappings { get; set; }
-        public DbSet<TblBuDiscountInformationList> TblBuDiscountInformationList { get; set; }
-        
-
-        #endregion
     }
 }

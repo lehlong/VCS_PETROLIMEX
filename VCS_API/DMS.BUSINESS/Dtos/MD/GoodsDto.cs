@@ -23,11 +23,8 @@ namespace DMS.BUSINESS.Dtos.MD
         [Description("Tên")]
         public string Name { get; set; }
 
-        [Description("Kiểu mặt hàng")]
-        public string Type { get; set; }
-
-        [Description("Thuế bảo vệ môi trường")]
-        public float ThueBvmt { get; set; }
+        [Description("Đơn vị tính")]
+        public string UnitCode { get; set; }
 
         [Description("Ngày tạo")]
         public DateTime createDate { get; set; }

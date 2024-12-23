@@ -19,11 +19,8 @@ namespace DMS.CORE.Entities.MD
         [Column("NAME", TypeName = "NVARCHAR(255)")]
         public string Name { get; set; }
 
-        [Column("THUE_BVMT", TypeName = "FLOAT")]
-        public float ThueBvmt { get; set; }
-
-        [Column("TYPE", TypeName = "NVARCHAR(50)")]
-        public string? Type { get; set; }
+        [Column("UNIT_CODE", TypeName = "NVARCHAR(50)")]
+        public string? UnitCode { get; set; }
 
     }
 }
