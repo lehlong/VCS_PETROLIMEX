@@ -21,3 +21,21 @@
     font-size: 32px;
     cursor: pointer;
 }
+.order-main{
+    padding: 12px;
+}
+table{
+    width: 100%;
+}
+th{
+    text-transform: uppercase;
+    background-color: rgb(255, 154, 99);
+    width: 25%;
+    text-align: center;
+}
+th, td {
+    border: solid 1px white;
+    padding: 8px;
+    font-size: 32px;
+    text-align: center;
+}
