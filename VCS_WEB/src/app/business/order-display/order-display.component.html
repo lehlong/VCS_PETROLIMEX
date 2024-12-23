@@ -1,1 +1,19 @@
-<p>order-display works!</p>
+<div class="bg-order">
+    <div class="order-header">
+        <div class="app-header flex justify-between items-center">
+            <div class="header-trigger flex items-center gap-[24px]">
+                <img src="assets/img/plx-order.png" class="logo-plx">
+            </div>
+            <div class="header-trigger flex items-center gap-[24px]">
+                <div class="text-notif">Xin mời xe có biển số 29H123456 vào lấy Ticket</div>
+            </div>
+            <div class="header-trigger flex items-center gap-[24px]">
+                <span nz-icon nzType="fullscreen" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(true)" *ngIf="!isFullscreen"></span>
+                <span nz-icon nzType="fullscreen-exit" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(false)" *ngIf="isFullscreen"></span>
+            </div>
+        </div>
+    </div>
+    <div class="order-main">
+
+    </div>
+</div>
