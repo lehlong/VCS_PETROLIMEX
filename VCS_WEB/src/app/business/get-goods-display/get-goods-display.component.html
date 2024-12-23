@@ -1,1 +1,57 @@
-<p>get-goods-display works!</p>
+<div class="bg-order">
+    <div class="order-header">
+        <div class="app-header flex justify-between items-center">
+            <div class="header-trigger flex items-center gap-[24px]">
+                <img src="assets/img/plx-order.png" class="logo-plx">
+            </div>
+            <div class="header-trigger flex items-center gap-[24px]">
+                <div class="text-notif">Xin mời xe có biển số 29H123456 vào họng bơm số 2</div>
+            </div>
+            <div class="header-trigger flex items-center gap-[24px]">
+                <span nz-icon nzType="fullscreen" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(true)" *ngIf="!isFullscreen"></span>
+                <span nz-icon nzType="fullscreen-exit" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(false)" *ngIf="isFullscreen"></span>
+            </div>
+        </div>
+    </div>
+    <div class="order-main">
+        <table>
+
+            <thead>
+              <tr>
+                <th colspan="2">Thiết bị</th>
+                <th rowspan="2">Mặt hàng</th>
+                <th colspan="4">Thứ tự xếp hàng</th>
+              </tr>
+              <tr>
+                <th>Giàn</th>
+                <th>Họng</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Giàn 1</td>
+                <td>Họng 1</td>
+                <td>Xăng RON95-II</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+              </tr>
+          
+              <tr>
+                <td>Giàn 1</td>
+                <td>Họng 2</td>
+                <td>Xăng E5 RON 92</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+                <td>29H12312</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
