@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VCS.FORM.Views.Pages;
 
 namespace VCS.FORM
 {
@@ -17,15 +18,15 @@ namespace VCS.FORM
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Views.Pages.HomePages homePages;
+        //private Views.Pages.Home home;
 
         public MainWindow()
         {
             InitializeComponent();
             LoadUserInfo();
             
-            homePages = new Views.Pages.HomePages();
-            MainContent.Navigate(homePages);
+            //home = new Views.Pages.Home();
+            //MainContent.Navigate(home);
         }
 
         private void LoadUserInfo()
@@ -37,10 +38,11 @@ namespace VCS.FORM
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (homePages == null)
-                homePages = new Views.Pages.HomePages();
-            
-            MainContent.Navigate(homePages);
+            //if (home == null)
+            //    home = new Views.Pages.Home();
+
+            //MainContent.Navigate(home);
+            MainContent.Navigate(new Views.Pages.Home());
         }
 
         private void DocumentButton_Click(object sender, RoutedEventArgs e)

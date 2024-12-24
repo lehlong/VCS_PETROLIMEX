@@ -22,7 +22,8 @@ namespace VCS.FORM.Views.Pages
     {
         public ChkTruckIn()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
+        
     }
 }
