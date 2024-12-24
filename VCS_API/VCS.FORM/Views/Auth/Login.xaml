@@ -12,7 +12,7 @@
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
-        <Image Source="/Resource/Images/close.png"  Grid.Column="1" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
+        <Image Source="\Resoures\Images\close.png"  Grid.Column="1" Panel.ZIndex="1" MouseUp="Image_MouseUp" Style="{StaticResource imgClose}"/>
 
         <Border CornerRadius="5 0 0 5">
             <Border.Background>
@@ -47,7 +47,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="/Resource/Images/person.png" Height="20"/>
+                        <Image Source="\Resoures\Images\person.png" Height="20"/>
                         <TextBlock x:Name="textEmail" MouseDown="textEmail_MouseDown" Text="Account" Style="{StaticResource textHint}"/>
                         <TextBox x:Name="txtEmail" TextChanged="txtEmail_TextChanged" Style="{StaticResource textBox}"/>
                     </Grid>
@@ -59,7 +59,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="/Resource/Images/lock.png" Height="20"/>
+                        <Image Source="\Resoures\Images\lock.png" Height="20"/>
                         <TextBlock x:Name="textPassword" MouseDown="textPassWord_MouseDown" Text="Password" Style="{StaticResource textHint}"/>
                         <PasswordBox x:Name="txtPassword" PasswordChanged="txtPassword_PasswordChanged" Style="{StaticResource textBox}"/>
                     </Grid>

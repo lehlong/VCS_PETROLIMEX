@@ -17,9 +17,90 @@ namespace VCS.FORM
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Views.Pages.HomePages homePages;
+
         public MainWindow()
         {
             InitializeComponent();
+            LoadUserInfo();
+            
+            homePages = new Views.Pages.HomePages();
+            MainContent.Navigate(homePages);
+        }
+
+        private void LoadUserInfo()
+        {
+            // TODO: Lấy thông tin user từ service authentication
+            UserNameText.Text = "Nguyễn Văn A";
+            UserRoleText.Text = "Admin";
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (homePages == null)
+                homePages = new Views.Pages.HomePages();
+            
+            MainContent.Navigate(homePages);
+        }
+
+        private void DocumentButton_Click(object sender, RoutedEventArgs e)
+        {
+            //MainContent.Navigate(new DocumentPage());
+        }
+
+        private void FinanceButton_Click(object sender, RoutedEventArgs e)
+        {
+            //MainContent.Navigate(new FinancePage());
+        }
+
+        private void ReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            //MainContent.Navigate(new ReportPage());
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                //Login loginWindow = new Login();
+                //loginWindow.Show();
+                this.Close();
+            }
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = this.WindowState == WindowState.Maximized ? 
+                              WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // TODO: Implement search functionality
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

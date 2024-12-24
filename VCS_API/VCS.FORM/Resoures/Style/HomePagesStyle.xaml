@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Style cho Header -->
+    <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="#1a1c1e"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+
+    <!-- Style cho Camera Container -->
+    <Style x:Key="CameraContainerStyle" TargetType="Border">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="#e0e6ed"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MaxHeight" Value="600"/>
+        <Setter Property="Padding" Value="5,0,5,5"/>
+    </Style>
+
+    <!-- Style cho Camera Title -->
+    <Style x:Key="CameraTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#1a1c1e"/>
+    </Style>
+
+</ResourceDictionary>
