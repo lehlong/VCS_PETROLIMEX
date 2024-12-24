@@ -21,6 +21,11 @@ namespace VCS.FORM.Views.Pages
         public HomePages()
         {
             InitializeComponent();
+            //InitializeLibVLC();
+            //InitializePlayer();
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             InitializeLibVLC();
             InitializePlayer();
         }

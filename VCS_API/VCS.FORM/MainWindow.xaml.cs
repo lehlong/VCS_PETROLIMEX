@@ -18,16 +18,26 @@ namespace VCS.FORM
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private Views.Pages.Home home;
+        private Views.Pages.HomePages homePages;
 
         public MainWindow()
         {
             InitializeComponent();
             LoadUserInfo();
-            
-            //home = new Views.Pages.Home();
-            //MainContent.Navigate(home);
+            this.Loaded += MainWindow_Loaded;
         }
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            homePages = new Views.Pages.HomePages();
+
+            await Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(1000);
+            });
+
+            MainContent.Navigate(homePages);
+        }
+
 
         private void LoadUserInfo()
         {
@@ -42,7 +52,7 @@ namespace VCS.FORM
             //    home = new Views.Pages.Home();
 
             //MainContent.Navigate(home);
-            MainContent.Navigate(new Views.Pages.Home());
+           // MainContent.Navigate(new Views.Pages.Home());
         }
 
         private void DocumentButton_Click(object sender, RoutedEventArgs e)
