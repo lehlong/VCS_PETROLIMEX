@@ -65,6 +65,11 @@
                     </Grid>
                 </Border>
 
+                <CheckBox x:Name="RememberMe" 
+                          Content="Ghi nhớ đăng nhập"
+                          Margin="70,0,0,10"
+                          Foreground="#878787"/>
+
                 <Button Content="Đăng Nhập" Click="Button_Click" Style="{StaticResource mainbutton}"/>
             </StackPanel>
 

@@ -13,13 +13,13 @@ namespace VCS.FORM
     /// </summary>
     public partial class App : Application
     {
-        private ServiceProvider serviceProvider;
+        public IServiceProvider ServiceProvider { get; private set; }
 
         public App()
         {
             ServiceCollection services = new ServiceCollection();
             ConfigureServices(services);
-            serviceProvider = services.BuildServiceProvider();
+            ServiceProvider = services.BuildServiceProvider();
         }
 
         private void ConfigureServices(ServiceCollection services)
@@ -46,7 +46,7 @@ namespace VCS.FORM
         {
             base.OnStartup(e);
 
-            var mainWindow = serviceProvider.GetRequiredService<Login>();
+            var mainWindow = ServiceProvider.GetRequiredService<Login>();
             mainWindow.Show();
         }
 

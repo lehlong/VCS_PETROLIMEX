@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VCS.FORM.Utilities;
 
 namespace VCS.FORM
 {
@@ -33,6 +34,9 @@ namespace VCS.FORM
             
             _service = service;
             _dbContext = dbContext;
+
+            // Kiểm tra và tự động điền thông tin đăng nhập đã lưu
+            LoadSavedCredentials();
         }
 
         private void HandleEnterKey(object sender, KeyEventArgs e)
@@ -91,6 +95,20 @@ namespace VCS.FORM
             }
         }
 
+        private void LoadSavedCredentials()
+        {
+            var savedCredentials = CredentialManager.GetSavedCredentials();
+            if (savedCredentials != null)
+            {
+                txtEmail.Text = savedCredentials.Username;
+                txtPassword.Password = savedCredentials.Password;
+                RememberMe.IsChecked = savedCredentials.RememberMe;
+
+                // Tự động đăng nhập nếu có thông tin được lưu
+                Button_Click(this, new RoutedEventArgs());
+            }
+        }
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try 
@@ -121,6 +139,21 @@ namespace VCS.FORM
 
                 if (result != null)
                 {
+                    // Lưu thông tin đăng nhập nếu người dùng chọn "Ghi nhớ đăng nhập"
+                    if (RememberMe.IsChecked == true)
+                    {
+                        CredentialManager.SaveCredentials(new LoginCredentials
+                        {
+                            Username = txtEmail.Text,
+                            Password = txtPassword.Password,
+                            RememberMe = true
+                        });
+                    }
+                    else
+                    {
+                        CredentialManager.DeleteCredentials();
+                    }
+
                     MainWindow mainWindow = new MainWindow();
 
                     // Animation fade out cho cửa sổ login

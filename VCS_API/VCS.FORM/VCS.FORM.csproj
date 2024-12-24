@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CredentialManagement" Version="1.0.2" />
     <PackageReference Include="LibVLCSharp" Version="3.9.1" />
     <PackageReference Include="LibVLCSharp.WPF" Version="3.9.1" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0" />

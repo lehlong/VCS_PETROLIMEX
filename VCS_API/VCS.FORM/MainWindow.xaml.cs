@@ -9,7 +9,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VCS.FORM.Views.Pages;
+using System.Windows.Media.Animation;
+using System.Threading.Tasks;
+using VCS.FORM.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace VCS.FORM
 {
@@ -24,20 +27,13 @@ namespace VCS.FORM
         {
             InitializeComponent();
             LoadUserInfo();
-            this.Loaded += MainWindow_Loaded;
-        }
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            homePages = new Views.Pages.HomePages();
-
-            await Task.Run(() =>
+            
+            if (homePages == null)
             {
-                System.Threading.Thread.Sleep(1000);
-            });
-
+                homePages = new Views.Pages.HomePages();
+            }
             MainContent.Navigate(homePages);
         }
-
 
         private void LoadUserInfo()
         {
@@ -48,11 +44,10 @@ namespace VCS.FORM
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (home == null)
-            //    home = new Views.Pages.Home();
-
-            //MainContent.Navigate(home);
-           // MainContent.Navigate(new Views.Pages.Home());
+            if (homePages == null)
+                homePages = new Views.Pages.HomePages();
+            
+            MainContent.Navigate(homePages);
         }
 
         private void DocumentButton_Click(object sender, RoutedEventArgs e)
@@ -75,9 +70,27 @@ namespace VCS.FORM
             if (MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //Login loginWindow = new Login();
-                //loginWindow.Show();
-                this.Close();
+                // Xóa thông tin đăng nhập đã lưu
+                CredentialManager.DeleteCredentials();
+                
+                // Tạo cửa sổ đăng nhập mới
+                var app = (App)Application.Current;
+                var loginWindow = app.ServiceProvider.GetRequiredService<Login>();
+                
+                // Animation fade out cho cửa sổ hiện tại
+                this.Opacity = 1;
+                DoubleAnimation animation = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 0.0,
+                    Duration = new Duration(TimeSpan.FromSeconds(0.3))
+                };
+                animation.Completed += (s, _) =>
+                {
+                    loginWindow.Show();
+                    this.Close();
+                };
+                this.BeginAnimation(OpacityProperty, animation);
             }
         }
 
