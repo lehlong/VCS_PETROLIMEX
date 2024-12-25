@@ -153,7 +153,11 @@ namespace VCS.FORM
                     {
                         CredentialManager.DeleteCredentials();
                     }
-
+                    LoginResponse.AccessToken = result.AccessToken;
+                    LoginResponse.ExpireDate = result.ExpireDate;
+                    LoginResponse.RefreshToken = result.RefreshToken; 
+                    LoginResponse.ExpireDateRefreshToken = result.ExpireDateRefreshToken;
+                    LoginResponse.AccountInfo = result.AccountInfo;
                     MainWindow mainWindow = new MainWindow();
 
                     // Animation fade out cho cửa sổ login

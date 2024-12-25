@@ -37,9 +37,13 @@ namespace VCS.FORM
 
         private void LoadUserInfo()
         {
-            // TODO: Lấy thông tin user từ service authentication
-            UserNameText.Text = "Nguyễn Văn A";
-            UserRoleText.Text = "Admin";
+            if (LoginResponse.AccountInfo != null)
+            {
+                UserNameText.Text = LoginResponse.AccountInfo.UserName;
+                UserRoleText.Text = LoginResponse.AccountInfo.AccountGroups?.FirstOrDefault()?.Name ?? "N/A";
+            
+             
+            }
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
@@ -52,7 +56,7 @@ namespace VCS.FORM
 
         private void DocumentButton_Click(object sender, RoutedEventArgs e)
         {
-            //MainContent.Navigate(new DocumentPage());
+            MainContent.Navigate(new Views.Pages.CheckInPages());
         }
 
         private void FinanceButton_Click(object sender, RoutedEventArgs e)
