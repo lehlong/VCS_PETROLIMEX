@@ -34,7 +34,7 @@ namespace DMS.API.Controllers.MD
         public async Task<IActionResult> GetAll([FromQuery] BaseMdFilter filter)
         {
             var transferObject = new TransferObject();
-            var result = await _service.GetAll(filter);
+            var result = await _service.GetAll (filter);
             if (_service.Status)
             {
                 transferObject.Data = result;

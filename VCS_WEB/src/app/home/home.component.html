@@ -1,0 +1,25 @@
+<div nz-row [nzGutter]="16">
+  <div nz-col class="gutter-row" [nzSpan]="12">
+    <div class="inner-box">
+      <nz-divider nzDashed [nzText]="cIn">
+        <ng-template #cIn>
+          <span nz-icon nzType="camera"></span>
+          CAMERA CỔNG VÀO
+        </ng-template>
+      </nz-divider>
+      <div id="lstCameraIn"></div>
+    </div>
+  </div>
+  <div nz-col class="gutter-row" [nzSpan]="12">
+    <div class="inner-box">
+      <nz-divider nzDashed [nzText]="cOut">
+        <ng-template #cOut>
+          <span nz-icon nzType="camera"></span>
+          CAMERA CỔNG RA
+        </ng-template>
+      </nz-divider>
+      <div id="lstCameraOut"></div>
+
+    </div>
+  </div>
+</div>

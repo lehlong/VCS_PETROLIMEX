@@ -130,10 +130,8 @@ namespace DMS.CORE
         public DbSet<TblMdPumpThroat> TblMdPumpThroat { get; set; }
         public DbSet<TblMdGoods> TblMdGoods { get; set; }
         public DbSet<TblMdWarehouse> TblMdWarehouse { get; set; }
-       
         public DbSet<TblMdCustomer> TblMdCustomer { get; set; }
-       
-       
+            
         public DbSet<TblMdCustomerType> TblMdCustomerType { get; set; }
 
         public DbSet<TblMdArea> TblMdArea { get; set; }      

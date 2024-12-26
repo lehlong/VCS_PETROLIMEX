@@ -1,8 +1,17 @@
-.main-home{
+.main-home {
     padding: 12px;
 }
-.goods-item{
+
+.goods-item {
     margin-bottom: 12px;
     height: 220px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+#lstCameraIn {
+    padding: 0 0 0 16px;
+}
+
+#lstCameraOut {
+    padding: 0px 16px 0px 0;
 }
