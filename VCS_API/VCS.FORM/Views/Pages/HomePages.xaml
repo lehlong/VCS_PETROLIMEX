@@ -1,0 +1,75 @@
+﻿<Page x:Class="VCS.FORM.Views.Pages.HomePages"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VCS.FORM.Views.Pages"
+      xmlns:uc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="1600" d:DesignWidth="800"
+      Title="HomePage"
+      Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded">
+
+    <Grid Margin="0,0,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="50*"/>
+            <!-- Camera vào -->
+            <RowDefinition Height="50*"/>
+            <!-- Camera ra -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="KIỂM SOÁT VÀO RA" 
+                       Style="{StaticResource HeaderTextStyle}"/>
+        </Grid>
+
+        <!-- Camera Vào -->
+        <Border Grid.Row="1" 
+                Style="{StaticResource CameraContainerStyle}" 
+                Margin="5,5,5,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Camera cổng vào" 
+                           Style="{StaticResource CameraTitleStyle}"
+                           Margin="15,12,15,0"/>
+                <uc:VideoView Grid.Row="1" 
+                              x:Name="CameraIn"
+                              Margin="0,0,0,0"
+                              AllowDrop="False"/>
+            </Grid>
+        </Border>
+
+        <!-- Camera Ra -->
+        <Border Grid.Row="2" 
+                Style="{StaticResource CameraContainerStyle}" 
+                Margin="5,5,5,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Camera cổng ra" 
+                           Style="{StaticResource CameraTitleStyle}"
+                           Margin="15,12,15,0"/>
+                <uc:VideoView Grid.Row="1" 
+                              x:Name="CameraOut"
+                              Margin="0,0,0,0"
+                              AllowDrop="False"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
