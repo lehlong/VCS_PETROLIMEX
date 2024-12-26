@@ -15,6 +15,11 @@ using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using VCS.FORM.Model;
+using Microsoft.AspNetCore.Identity.Data;
+using System.Text;
+using VCS.FORM.Utilities;
+using DMS.BUSINESS.Services.Auth;
+using DMS.BUSINESS.Services.SMO;
 
 namespace VCS.FORM.Views.Pages
 {
@@ -31,6 +36,7 @@ namespace VCS.FORM.Views.Pages
         private int currentPage = 1;
         private int itemsPerPage = 10;
         private static readonly HttpClient client = new HttpClient();
+
         public CheckInPages()
         {
             InitializeComponent();
@@ -152,11 +158,22 @@ namespace VCS.FORM.Views.Pages
             MessageBox.Show("Mở form đăng ký tài xế", "Thông báo");
         }
 
-        private void RegisterVehicle_Click(object sender, RoutedEventArgs e)
+        private async void DO_SAP_Click(object sender, RoutedEventArgs e)
         {
-            // Open vehicle registration window/dialog
-            MessageBox.Show("Mở form đăng ký xe", "Thông báo");
+            var authService = new AuthSMOService();
+            string token = await authService.Login();
+            var dataService = new DOSAPService();
+            string doNumber = DO_SAP.Text.Trim();
+            if (string.IsNullOrEmpty(doNumber))
+            {
+                MessageBox.Show("Vui lòng nhập số DO SAP!");
+                return;
+            }
+            string apiUrl = $"https://smoapiuat.petrolimex.com.vn/api/PO/GetDO?doNumber={doNumber}";
+            string data = await dataService.GetData(apiUrl, token);
+            MessageBox.Show(data);
         }
+       
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -185,7 +202,7 @@ namespace VCS.FORM.Views.Pages
                     imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                     content.Add(imageContent, "file", Path.GetFileName(imagePath));
 
-                    var response = await client.PostAsync("http://localhost:5000/detect", content);
+                    var response = await client.PostAsync("http://localhost:5000/api/detect", content);
                     var jsonString = await response.Content.ReadAsStringAsync();
                     dynamic jsonResponse = JObject.Parse(jsonString);
 
