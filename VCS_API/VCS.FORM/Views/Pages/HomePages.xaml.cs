@@ -3,6 +3,8 @@ using LibVLCSharp.WPF;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using VCS.FORM.Model;
 
 namespace VCS.FORM.Views.Pages
 {
@@ -12,27 +14,23 @@ namespace VCS.FORM.Views.Pages
     public partial class HomePages : Page
     {
         private LibVLC libVLC;
-        private Media mediaIn;
-        private Media mediaOut;
-        private MediaPlayer playerIn;
-        private MediaPlayer playerOut;
-        private bool isPlaying = false;
+        private ObservableCollection<CameraViewModel> Cameras { get; set; }
 
         public HomePages()
         {
             InitializeComponent();
-            //InitializeLibVLC();
-            //InitializePlayer();
+            Cameras = new ObservableCollection<CameraViewModel>();
+            CameraItemsControl.ItemsSource = Cameras;
+            InitializeLibVLC();
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeLibVLC();
             InitializePlayer();
         }
 
         private void InitializeLibVLC()
         {
-            // Khởi tạo LibVLC với các tùy chọn tối ưu cho streaming
             Core.Initialize();
             libVLC = new LibVLC(
                 "--network-caching=100",
@@ -49,20 +47,11 @@ namespace VCS.FORM.Views.Pages
         {
             try
             {
-                // Khởi tạo camera vào
-                string rtspUrlIn = "rtsp://admin:D2s@2024@192.168.110.6/Streaming/Channels/1";
-                mediaIn = new Media(libVLC, rtspUrlIn, FromType.FromLocation);
-                playerIn = new MediaPlayer(mediaIn);
-                CameraIn.MediaPlayer = playerIn;
-                
-                // Khởi tạo camera ra
-                string rtspUrlOut = "rtsp://admin:D2s@2024@192.168.110.6/Streaming/Channels/1";
-                mediaOut = new Media(libVLC, rtspUrlOut, FromType.FromLocation);
-                playerOut = new MediaPlayer(mediaOut);
-                CameraOut.MediaPlayer = playerOut;
-
-                // Bắt đầu phát
-                StartStreaming();
+                // Ví dụ thêm camera
+                AddCamera("Camera cổng vào 1", "rtsp://admin:D2s@2024@192.168.110.6/Streaming/Channels/1");
+                AddCamera("Camera cổng ra 1", "rtsp://admin:D2s@2024@192.168.110.6/Streaming/Channels/1");
+                AddCamera("Camera cổng vào 2", "rtsp://admin:D2s@2024@192.168.110.6/Streaming/Channels/1");
+                // Thêm camera khác nếu cần
             }
             catch (Exception ex)
             {
@@ -70,17 +59,19 @@ namespace VCS.FORM.Views.Pages
             }
         }
 
-        private void StartStreaming()
+        private void AddCamera(string name, string rtspUrl)
         {
-            if (!isPlaying)
+            var media = new Media(libVLC, rtspUrl, FromType.FromLocation);
+            var player = new MediaPlayer(media);
+            var camera = new CameraViewModel
             {
-                CameraIn.MediaPlayer?.Play();
-                CameraOut.MediaPlayer?.Play();
-                isPlaying = true;
-            }
+                CameraName = name,
+                MediaPlayer = player
+            };
+            Cameras.Add(camera);
+            player.Play();
         }
 
-        // Cleanup khi đóng page
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             StopAndDisposeMediaPlayers();
@@ -88,13 +79,14 @@ namespace VCS.FORM.Views.Pages
 
         private void StopAndDisposeMediaPlayers()
         {
-            playerIn?.Stop();
-            playerOut?.Stop();
-            playerIn?.Dispose();
-            playerOut?.Dispose();
-            mediaIn?.Dispose();
-            mediaOut?.Dispose();
+            foreach (var camera in Cameras)
+            {
+                camera.MediaPlayer?.Stop();
+                camera.MediaPlayer?.Dispose();
+            }
+            Cameras.Clear();
             libVLC?.Dispose();
         }
     }
+
 }

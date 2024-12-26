@@ -34,66 +34,40 @@
                 </Grid.RowDefinitions>
 
                 <!-- Camera Stream Section -->
-                <Border Grid.Row="0" 
-                        Style="{StaticResource CameraContainerStyle}"
-                        Margin="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        <TextBlock Text="CAMERA GIÁM SÁT" 
-                                 Style="{StaticResource CameraTitleStyle}"
-                                 Margin="15,12"/>
+                    <!-- Title -->
+                    <TextBlock Text="CAMERA GIÁM SÁT" 
+                              Style="{StaticResource CameraTitleStyle}"
+                              Margin="15,12"/>
 
-                        <uc:VideoView Grid.Row="1" 
-                                     x:Name="CameraStream"
-                                     Height="320"
-                                     Margin="5"/>
-                    </Grid>
-                </Border>
+                    <!-- Camera Container -->
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CameraContainerStyle}"
+                            Margin="5">
+                        <uc:VideoView x:Name="CameraStream"
+                                      Height="320"/>
+                    </Border>
+                </Grid>
 
                 <!-- Action Buttons -->
                 <StackPanel Grid.Row="1" 
-                          Orientation="Horizontal" 
-                          HorizontalAlignment="Center"
-                          Margin="0,10">
+                           Orientation="Horizontal" 
+                           HorizontalAlignment="Right"
+                           Margin="0,10,20,10">
                     <Button Style="{StaticResource ActionButtonStyle}"
                             Click="CheckIn_Click"
                             Width="100" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="Login" 
-                                                 Width="16" 
-                                                 Height="16" 
-                                                 Margin="0,0,5,0"/>
+                                                Width="16" 
+                                                Height="16" 
+                                                Margin="0,0,5,0"/>
                             <TextBlock Text="Check in" 
-                                      VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!--<Button Style="{StaticResource ActionButtonStyle}"
-                            Click="RegisterDriver_Click"
-                            Width="130" Height="40">
-                        <StackPanel Orientation="Horizontal">
-                            <Icon:PackIconMaterial Kind="AccountPlus" 
-                                                 Width="16" 
-                                                 Height="16" 
-                                                 Margin="0,0,5,0"/>
-                            <TextBlock Text="Đăng ký tài xế" 
-                                      VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>-->
-
-                    <Button Style="{StaticResource ActionButtonStyle}"
-                            Click="DO_SAP_Click"
-                            Width="160" Height="40">
-                        <StackPanel Orientation="Horizontal">
-                            <Icon:PackIconMaterial Kind="TruckPlus" 
-                                                 Width="16" 
-                                                 Height="16" 
-                                                 Margin="0,0,5,0"/>
-                            <TextBlock Text="Lấy thông tin lệnh xuất" 
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -103,10 +77,23 @@
                             Width="120" Height="40">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="QrcodeScan" 
-                                                 Width="16" 
-                                                 Height="16" 
-                                                 Margin="0,0,5,0"/>
+                                                Width="16" 
+                                                Height="16" 
+                                                Margin="0,0,5,0"/>
                             <TextBlock Text="Quét mã QR" 
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource ActionButtonStyle}"
+                            Click="DO_SAP_Click"
+                            Width="160" Height="40">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="TruckPlus" 
+                                                Width="16" 
+                                                Height="16" 
+                                                Margin="0,0,5,0"/>
+                            <TextBlock Text="Lấy thông tin lệnh xuất" 
                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
@@ -119,75 +106,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Text Information -->
-                    <Border Grid.Column="0"
-                            Background="#f6f8fb"
-                            Margin="5"
-                            CornerRadius="10"
-                            Padding="15">
-                        <StackPanel>
-                            <TextBlock Text="THÔNG TIN XE" 
-                                      Style="{StaticResource InfoLabelStyle}"
-                                      HorizontalAlignment="Center"
-                                      Margin="0,0,0,15"/>
-
-                            <!-- Thời gian -->
-                            <Grid Style="{StaticResource InputContainerStyle}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Thời gian:" 
-                                          Style="{StaticResource InputLabelStyle}"/>
-                                <TextBox x:Name="CheckInTime" 
-                                        Grid.Column="1" 
-                                        Style="{StaticResource InputTextBoxStyle}"
-                                        IsReadOnly="True"/>
-                            </Grid>
-
-                            <!-- Số DO SAP -->
-                            <Grid Style="{StaticResource InputContainerStyle}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Số DO SAP:" 
-                                          Style="{StaticResource InputLabelStyle}"/>
-                                <TextBox x:Name="DO_SAP"
-                                        Grid.Column="1" 
-                                        Style="{StaticResource InputTextBoxStyle}"/>
-                            </Grid>
-
-                            <!-- Biển số -->
-                            <Grid Style="{StaticResource InputContainerStyle}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Biển số:" 
-                                          Style="{StaticResource InputLabelStyle}"/>
-                                <TextBox x:Name="LicensePlate" 
-                                        Grid.Column="1" 
-                                        Style="{StaticResource InputTextBoxStyle}"/>
-                            </Grid>
-
-                            <!-- Tài xế -->
-                            <Grid Style="{StaticResource InputContainerStyle}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Tài xế:" 
-                                          Style="{StaticResource InputLabelStyle}"/>
-                                <TextBox x:Name="DriverName" 
-                                        Grid.Column="1" 
-                                        Style="{StaticResource InputTextBoxStyle}"/>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Images -->
-                    <StackPanel Grid.Column="1" Margin="5">
+                    <!-- Images - Moved to first column -->
+                    <StackPanel Grid.Column="0" Margin="5">
                         <!-- Ảnh biển số -->
                         <Border Background="#f6f8fb"
                                 CornerRadius="10"
@@ -219,35 +139,139 @@
                             </StackPanel>
                         </Border>
                     </StackPanel>
+
+                    <!-- Text Information - Moved to second column -->
+                    <Border Grid.Column="1"
+                            Background="#f6f8fb"
+                            Margin="5"
+                            CornerRadius="10"
+                            Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="THÔNG TIN XE" 
+                                      Style="{StaticResource InfoLabelStyle}"
+                                      HorizontalAlignment="Center"
+                                      Margin="0,0,0,15"/>
+
+                            <!-- Thời gian -->
+                            <Grid Style="{StaticResource InputContainerStyle}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Thời gian:" 
+                                          Style="{StaticResource InputLabelStyle}"/>
+                                <TextBox x:Name="CheckInTime" 
+                                        Grid.Column="1" 
+                                        Style="{StaticResource InputTextBoxStyle}"
+                                        IsReadOnly="True"/>
+                            </Grid>
+
+                            <!-- Biển số -->
+                            <Grid Style="{StaticResource InputContainerStyle}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Biển số:" 
+                                          Style="{StaticResource InputLabelStyle}"/>
+                                <TextBox x:Name="LicensePlate" 
+                                        Grid.Column="1" 
+                                        Style="{StaticResource InputTextBoxStyle}"/>
+                            </Grid>
+
+                            <!-- Tài xế -->
+                            <Grid Style="{StaticResource InputContainerStyle}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Tài xế:" 
+                                          Style="{StaticResource InputLabelStyle}"/>
+                                <TextBox x:Name="DriverName" 
+                                        Grid.Column="1" 
+                                        Style="{StaticResource InputTextBoxStyle}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </Grid>
 
-            <!-- Order List Column -->
+            <!-- Order List Column - Modified with new layout -->
             <Border Grid.Column="1"
                     Background="#f6f8fb"
-                    Margin="5"
+                    Margin="5,50,5,5"
                     CornerRadius="10">
-                <Grid Height="Auto">
+                <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="DANH SÁCH ĐƠN HÀNG" 
+                    <!-- Action Buttons moved to top -->
+                    <StackPanel Grid.Row="0" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right"
+                                Margin="0,15,15,15">
+                        <Button Style="{StaticResource ActionButtonStyle}"
+                                Click="ScanQR_Click"
+                                Width="120" Height="40">
+                            <StackPanel Orientation="Horizontal">
+                                <Icon:PackIconMaterial Kind="QrcodeScan" 
+                                                     Width="16" 
+                                                     Height="16" 
+                                                     Margin="0,0,5,0"/>
+                                <TextBlock Text="Quét mã QR" 
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ActionButtonStyle}"
+                                Click="DO_SAP_Click"
+                                Width="160" Height="40"
+                                Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Icon:PackIconMaterial Kind="TruckPlus" 
+                                                     Width="16" 
+                                                     Height="16" 
+                                                     Margin="0,0,5,0"/>
+                                <TextBlock Text="Lấy thông tin lệnh xuất" 
+                                          VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- DO SAP Input -->
+                    <Grid Grid.Row="1" Margin="15,0,15,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Số DO SAP:" 
+                                  Style="{StaticResource InputLabelStyle}"/>
+                        <TextBox x:Name="DO_SAP"
+                                Grid.Column="1" 
+                                Style="{StaticResource InputTextBoxStyle}"/>
+                    </Grid>
+
+                    <!-- Order List Title -->
+                    <TextBlock Grid.Row="2"
+                              Text="DANH SÁCH ĐƠN HÀNG" 
                               Style="{StaticResource InfoLabelStyle}"
                               HorizontalAlignment="Center"
                               Margin="15"/>
 
+                    <!-- DataGrid remains the same -->
                     <DataGrid x:Name="OrderList"
-                             Grid.Row="1"
-                             Style="{StaticResource CheckInDataGridStyle}"
-                             Margin="15"
-                             Height="Auto"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
-                             CellStyle="{StaticResource DataGridCellStyle}"
-                             RowStyle="{StaticResource DataGridRowStyle}">
+                              Grid.Row="2"
+                              Style="{StaticResource CheckInDataGridStyle}"
+                              Margin="15"
+                              Height="Auto"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                              CellStyle="{StaticResource DataGridCellStyle}"
+                              RowStyle="{StaticResource DataGridRowStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="STT" 
                                               Binding="{Binding Index}" 
@@ -259,8 +283,8 @@
                                               MinWidth="100"/>
                             <DataGridTextColumn Header="Thời gian" 
                                               Binding="{Binding Time}" 
-                                              Width="120"
-                                              MinWidth="120"/>
+                                              Width="150"
+                                              MinWidth="150"/>
                             <DataGridTextColumn Header="Biển số xe" 
                                               Binding="{Binding LicensePlate}" 
                                               Width="100"
@@ -271,17 +295,13 @@
                                               MinWidth="120"/>
                             <DataGridTextColumn Header="Thông tin đơn hàng" 
                                               Binding="{Binding OrderInfo}" 
-                                              Width="150"
+                                              Width="*"
                                               MinWidth="150"/>
-                            <DataGridTextColumn Header="Trạng thái" 
-                                              Binding="{Binding Status}" 
-                                              Width="80"
-                                              MinWidth="80"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <!-- Pagination -->
-                    <StackPanel Grid.Row="2" 
+                    <!-- Pagination remains the same -->
+                    <StackPanel Grid.Row="3" 
                                 Orientation="Horizontal" 
                                 HorizontalAlignment="Right"
                                 Margin="15">
