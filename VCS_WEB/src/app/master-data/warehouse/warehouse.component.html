@@ -18,6 +18,8 @@
       <tr>
         <th>Mã kho</th>
         <th>Tên kho</th>
+        <th>Trung gian bơm xuất</th>
+        <th>Tự động hóa</th>
         <th>Trạng thái</th>
       </tr>
     </thead>
@@ -26,6 +28,8 @@
       <tr (click)="openEdit(data)">
         <td>{{ data.code }}</td>
         <td>{{ data.name }}</td>
+        <td>{{ data.tgbx }}</td>
+        <td>{{ data.tdh }}</td>
         <td>
           <nz-tag nzColor="success" *ngIf="data.isActive">
             <span nz-icon nzType="check-circle"></span>
@@ -49,6 +53,10 @@
       <input nz-input class="input-form" placeholder="Mã kho" [(ngModel)]="itemEdit.code" [disabled]="edit" />
       <label>Tên kho</label>
       <input nz-input class="input-form" placeholder="Tên kho" [(ngModel)]="itemEdit.name" />
+      <label>Trugn gian bơm xuất</label>
+      <input nz-input class="input-form" placeholder="Trugn gian bơm xuất" [(ngModel)]="itemEdit.tgbx" />
+      <label>Tự động hóa</label>
+      <input nz-input class="input-form" placeholder="Tự động hóa" [(ngModel)]="itemEdit.tdh" />
       <label>Trạng thái</label>
       <div>
         <nz-radio-group [(ngModel)]="itemEdit.isActive">

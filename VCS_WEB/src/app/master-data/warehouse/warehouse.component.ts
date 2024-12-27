@@ -25,6 +25,8 @@ export class WarehouseComponent implements OnInit {
   itemEdit: any = {
     code: '',
     name: '',
+    tgbx: '',
+    tdh: '',
     orgCode: '',
     isActive: true
   }
@@ -66,6 +68,8 @@ export class WarehouseComponent implements OnInit {
     this.itemEdit = {
       code: '',
       name: '',
+      tgbx: '',
+      tdh: '',
       orgCode: '',
       isActive: true
     }
