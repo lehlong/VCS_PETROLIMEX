@@ -191,6 +191,7 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     txtStatus.Text = "Vui lòng nhập số lệnh xuất";
                     txtStatus.ForeColor = Color.Red;
+                    return;
                 }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
@@ -198,6 +199,7 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
                     txtStatus.ForeColor = Color.Red;
+                    return;
                 }
 
                 var dataDetail = _s.GetInformationNumber(number, token);
@@ -205,7 +207,16 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     txtStatus.Text = "Số lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại!";
                     txtStatus.ForeColor = Color.Red;
+                    return;
                 }
+                
+                var panelInfo = new Panel();
+                panelInfo.BackColor = SystemColors.Control;
+                panelInfo.Location = new Point(18, 222);
+                panelInfo.Name = "panelInfo";
+                panelInfo.Size = new Size(809, 44);
+                panelInfo.TabIndex = 14;
+                panel1.Controls.Add(panelInfo);
 
             }
             catch (Exception ex)
