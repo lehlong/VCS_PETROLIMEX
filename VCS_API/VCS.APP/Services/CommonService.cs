@@ -180,6 +180,39 @@ namespace VCS.APP.Services
                 return null;
             }
         }
+
+        public DOSAPDataDto GetInformationNumber(string number, string token)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear(); 
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}{number}");
+                    HttpResponseMessage response = client.Send(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = response.Content.ReadAsStringAsync().Result;
+                        var data = JsonSerializer.Deserialize<DOSAPDataDto>(responseContent);
+                        return data;
+                    }
+                    else
+                    {
+                        var resEx = new DOSAPDataDto();
+                        resEx.STATUS = false;
+                        return resEx;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                var resEx = new DOSAPDataDto();
+                resEx.STATUS = false;
+                return resEx;
+            }
+        }
     }
 
     public class ResponseLoginSmoApi

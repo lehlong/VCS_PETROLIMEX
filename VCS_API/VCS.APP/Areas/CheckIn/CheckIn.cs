@@ -199,16 +199,25 @@ namespace VCS.APP.Areas.CheckIn
                     return;
                 }
 
+                var dataDetail = _s.GetInformationNumber(number, token);
+                if (!dataDetail.STATUS)
+                {
+                    MessageBox.Show($"Lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-
-
-                MessageBox.Show(token);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-           
+
+        }
+
+        private void txtLicensePlate_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

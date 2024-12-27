@@ -39,12 +39,12 @@
             cameraPanel = new Panel();
             videoView = new LibVLCSharp.WinForms.VideoView();
             infoPanel = new Panel();
+            txtLicensePlate = new TextBox();
             txtStatus = new TextBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             lblLicensePlate = new Label();
-            txtLicensePlate = new TextBox();
             pictureBoxVehicle = new PictureBox();
             pictureBoxLicensePlate = new PictureBox();
             mainPanel.SuspendLayout();
@@ -89,7 +89,7 @@
             btnCheckNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckNumber.Location = new Point(741, 86);
             btnCheckNumber.Name = "btnCheckNumber";
-            btnCheckNumber.Size = new Size(96, 31);
+            btnCheckNumber.Size = new Size(96, 30);
             btnCheckNumber.TabIndex = 11;
             btnCheckNumber.Text = "Kiểm tra";
             btnCheckNumber.UseVisualStyleBackColor = true;
@@ -97,10 +97,12 @@
             // 
             // txtNumber
             // 
-            txtNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumber.Location = new Point(17, 87);
+            txtNumber.BackColor = SystemColors.Control;
+            txtNumber.BorderStyle = BorderStyle.None;
+            txtNumber.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNumber.Location = new Point(20, 87);
             txtNumber.Name = "txtNumber";
-            txtNumber.Size = new Size(787, 29);
+            txtNumber.Size = new Size(784, 28);
             txtNumber.TabIndex = 10;
             txtNumber.TextChanged += textBox1_TextChanged;
             // 
@@ -180,12 +182,12 @@
             // infoPanel
             // 
             infoPanel.BackColor = Color.White;
+            infoPanel.Controls.Add(txtLicensePlate);
             infoPanel.Controls.Add(txtStatus);
             infoPanel.Controls.Add(label3);
             infoPanel.Controls.Add(label2);
             infoPanel.Controls.Add(label1);
             infoPanel.Controls.Add(lblLicensePlate);
-            infoPanel.Controls.Add(txtLicensePlate);
             infoPanel.Controls.Add(pictureBoxVehicle);
             infoPanel.Controls.Add(pictureBoxLicensePlate);
             infoPanel.Location = new Point(12, 336);
@@ -195,12 +197,24 @@
             infoPanel.TabIndex = 1;
             infoPanel.Paint += infoPanel_Paint;
             // 
+            // txtLicensePlate
+            // 
+            txtLicensePlate.BackColor = SystemColors.Control;
+            txtLicensePlate.BorderStyle = BorderStyle.None;
+            txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtLicensePlate.Location = new Point(10, 95);
+            txtLicensePlate.Name = "txtLicensePlate";
+            txtLicensePlate.Size = new Size(497, 47);
+            txtLicensePlate.TabIndex = 9;
+            // 
             // txtStatus
             // 
+            txtStatus.BackColor = SystemColors.Control;
+            txtStatus.BorderStyle = BorderStyle.None;
             txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtStatus.Location = new Point(10, 30);
             txtStatus.Name = "txtStatus";
-            txtStatus.Size = new Size(500, 29);
+            txtStatus.Size = new Size(497, 22);
             txtStatus.TabIndex = 8;
             // 
             // label3
@@ -243,18 +257,9 @@
             lblLicensePlate.TabIndex = 0;
             lblLicensePlate.Text = "Biển số xe:";
             // 
-            // txtLicensePlate
-            // 
-            txtLicensePlate.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtLicensePlate.Location = new Point(10, 90);
-            txtLicensePlate.Name = "txtLicensePlate";
-            txtLicensePlate.ReadOnly = true;
-            txtLicensePlate.Size = new Size(499, 57);
-            txtLicensePlate.TabIndex = 1;
-            // 
             // pictureBoxVehicle
             // 
-            pictureBoxVehicle.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxVehicle.BackColor = SystemColors.Control;
             pictureBoxVehicle.Location = new Point(10, 178);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
             pictureBoxVehicle.Size = new Size(247, 219);
@@ -264,7 +269,7 @@
             // 
             // pictureBoxLicensePlate
             // 
-            pictureBoxLicensePlate.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxLicensePlate.BackColor = SystemColors.Control;
             pictureBoxLicensePlate.Location = new Point(263, 178);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
             pictureBoxLicensePlate.Size = new Size(244, 219);
@@ -300,7 +305,6 @@
         private Label lblCameraTitle;
         private Panel infoPanel;
         private Label lblLicensePlate;
-        private TextBox txtLicensePlate;
         private Button btnDetect;
         private PictureBox pictureBoxVehicle;
         private PictureBox pictureBoxLicensePlate;
@@ -314,5 +318,6 @@
         private Button btnCheckNumber;
         private TextBox txtNumber;
         private Label label4;
+        private TextBox txtLicensePlate;
     }
 }
