@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\CheckIn\" />
-    <Folder Include="Areas\CheckOut\" />
     <Folder Include="Content\img\" />
     <Folder Include="Models\" />
   </ItemGroup>
