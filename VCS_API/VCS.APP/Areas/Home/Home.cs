@@ -98,16 +98,46 @@ namespace VCS.APP.Areas.Home
             }
         }
 
+        private void CleanupResources()
+        {
+            try
+            {
+                foreach (var player in _mediaPlayers.Values)
+                {
+                    player.Stop();
+                    player.Dispose();
+                }
+                _mediaPlayers.Clear();
+                cameraPanel.Controls.Clear();
+                _libVLC?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi dọn dẹp resources: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CleanupResources();
+
+                InitializeLibVLC();
+                GetListCameras();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi reset camera: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            foreach (var player in _mediaPlayers.Values)
-            {
-                player.Stop();
-                player.Dispose();
-            }
-            _mediaPlayers.Clear();
-
-            _libVLC?.Dispose();
+            CleanupResources();
             base.OnFormClosing(e);
         }
 

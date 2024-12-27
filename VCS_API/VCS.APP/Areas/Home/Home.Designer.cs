@@ -39,18 +39,20 @@
             cameraPanel.AutoScroll = true;
             cameraPanel.BackColor = SystemColors.Control;
             cameraPanel.ForeColor = SystemColors.ControlText;
-            cameraPanel.Location = new Point(0, 48);
+            cameraPanel.Location = new Point(0, 64);
+            cameraPanel.Margin = new Padding(3, 4, 3, 4);
             cameraPanel.Name = "cameraPanel";
-            cameraPanel.Padding = new Padding(10);
-            cameraPanel.Size = new Size(1388, 720);
+            cameraPanel.Padding = new Padding(11, 13, 11, 13);
+            cameraPanel.Size = new Size(1586, 960);
             cameraPanel.TabIndex = 0;
             // 
             // panel1
             // 
             panel1.Controls.Add(button1);
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1388, 52);
+            panel1.Size = new Size(1586, 69);
             panel1.TabIndex = 1;
             // 
             // button1
@@ -60,20 +62,23 @@
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = Color.White;
-            button1.Location = new Point(10, 14);
+            button1.Location = new Point(11, 19);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(107, 30);
+            button1.Size = new Size(122, 40);
             button1.TabIndex = 0;
             button1.Text = "Reset Camera";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // Home
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1384, 768);
+            ClientSize = new Size(1582, 1024);
             Controls.Add(panel1);
             Controls.Add(cameraPanel);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Home";
             Text = "Camera Monitoring";
             Load += Home_Load;
