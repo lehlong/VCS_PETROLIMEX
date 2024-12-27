@@ -4,17 +4,46 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VCS.APP.Areas.Login;
+using System.IO;
 using VCS.APP.Utilities;
+
 namespace VCS.APP
 {
     internal static class Program
     {
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         [STAThread]
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new Login());
+            
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            ServiceProvider = services.BuildServiceProvider();
+
+            Application.Run(ServiceProvider.GetRequiredService<Areas.Login.Login>());
+        }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            var configuration = new ConfigurationBuilder()
+               .SetBasePath(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\DMS.API")))
+               .AddJsonFile("appsettings.json")
+               .Build();
+            services.AddSingleton<IConfiguration>(configuration);
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Global.Connection);
+            }, ServiceLifetime.Scoped);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
+            services.AddScoped<IAuthService, AuthService>();
+            
+            services.AddTransient<Areas.Login.Login>();
+            services.AddTransient<Main>();
         }
     }
 }
