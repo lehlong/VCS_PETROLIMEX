@@ -15,6 +15,15 @@ using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 using VCS.FORM.Model;
+using Microsoft.AspNetCore.Identity.Data;
+using System.Text;
+using VCS.FORM.Utilities;
+using DMS.BUSINESS.Services.Auth;
+using DMS.BUSINESS.Services.SMO;
+using DMS.BUSINESS.Dtos.SMO;
+using Hangfire.Storage;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace VCS.FORM.Views.Pages
 {
@@ -31,11 +40,12 @@ namespace VCS.FORM.Views.Pages
         private int currentPage = 1;
         private int itemsPerPage = 10;
         private static readonly HttpClient client = new HttpClient();
+
         public CheckInPages()
         {
             InitializeComponent();
             InitializeTimer();
-            LoadData();
+         //   LoadData();
         }
 
         private void InitializeTimer()
@@ -97,15 +107,35 @@ namespace VCS.FORM.Views.Pages
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             StopAndDisposeMediaPlayers();
-            timer?.Stop();
         }
 
         private void StopAndDisposeMediaPlayers()
         {
-            player?.Stop();
-            player?.Dispose();
-            media?.Dispose();
-            libVLC?.Dispose();
+            try
+            {
+                if (player != null)
+                {
+                    player.Stop();
+                    player.Dispose();
+                    player = null;
+                }
+
+                if (media != null)
+                {
+                    media.Dispose();
+                    media = null;
+                }
+
+                if (libVLC != null)
+                {
+                    libVLC.Dispose();
+                    libVLC = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error during cleanup: {ex.Message}");
+            }
         }
 
         private void LicensePlate_TextChanged(object sender, TextChangedEventArgs e)
@@ -152,11 +182,54 @@ namespace VCS.FORM.Views.Pages
             MessageBox.Show("Mở form đăng ký tài xế", "Thông báo");
         }
 
-        private void RegisterVehicle_Click(object sender, RoutedEventArgs e)
+        private async void DO_SAP_Click(object sender, RoutedEventArgs e)
         {
-            // Open vehicle registration window/dialog
-            MessageBox.Show("Mở form đăng ký xe", "Thông báo");
+            var authService = new AuthSMOService();
+            string token = await authService.Login();
+            var dataService = new DOSAPService();
+            string doNumber = DO_SAP.Text.Trim();
+            if (string.IsNullOrEmpty(doNumber))
+            {
+                MessageBox.Show("Vui lòng nhập số DO SAP!");
+                return;
+            }
+            string apiUrl = $"https://smoapiuat.petrolimex.com.vn/api/PO/GetDO?doNumber={doNumber}";
+            string data = await dataService.GetData(apiUrl, token);
+            // Deserialize dữ liệu từ JSON
+            var dataResponse = JsonConvert.DeserializeObject<DOSAPDataDto>(data);
+
+            // Kiểm tra trạng thái
+            if (dataResponse.STATUS && dataResponse.DATA != null)
+            {
+                var vehicleId = dataResponse.DATA.VEHICLE;
+                var listDO = dataResponse.DATA.LIST_DO;
+
+                // Làm phẳng danh sách như trước
+                var flattenedOrders = new List<dynamic>();
+                foreach (var doItem in listDO)
+                {
+                    foreach (var material in doItem.LIST_MATERIAL)
+                    {
+                        flattenedOrders.Add(new
+                        {
+                            Vehicle = vehicleId,
+                            DO_Number = doItem.DO_NUMBER,
+                          //  Source = doItem.NGUON_HANG,
+                            Material = material.MATERIAL,
+                            Quantity = material.QUANTITY + " " + material.UNIT
+                        });
+                    }
+                }
+
+                // Gán dữ liệu cho DataGrid
+                OrderList.ItemsSource = flattenedOrders;
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để hiển thị!");
+            }
         }
+       
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -185,7 +258,7 @@ namespace VCS.FORM.Views.Pages
                     imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                     content.Add(imageContent, "file", Path.GetFileName(imagePath));
 
-                    var response = await client.PostAsync("http://localhost:5000/detect", content);
+                    var response = await client.PostAsync("http://localhost:5000/api/detect", content);
                     var jsonString = await response.Content.ReadAsStringAsync();
                     dynamic jsonResponse = JObject.Parse(jsonString);
 
@@ -288,22 +361,22 @@ namespace VCS.FORM.Views.Pages
             }
         }
 
-        private void LoadData()
-        {
-            // Giả lập dữ liệu mẫu
-            allItems = Enumerable.Range(1, 50).Select(i => new OrderListItem
-            {
-                Index = i,
-                OrderNumber = $"DO00{1000 + i}",
-                Time = DateTime.Now.AddMinutes(-i).ToString("dd/MM/yyyy HH:mm:ss"),
-                LicensePlate = $"37C-{i:D5}",
-                Driver = $"Tài xế {i}",
-                OrderInfo = $"Xi măng PCB40 - {20 + i} tấn",
-                Status = i % 3 == 0 ? "Đã duyệt" : (i % 3 == 1 ? "Chờ duyệt" : "Từ chối")
-            }).ToList();
+        //private void LoadData()
+        //{
+        //    // Giả lập dữ liệu mẫu
+        //    allItems = Enumerable.Range(1, 50).Select(i => new OrderListItem
+        //    {
+        //        Index = i,
+        //        OrderNumber = $"DO00{1000 + i}",
+        //        Time = DateTime.Now.AddMinutes(-i).ToString("dd/MM/yyyy HH:mm:ss"),
+        //        LicensePlate = $"37C-{i:D5}",
+        //        Driver = $"Tài xế {i}",
+        //        OrderInfo = $"Xi măng PCB40 - {20 + i} tấn",
+        //        Status = i % 3 == 0 ? "Đã duyệt" : (i % 3 == 1 ? "Chờ duyệt" : "Từ chối")
+        //    }).ToList();
 
-            UpdatePageDisplay();
-        }
+        //    UpdatePageDisplay();
+        //}
 
         private void UpdatePageDisplay()
         {
@@ -343,6 +416,36 @@ namespace VCS.FORM.Views.Pages
                 itemsPerPage = int.Parse(selectedItem.Content.ToString());
                 currentPage = 1;
                 UpdatePageDisplay();
+            }
+        }
+
+        private async void DetectLicensePlate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadingOverlay.Visibility = Visibility.Visible;
+                
+                var (imagePath, snapshotImage) = await TakeSnapshot();
+                if (!string.IsNullOrEmpty(imagePath) && snapshotImage != null)
+                {
+                    VehicleImage.Source = snapshotImage;
+
+                    var (licensePlate, croppedImage) = await DetectLicensePlateAsync(imagePath);
+                    
+                    if (!string.IsNullOrEmpty(licensePlate) && croppedImage != null)
+                    {
+                        LicensePlate.Text = licensePlate;
+                        LicensePlateImage.Source = croppedImage;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi nhận diện biển số: {ex.Message}", "Lỗi");
+            }
+            finally
+            {
+                LoadingOverlay.Visibility = Visibility.Collapsed;
             }
         }
     }

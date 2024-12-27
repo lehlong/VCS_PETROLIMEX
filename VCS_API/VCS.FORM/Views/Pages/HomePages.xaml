@@ -11,65 +11,63 @@
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded">
 
-    <Grid Margin="0,0,20,20">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Header -->
-            <RowDefinition Height="50*"/>
-            <!-- Camera vào -->
-            <RowDefinition Height="50*"/>
-            <!-- Camera ra -->
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Grid Grid.Row="0" Margin="0,0,0,5">
+        <Grid Grid.Row="0" Margin="20,10,20,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="KIỂM SOÁT VÀO RA" 
-                       Style="{StaticResource HeaderTextStyle}"/>
+                      Style="{StaticResource HeaderTextStyle}"/>
         </Grid>
 
-        <!-- Camera Vào -->
-        <Border Grid.Row="1" 
-                Style="{StaticResource CameraContainerStyle}" 
-                Margin="5,5,5,5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <!-- ScrollViewer for Camera Container -->
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      Margin="20,0,20,20">
+            <ItemsControl x:Name="CameraItemsControl">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Style="{StaticResource CameraGridStyle}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CameraContainerStyle}" 
+                                Margin="5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-                <TextBlock Text="Camera cổng vào" 
-                           Style="{StaticResource CameraTitleStyle}"
-                           Margin="15,12,15,0"/>
-                <uc:VideoView Grid.Row="1" 
-                              x:Name="CameraIn"
-                              Margin="0,0,0,0"
-                              AllowDrop="False"/>
-            </Grid>
-        </Border>
+                                <!-- Camera Title -->
+                                <Border Background="#F5F5F5" 
+                                        BorderThickness="0,0,0,1" 
+                                        BorderBrush="#E0E0E0">
+                                    <TextBlock Text="{Binding CameraName}" 
+                                             Style="{StaticResource CameraTitleStyle}"
+                                             Margin="15,12,15,12"/>
+                                </Border>
 
-        <!-- Camera Ra -->
-        <Border Grid.Row="2" 
-                Style="{StaticResource CameraContainerStyle}" 
-                Margin="5,5,5,5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Camera cổng ra" 
-                           Style="{StaticResource CameraTitleStyle}"
-                           Margin="15,12,15,0"/>
-                <uc:VideoView Grid.Row="1" 
-                              x:Name="CameraOut"
-                              Margin="0,0,0,0"
-                              AllowDrop="False"/>
-            </Grid>
-        </Border>
+                                <!-- Camera View -->
+                                <uc:VideoView Grid.Row="1" 
+                                            MediaPlayer="{Binding MediaPlayer}"
+                                            Margin="0"
+                                            AllowDrop="False"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>

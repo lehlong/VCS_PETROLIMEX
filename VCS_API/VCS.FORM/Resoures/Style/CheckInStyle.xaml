@@ -21,7 +21,7 @@
     </Style>
 
     <!-- DataGrid Column Header Style -->
-    <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+    <!--<Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="#2B579A"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
@@ -43,10 +43,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <!-- DataGrid Cell Style -->
-    <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+    <!--<Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Padding" Value="10,0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -64,7 +64,7 @@
                 <Setter Property="Foreground" Value="#2B579A"/>
             </Trigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
 
     <!-- DataGrid Row Style -->
     <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
@@ -420,4 +420,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style x:Key="CenteredTextStyle" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="DodgerBlue"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Height" Value="50"/>
+    </Style>
+
+    <Style x:Key="DataGridCellStyle" TargetType="DataGridCell">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
 </ResourceDictionary>
