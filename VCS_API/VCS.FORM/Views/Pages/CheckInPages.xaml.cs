@@ -20,6 +20,9 @@ using System.Text;
 using VCS.FORM.Utilities;
 using DMS.BUSINESS.Services.Auth;
 using DMS.BUSINESS.Services.SMO;
+using DMS.BUSINESS.Dtos.SMO;
+using Hangfire.Storage;
+using Newtonsoft.Json;
 
 namespace VCS.FORM.Views.Pages
 {
@@ -41,7 +44,7 @@ namespace VCS.FORM.Views.Pages
         {
             InitializeComponent();
             InitializeTimer();
-            LoadData();
+         //   LoadData();
         }
 
         private void InitializeTimer()
@@ -171,7 +174,39 @@ namespace VCS.FORM.Views.Pages
             }
             string apiUrl = $"https://smoapiuat.petrolimex.com.vn/api/PO/GetDO?doNumber={doNumber}";
             string data = await dataService.GetData(apiUrl, token);
-            MessageBox.Show(data);
+            // Deserialize dữ liệu từ JSON
+            var dataResponse = JsonConvert.DeserializeObject<DOSAPDataDto>(data);
+
+            // Kiểm tra trạng thái
+            if (dataResponse.STATUS && dataResponse.DATA != null)
+            {
+                var vehicleId = dataResponse.DATA.VEHICLE;
+                var listDO = dataResponse.DATA.LIST_DO;
+
+                // Làm phẳng danh sách như trước
+                var flattenedOrders = new List<dynamic>();
+                foreach (var doItem in listDO)
+                {
+                    foreach (var material in doItem.LIST_MATERIAL)
+                    {
+                        flattenedOrders.Add(new
+                        {
+                            Vehicle = vehicleId,
+                            DO_Number = doItem.DO_NUMBER,
+                          //  Source = doItem.NGUON_HANG,
+                            Material = material.MATERIAL,
+                            Quantity = material.QUANTITY + " " + material.UNIT
+                        });
+                    }
+                }
+
+                // Gán dữ liệu cho DataGrid
+                OrderList.ItemsSource = flattenedOrders;
+            }
+            else
+            {
+                MessageBox.Show("Không có dữ liệu để hiển thị!");
+            }
         }
        
 
@@ -305,22 +340,22 @@ namespace VCS.FORM.Views.Pages
             }
         }
 
-        private void LoadData()
-        {
-            // Giả lập dữ liệu mẫu
-            allItems = Enumerable.Range(1, 50).Select(i => new OrderListItem
-            {
-                Index = i,
-                OrderNumber = $"DO00{1000 + i}",
-                Time = DateTime.Now.AddMinutes(-i).ToString("dd/MM/yyyy HH:mm:ss"),
-                LicensePlate = $"37C-{i:D5}",
-                Driver = $"Tài xế {i}",
-                OrderInfo = $"Xi măng PCB40 - {20 + i} tấn",
-                Status = i % 3 == 0 ? "Đã duyệt" : (i % 3 == 1 ? "Chờ duyệt" : "Từ chối")
-            }).ToList();
+        //private void LoadData()
+        //{
+        //    // Giả lập dữ liệu mẫu
+        //    allItems = Enumerable.Range(1, 50).Select(i => new OrderListItem
+        //    {
+        //        Index = i,
+        //        OrderNumber = $"DO00{1000 + i}",
+        //        Time = DateTime.Now.AddMinutes(-i).ToString("dd/MM/yyyy HH:mm:ss"),
+        //        LicensePlate = $"37C-{i:D5}",
+        //        Driver = $"Tài xế {i}",
+        //        OrderInfo = $"Xi măng PCB40 - {20 + i} tấn",
+        //        Status = i % 3 == 0 ? "Đã duyệt" : (i % 3 == 1 ? "Chờ duyệt" : "Từ chối")
+        //    }).ToList();
 
-            UpdatePageDisplay();
-        }
+        //    UpdatePageDisplay();
+        //}
 
         private void UpdatePageDisplay()
         {
