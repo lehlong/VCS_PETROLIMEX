@@ -193,9 +193,16 @@ namespace VCS.APP.Areas.CheckIn
                 }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
+                if (string.IsNullOrEmpty(token))
+                {
+                    MessageBox.Show($"Không thể kết nối đến hệ thống SMO!", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+
+
+
                 MessageBox.Show(token);
-                //var dataService = new DOSAPService();
-                //var data = dataService.GetData(Global.SmoApiUrl + number, token.Result.ToString());
             }
             catch (Exception ex) {
                 MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
