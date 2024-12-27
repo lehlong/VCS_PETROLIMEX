@@ -28,19 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
+            this.cameraPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.SuspendLayout();
+            
+            // cameraPanel
+            this.cameraPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraPanel.AutoScroll = true;
+            this.cameraPanel.Padding = new System.Windows.Forms.Padding(10);
+            
             // Home
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "Home";
-            Text = "Home";
-            Load += Home_Load;
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1024, 768);
+            this.Controls.Add(this.cameraPanel);
+            this.Name = "Home";
+            this.Text = "Camera Monitoring";
+            this.Load += new System.EventHandler(this.Home_Load);
+            this.ResumeLayout(false);
         }
 
         #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel cameraPanel;
     }
 }
