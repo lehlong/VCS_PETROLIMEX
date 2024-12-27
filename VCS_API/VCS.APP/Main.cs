@@ -49,7 +49,20 @@ namespace VCS.APP
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", 
+                "Xác nhận đăng xuất", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                // Đóng form hiện tại
+                this.Hide();
+
+                // Tạo và hiển thị form đăng nhập mới
+                var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
+                loginForm.Show();
+            }
         }
 
         private void OpenChildForm(Form childForm)
