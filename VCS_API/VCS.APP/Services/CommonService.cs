@@ -7,16 +7,15 @@ using System.Drawing;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using VCS.APP.Utilities;
+using System.Net.Http;
+using DMS.BUSINESS.Dtos.SMO;
+using System.Text.Json;
 
 namespace VCS.APP.Services
 {
     public class CommonService
     {
         private static readonly HttpClient _client = new HttpClient();
-
-        /// <summary>
-        /// Chụp ảnh từ camera stream
-        /// </summary>
         public static async Task<(string? filePath, Image? image)> TakeSnapshot(LibVLCSharp.Shared.MediaPlayer player)
         {
             try
@@ -66,10 +65,6 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi chụp ảnh: {ex.Message}");
             }
         }
-
-        /// <summary>
-        /// Nhận diện biển số xe từ ảnh
-        /// </summary>
         public static async Task<(string? licensePlate, Image? croppedImage, string? imagePath)> DetectLicensePlateAsync(string imagePath)
         {
             try
@@ -113,10 +108,6 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi nhận diện biển số: {ex.Message}");
             }
         }
-
-        /// <summary>
-        /// Lưu ảnh biển số đã được cắt
-        /// </summary>
         private static string SaveDetectedImage(byte[] imageBytes)
         {
             try
@@ -139,10 +130,6 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi lưu ảnh: {ex.Message}");
             }
         }
-
-        /// <summary>
-        /// Dọn dẹp tài nguyên camera
-        /// </summary>
         public static void CleanupCameraResources(Dictionary<string, LibVLCSharp.Shared.MediaPlayer> mediaPlayers, LibVLCSharp.Shared.LibVLC? libVLC)
         {
             try
@@ -160,5 +147,46 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi dọn dẹp tài nguyên: {ex.Message}");
             }
         }
+
+        public string LoginSmoApi()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var request = new HttpRequestMessage(HttpMethod.Get, $"https://smoapiuat.petrolimex.com.vn/api/Authorize/Login?username={Global.SmoApiUsername}&password={Global.SmoApiPassword}");
+                    HttpResponseMessage response = client.Send(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = response.Content.ReadAsStringAsync().Result;
+                        var data = JsonSerializer.Deserialize<ResponseLoginSmoApi>(responseContent);
+                        if (string.IsNullOrEmpty(data.DATA))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return data.DATA;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+    }
+
+    public class ResponseLoginSmoApi
+    {
+        public bool STATUS { get; set; }
+        public int CODE { get; set; }
+        public string DATA { get; set; }
+        public string? MESSAGE { get; set; }
     }
 }

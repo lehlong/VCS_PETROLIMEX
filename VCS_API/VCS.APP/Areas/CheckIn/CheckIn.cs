@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using VCS.APP.Utilities;
 using MediaPlayer = LibVLCSharp.Shared.MediaPlayer;
 using VCS.APP.Services;
+using DMS.BUSINESS.Services.SMO;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -182,11 +183,25 @@ namespace VCS.APP.Areas.CheckIn
 
         private void btnCheckNumber_Click(object sender, EventArgs e)
         {
-            var number = txtNumber.Text.Trim();
-            if (string.IsNullOrEmpty(number))
+            try
             {
-                MessageBox.Show($"Vui lòng nhập số lệnh xuất!","Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                var number = txtNumber.Text.Trim();
+                if (string.IsNullOrEmpty(number))
+                {
+                    MessageBox.Show($"Vui lòng nhập số lệnh xuất!", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                var _s = new CommonService();
+                var token = _s.LoginSmoApi();
+                MessageBox.Show(token);
+                //var dataService = new DOSAPService();
+                //var data = dataService.GetData(Global.SmoApiUrl + number, token.Result.ToString());
             }
+            catch (Exception ex) {
+                MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
+                        "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
     }
 }
