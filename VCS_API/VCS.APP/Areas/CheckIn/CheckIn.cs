@@ -15,7 +15,7 @@ namespace VCS.APP.Areas.CheckIn
     {
         private readonly AppDbContext _dbContext;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
-         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
+        private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         private LibVLCSharp.Shared.LibVLC? _libVLC;
 
         public CheckIn(AppDbContext dbContext)
@@ -66,23 +66,26 @@ namespace VCS.APP.Areas.CheckIn
             {
                 btnDetect.Enabled = false;
                 var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
-                
+
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     pictureBoxVehicle.Image = snapshotImage;
-                    
+
                     var (licensePlate, croppedImage, savedImagePath) = await CommonService.DetectLicensePlateAsync(filePath);
-                    
+
                     if (!string.IsNullOrEmpty(licensePlate))
                     {
                         txtLicensePlate.Text = licensePlate;
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
+                txtStatus.Text = "Nhận diện thành công";
+                txtStatus.ForeColor = Color.Green;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtStatus.Text = "Lỗi không nhận diện được biển số";
+                txtStatus.ForeColor = Color.Red;
             }
             finally
             {
@@ -131,7 +134,7 @@ namespace VCS.APP.Areas.CheckIn
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi khởi tạo camera {camera.Code}: {ex.Message}", 
+                    MessageBox.Show($"Lỗi khi khởi tạo camera {camera.Code}: {ex.Message}",
                         "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -150,11 +153,40 @@ namespace VCS.APP.Areas.CheckIn
                 player.Dispose();
             }
             _mediaPlayers.Clear();
-            
+
             _libVLC?.Dispose();
             _libVLC = null;
-            
+
             videoView.MediaPlayer = null;
+        }
+
+        private void lblCameraTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void infoPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void CheckIn_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCheckNumber_Click(object sender, EventArgs e)
+        {
+            var number = txtNumber.Text.Trim();
+            if (string.IsNullOrEmpty(number))
+            {
+                MessageBox.Show($"Vui lòng nhập số lệnh xuất!","Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

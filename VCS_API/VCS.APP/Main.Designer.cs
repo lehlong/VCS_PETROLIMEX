@@ -1,4 +1,6 @@
-﻿namespace VCS.APP
+﻿using VCS.APP.Utilities;
+
+namespace VCS.APP
 {
     partial class Main
     {
@@ -59,6 +61,7 @@
             panelMenu.Controls.Add(btnHome);
             panelMenu.Controls.Add(panelLogo);
             panelMenu.Dock = DockStyle.Left;
+            panelMenu.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelMenu.Location = new Point(0, 0);
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(200, 900);
@@ -81,14 +84,14 @@
             btnLogOut.Dock = DockStyle.Top;
             btnLogOut.FlatAppearance.BorderSize = 0;
             btnLogOut.FlatStyle = FlatStyle.Flat;
-            btnLogOut.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLogOut.ForeColor = Color.White;
             btnLogOut.Image = Properties.Resources.padlock_menu;
             btnLogOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogOut.Location = new Point(0, 164);
+            btnLogOut.Location = new Point(0, 210);
             btnLogOut.Name = "btnLogOut";
             btnLogOut.Padding = new Padding(12, 0, 0, 0);
-            btnLogOut.Size = new Size(200, 40);
+            btnLogOut.Size = new Size(200, 50);
             btnLogOut.TabIndex = 4;
             btnLogOut.Text = "Đăng xuất";
             btnLogOut.TextAlign = ContentAlignment.MiddleLeft;
@@ -102,14 +105,14 @@
             btnCheckOut.Dock = DockStyle.Top;
             btnCheckOut.FlatAppearance.BorderSize = 0;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
-            btnCheckOut.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckOut.ForeColor = Color.White;
             btnCheckOut.Image = Properties.Resources.log_out;
             btnCheckOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckOut.Location = new Point(0, 124);
+            btnCheckOut.Location = new Point(0, 160);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.Padding = new Padding(12, 0, 0, 0);
-            btnCheckOut.Size = new Size(200, 40);
+            btnCheckOut.Size = new Size(200, 50);
             btnCheckOut.TabIndex = 3;
             btnCheckOut.Text = "Quản lý cổng ra";
             btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
@@ -123,14 +126,14 @@
             btnCheckIn.Dock = DockStyle.Top;
             btnCheckIn.FlatAppearance.BorderSize = 0;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
-            btnCheckIn.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckIn.ForeColor = Color.White;
             btnCheckIn.Image = Properties.Resources.log_in;
             btnCheckIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckIn.Location = new Point(0, 84);
+            btnCheckIn.Location = new Point(0, 110);
             btnCheckIn.Name = "btnCheckIn";
             btnCheckIn.Padding = new Padding(12, 0, 0, 0);
-            btnCheckIn.Size = new Size(200, 40);
+            btnCheckIn.Size = new Size(200, 50);
             btnCheckIn.TabIndex = 2;
             btnCheckIn.Text = "Quản lý cổng vào";
             btnCheckIn.TextAlign = ContentAlignment.MiddleLeft;
@@ -144,14 +147,14 @@
             btnHome.Dock = DockStyle.Top;
             btnHome.FlatAppearance.BorderSize = 0;
             btnHome.FlatStyle = FlatStyle.Flat;
-            btnHome.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnHome.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnHome.ForeColor = Color.White;
             btnHome.Image = Properties.Resources.home_icon2;
             btnHome.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHome.Location = new Point(0, 44);
+            btnHome.Location = new Point(0, 60);
             btnHome.Name = "btnHome";
             btnHome.Padding = new Padding(12, 0, 0, 0);
-            btnHome.Size = new Size(200, 40);
+            btnHome.Size = new Size(200, 50);
             btnHome.TabIndex = 1;
             btnHome.Text = "Trang chủ";
             btnHome.TextAlign = ContentAlignment.MiddleLeft;
@@ -163,19 +166,20 @@
             // 
             panelLogo.Controls.Add(logoText);
             panelLogo.Dock = DockStyle.Top;
+            panelLogo.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelLogo.Location = new Point(0, 0);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(200, 44);
+            panelLogo.Size = new Size(200, 60);
             panelLogo.TabIndex = 0;
             // 
             // logoText
             // 
             logoText.AutoSize = true;
-            logoText.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            logoText.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             logoText.ForeColor = Color.White;
-            logoText.Location = new Point(17, 12);
+            logoText.Location = new Point(19, 14);
             logoText.Name = "logoText";
-            logoText.Size = new Size(40, 21);
+            logoText.Size = new Size(52, 30);
             logoText.TabIndex = 0;
             logoText.Text = "VSC";
             // 
@@ -184,6 +188,7 @@
             panelMain.BackgroundImageLayout = ImageLayout.None;
             panelMain.Controls.Add(panelTitle);
             panelMain.Dock = DockStyle.Fill;
+            panelMain.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelMain.Location = new Point(200, 0);
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1400, 900);
@@ -197,9 +202,10 @@
             panelTitle.Controls.Add(label1);
             panelTitle.Controls.Add(labelTitle);
             panelTitle.Dock = DockStyle.Top;
+            panelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelTitle.Location = new Point(0, 0);
             panelTitle.Name = "panelTitle";
-            panelTitle.Size = new Size(1400, 44);
+            panelTitle.Size = new Size(1400, 60);
             panelTitle.TabIndex = 0;
             panelTitle.Paint += panelTitle_Paint;
             // 
@@ -217,7 +223,7 @@
             btnUser.Location = new Point(1222, 0);
             btnUser.Name = "btnUser";
             btnUser.Padding = new Padding(0, 0, 12, 0);
-            btnUser.Size = new Size(178, 44);
+            btnUser.Size = new Size(178, 60);
             btnUser.TabIndex = 3;
             btnUser.Text = "Người dùng";
             btnUser.TextAlign = ContentAlignment.MiddleRight;
@@ -227,19 +233,19 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(25, 14);
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(25, 20);
             label1.Name = "label1";
-            label1.Size = new Size(171, 15);
+            label1.Size = new Size(231, 21);
             label1.TabIndex = 2;
             label1.Text = "HỆ THỐNG XẾP TÀI TỰ ĐỘNG";
             // 
             // labelTitle
             // 
             labelTitle.AutoSize = true;
-            labelTitle.Location = new Point(196, 13);
+            labelTitle.Location = new Point(251, 19);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(67, 15);
+            labelTitle.Size = new Size(88, 21);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "/ Trang chủ";
             labelTitle.Click += labelTitle_Click;

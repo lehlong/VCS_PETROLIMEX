@@ -1,5 +1,6 @@
 ﻿using DMS.BUSINESS.Services.Auth;
 using DMS.CORE;
+using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.Login
 {
@@ -41,9 +42,10 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.petrolimex;
-            pictureBox1.Location = new Point(270, 118);
+            pictureBox1.Location = new Point(347, 165);
+            pictureBox1.Margin = new Padding(4, 4, 4, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(279, 55);
+            pictureBox1.Size = new Size(359, 77);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -51,16 +53,18 @@ namespace VCS.APP.Areas.Login
             // 
             // username
             // 
-            username.Location = new Point(295, 198);
+            username.Location = new Point(379, 277);
+            username.Margin = new Padding(4, 4, 4, 4);
             username.Name = "username";
-            username.Size = new Size(254, 23);
+            username.Size = new Size(325, 29);
             username.TabIndex = 1;
             // 
             // password
             // 
-            password.Location = new Point(295, 237);
+            password.Location = new Point(379, 332);
+            password.Margin = new Padding(4, 4, 4, 4);
             password.Name = "password";
-            password.Size = new Size(254, 23);
+            password.Size = new Size(325, 29);
             password.TabIndex = 2;
             password.UseSystemPasswordChar = true;
             // 
@@ -70,9 +74,10 @@ namespace VCS.APP.Areas.Login
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(270, 277);
+            btnLogin.Location = new Point(347, 388);
+            btnLogin.Margin = new Padding(4, 4, 4, 4);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(279, 29);
+            btnLogin.Size = new Size(359, 41);
             btnLogin.TabIndex = 3;
             btnLogin.Text = "Đăng nhập";
             btnLogin.UseVisualStyleBackColor = false;
@@ -81,9 +86,10 @@ namespace VCS.APP.Areas.Login
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.user;
-            pictureBox2.Location = new Point(269, 198);
+            pictureBox2.Location = new Point(346, 277);
+            pictureBox2.Margin = new Padding(4, 4, 4, 4);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(20, 20);
+            pictureBox2.Size = new Size(26, 28);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
@@ -91,9 +97,10 @@ namespace VCS.APP.Areas.Login
             // pictureBox3
             // 
             pictureBox3.Image = Properties.Resources.padlock;
-            pictureBox3.Location = new Point(270, 237);
+            pictureBox3.Location = new Point(347, 332);
+            pictureBox3.Margin = new Padding(4, 4, 4, 4);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(20, 20);
+            pictureBox3.Size = new Size(26, 28);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
@@ -102,9 +109,10 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox4.Cursor = Cursors.Hand;
             pictureBox4.Image = Properties.Resources.close;
-            pictureBox4.Location = new Point(768, 12);
+            pictureBox4.Location = new Point(987, 17);
+            pictureBox4.Margin = new Padding(4, 4, 4, 4);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(16, 16);
+            pictureBox4.Size = new Size(21, 22);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 6;
             pictureBox4.TabStop = false;
@@ -113,21 +121,22 @@ namespace VCS.APP.Areas.Login
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(313, 426);
+            label1.Location = new Point(402, 596);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(210, 15);
+            label1.Size = new Size(279, 21);
             label1.TabIndex = 7;
             label1.Text = "Design by Dynamic Software Solutions";
             label1.Click += label1_Click;
             // 
             // Login
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BackgroundImage = Properties.Resources.bg_auth;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1029, 630);
             Controls.Add(label1);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
@@ -137,7 +146,9 @@ namespace VCS.APP.Areas.Login
             Controls.Add(username);
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
+            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 4, 4, 4);
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
