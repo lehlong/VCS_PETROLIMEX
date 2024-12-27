@@ -23,6 +23,7 @@ using DMS.BUSINESS.Services.SMO;
 using DMS.BUSINESS.Dtos.SMO;
 using Hangfire.Storage;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace VCS.FORM.Views.Pages
 {
@@ -106,15 +107,35 @@ namespace VCS.FORM.Views.Pages
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             StopAndDisposeMediaPlayers();
-            timer?.Stop();
         }
 
         private void StopAndDisposeMediaPlayers()
         {
-            player?.Stop();
-            player?.Dispose();
-            media?.Dispose();
-            libVLC?.Dispose();
+            try
+            {
+                if (player != null)
+                {
+                    player.Stop();
+                    player.Dispose();
+                    player = null;
+                }
+
+                if (media != null)
+                {
+                    media.Dispose();
+                    media = null;
+                }
+
+                if (libVLC != null)
+                {
+                    libVLC.Dispose();
+                    libVLC = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error during cleanup: {ex.Message}");
+            }
         }
 
         private void LicensePlate_TextChanged(object sender, TextChangedEventArgs e)
@@ -395,6 +416,36 @@ namespace VCS.FORM.Views.Pages
                 itemsPerPage = int.Parse(selectedItem.Content.ToString());
                 currentPage = 1;
                 UpdatePageDisplay();
+            }
+        }
+
+        private async void DetectLicensePlate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadingOverlay.Visibility = Visibility.Visible;
+                
+                var (imagePath, snapshotImage) = await TakeSnapshot();
+                if (!string.IsNullOrEmpty(imagePath) && snapshotImage != null)
+                {
+                    VehicleImage.Source = snapshotImage;
+
+                    var (licensePlate, croppedImage) = await DetectLicensePlateAsync(imagePath);
+                    
+                    if (!string.IsNullOrEmpty(licensePlate) && croppedImage != null)
+                    {
+                        LicensePlate.Text = licensePlate;
+                        LicensePlateImage.Source = croppedImage;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi nhận diện biển số: {ex.Message}", "Lỗi");
+            }
+            finally
+            {
+                LoadingOverlay.Visibility = Visibility.Collapsed;
             }
         }
     }
