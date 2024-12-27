@@ -98,11 +98,12 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
-                btnReset.Enabled = false;
+                btnReset.Enabled = true;
                 CleanupResources();
                 InitializeLibVLC();
                 GetListCameras();
-                MessageBox.Show("Đã khởi tạo lại camera thành công!", "Thông báo");
+                txtStatus.Text = "Reset camera thành công!";
+                txtStatus.ForeColor = Color.Green;
             }
             catch (Exception ex)
             {
