@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.Login
 {
@@ -48,47 +49,44 @@ namespace VCS.APP.Areas.Login
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
-            {
-                MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và mật khẩu!", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             try
             {
-                // Kiểm tra kết nối database
-                bool canConnect = await _dbContext.Database.CanConnectAsync();
-                if (!canConnect)
+                if (!await _dbContext.Database.CanConnectAsync())
                 {
-                    MessageBox.Show("Không thể kết nối đến cơ sở dữ liệu!", "Lỗi kết nối", 
+                    MessageBox.Show("Không thể kết nối đến cơ sở dữ liệu!", "Lỗi kết nối",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và mật khẩu!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                var response = await _authService.Login(new LoginDto
+                var query = new LoginDto
                 {
                     UserName = username.Text.Trim(),
                     Password = password.Text.Trim(),
-                });
+                };
+                var response = await _authService.Login(query);
 
-                if (response != null)
+                if (response == null)
                 {
-                    var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
-                    MessageBox.Show("Đăng nhập thành công!", "Thông báo", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    mainForm.Show();
-                    this.Hide();
+                    MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập",
+                       MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _authService.Status = true;
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                ProfileUtilities.User = _dbContext.TblAdAccount.Find(query.UserName);
+                var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
+                mainForm.Show();
+                this.Hide();
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}", 
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

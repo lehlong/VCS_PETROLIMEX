@@ -37,11 +37,13 @@
             logoText = new Label();
             panelMain = new Panel();
             panelTitle = new Panel();
+            pictureBox1 = new PictureBox();
             labelTitle = new Label();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelMain.SuspendLayout();
             panelTitle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelMenu
@@ -57,6 +59,7 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(200, 450);
             panelMenu.TabIndex = 0;
+            panelMenu.Paint += panelMenu_Paint;
             // 
             // btnLogOut
             // 
@@ -164,6 +167,7 @@
             // 
             // panelMain
             // 
+            panelMain.BackgroundImageLayout = ImageLayout.None;
             panelMain.Controls.Add(panelTitle);
             panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(200, 0);
@@ -173,17 +177,32 @@
             // 
             // panelTitle
             // 
+            panelTitle.BackgroundImageLayout = ImageLayout.None;
+            panelTitle.Controls.Add(pictureBox1);
             panelTitle.Controls.Add(labelTitle);
             panelTitle.Dock = DockStyle.Top;
             panelTitle.Location = new Point(0, 0);
             panelTitle.Name = "panelTitle";
             panelTitle.Size = new Size(600, 44);
             panelTitle.TabIndex = 0;
+            panelTitle.Paint += panelTitle_Paint;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Cursor = Cursors.Hand;
+            pictureBox1.Image = Properties.Resources.close;
+            pictureBox1.Location = new Point(572, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(16, 16);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // labelTitle
             // 
             labelTitle.AutoSize = true;
-            labelTitle.Location = new Point(21, 17);
+            labelTitle.Location = new Point(20, 14);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(73, 15);
             labelTitle.TabIndex = 0;
@@ -207,6 +226,7 @@
             panelMain.ResumeLayout(false);
             panelTitle.ResumeLayout(false);
             panelTitle.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -222,5 +242,6 @@
         private Panel panelMain;
         private Panel panelTitle;
         private Label labelTitle;
+        private PictureBox pictureBox1;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMS.CORE;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,35 +18,35 @@ namespace VCS.APP
     public partial class Main : Form
     {
         private Form activeForm;
-        public Main()
+        private AppDbContext _dbContext;
+        public Main(AppDbContext dbContext)
         {
             InitializeComponent();
+            OpenChildForm(new Home(dbContext));
+            _dbContext = dbContext;
         }
 
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "QUẢN LÝ CỔNG VÀO";
-            OpenChildForm(new CheckIn());
+            OpenChildForm(new CheckIn(_dbContext));
         }
 
         private void btnHome_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "TRANG CHỦ";
-            OpenChildForm(new Home());
+            OpenChildForm(new Home(_dbContext));
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "QUẢN LÝ CỔNG RA";
-            OpenChildForm(new CheckOut());
+            OpenChildForm(new CheckOut(_dbContext));
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            
-            var fLogin = new Login();
-            fLogin.Show();
-            this.Close();
+
         }
 
         private void OpenChildForm(Form childForm)
@@ -62,6 +63,21 @@ namespace VCS.APP
             this.panelMain.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void panelMenu_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void panelTitle_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
