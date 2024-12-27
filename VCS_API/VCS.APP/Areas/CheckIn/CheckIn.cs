@@ -188,22 +188,22 @@ namespace VCS.APP.Areas.CheckIn
                 var number = txtNumber.Text.Trim();
                 if (string.IsNullOrEmpty(number))
                 {
-                    MessageBox.Show($"Vui lòng nhập số lệnh xuất!", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    txtStatus.Text = "Vui lòng nhập số lệnh xuất";
+                    txtStatus.ForeColor = Color.Red;
                 }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
                 if (string.IsNullOrEmpty(token))
                 {
-                    MessageBox.Show($"Không thể kết nối đến hệ thống SMO!", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+                    txtStatus.ForeColor = Color.Red;
                 }
 
                 var dataDetail = _s.GetInformationNumber(number, token);
                 if (!dataDetail.STATUS)
                 {
-                    MessageBox.Show($"Lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại", "Chú ý", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    txtStatus.Text = "Số lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại!";
+                    txtStatus.ForeColor = Color.Red;
                 }
 
             }
@@ -216,6 +216,16 @@ namespace VCS.APP.Areas.CheckIn
         }
 
         private void txtLicensePlate_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStatus_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
