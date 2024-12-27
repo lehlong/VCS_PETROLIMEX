@@ -25,6 +25,20 @@ namespace VCS.APP.Areas.Login
             InitializeComponent();
             _authService = authService;
             _dbContext = dbContext;
+
+            // Đăng ký sự kiện KeyPress cho các TextBox
+            username.KeyPress += TextBox_KeyPress;
+            password.KeyPress += TextBox_KeyPress;
+        }
+
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Kiểm tra nếu phím nhấn là Enter
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true; // Ngăn không cho phát ra tiếng beep
+                btnLogin.PerformClick(); // Kích hoạt sự kiện click của nút đăng nhập
+            }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
