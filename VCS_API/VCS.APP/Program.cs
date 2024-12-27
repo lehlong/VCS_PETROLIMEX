@@ -28,13 +28,13 @@ namespace VCS.APP
         private static void ConfigureServices(ServiceCollection services)
         {
             var configuration = new ConfigurationBuilder()
-               .SetBasePath(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\DMS.API")))
+               .SetBasePath(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\")))
                .AddJsonFile("appsettings.json")
                .Build();
             services.AddSingleton<IConfiguration>(configuration);
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(Global.Connection);
+                options.UseSqlServer(configuration.GetConnectionString("Connection"));
             }, ServiceLifetime.Scoped);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
