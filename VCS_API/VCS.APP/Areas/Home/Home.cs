@@ -35,7 +35,6 @@ namespace VCS.APP.Areas.Home
                 "--rtsp-tcp"
             );
         }
-
         public void GetListCameras()
         {
             try
@@ -43,12 +42,11 @@ namespace VCS.APP.Areas.Home
                 _lstCamera = _dbContext.TblMdCamera
                     .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
                     && x.WarehouseCode == ProfileUtilities.User.WarehouseCode).ToList();
-
                 InitializeCameraStreams();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi", 
+                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -59,17 +57,16 @@ namespace VCS.APP.Areas.Home
             {
                 try
                 {
-                    // Tạo panel cho mỗi camera
                     var cameraContainer = new Panel
                     {
-                        Width = 480,
-                        Height = 320,
-                        Margin = new Padding(5),
+                        Width = 674,
+                        Height = 382,
+                        Margin = new Padding(0, 0, 10, 10),
                         BorderStyle = BorderStyle.FixedSingle
                     };
                     var label = new Label
                     {
-                        Text = camera.Name,
+                        Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO" : $"{camera.Name} - CAMERA CỔNG RA",
                         Dock = DockStyle.Top,
                         Height = 25,
                         TextAlign = ContentAlignment.MiddleCenter
@@ -77,22 +74,20 @@ namespace VCS.APP.Areas.Home
                     cameraContainer.Controls.Add(label);
                     var videoView = new VideoView
                     {
-                        Width = 480,
-                        Height = 295,
-                        Top = 25
+                        Width = 674,
+                        Height = 382,
                     };
 
-                    MessageBox.Show(camera.Rtsp);
                     string rtspUrl = $"{camera.Rtsp}";
                     var media = new Media(_libVLC, rtspUrl, FromType.FromLocation);
                     var player = new MediaPlayer(media);
-                    
+
                     videoView.MediaPlayer = player;
                     _mediaPlayers[camera.Code] = player;
-                    
+
                     cameraContainer.Controls.Add(videoView);
                     cameraPanel.Controls.Add(cameraContainer);
-                    
+
                     player.Play();
                 }
                 catch (Exception ex)
@@ -105,14 +100,13 @@ namespace VCS.APP.Areas.Home
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            // Dọn dẹp resources
             foreach (var player in _mediaPlayers.Values)
             {
                 player.Stop();
                 player.Dispose();
             }
             _mediaPlayers.Clear();
-            
+
             _libVLC?.Dispose();
             base.OnFormClosing(e);
         }

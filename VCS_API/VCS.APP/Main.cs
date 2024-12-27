@@ -1,4 +1,5 @@
 ﻿using DMS.CORE;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
 using VCS.APP.Areas.Home;
 using VCS.APP.Areas.Login;
+using VCS.APP.Utilities;
 
 namespace VCS.APP
 {
@@ -24,23 +26,24 @@ namespace VCS.APP
             InitializeComponent();
             OpenChildForm(new Home(dbContext));
             _dbContext = dbContext;
+            btnUser.Text = ProfileUtilities.User.FullName;
         }
 
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
-            labelTitle.Text = "QUẢN LÝ CỔNG VÀO";
+            labelTitle.Text = "/ Quản lý cổng vào";
             OpenChildForm(new CheckIn(_dbContext));
         }
 
         private void btnHome_Click(object sender, EventArgs e)
         {
-            labelTitle.Text = "TRANG CHỦ";
+            labelTitle.Text = "/ Trang chủ";
             OpenChildForm(new Home(_dbContext));
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            labelTitle.Text = "QUẢN LÝ CỔNG RA";
+            labelTitle.Text = "/ Quản lý cổng ra";
             OpenChildForm(new CheckOut(_dbContext));
         }
 
@@ -72,10 +75,15 @@ namespace VCS.APP
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void panelTitle_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void labelTitle_Click(object sender, EventArgs e)
         {
 
         }

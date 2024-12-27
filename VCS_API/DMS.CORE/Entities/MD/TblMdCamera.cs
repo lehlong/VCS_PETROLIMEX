@@ -37,13 +37,13 @@ namespace DMS.CORE.Entities.MD
         public string? Stream { get; set; }
 
         [Column("IS_IN")]
-        public bool? IsIn { get; set; }
+        public bool IsIn { get; set; }
 
         [Column("IS_OUT")]
-        public bool? IsOut { get; set; }
+        public bool IsOut { get; set; }
 
         [Column("IS_RECOGNITION")]
-        public bool? IsRecognition { get; set; }
+        public bool IsRecognition { get; set; }
 
     }
 }
