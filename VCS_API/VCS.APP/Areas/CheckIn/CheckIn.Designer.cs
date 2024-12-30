@@ -30,6 +30,7 @@
         {
             mainPanel = new Panel();
             panel1 = new Panel();
+            panel1.AutoScroll = true;
             panel3 = new Panel();
             txtNumber = new TextBox();
             btnCheckNumber = new Button();

@@ -234,36 +234,62 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
+                int yPosition = 217;
+                if (_lstDOSAP.Count > 1)
+                {
+                    var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
+                    if (existingGrids.Any())
+                    {
+                        var lastGrid = existingGrids.Last();
+                        yPosition = lastGrid.Bottom + 1; // Giảm khoảng cách xuống 1px
+                    }
+                }
                 var dataGridView1 = new DataGridView();
                 dataGridView1.BackgroundColor = Color.White;
                 dataGridView1.BorderStyle = BorderStyle.None;
                 dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-                dataGridView1.Location = new Point(18, 217);
-                dataGridView1.Name = "dataGridView1";
-                dataGridView1.Size = new Size(809, 150);
+                dataGridView1.Location = new Point(18, yPosition);
+                dataGridView1.Name = $"dataGridView_{_lstDOSAP.Count}";
+                dataGridView1.Size = new Size(809, 80);
                 dataGridView1.TabIndex = 14;
                 dataGridView1.ReadOnly = true;
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridView1.ColumnHeadersHeight = 30;
                 dataGridView1.AllowUserToAddRows = false;
+                dataGridView1.RowTemplate.Height = 25;
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add("Số lệnh xuất", typeof(string));
                 dataTable.Columns.Add("Phương tiện", typeof(string));
                 dataTable.Columns.Add("Mặt hàng", typeof(string));
                 dataTable.Columns.Add("Số lượng (ĐVT)", typeof(string));
-                if(data.DATA.LIST_DO.FirstOrDefault() != null)
+
+                if (data.DATA.LIST_DO.FirstOrDefault() != null)
                 {
                     foreach (var i in data.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
                     {
                         var materials = _dbContext.TblMdGoods.Find(i.MATERIAL);
-                        dataTable.Rows.Add(data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER, data.DATA.VEHICLE, materials?.Name, $"{i.QUANTITY} ({i.UNIT})");
+                        dataTable.Rows.Add(
+                            data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER,
+                            data.DATA.VEHICLE,
+                            materials?.Name,
+                            $"{i.QUANTITY} ({i.UNIT})"
+                        );
                     }
                 }
+
                 dataGridView1.DataSource = dataTable;
+
+                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                {
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+
                 panel1.Controls.Add(dataGridView1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
+                MessageBox.Show($"Vui lòng liên hệ đến quản trị viên hệ thống: {ex.Message}",
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
