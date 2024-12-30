@@ -49,9 +49,9 @@ namespace VCS.APP
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", 
-                "Xác nhận đăng xuất", 
-                MessageBoxButtons.YesNo, 
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
+                "Xác nhận đăng xuất",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
@@ -97,6 +97,11 @@ namespace VCS.APP
         }
 
         private void labelTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -42,10 +42,10 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.petrolimex;
-            pictureBox1.Location = new Point(347, 165);
-            pictureBox1.Margin = new Padding(4, 4, 4, 4);
+            pictureBox1.Location = new Point(347, 172);
+            pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(359, 77);
+            pictureBox1.Size = new Size(359, 70);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -54,7 +54,7 @@ namespace VCS.APP.Areas.Login
             // username
             // 
             username.Location = new Point(379, 277);
-            username.Margin = new Padding(4, 4, 4, 4);
+            username.Margin = new Padding(4);
             username.Name = "username";
             username.Size = new Size(325, 29);
             username.TabIndex = 1;
@@ -62,7 +62,7 @@ namespace VCS.APP.Areas.Login
             // password
             // 
             password.Location = new Point(379, 332);
-            password.Margin = new Padding(4, 4, 4, 4);
+            password.Margin = new Padding(4);
             password.Name = "password";
             password.Size = new Size(325, 29);
             password.TabIndex = 2;
@@ -75,7 +75,7 @@ namespace VCS.APP.Areas.Login
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
             btnLogin.Location = new Point(347, 388);
-            btnLogin.Margin = new Padding(4, 4, 4, 4);
+            btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(359, 41);
             btnLogin.TabIndex = 3;
@@ -87,9 +87,9 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox2.Image = Properties.Resources.user;
             pictureBox2.Location = new Point(346, 277);
-            pictureBox2.Margin = new Padding(4, 4, 4, 4);
+            pictureBox2.Margin = new Padding(4);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(26, 28);
+            pictureBox2.Size = new Size(26, 26);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
@@ -97,10 +97,10 @@ namespace VCS.APP.Areas.Login
             // pictureBox3
             // 
             pictureBox3.Image = Properties.Resources.padlock;
-            pictureBox3.Location = new Point(347, 332);
-            pictureBox3.Margin = new Padding(4, 4, 4, 4);
+            pictureBox3.Location = new Point(345, 332);
+            pictureBox3.Margin = new Padding(4);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(26, 28);
+            pictureBox3.Size = new Size(28, 26);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
@@ -110,7 +110,7 @@ namespace VCS.APP.Areas.Login
             pictureBox4.Cursor = Cursors.Hand;
             pictureBox4.Image = Properties.Resources.close;
             pictureBox4.Location = new Point(987, 17);
-            pictureBox4.Margin = new Padding(4, 4, 4, 4);
+            pictureBox4.Margin = new Padding(4);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(21, 22);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -148,7 +148,7 @@ namespace VCS.APP.Areas.Login
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";

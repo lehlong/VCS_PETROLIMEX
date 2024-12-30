@@ -9,6 +9,8 @@ using VCS.APP.Utilities;
 using MediaPlayer = LibVLCSharp.Shared.MediaPlayer;
 using VCS.APP.Services;
 using DMS.BUSINESS.Services.SMO;
+using DMS.BUSINESS.Dtos.SMO;
+using System.Data;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -18,6 +20,7 @@ namespace VCS.APP.Areas.CheckIn
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         private LibVLCSharp.Shared.LibVLC? _libVLC;
+        private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
 
         public CheckIn(AppDbContext dbContext)
         {
@@ -209,15 +212,15 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
-                
-                var panelInfo = new Panel();
-                panelInfo.BackColor = SystemColors.Control;
-                panelInfo.Location = new Point(18, 222);
-                panelInfo.Name = "panelInfo";
-                panelInfo.Size = new Size(809, 44);
-                panelInfo.TabIndex = 14;
-                panel1.Controls.Add(panelInfo);
 
+                txtStatus.Text = "Kiểm tra lệnh xuất thành công!";
+                txtStatus.ForeColor = Color.Green;
+
+                _lstDOSAP.Add(dataDetail);
+
+
+
+                AppendPanelDetail(dataDetail);
             }
             catch (Exception ex)
             {
@@ -225,6 +228,43 @@ namespace VCS.APP.Areas.CheckIn
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void AppendPanelDetail(DOSAPDataDto data)
+        {
+            try
+            {
+                var dataGridView1 = new DataGridView();
+                dataGridView1.BackgroundColor = Color.White;
+                dataGridView1.BorderStyle = BorderStyle.None;
+                dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+                dataGridView1.Location = new Point(18, 217);
+                dataGridView1.Name = "dataGridView1";
+                dataGridView1.Size = new Size(809, 150);
+                dataGridView1.TabIndex = 14;
+                dataGridView1.ReadOnly = true;
+
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("Số lệnh xuất", typeof(string));
+                dataTable.Columns.Add("Phương tiện", typeof(string));
+                dataTable.Columns.Add("Mặt hàng", typeof(string));
+                dataTable.Columns.Add("Số lượng (ĐVT)", typeof(string));
+                if(data.DATA.LIST_DO.FirstOrDefault() != null)
+                {
+                    foreach (var i in data.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                    {
+                        var materials = _dbContext.TblMdGoods.Find(i.MATERIAL);
+                        dataTable.Rows.Add(data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER, data.DATA.VEHICLE, materials?.Name, $"{i.QUANTITY} ({i.UNIT})");
+                    }
+                }
+                dataGridView1.DataSource = dataTable;
+                panel1.Controls.Add(dataGridView1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
+                        "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtLicensePlate_TextChanged(object sender, EventArgs e)
@@ -238,6 +278,11 @@ namespace VCS.APP.Areas.CheckIn
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -53,6 +53,7 @@ namespace VCS.APP
             // 
             // panelMenu
             // 
+            panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.FromArgb(66, 66, 66);
             panelMenu.Controls.Add(pictureBox2);
             panelMenu.Controls.Add(btnLogOut);
@@ -193,6 +194,7 @@ namespace VCS.APP
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1400, 900);
             panelMain.TabIndex = 1;
+            panelMain.Paint += panelMain_Paint;
             // 
             // panelTitle
             // 

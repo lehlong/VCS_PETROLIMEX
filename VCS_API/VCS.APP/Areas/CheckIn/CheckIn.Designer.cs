@@ -30,10 +30,11 @@
         {
             mainPanel = new Panel();
             panel1 = new Panel();
+            panel3 = new Panel();
+            txtNumber = new TextBox();
+            btnCheckNumber = new Button();
             panel2 = new Panel();
             txtStatus = new Label();
-            btnCheckNumber = new Button();
-            txtNumber = new TextBox();
             label3 = new Label();
             label4 = new Label();
             button1 = new Button();
@@ -48,16 +49,15 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
-            panel3 = new Panel();
             mainPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
             panel2.SuspendLayout();
             cameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView).BeginInit();
             infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
-            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // mainPanel
@@ -86,25 +86,26 @@
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
-            // panel2
+            // panel3
             // 
-            panel2.BackColor = SystemColors.Control;
-            panel2.Controls.Add(txtStatus);
-            panel2.Location = new Point(18, 76);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(809, 40);
-            panel2.TabIndex = 12;
-            panel2.Paint += panel2_Paint;
+            panel3.BackColor = Color.WhiteSmoke;
+            panel3.Controls.Add(txtNumber);
+            panel3.Controls.Add(btnCheckNumber);
+            panel3.Location = new Point(18, 150);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(809, 40);
+            panel3.TabIndex = 13;
             // 
-            // txtStatus
+            // txtNumber
             // 
-            txtStatus.AutoSize = true;
-            txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtStatus.Location = new Point(10, 8);
-            txtStatus.Name = "txtStatus";
-            txtStatus.Size = new Size(84, 21);
-            txtStatus.TabIndex = 0;
-            txtStatus.Text = "Thông báo";
+            txtNumber.BackColor = Color.WhiteSmoke;
+            txtNumber.BorderStyle = BorderStyle.None;
+            txtNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNumber.Location = new Point(12, 10);
+            txtNumber.Name = "txtNumber";
+            txtNumber.Size = new Size(695, 22);
+            txtNumber.TabIndex = 10;
+            txtNumber.TextChanged += textBox1_TextChanged;
             // 
             // btnCheckNumber
             // 
@@ -121,16 +122,26 @@
             btnCheckNumber.UseVisualStyleBackColor = false;
             btnCheckNumber.Click += btnCheckNumber_Click;
             // 
-            // txtNumber
+            // panel2
             // 
-            txtNumber.BackColor = SystemColors.Control;
-            txtNumber.BorderStyle = BorderStyle.None;
-            txtNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumber.Location = new Point(12, 10);
-            txtNumber.Name = "txtNumber";
-            txtNumber.Size = new Size(695, 22);
-            txtNumber.TabIndex = 10;
-            txtNumber.TextChanged += textBox1_TextChanged;
+            panel2.BackColor = Color.WhiteSmoke;
+            panel2.Controls.Add(txtStatus);
+            panel2.Location = new Point(18, 76);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(809, 40);
+            panel2.TabIndex = 12;
+            panel2.Paint += panel2_Paint;
+            // 
+            // txtStatus
+            // 
+            txtStatus.AutoSize = true;
+            txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtStatus.ForeColor = Color.WhiteSmoke;
+            txtStatus.Location = new Point(10, 8);
+            txtStatus.Name = "txtStatus";
+            txtStatus.Size = new Size(84, 21);
+            txtStatus.TabIndex = 0;
+            txtStatus.Text = "Thông báo";
             // 
             // label3
             // 
@@ -205,7 +216,7 @@
             // 
             // txtLicensePlate
             // 
-            txtLicensePlate.BackColor = SystemColors.Control;
+            txtLicensePlate.BackColor = Color.WhiteSmoke;
             txtLicensePlate.BorderStyle = BorderStyle.None;
             txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtLicensePlate.Location = new Point(10, 87);
@@ -245,7 +256,7 @@
             // 
             // pictureBoxVehicle
             // 
-            pictureBoxVehicle.BackColor = SystemColors.Control;
+            pictureBoxVehicle.BackColor = Color.WhiteSmoke;
             pictureBoxVehicle.Location = new Point(10, 170);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
             pictureBoxVehicle.Size = new Size(247, 219);
@@ -255,7 +266,7 @@
             // 
             // pictureBoxLicensePlate
             // 
-            pictureBoxLicensePlate.BackColor = SystemColors.Control;
+            pictureBoxLicensePlate.BackColor = Color.WhiteSmoke;
             pictureBoxLicensePlate.Location = new Point(263, 170);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
             pictureBoxLicensePlate.Size = new Size(244, 219);
@@ -293,16 +304,6 @@
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
             // 
-            // panel3
-            // 
-            panel3.BackColor = SystemColors.Control;
-            panel3.Controls.Add(txtNumber);
-            panel3.Controls.Add(btnCheckNumber);
-            panel3.Location = new Point(18, 150);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(809, 40);
-            panel3.TabIndex = 13;
-            // 
             // CheckIn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -316,6 +317,8 @@
             mainPanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             cameraPanel.ResumeLayout(false);
@@ -324,8 +327,6 @@
             infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ResumeLayout(false);
         }
         #endregion
