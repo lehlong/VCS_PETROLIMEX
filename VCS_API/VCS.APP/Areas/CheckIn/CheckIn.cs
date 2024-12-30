@@ -243,6 +243,7 @@ namespace VCS.APP.Areas.CheckIn
                 dataGridView1.Size = new Size(809, 150);
                 dataGridView1.TabIndex = 14;
                 dataGridView1.ReadOnly = true;
+                dataGridView1.AllowUserToAddRows = false;
 
                 DataTable dataTable = new DataTable();
                 dataTable.Columns.Add("Số lệnh xuất", typeof(string));
