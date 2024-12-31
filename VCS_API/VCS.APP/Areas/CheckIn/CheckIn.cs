@@ -250,7 +250,6 @@ namespace VCS.APP.Areas.CheckIn
                 dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
                 dataGridView1.Location = new Point(18, yPosition);
                 dataGridView1.Name = $"dataGridView_{_lstDOSAP.Count}";
-                dataGridView1.Size = new Size(809, 80);
                 dataGridView1.TabIndex = 14;
                 dataGridView1.ReadOnly = true;
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -284,6 +283,10 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
+
+                int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 25; 
+
+                dataGridView1.Size = new Size(809, totalHeight);
 
                 panel1.Controls.Add(dataGridView1);
             }
