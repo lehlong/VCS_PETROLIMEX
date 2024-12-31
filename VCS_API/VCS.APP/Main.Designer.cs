@@ -144,6 +144,7 @@ namespace VCS.APP
             // 
             // btnHome
             // 
+            btnHome.BackColor = Color.FromArgb(66, 66, 66);
             btnHome.Cursor = Cursors.Hand;
             btnHome.Dock = DockStyle.Top;
             btnHome.FlatAppearance.BorderSize = 0;
@@ -160,7 +161,7 @@ namespace VCS.APP
             btnHome.Text = "Trang chủ";
             btnHome.TextAlign = ContentAlignment.MiddleLeft;
             btnHome.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnHome.UseVisualStyleBackColor = true;
+            btnHome.UseVisualStyleBackColor = false;
             btnHome.Click += btnHome_Click;
             // 
             // panelLogo
