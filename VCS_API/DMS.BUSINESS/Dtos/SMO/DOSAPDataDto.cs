@@ -31,7 +31,7 @@ namespace DMS.BUSINESS.Dtos.SMO
     public class LIST_MATERIAL
     {
         public string MATERIAL { get; set; }
-        public float QUANTITY { get; set; }
+        public decimal QUANTITY { get; set; }
         public string UNIT { get; set; }
     }
 }

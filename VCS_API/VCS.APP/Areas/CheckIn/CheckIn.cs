@@ -22,7 +22,8 @@ namespace VCS.APP.Areas.CheckIn
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         private LibVLCSharp.Shared.LibVLC? _libVLC;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
-
+        private string IMGPATH;
+        private string PLATEPATH;
         public CheckIn(AppDbContext dbContext)
         {
             InitializeComponent();
@@ -71,13 +72,13 @@ namespace VCS.APP.Areas.CheckIn
             {
                 btnDetect.Enabled = false;
                 var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
-
+                IMGPATH = filePath;
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     pictureBoxVehicle.Image = snapshotImage;
 
                     var (licensePlate, croppedImage, savedImagePath) = await CommonService.DetectLicensePlateAsync(filePath);
-
+                    PLATEPATH = savedImagePath;
                     if (!string.IsNullOrEmpty(licensePlate))
                     {
                         txtLicensePlate.Text = licensePlate;
@@ -320,33 +321,34 @@ namespace VCS.APP.Areas.CheckIn
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (_lstDOSAP.Count() == 0)
-            {
-                DialogResult result = MessageBox.Show("Chưa có thông tin lệnh xuất! Vẫn cho xe vào?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            //if (_lstDOSAP.Count() == 0)
+            //{
+            //    DialogResult result = MessageBox.Show("Chưa có thông tin lệnh xuất! Vẫn cho xe vào?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                switch (result)
-                {
-                    case DialogResult.No:
-                        break;
-                    case DialogResult.Yes:
-                        if (string.IsNullOrEmpty(txtLicensePlate.Text))
-                        {
-                            txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
-                            txtStatus.ForeColor = Color.Red;
-                            return;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return;
-            }
-            if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
-            {
-                txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
-                txtStatus.ForeColor = Color.Red;
-                return;
-            }
+            //    switch (result)
+            //    {
+            //        case DialogResult.No:
+            //            break;
+            //        case DialogResult.Yes:
+            //            if (string.IsNullOrEmpty(txtLicensePlate.Text))
+            //            {
+            //                txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
+            //                txtStatus.ForeColor = Color.Red;
+            //                return;
+            //            }
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //    return;
+            //}
+            //if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
+            //{
+            //    txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
+            //    txtStatus.ForeColor = Color.Red;
+            //    return;
+            //}
+          
             var headerId = Guid.NewGuid().ToString();
             _dbContext.TblBuHeader.Add(new TblBuHeader
             {
@@ -356,11 +358,45 @@ namespace VCS.APP.Areas.CheckIn
 
             foreach(var i in _lstDOSAP)
             {
+                var hId = Guid.NewGuid().ToString();
                 _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
                 {
+                    Id = hId,
+                    HeaderId = headerId,
+                    Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
                 });
+                foreach(var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                {
+                    _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = hId,
+                        MaterialCode = l.MATERIAL,
+                        Quantity = l.QUANTITY,
+                        UnitCode = l.UNIT,
+                    });                  
+                    
+                }
             }
-           
+
+            _dbContext.TblBuImage.Add(new TblBuImage
+            {
+                Id = Guid.NewGuid().ToString(),
+                HeaderId = headerId,
+                Path = PLATEPATH,
+                FullPath = PLATEPATH,
+                IsPlate = true,
+
+            }) ;
+            _dbContext.TblBuImage.Add(new TblBuImage
+            {
+                Id = Guid.NewGuid().ToString(),
+                HeaderId = headerId,
+                Path = IMGPATH,
+                FullPath = IMGPATH,
+                IsPlate = false,
+            });
+           _dbContext.SaveChangesAsync();
         }
     }
 }
