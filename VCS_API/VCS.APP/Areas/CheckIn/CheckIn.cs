@@ -322,8 +322,23 @@ namespace VCS.APP.Areas.CheckIn
         {
             if (_lstDOSAP.Count() == 0)
             {
-                txtStatus.Text = "Không có thông tin lệnh xuất!";
-                txtStatus.ForeColor = Color.Red;
+                DialogResult result = MessageBox.Show("Chưa có thông tin lệnh xuất! Vẫn cho xe vào?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                switch (result)
+                {
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Yes:
+                        if (string.IsNullOrEmpty(txtLicensePlate.Text))
+                        {
+                            txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
+                            txtStatus.ForeColor = Color.Red;
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 return;
             }
             if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)

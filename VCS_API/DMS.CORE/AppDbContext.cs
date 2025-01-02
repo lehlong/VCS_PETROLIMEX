@@ -129,6 +129,7 @@ namespace DMS.CORE
         public DbSet<TblBuDetailDO> TblBuDetailDO { get; set; }
         public DbSet<TblBuDetailMaterial> TblBuDetailMaterial { get; set; }
         public DbSet<TblBuQueue> TblBuQueue { get; set; }
+        public DbSet<TblBuImage> TblBuImage { get; set; }
         #endregion
 
         #region Master Data

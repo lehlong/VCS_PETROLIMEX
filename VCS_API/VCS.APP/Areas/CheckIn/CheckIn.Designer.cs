@@ -110,11 +110,12 @@
             // 
             // btnCheckNumber
             // 
-            btnCheckNumber.BackColor = SystemColors.ActiveBorder;
+            btnCheckNumber.BackColor = Color.FromArgb(66, 66, 66);
             btnCheckNumber.Cursor = Cursors.Hand;
             btnCheckNumber.FlatAppearance.BorderSize = 0;
             btnCheckNumber.FlatStyle = FlatStyle.Flat;
             btnCheckNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCheckNumber.ForeColor = Color.White;
             btnCheckNumber.Location = new Point(713, 0);
             btnCheckNumber.Name = "btnCheckNumber";
             btnCheckNumber.Size = new Size(96, 40);
@@ -166,16 +167,16 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(24, 144, 255);
+            button1.BackColor = Color.FromArgb(66, 66, 66);
             button1.Cursor = Cursors.Hand;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(711, 14);
+            button1.Location = new Point(731, 14);
             button1.Name = "button1";
-            button1.Size = new Size(116, 40);
+            button1.Size = new Size(96, 40);
             button1.TabIndex = 6;
-            button1.Text = "Cho xe vào";
+            button1.Text = "Cho vào";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -278,7 +279,7 @@
             // 
             // btnReset
             // 
-            btnReset.BackColor = Color.FromArgb(24, 144, 255);
+            btnReset.BackColor = Color.FromArgb(66, 66, 66);
             btnReset.Cursor = Cursors.Hand;
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -293,7 +294,7 @@
             // 
             // btnDetect
             // 
-            btnDetect.BackColor = Color.FromArgb(24, 144, 255);
+            btnDetect.BackColor = Color.FromArgb(66, 66, 66);
             btnDetect.Cursor = Cursors.Hand;
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
