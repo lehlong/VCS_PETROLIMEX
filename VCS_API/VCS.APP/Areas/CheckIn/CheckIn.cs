@@ -319,7 +319,7 @@ namespace VCS.APP.Areas.CheckIn
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             //if (_lstDOSAP.Count() == 0)
             //{
@@ -348,8 +348,9 @@ namespace VCS.APP.Areas.CheckIn
             //    txtStatus.ForeColor = Color.Red;
             //    return;
             //}
-          
-            var headerId = Guid.NewGuid().ToString();
+           
+
+                var headerId = Guid.NewGuid().ToString();
             _dbContext.TblBuHeader.Add(new TblBuHeader
             {
                 Id = headerId,
@@ -386,7 +387,7 @@ namespace VCS.APP.Areas.CheckIn
                 Path = PLATEPATH,
                 FullPath = PLATEPATH,
                 IsPlate = true,
-
+                IsActive = true,
             }) ;
             _dbContext.TblBuImage.Add(new TblBuImage
             {
@@ -395,8 +396,10 @@ namespace VCS.APP.Areas.CheckIn
                 Path = IMGPATH,
                 FullPath = IMGPATH,
                 IsPlate = false,
+                IsActive = true
             });
-           _dbContext.SaveChangesAsync();
-        }
+          await _dbContext.SaveChangesAsync();
+        
+}
     }
 }
