@@ -119,9 +119,16 @@ namespace DMS.CORE
         public DbSet<TblAdAccountRefreshToken> TblAdAccountRefreshToken { get; set; }
         public DbSet<TblAdAppVersion> TblAdAppVersion { get; set; }
         public DbSet<TblAdAccount_AccountGroup> TblAdAccount_AccountGroup { get; set; }
-        public DbSet<TblActionLog> TblActionLogs {get; set;}
+        public DbSet<TblActionLog> TblActionLogs { get; set; }
         public DbSet<TblAdSystemTrace> TblAdSystemTrace { get; set; }
         public DbSet<tblAdOrganize> tblAdOrganize { get; set; }
+        #endregion
+
+        #region Business Unit
+        public DbSet<TblBuHeader> TblBuHeader { get; set; }
+        public DbSet<TblBuDetailDO> TblBuDetailDO { get; set; }
+        public DbSet<TblBuDetailMaterial> TblBuDetailMaterial { get; set; }
+        public DbSet<TblBuQueue> TblBuQueue { get; set; }
         #endregion
 
         #region Master Data
@@ -132,18 +139,14 @@ namespace DMS.CORE
         public DbSet<TblMdWarehouse> TblMdWarehouse { get; set; }
         public DbSet<TblMdVehicle> TblMdVehicle { get; set; }
 
-
-
         public DbSet<TblMdCustomer> TblMdCustomer { get; set; }
-            
         public DbSet<TblMdCustomerType> TblMdCustomerType { get; set; }
-
-        public DbSet<TblMdArea> TblMdArea { get; set; }      
+        public DbSet<TblMdArea> TblMdArea { get; set; }
         public DbSet<TblMdCurrency> tblMdCurrency { get; set; }
         public DbSet<TblMdUnit> tblMdUnit { get; set; }
         public DbSet<TblMdLocal> tblMdLocal { get; set; }
         public DbSet<TblMdAccountType> tblMdAccountType { get; set; }
-       
+
         #endregion
 
         #region Common

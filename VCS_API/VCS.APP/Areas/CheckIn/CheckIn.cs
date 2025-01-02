@@ -11,6 +11,7 @@ using VCS.APP.Services;
 using DMS.BUSINESS.Services.SMO;
 using DMS.BUSINESS.Dtos.SMO;
 using System.Data;
+using DMS.CORE.Entities.BU;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -284,7 +285,7 @@ namespace VCS.APP.Areas.CheckIn
                     col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
 
-                int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 25; 
+                int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 25;
 
                 dataGridView1.Size = new Size(809, totalHeight);
 
@@ -315,6 +316,36 @@ namespace VCS.APP.Areas.CheckIn
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_lstDOSAP.Count() == 0)
+            {
+                txtStatus.Text = "Không có thông tin lệnh xuất!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+            if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
+            {
+                txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+            var headerId = Guid.NewGuid().ToString();
+            _dbContext.TblBuHeader.Add(new TblBuHeader
+            {
+                Id = headerId,
+                VehicleCode = txtLicensePlate.Text,
+            });
+
+            foreach(var i in _lstDOSAP)
+            {
+                _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
+                {
+                });
+            }
+           
         }
     }
 }

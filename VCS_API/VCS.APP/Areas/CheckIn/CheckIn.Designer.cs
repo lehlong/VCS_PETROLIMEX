@@ -30,7 +30,6 @@
         {
             mainPanel = new Panel();
             panel1 = new Panel();
-            panel1.AutoScroll = true;
             panel3 = new Panel();
             txtNumber = new TextBox();
             btnCheckNumber = new Button();
@@ -76,6 +75,7 @@
             // 
             // panel1
             // 
+            panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
@@ -177,6 +177,7 @@
             button1.TabIndex = 6;
             button1.Text = "Cho xe vào";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // cameraPanel
             // 
