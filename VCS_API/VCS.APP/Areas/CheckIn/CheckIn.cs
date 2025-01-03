@@ -12,6 +12,7 @@ using DMS.BUSINESS.Services.SMO;
 using DMS.BUSINESS.Dtos.SMO;
 using System.Data;
 using DMS.CORE.Entities.BU;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -259,7 +260,7 @@ namespace VCS.APP.Areas.CheckIn
                 dataGridView1.AllowUserToAddRows = false;
                 dataGridView1.RowTemplate.Height = 25;
 
-                DataTable dataTable = new DataTable();
+                System.Data.DataTable dataTable = new System.Data.DataTable();
                 dataTable.Columns.Add("Số lệnh xuất", typeof(string));
                 dataTable.Columns.Add("Phương tiện", typeof(string));
                 dataTable.Columns.Add("Mặt hàng", typeof(string));
@@ -288,7 +289,7 @@ namespace VCS.APP.Areas.CheckIn
 
                 int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 25;
 
-                dataGridView1.Size = new Size(809, totalHeight);
+                dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
                 panel1.Controls.Add(dataGridView1);
             }
@@ -321,10 +322,12 @@ namespace VCS.APP.Areas.CheckIn
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            //var _s = new CommonService();
+            //var token = _s.LoginSmoApi();
+
             //if (_lstDOSAP.Count() == 0)
             //{
             //    DialogResult result = MessageBox.Show("Chưa có thông tin lệnh xuất! Vẫn cho xe vào?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
             //    switch (result)
             //    {
             //        case DialogResult.No:
@@ -348,9 +351,40 @@ namespace VCS.APP.Areas.CheckIn
             //    txtStatus.ForeColor = Color.Red;
             //    return;
             //}
-           
+            var _s = new CommonService();
+            var token = _s.LoginSmoApi();
 
-                var headerId = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(txtLicensePlate.Text))
+            {
+                txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(token) || _lstDOSAP.Count() == 0)
+            {
+                var message = string.IsNullOrEmpty(token) ?
+                    "Không thể kết nối đến hệ thống SMO!" :
+                    "Chưa có thông tin lệnh xuất!";
+
+                if (MessageBox.Show($"{message} Vẫn cho xe vào?", "Cảnh báo",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                {
+                    txtStatus.Text = message;
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+                return;
+            }
+
+            if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
+            {
+                txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+            var headerId = Guid.NewGuid().ToString();
+            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
             _dbContext.TblBuHeader.Add(new TblBuHeader
             {
                 Id = headerId,
@@ -379,7 +413,6 @@ namespace VCS.APP.Areas.CheckIn
                     
                 }
             }
-
             _dbContext.TblBuImage.Add(new TblBuImage
             {
                 Id = Guid.NewGuid().ToString(),
@@ -398,8 +431,18 @@ namespace VCS.APP.Areas.CheckIn
                 IsPlate = false,
                 IsActive = true
             });
+            _dbContext.TblBuQueue.Add(new TblBuQueue
+            {
+                Id = Guid.NewGuid().ToString(),
+                HeaderId = headerId,
+                VehicleCode = txtLicensePlate.Text,
+                Name = name,
+                Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                Count = 0,
+                IsActive = true
+            });
           await _dbContext.SaveChangesAsync();
         
-}
+    }
     }
 }
