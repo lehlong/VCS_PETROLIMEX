@@ -25,7 +25,7 @@ namespace VCS.APP.Areas.Login
             InitializeComponent();
             _authService = authService;
             _dbContext = dbContext;
-
+            LoadSavedCredentials();
             // Đăng ký sự kiện KeyPress cho các TextBox
             username.KeyPress += TextBox_KeyPress;
             password.KeyPress += TextBox_KeyPress;
@@ -62,6 +62,18 @@ namespace VCS.APP.Areas.Login
 
         }
 
+
+        private void LoadSavedCredentials()
+        {
+            var savedCredentials = CredentialManager.GetSavedCredentials();
+            if (savedCredentials != null)
+            {
+                username.Text = savedCredentials.Username;
+                password.Text = savedCredentials.Password;
+                rememberMe.Checked = true;
+            }
+        }
+
         private async void btnLogin_Click(object sender, EventArgs e)
         {
             try
@@ -89,15 +101,31 @@ namespace VCS.APP.Areas.Login
                 if (response == null)
                 {
                     MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập",
-                       MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     _authService.Status = true;
                     return;
                 }
+
+                // Lưu thông tin đăng nhập nếu checkbox được chọn
+                if (rememberMe.Checked)
+                {
+                    CredentialManager.SaveCredentials(new LoginCredentials
+                    {
+                        Username = username.Text,
+                        Password = password.Text,
+                        RememberMe = true
+                    });
+                }
+                else
+                {
+                    // Xóa thông tin đăng nhập đã lưu nếu không check
+                    CredentialManager.DeleteCredentials();
+                }
+
                 ProfileUtilities.User = _dbContext.TblAdAccount.Find(query.UserName);
                 var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
                 mainForm.Show();
                 this.Hide();
-
             }
             catch (Exception ex)
             {

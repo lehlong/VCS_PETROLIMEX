@@ -243,14 +243,14 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
-                int yPosition = 217;
+                int yPosition = 150;
                 if (_lstDOSAP.Count > 1)
                 {
                     var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
                     if (existingGrids.Any())
                     {
                         var lastGrid = existingGrids.Last();
-                        yPosition = lastGrid.Bottom + 1; // Giảm khoảng cách xuống 1px
+                        yPosition = lastGrid.Bottom + 1;
                     }
                 }
                 var dataGridView1 = new DataGridView();
@@ -264,7 +264,13 @@ namespace VCS.APP.Areas.CheckIn
                 dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dataGridView1.ColumnHeadersHeight = 30;
                 dataGridView1.AllowUserToAddRows = false;
-                dataGridView1.RowTemplate.Height = 25;
+                dataGridView1.AllowUserToResizeRows = false;
+                dataGridView1.RowHeadersVisible = false;
+                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dataGridView1.DefaultCellStyle.SelectionBackColor = Color.White;
+                dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
+                dataGridView1.RowTemplate.Height = 35;
+                dataGridView1.DefaultCellStyle.Padding = new Padding(5, 0, 5, 0);
 
                 System.Data.DataTable dataTable = new System.Data.DataTable();
                 dataTable.Columns.Add("Số lệnh xuất", typeof(string));
@@ -293,8 +299,8 @@ namespace VCS.APP.Areas.CheckIn
                     col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
 
-                int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 25;
-
+                int totalHeight = dataGridView1.ColumnHeadersHeight + 
+                    (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 35;
                 dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
                 panel1.Controls.Add(dataGridView1);

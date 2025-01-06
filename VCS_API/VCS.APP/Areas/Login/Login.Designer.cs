@@ -32,6 +32,7 @@ namespace VCS.APP.Areas.Login
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
             label1 = new Label();
+            rememberMe = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -74,7 +75,7 @@ namespace VCS.APP.Areas.Login
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(347, 388);
+            btnLogin.Location = new Point(347, 420);
             btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(359, 40);
@@ -129,6 +130,15 @@ namespace VCS.APP.Areas.Login
             label1.Text = "Design by Dynamic Software Solutions";
             label1.Click += label1_Click;
             // 
+            // rememberMe
+            // 
+            rememberMe.AutoSize = false;
+            rememberMe.Location = new Point(347, 375);
+            rememberMe.Size = new Size(200, 30);
+            rememberMe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            rememberMe.Text = "Ghi nhớ tài khoản";
+            rememberMe.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -145,6 +155,7 @@ namespace VCS.APP.Areas.Login
             Controls.Add(password);
             Controls.Add(username);
             Controls.Add(pictureBox1);
+            Controls.Add(rememberMe);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
@@ -171,5 +182,6 @@ namespace VCS.APP.Areas.Login
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
         private Label label1;
+        private CheckBox rememberMe;
     }
 }
