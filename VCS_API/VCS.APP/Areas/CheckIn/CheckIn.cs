@@ -13,12 +13,16 @@ using DMS.BUSINESS.Dtos.SMO;
 using System.Data;
 using DMS.CORE.Entities.BU;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using Microsoft.EntityFrameworkCore;
+using DMS.BUSINESS.Dtos.Auth;
+using Microsoft.Extensions.DependencyInjection;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace VCS.APP.Areas.CheckIn
 {
     public partial class CheckIn : Form
     {
-        private readonly AppDbContext _dbContext;
+        private AppDbContext _dbContext;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         private LibVLCSharp.Shared.LibVLC? _libVLC;
@@ -32,6 +36,7 @@ namespace VCS.APP.Areas.CheckIn
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
+            CheckStatusSystem();
         }
 
         private void InitializeLibVLC()
@@ -494,9 +499,52 @@ namespace VCS.APP.Areas.CheckIn
 
         }
 
-        private void CheckStatusSystem()
+        private async void CheckStatusSystem()
         {
+            try
+            {
+                if (!await _dbContext.Database.CanConnectAsync())
+                {
+                    statusDB.BackColor = Color.Red;
+                }
+                else
+                {
+                    statusDB.BackColor = Color.LimeGreen;
+                }
+                var _s = new CommonService();
+                var token = _s.LoginSmoApi();
+                if (string.IsNullOrEmpty(token))
+                {
+                    statusSMO.BackColor = Color.Red;
+                }
+                else
+                {
+                    statusSMO.BackColor = Color.LimeGreen;
+                }
 
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ReloadForm(AppDbContext dbContext)
+        {
+            this.Controls.Clear();
+            InitializeComponent();
+            _dbContext = dbContext;
+            InitializeLibVLC();
+            GetListCameras();
+            InitializeControls();
+            CheckStatusSystem();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            ReloadForm(_dbContext);
         }
     }
 }

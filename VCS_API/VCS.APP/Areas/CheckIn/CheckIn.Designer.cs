@@ -30,14 +30,15 @@
         {
             mainPanel = new Panel();
             panel1 = new Panel();
+            pictureBox2 = new PictureBox();
             label9 = new Label();
             panel8 = new Panel();
             label8 = new Label();
             panel7 = new Panel();
             label7 = new Label();
             label6 = new Label();
-            panel6 = new Panel();
-            panel5 = new Panel();
+            statusDB = new Panel();
+            statusSMO = new Panel();
             label5 = new Label();
             panel4 = new Panel();
             comboBox1 = new ComboBox();
@@ -64,6 +65,7 @@
             btnDetect = new Button();
             mainPanel.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -92,14 +94,15 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(panel8);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(panel7);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(label6);
-            panel1.Controls.Add(panel6);
-            panel1.Controls.Add(panel5);
+            panel1.Controls.Add(statusDB);
+            panel1.Controls.Add(statusSMO);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(button3);
@@ -112,11 +115,23 @@
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.Cursor = Cursors.Hand;
+            pictureBox2.Image = Properties.Resources.refresh;
+            pictureBox2.Location = new Point(823, 796);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(16, 16);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 25;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
+            // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(526, 796);
+            label9.Location = new Point(503, 796);
             label9.Name = "label9";
             label9.Size = new Size(87, 15);
             label9.TabIndex = 24;
@@ -124,8 +139,8 @@
             // 
             // panel8
             // 
-            panel8.BackColor = Color.Lime;
-            panel8.Location = new Point(513, 799);
+            panel8.BackColor = Color.DarkGray;
+            panel8.Location = new Point(490, 799);
             panel8.Name = "panel8";
             panel8.Size = new Size(10, 10);
             panel8.TabIndex = 23;
@@ -134,7 +149,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label8.Location = new Point(369, 796);
+            label8.Location = new Point(346, 796);
             label8.Name = "label8";
             label8.Size = new Size(123, 15);
             label8.TabIndex = 22;
@@ -142,8 +157,8 @@
             // 
             // panel7
             // 
-            panel7.BackColor = Color.Lime;
-            panel7.Location = new Point(355, 799);
+            panel7.BackColor = Color.DarkGray;
+            panel7.Location = new Point(332, 799);
             panel7.Name = "panel7";
             panel7.Size = new Size(10, 10);
             panel7.TabIndex = 21;
@@ -152,7 +167,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label7.Location = new Point(647, 796);
+            label7.Location = new Point(624, 796);
             label7.Name = "label7";
             label7.Size = new Size(76, 15);
             label7.TabIndex = 20;
@@ -162,27 +177,27 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(755, 796);
+            label6.Location = new Point(732, 796);
             label6.Name = "label6";
             label6.Size = new Size(84, 15);
             label6.TabIndex = 19;
             label6.Text = "Hệ thống SMO";
             // 
-            // panel6
+            // statusDB
             // 
-            panel6.BackColor = Color.Lime;
-            panel6.Location = new Point(635, 799);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(10, 10);
-            panel6.TabIndex = 18;
+            statusDB.BackColor = Color.DarkGray;
+            statusDB.Location = new Point(612, 799);
+            statusDB.Name = "statusDB";
+            statusDB.Size = new Size(10, 10);
+            statusDB.TabIndex = 18;
             // 
-            // panel5
+            // statusSMO
             // 
-            panel5.BackColor = Color.Lime;
-            panel5.Location = new Point(741, 799);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(10, 10);
-            panel5.TabIndex = 17;
+            statusSMO.BackColor = Color.DarkGray;
+            statusSMO.Location = new Point(718, 799);
+            statusSMO.Name = "statusSMO";
+            statusSMO.Size = new Size(10, 10);
+            statusSMO.TabIndex = 17;
             // 
             // label5
             // 
@@ -475,6 +490,7 @@
             mainPanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
@@ -517,13 +533,14 @@
         private PictureBox pictureBox1;
         private ComboBox comboBox1;
         private Label label5;
-        private Panel panel5;
+        private Panel statusSMO;
         private Label label9;
         private Panel panel8;
         private Label label8;
         private Panel panel7;
         private Label label7;
         private Label label6;
-        private Panel panel6;
+        private Panel statusDB;
+        private PictureBox pictureBox2;
     }
 }
