@@ -229,6 +229,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(382, 29);
             comboBox1.TabIndex = 16;
+            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
             // 
             // button3
             // 
@@ -237,9 +238,9 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
-            button3.Location = new Point(445, 14);
+            button3.Location = new Point(375, 14);
             button3.Name = "button3";
-            button3.Size = new Size(95, 40);
+            button3.Size = new Size(96, 40);
             button3.TabIndex = 15;
             button3.Text = "Cập nhật";
             button3.UseVisualStyleBackColor = false;
@@ -251,11 +252,11 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(707, 14);
+            button2.Location = new Point(646, 14);
             button2.Name = "button2";
-            button2.Size = new Size(120, 40);
+            button2.Size = new Size(181, 40);
             button2.TabIndex = 14;
-            button2.Text = "Cho vào kho";
+            button2.Text = "Cho vào kho - Cấp số";
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
@@ -309,9 +310,9 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(546, 14);
+            button1.Location = new Point(477, 14);
             button1.Name = "button1";
-            button1.Size = new Size(155, 40);
+            button1.Size = new Size(163, 40);
             button1.TabIndex = 6;
             button1.Text = "Cho vào hàng chờ";
             button1.UseVisualStyleBackColor = false;

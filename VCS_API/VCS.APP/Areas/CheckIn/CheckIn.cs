@@ -37,6 +37,7 @@ namespace VCS.APP.Areas.CheckIn
             GetListCameras();
             InitializeControls();
             CheckStatusSystem();
+            GetListQueue();
         }
 
         private void InitializeLibVLC()
@@ -540,11 +541,39 @@ namespace VCS.APP.Areas.CheckIn
             GetListCameras();
             InitializeControls();
             CheckStatusSystem();
+            GetListQueue();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             ReloadForm(_dbContext);
+        }
+
+        private void GetListQueue()
+        {
+            //var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
+            //&& x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
+            var lstQueue = _dbContext.TblBuQueue.ToList();
+            List<ComboBoxItem> items = new List<ComboBoxItem>();
+            items.Add(new ComboBoxItem(" -", ""));
+            foreach (var item in lstQueue)
+            {
+                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.Name}", item.HeaderId));
+            }
+            comboBox1.DataSource = items;
+            comboBox1.DisplayMember = "Text";
+            comboBox1.ValueMember = "Value";
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedValue = selectedItem.Value;
+            string selectedText = selectedItem.Text;
+            if (string.IsNullOrEmpty(selectedValue)) return;
+
+            var i = _dbContext.TblBuHeader.Find(selectedValue);
+            txtLicensePlate.Text = i.VehicleCode;
         }
     }
 }

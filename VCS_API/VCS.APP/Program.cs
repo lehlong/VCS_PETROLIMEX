@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using VCS.APP.Areas.CheckIn;
 using VCS.APP.Utilities;
 
 namespace VCS.APP
@@ -44,6 +45,7 @@ namespace VCS.APP
             
             services.AddTransient<Areas.Login.Login>();
             services.AddTransient<Main>();
+            services.AddTransient<CheckIn>();
         }
     }
 }
