@@ -30,18 +30,31 @@
         {
             mainPanel = new Panel();
             panel1 = new Panel();
+            label9 = new Label();
+            panel8 = new Panel();
+            label8 = new Label();
+            panel7 = new Panel();
+            label7 = new Label();
+            label6 = new Label();
+            panel6 = new Panel();
+            panel5 = new Panel();
+            label5 = new Label();
+            panel4 = new Panel();
+            comboBox1 = new ComboBox();
+            button3 = new Button();
+            button2 = new Button();
             panel3 = new Panel();
+            pictureBox1 = new PictureBox();
             txtNumber = new TextBox();
-            btnCheckNumber = new Button();
-            panel2 = new Panel();
-            txtStatus = new Label();
-            label3 = new Label();
             label4 = new Label();
             button1 = new Button();
             cameraPanel = new Panel();
             videoView = new LibVLCSharp.WinForms.VideoView();
             infoPanel = new Panel();
             txtLicensePlate = new TextBox();
+            panel2 = new Panel();
+            txtStatus = new Label();
+            label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             lblLicensePlate = new Label();
@@ -51,11 +64,13 @@
             btnDetect = new Button();
             mainPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel4.SuspendLayout();
             panel3.SuspendLayout();
-            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             cameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView).BeginInit();
             infoPanel.SuspendLayout();
+            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
             SuspendLayout();
@@ -77,9 +92,19 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(label9);
+            panel1.Controls.Add(panel8);
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(panel7);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(panel5);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(panel4);
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(button2);
             panel1.Controls.Add(panel3);
-            panel1.Controls.Add(panel2);
-            panel1.Controls.Add(label3);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(button1);
             panel1.Location = new Point(545, 9);
@@ -87,79 +112,176 @@
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label9.Location = new Point(526, 796);
+            label9.Name = "label9";
+            label9.Size = new Size(87, 15);
+            label9.TabIndex = 24;
+            label9.Text = "Hệ thống TGBX";
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.Lime;
+            panel8.Location = new Point(513, 799);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(10, 10);
+            panel8.TabIndex = 23;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label8.Location = new Point(369, 796);
+            label8.Name = "label8";
+            label8.Size = new Size(123, 15);
+            label8.TabIndex = 22;
+            label8.Text = "Hệ thống tự động hoá";
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.Lime;
+            panel7.Location = new Point(355, 799);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(10, 10);
+            panel7.TabIndex = 21;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label7.Location = new Point(647, 796);
+            label7.Name = "label7";
+            label7.Size = new Size(76, 15);
+            label7.TabIndex = 20;
+            label7.Text = "Cơ sở dữ liệu";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label6.Location = new Point(755, 796);
+            label6.Name = "label6";
+            label6.Size = new Size(84, 15);
+            label6.TabIndex = 19;
+            label6.Text = "Hệ thống SMO";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.Lime;
+            panel6.Location = new Point(635, 799);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(10, 10);
+            panel6.TabIndex = 18;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Lime;
+            panel5.Location = new Point(741, 799);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(10, 10);
+            panel5.TabIndex = 17;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Location = new Point(430, 74);
+            label5.Name = "label5";
+            label5.Size = new Size(164, 21);
+            label5.TabIndex = 16;
+            label5.Text = "Cập nhật phương tiện:";
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.WhiteSmoke;
+            panel4.Controls.Add(comboBox1);
+            panel4.Location = new Point(430, 101);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(396, 40);
+            panel4.TabIndex = 14;
+            // 
+            // comboBox1
+            // 
+            comboBox1.BackColor = Color.WhiteSmoke;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.FlatStyle = FlatStyle.Popup;
+            comboBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(11, 5);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(382, 29);
+            comboBox1.TabIndex = 16;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.FromArgb(66, 66, 66);
+            button3.Cursor = Cursors.Hand;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.White;
+            button3.Location = new Point(445, 14);
+            button3.Name = "button3";
+            button3.Size = new Size(95, 40);
+            button3.TabIndex = 15;
+            button3.Text = "Cập nhật";
+            button3.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(66, 66, 66);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(707, 14);
+            button2.Name = "button2";
+            button2.Size = new Size(120, 40);
+            button2.TabIndex = 14;
+            button2.Text = "Cho vào kho";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
             // panel3
             // 
             panel3.BackColor = Color.WhiteSmoke;
+            panel3.Controls.Add(pictureBox1);
             panel3.Controls.Add(txtNumber);
-            panel3.Controls.Add(btnCheckNumber);
-            panel3.Location = new Point(18, 150);
+            panel3.Location = new Point(19, 101);
             panel3.Name = "panel3";
-            panel3.Size = new Size(809, 40);
+            panel3.Size = new Size(396, 40);
             panel3.TabIndex = 13;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Cursor = Cursors.Hand;
+            pictureBox1.Image = Properties.Resources.search;
+            pictureBox1.Location = new Point(368, 11);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(18, 18);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 16;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // txtNumber
             // 
             txtNumber.BackColor = Color.WhiteSmoke;
             txtNumber.BorderStyle = BorderStyle.None;
             txtNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumber.Location = new Point(12, 10);
+            txtNumber.Location = new Point(13, 9);
             txtNumber.Name = "txtNumber";
-            txtNumber.Size = new Size(695, 22);
+            txtNumber.Size = new Size(348, 22);
             txtNumber.TabIndex = 10;
             txtNumber.TextChanged += textBox1_TextChanged;
-            // 
-            // btnCheckNumber
-            // 
-            btnCheckNumber.BackColor = Color.FromArgb(66, 66, 66);
-            btnCheckNumber.Cursor = Cursors.Hand;
-            btnCheckNumber.FlatAppearance.BorderSize = 0;
-            btnCheckNumber.FlatStyle = FlatStyle.Flat;
-            btnCheckNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCheckNumber.ForeColor = Color.White;
-            btnCheckNumber.Location = new Point(713, 0);
-            btnCheckNumber.Name = "btnCheckNumber";
-            btnCheckNumber.Size = new Size(96, 40);
-            btnCheckNumber.TabIndex = 11;
-            btnCheckNumber.Text = "Kiểm tra";
-            btnCheckNumber.UseVisualStyleBackColor = false;
-            btnCheckNumber.Click += btnCheckNumber_Click;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.WhiteSmoke;
-            panel2.Controls.Add(txtStatus);
-            panel2.Location = new Point(18, 76);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(809, 40);
-            panel2.TabIndex = 12;
-            panel2.Paint += panel2_Paint;
-            // 
-            // txtStatus
-            // 
-            txtStatus.AutoSize = true;
-            txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtStatus.ForeColor = Color.WhiteSmoke;
-            txtStatus.Location = new Point(10, 8);
-            txtStatus.Name = "txtStatus";
-            txtStatus.Size = new Size(84, 21);
-            txtStatus.TabIndex = 0;
-            txtStatus.Text = "Thông báo";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(27, 51);
-            label3.Name = "label3";
-            label3.Size = new Size(153, 21);
-            label3.TabIndex = 7;
-            label3.Text = "Thông báo hệ thống:";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(27, 125);
+            label4.Location = new Point(22, 74);
             label4.Name = "label4";
             label4.Size = new Size(98, 21);
             label4.TabIndex = 9;
@@ -172,11 +294,11 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(731, 14);
+            button1.Location = new Point(546, 14);
             button1.Name = "button1";
-            button1.Size = new Size(96, 40);
+            button1.Size = new Size(155, 40);
             button1.TabIndex = 6;
-            button1.Text = "Cho vào";
+            button1.Text = "Cho vào hàng chờ";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -203,6 +325,8 @@
             // 
             infoPanel.BackColor = Color.White;
             infoPanel.Controls.Add(txtLicensePlate);
+            infoPanel.Controls.Add(panel2);
+            infoPanel.Controls.Add(label3);
             infoPanel.Controls.Add(label2);
             infoPanel.Controls.Add(label1);
             infoPanel.Controls.Add(lblLicensePlate);
@@ -222,16 +346,47 @@
             txtLicensePlate.BackColor = Color.WhiteSmoke;
             txtLicensePlate.BorderStyle = BorderStyle.None;
             txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtLicensePlate.Location = new Point(10, 87);
+            txtLicensePlate.Location = new Point(10, 96);
             txtLicensePlate.Name = "txtLicensePlate";
             txtLicensePlate.Size = new Size(497, 47);
             txtLicensePlate.TabIndex = 9;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.WhiteSmoke;
+            panel2.Controls.Add(txtStatus);
+            panel2.Location = new Point(11, 418);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(496, 47);
+            panel2.TabIndex = 12;
+            panel2.Paint += panel2_Paint;
+            // 
+            // txtStatus
+            // 
+            txtStatus.AutoSize = true;
+            txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtStatus.ForeColor = Color.WhiteSmoke;
+            txtStatus.Location = new Point(12, 12);
+            txtStatus.Name = "txtStatus";
+            txtStatus.Size = new Size(84, 21);
+            txtStatus.TabIndex = 0;
+            txtStatus.Text = "Thông báo";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(14, 391);
+            label3.Name = "label3";
+            label3.Size = new Size(153, 21);
+            label3.TabIndex = 7;
+            label3.Text = "Thông báo hệ thống:";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(260, 148);
+            label2.Location = new Point(266, 155);
             label2.Name = "label2";
             label2.Size = new Size(114, 21);
             label2.TabIndex = 6;
@@ -241,7 +396,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(8, 148);
+            label1.Location = new Point(13, 155);
             label1.Name = "label1";
             label1.Size = new Size(79, 21);
             label1.TabIndex = 5;
@@ -251,7 +406,7 @@
             // 
             lblLicensePlate.AutoSize = true;
             lblLicensePlate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblLicensePlate.Location = new Point(6, 60);
+            lblLicensePlate.Location = new Point(13, 68);
             lblLicensePlate.Name = "lblLicensePlate";
             lblLicensePlate.Size = new Size(82, 21);
             lblLicensePlate.TabIndex = 0;
@@ -260,9 +415,9 @@
             // pictureBoxVehicle
             // 
             pictureBoxVehicle.BackColor = Color.WhiteSmoke;
-            pictureBoxVehicle.Location = new Point(10, 170);
+            pictureBoxVehicle.Location = new Point(10, 182);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
-            pictureBoxVehicle.Size = new Size(247, 219);
+            pictureBoxVehicle.Size = new Size(247, 198);
             pictureBoxVehicle.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxVehicle.TabIndex = 3;
             pictureBoxVehicle.TabStop = false;
@@ -270,9 +425,9 @@
             // pictureBoxLicensePlate
             // 
             pictureBoxLicensePlate.BackColor = Color.WhiteSmoke;
-            pictureBoxLicensePlate.Location = new Point(263, 170);
+            pictureBoxLicensePlate.Location = new Point(263, 182);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
-            pictureBoxLicensePlate.Size = new Size(244, 219);
+            pictureBoxLicensePlate.Size = new Size(244, 198);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLicensePlate.TabIndex = 4;
             pictureBoxLicensePlate.TabStop = false;
@@ -284,7 +439,7 @@
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(377, 13);
+            btnReset.Location = new Point(377, 18);
             btnReset.Name = "btnReset";
             btnReset.Size = new Size(130, 40);
             btnReset.TabIndex = 5;
@@ -299,7 +454,7 @@
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDetect.ForeColor = Color.White;
-            btnDetect.Location = new Point(241, 13);
+            btnDetect.Location = new Point(241, 18);
             btnDetect.Name = "btnDetect";
             btnDetect.Size = new Size(130, 40);
             btnDetect.TabIndex = 2;
@@ -320,14 +475,16 @@
             mainPanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             cameraPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)videoView).EndInit();
             infoPanel.ResumeLayout(false);
             infoPanel.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
             ResumeLayout(false);
@@ -348,12 +505,25 @@
         private Panel panel1;
         private Label label3;
         private Button button1;
-        private Button btnCheckNumber;
         private TextBox txtNumber;
         private Label label4;
         private TextBox txtLicensePlate;
         private Panel panel2;
         private Label txtStatus;
         private Panel panel3;
+        private Button button3;
+        private Button button2;
+        private Panel panel4;
+        private PictureBox pictureBox1;
+        private ComboBox comboBox1;
+        private Label label5;
+        private Panel panel5;
+        private Label label9;
+        private Panel panel8;
+        private Label label8;
+        private Panel panel7;
+        private Label label7;
+        private Label label6;
+        private Panel panel6;
     }
 }

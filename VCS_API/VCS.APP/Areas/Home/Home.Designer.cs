@@ -68,7 +68,7 @@
             button1.Location = new Point(13, 19);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
-            button1.Size = new Size(138, 42);
+            button1.Size = new Size(138, 40);
             button1.TabIndex = 0;
             button1.Text = "Reset Camera";
             button1.UseVisualStyleBackColor = false;

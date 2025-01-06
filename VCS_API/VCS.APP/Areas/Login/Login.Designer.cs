@@ -77,7 +77,7 @@ namespace VCS.APP.Areas.Login
             btnLogin.Location = new Point(347, 388);
             btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(359, 41);
+            btnLogin.Size = new Size(359, 40);
             btnLogin.TabIndex = 3;
             btnLogin.Text = "Đăng nhập";
             btnLogin.UseVisualStyleBackColor = false;
@@ -109,10 +109,10 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox4.Cursor = Cursors.Hand;
             pictureBox4.Image = Properties.Resources.close;
-            pictureBox4.Location = new Point(987, 17);
+            pictureBox4.Location = new Point(1000, 13);
             pictureBox4.Margin = new Padding(4);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(21, 22);
+            pictureBox4.Size = new Size(16, 16);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 6;
             pictureBox4.TabStop = false;

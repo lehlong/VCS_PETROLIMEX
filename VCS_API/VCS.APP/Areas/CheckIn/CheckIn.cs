@@ -351,8 +351,6 @@ namespace VCS.APP.Areas.CheckIn
             //    txtStatus.ForeColor = Color.Red;
             //    return;
             //}
-            var _s = new CommonService();
-            var token = _s.LoginSmoApi();
 
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
@@ -360,6 +358,8 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
+            var _s = new CommonService();
+            var token = _s.LoginSmoApi();
 
             if (string.IsNullOrEmpty(token) || _lstDOSAP.Count() == 0)
             {
@@ -391,7 +391,7 @@ namespace VCS.APP.Areas.CheckIn
                 VehicleCode = txtLicensePlate.Text,
             });
 
-            foreach(var i in _lstDOSAP)
+            foreach (var i in _lstDOSAP)
             {
                 var hId = Guid.NewGuid().ToString();
                 _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
@@ -400,7 +400,7 @@ namespace VCS.APP.Areas.CheckIn
                     HeaderId = headerId,
                     Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
                 });
-                foreach(var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
                 {
                     _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
                     {
@@ -409,8 +409,8 @@ namespace VCS.APP.Areas.CheckIn
                         MaterialCode = l.MATERIAL,
                         Quantity = l.QUANTITY,
                         UnitCode = l.UNIT,
-                    });                  
-                    
+                    });
+
                 }
             }
             _dbContext.TblBuImage.Add(new TblBuImage
@@ -421,7 +421,7 @@ namespace VCS.APP.Areas.CheckIn
                 FullPath = PLATEPATH,
                 IsPlate = true,
                 IsActive = true,
-            }) ;
+            });
             _dbContext.TblBuImage.Add(new TblBuImage
             {
                 Id = Guid.NewGuid().ToString(),
@@ -441,8 +441,62 @@ namespace VCS.APP.Areas.CheckIn
                 Count = 0,
                 IsActive = true
             });
-          await _dbContext.SaveChangesAsync();
-        
-    }
+            await _dbContext.SaveChangesAsync();
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var number = txtNumber.Text.Trim();
+                if (string.IsNullOrEmpty(number))
+                {
+                    txtStatus.Text = "Vui lòng nhập số lệnh xuất";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+                var _s = new CommonService();
+                var token = _s.LoginSmoApi();
+                if (string.IsNullOrEmpty(token))
+                {
+                    txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+
+                var dataDetail = _s.GetInformationNumber(number, token);
+                if (!dataDetail.STATUS)
+                {
+                    txtStatus.Text = "Số lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại!";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+
+                txtStatus.Text = "Kiểm tra lệnh xuất thành công!";
+                txtStatus.ForeColor = Color.Green;
+
+                _lstDOSAP.Add(dataDetail);
+
+
+
+                AppendPanelDetail(dataDetail);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
+                        "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckStatusSystem()
+        {
+
+        }
     }
 }
