@@ -41,8 +41,8 @@ namespace VCS.APP
             }, ServiceLifetime.Scoped);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddAutoMapper(typeof(Program).Assembly, typeof(MappingProfile).Assembly);
-            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IAuthService, AuthService>();
             
             services.AddTransient<Areas.Login.Login>();

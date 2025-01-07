@@ -30,13 +30,12 @@ namespace VCS.APP.Areas.CheckIn
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private string IMGPATH;
         private string PLATEPATH;
-        private readonly IMapper _mapper;
+        private AppDbContext dbContext;
 
-        public CheckIn(AppDbContext dbContext, IMapper mapper)
+        public CheckIn(AppDbContext dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            _mapper = mapper;
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
@@ -302,15 +301,22 @@ namespace VCS.APP.Areas.CheckIn
                 // Tạo nút xóa
                 var deleteButton = new Button
                 {
-                    Text = "X",
                     Size = new System.Drawing.Size(30, 30),
                     Location = new Point(797, yPosition),
                     FlatStyle = FlatStyle.Flat,
-                    BackColor = Color.FromArgb(66, 66, 66),
-                    ForeColor = Color.White,
-                    Cursor = Cursors.Hand
+                    BackColor = Color.FromArgb(230, 230, 230), // Màu xám nhạt
+                    ForeColor = Color.Black,
+                    Cursor = Cursors.Hand,
+                    Image = Properties.Resources.delete_icon, // Thêm icon từ Resources
+                    ImageAlign = ContentAlignment.MiddleCenter // Căn giữa icon
                 };
                 deleteButton.FlatAppearance.BorderSize = 0;
+
+                // Điều chỉnh kích thước icon nếu cần
+                if (deleteButton.Image != null)
+                {
+                    deleteButton.Image = new Bitmap(deleteButton.Image, new System.Drawing.Size(16, 16));
+                }
 
                 // Xử lý sự kiện click nút xóa
                 deleteButton.Click += (sender, e) =>
@@ -654,26 +660,55 @@ namespace VCS.APP.Areas.CheckIn
                 var detail = GetCheckInDetail(selectedValue);
                 if (detail == null) return;
 
-                // Cập nhật biển số
                 txtLicensePlate.Text = detail.LicensePlate;
 
-                // Cập nhật ảnh
                 if (!string.IsNullOrEmpty(detail.VehicleImagePath))
-                    pictureBoxVehicle.Image = Image.FromFile(detail.VehicleImagePath);
-                    
+                {
+                    if (File.Exists(detail.VehicleImagePath))
+                    {
+                        using (var stream = new FileStream(detail.VehicleImagePath, FileMode.Open, FileAccess.Read))
+                        {
+                            pictureBoxVehicle.Image?.Dispose();
+                            pictureBoxVehicle.Image = Image.FromStream(stream);
+                        }
+                    }
+                    else
+                    {
+                        pictureBoxVehicle.Image = null;
+                    }
+                }
+                else
+                {
+                    pictureBoxVehicle.Image = null;
+                }
                 if (!string.IsNullOrEmpty(detail.PlateImagePath))
-                    pictureBoxLicensePlate.Image = Image.FromFile(detail.PlateImagePath);
+                {
+                    if (File.Exists(detail.PlateImagePath))
+                    {
+                        using (var stream = new FileStream(detail.PlateImagePath, FileMode.Open, FileAccess.Read))
+                        {
+                            pictureBoxLicensePlate.Image?.Dispose();
+                            pictureBoxLicensePlate.Image = Image.FromStream(stream);
+                        }
+                    }
+                    else
+                    {
+                        pictureBoxLicensePlate.Image = null;
+                    }
+                }
+                else
+                {
+                    pictureBoxLicensePlate.Image = null;
+                }
 
-                // Xóa dữ liệu DO SAP cũ
                 _lstDOSAP.Clear();
                 panel1.Controls.OfType<DataGridView>().ToList()
-                    .ForEach(x => panel1.Controls.Remove(x));
+                    .ForEach(x => { x.Dispose(); panel1.Controls.Remove(x); });
                 panel1.Controls.OfType<Button>()
                     .Where(x => x.Size.Width == 30)
                     .ToList()
-                    .ForEach(x => panel1.Controls.Remove(x));
+                    .ForEach(x => { x.Dispose(); panel1.Controls.Remove(x); });
 
-                // Thêm dữ liệu DO SAP mới
                 _lstDOSAP.AddRange(detail.ListDOSAP);
                 foreach (var doSap in detail.ListDOSAP)
                 {
@@ -687,6 +722,8 @@ namespace VCS.APP.Areas.CheckIn
             {
                 txtStatus.Text = $"Lỗi khi tải thông tin: {ex.Message}";
                 txtStatus.ForeColor = Color.Red;
+                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -709,10 +746,14 @@ namespace VCS.APP.Areas.CheckIn
             e.Graphics.FillRectangle(new SolidBrush(backColor), e.Bounds);
             if (e.Index >= 0)
             {
-                e.Graphics.DrawString(combo.Items[e.Index].ToString(), 
+                string text = combo.Items[e.Index].ToString();
+                SizeF textSize = e.Graphics.MeasureString(text, e.Font);
+                float yPos = e.Bounds.Y + (e.Bounds.Height - textSize.Height) / 2;
+
+                e.Graphics.DrawString(text,
                     e.Font,
                     new SolidBrush(Color.Black),
-                    new Point(e.Bounds.X + 3, e.Bounds.Y + 2));
+                    new Point(e.Bounds.X + 3, (int)yPos));
             }
         }
 
@@ -723,27 +764,29 @@ namespace VCS.APP.Areas.CheckIn
                 var header = _dbContext.TblBuHeader
                     .FirstOrDefault(x => x.Id == headerId);
                     
-                if (header == null) return null;
+                if (header == null)
+                {
+                    throw new InvalidOperationException($"Không tìm thấy header với ID: {headerId}");
+                }
 
-                var result = _mapper.Map<CheckInDetailModel>(header);
+                var result = new CheckInDetailModel
+                {
+                    LicensePlate = header.VehicleCode,
+                    ListDOSAP = new List<DOSAPDataDto>()
+                };
 
                 var images = _dbContext.TblBuImage
-                    .Where(x => x.HeaderId == headerId)
-                    .ToList();
+                    .Where(x => x.HeaderId.Contains(headerId))
+                    .ToArray();
                     
                 result.VehicleImagePath = images.FirstOrDefault(x => !x.IsPlate)?.FullPath;
                 result.PlateImagePath = images.FirstOrDefault(x => x.IsPlate)?.FullPath;
-
-                // Lấy thông tin DO SAP từ database
-                result.ListDOSAP = new List<DOSAPDataDto>();
-                
                 var doDetails = _dbContext.TblBuDetailDO
                     .Where(x => x.HeaderId == headerId)
                     .ToList();
 
                 foreach (var doDetail in doDetails)
                 {
-                    // Lấy thông tin materials cho mỗi DO
                     var materials = _dbContext.TblBuDetailMaterial
                         .Where(x => x.HeaderId == doDetail.Id)
                         .ToList();

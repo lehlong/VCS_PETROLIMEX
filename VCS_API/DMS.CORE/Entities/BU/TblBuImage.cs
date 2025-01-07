@@ -14,9 +14,9 @@ namespace DMS.CORE.Entities.BU
         [Column("HEADER_ID", TypeName = "NVARCHAR(50)")]
         public string HeaderId { get; set; }
         [Column("PATH", TypeName = "NVARCHAR(500)")]
-        public string Path { get; set; }
+        public string? Path { get; set; }
         [Column("FULL_PATH", TypeName = "NVARCHAR(500)")]
-        public string FullPath { get; set; }
+        public string? FullPath { get; set; }
         [Column("IS_PLATE")]
         public bool IsPlate { get; set; }
 

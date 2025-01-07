@@ -221,14 +221,19 @@
             // comboBox1
             // 
             comboBox1.BackColor = Color.WhiteSmoke;
+            comboBox1.Dock = DockStyle.Fill;
+            comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FlatStyle = FlatStyle.Popup;
+            comboBox1.FlatStyle = FlatStyle.Flat;
             comboBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(11, 5);
+            comboBox1.ItemHeight = 35;
+            comboBox1.Location = new Point(0, 0);
+            comboBox1.Margin = new Padding(0);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(382, 29);
+            comboBox1.Size = new Size(396, 41);
             comboBox1.TabIndex = 16;
+            comboBox1.DrawItem += comboBox1_DrawItem;
             comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
             // 
             // button3
