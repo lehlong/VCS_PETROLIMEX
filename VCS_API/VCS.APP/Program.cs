@@ -1,4 +1,5 @@
-﻿using DMS.BUSINESS.Services.Auth;
+﻿using DMS.BUSINESS.Common;
+using DMS.BUSINESS.Services.Auth;
 using DMS.CORE;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -36,10 +37,11 @@ namespace VCS.APP
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("Connection"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             }, ServiceLifetime.Scoped);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Program).Assembly, typeof(MappingProfile).Assembly);
             
             services.AddScoped<IAuthService, AuthService>();
             

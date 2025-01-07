@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using DMS.BUSINESS.Dtos.Auth;
 using Microsoft.Extensions.DependencyInjection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using AutoMapper;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -29,10 +30,13 @@ namespace VCS.APP.Areas.CheckIn
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private string IMGPATH;
         private string PLATEPATH;
-        public CheckIn(AppDbContext dbContext)
+        private readonly IMapper _mapper;
+
+        public CheckIn(AppDbContext dbContext, IMapper mapper)
         {
             InitializeComponent();
             _dbContext = dbContext;
+            _mapper = mapper;
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
@@ -239,11 +243,52 @@ namespace VCS.APP.Areas.CheckIn
 
         }
 
+        private void DeleteDOSAPDetail(string doNumber, Button deleteButton)
+        {
+            try
+            {
+                // Xóa khỏi danh sách DOSAP
+                _lstDOSAP.RemoveAll(x => x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == doNumber);
+                
+                // Lấy vị trí Y của button bị xóa
+                int deletedY = deleteButton.Location.Y;
+                
+                // Xóa DataGridView và Button khỏi giao diện
+                var gridToRemove = panel1.Controls.OfType<DataGridView>()
+                    .FirstOrDefault(g => g.Location.Y == deleteButton.Location.Y + 35);
+                int heightRemoved = 0;
+                if (gridToRemove != null)
+                {
+                    heightRemoved = gridToRemove.Height + 35; // Chiều cao của grid + khoảng cách
+                    panel1.Controls.Remove(gridToRemove);
+                    gridToRemove.Dispose();
+                }
+                panel1.Controls.Remove(deleteButton);
+                deleteButton.Dispose();
+
+                // Di chuyển chỉ các DataGridView và Button phía dưới lên
+                foreach (Control control in panel1.Controls)
+                {
+                    if (control.Location.Y > deletedY && (control is DataGridView || (control is Button && control.Size.Width == 30)))
+                    {
+                        control.Location = new Point(control.Location.X, control.Location.Y - heightRemoved);
+                    }
+                }
+
+                panel1.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xóa dữ liệu: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void AppendPanelDetail(DOSAPDataDto data)
         {
             try
             {
-                int yPosition = 150;
+                int yPosition = 155;
                 if (_lstDOSAP.Count > 1)
                 {
                     var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
@@ -253,11 +298,36 @@ namespace VCS.APP.Areas.CheckIn
                         yPosition = lastGrid.Bottom + 1;
                     }
                 }
+
+                // Tạo nút xóa
+                var deleteButton = new Button
+                {
+                    Text = "X",
+                    Size = new System.Drawing.Size(30, 30),
+                    Location = new Point(797, yPosition),
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(66, 66, 66),
+                    ForeColor = Color.White,
+                    Cursor = Cursors.Hand
+                };
+                deleteButton.FlatAppearance.BorderSize = 0;
+
+                // Xử lý sự kiện click nút xóa
+                deleteButton.Click += (sender, e) =>
+                {
+                    var doNumber = data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER;
+                    DeleteDOSAPDetail(doNumber, deleteButton);
+                };
+
+                // Thêm nút xóa vào panel1
+                panel1.Controls.Add(deleteButton);
+
+                // Tạo và cấu hình DataGridView
                 var dataGridView1 = new DataGridView();
                 dataGridView1.BackgroundColor = Color.White;
                 dataGridView1.BorderStyle = BorderStyle.None;
                 dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-                dataGridView1.Location = new Point(18, yPosition);
+                dataGridView1.Location = new Point(18, yPosition + 35);
                 dataGridView1.Name = $"dataGridView_{_lstDOSAP.Count}";
                 dataGridView1.TabIndex = 14;
                 dataGridView1.ReadOnly = true;
@@ -300,9 +370,10 @@ namespace VCS.APP.Areas.CheckIn
                 }
 
                 int totalHeight = dataGridView1.ColumnHeadersHeight + 
-                    (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 35;
+                    (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
                 dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
+                // Thêm DataGridView vào panel1
                 panel1.Controls.Add(dataGridView1);
             }
             catch (Exception ex)
@@ -311,7 +382,7 @@ namespace VCS.APP.Areas.CheckIn
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        
         private void txtLicensePlate_TextChanged(object sender, EventArgs e)
         {
 
@@ -573,13 +644,143 @@ namespace VCS.APP.Areas.CheckIn
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
-            string selectedValue = selectedItem.Value;
-            string selectedText = selectedItem.Text;
-            if (string.IsNullOrEmpty(selectedValue)) return;
+            try
+            {
+                ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+                string selectedValue = selectedItem.Value;
+                
+                if (string.IsNullOrEmpty(selectedValue)) return;
 
-            var i = _dbContext.TblBuHeader.Find(selectedValue);
-            txtLicensePlate.Text = i.VehicleCode;
+                var detail = GetCheckInDetail(selectedValue);
+                if (detail == null) return;
+
+                // Cập nhật biển số
+                txtLicensePlate.Text = detail.LicensePlate;
+
+                // Cập nhật ảnh
+                if (!string.IsNullOrEmpty(detail.VehicleImagePath))
+                    pictureBoxVehicle.Image = Image.FromFile(detail.VehicleImagePath);
+                    
+                if (!string.IsNullOrEmpty(detail.PlateImagePath))
+                    pictureBoxLicensePlate.Image = Image.FromFile(detail.PlateImagePath);
+
+                // Xóa dữ liệu DO SAP cũ
+                _lstDOSAP.Clear();
+                panel1.Controls.OfType<DataGridView>().ToList()
+                    .ForEach(x => panel1.Controls.Remove(x));
+                panel1.Controls.OfType<Button>()
+                    .Where(x => x.Size.Width == 30)
+                    .ToList()
+                    .ForEach(x => panel1.Controls.Remove(x));
+
+                // Thêm dữ liệu DO SAP mới
+                _lstDOSAP.AddRange(detail.ListDOSAP);
+                foreach (var doSap in detail.ListDOSAP)
+                {
+                    AppendPanelDetail(doSap);
+                }
+
+                txtStatus.Text = "Đã tải thông tin thành công";
+                txtStatus.ForeColor = Color.Green;
+            }
+            catch (Exception ex)
+            {
+                txtStatus.Text = $"Lỗi khi tải thông tin: {ex.Message}";
+                txtStatus.ForeColor = Color.Red;
+            }
+        }
+
+        private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+            
+            ComboBox combo = sender as ComboBox;
+            
+            Color backColor = combo.BackColor;
+            
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                backColor = Color.FromArgb(230, 230, 230);
+            }
+            else if ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight)
+            {
+                backColor = Color.FromArgb(245, 245, 245);
+            }
+            e.Graphics.FillRectangle(new SolidBrush(backColor), e.Bounds);
+            if (e.Index >= 0)
+            {
+                e.Graphics.DrawString(combo.Items[e.Index].ToString(), 
+                    e.Font,
+                    new SolidBrush(Color.Black),
+                    new Point(e.Bounds.X + 3, e.Bounds.Y + 2));
+            }
+        }
+
+        private CheckInDetailModel GetCheckInDetail(string headerId)
+        {
+            try 
+            {
+                var header = _dbContext.TblBuHeader
+                    .FirstOrDefault(x => x.Id == headerId);
+                    
+                if (header == null) return null;
+
+                var result = _mapper.Map<CheckInDetailModel>(header);
+
+                var images = _dbContext.TblBuImage
+                    .Where(x => x.HeaderId == headerId)
+                    .ToList();
+                    
+                result.VehicleImagePath = images.FirstOrDefault(x => !x.IsPlate)?.FullPath;
+                result.PlateImagePath = images.FirstOrDefault(x => x.IsPlate)?.FullPath;
+
+                // Lấy thông tin DO SAP từ database
+                result.ListDOSAP = new List<DOSAPDataDto>();
+                
+                var doDetails = _dbContext.TblBuDetailDO
+                    .Where(x => x.HeaderId == headerId)
+                    .ToList();
+
+                foreach (var doDetail in doDetails)
+                {
+                    // Lấy thông tin materials cho mỗi DO
+                    var materials = _dbContext.TblBuDetailMaterial
+                        .Where(x => x.HeaderId == doDetail.Id)
+                        .ToList();
+
+                    var doSapData = new DOSAPDataDto
+                    {
+                        STATUS = true,
+                        DATA = new DMS.BUSINESS.Dtos.SMO.Data
+                        {
+                            VEHICLE = header.VehicleCode,
+                            LIST_DO = new List<DO>
+                            {
+                                new DO
+                                {
+                                    DO_NUMBER = doDetail.Do1Sap,
+                                    LIST_MATERIAL = materials.Select(m => new LIST_MATERIAL
+                                    {
+                                        MATERIAL = m.MaterialCode,
+                                        QUANTITY = m.Quantity,
+                                        UNIT = m.UnitCode
+                                    }).ToList()
+                                }
+                            }
+                        }
+                    };
+
+                    result.ListDOSAP.Add(doSapData);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
     }
 }
