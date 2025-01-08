@@ -252,8 +252,6 @@ namespace VCS.APP.Areas.CheckIn
                 if (itemToRemove != null)
                 {
                     _lstDOSAP.Remove(itemToRemove);
-                    MessageBox.Show($"Đã xóa thành công!\nSố lượng lệnh xuất còn lại: {_lstDOSAP.Count}",
-                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 
                 int deletedY = deleteButton.Location.Y;
@@ -783,6 +781,7 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
+                _dbContext.ChangeTracker.Clear();
 
                 var header = await _dbContext.TblBuHeader.FindAsync(selectedHeaderId);
                 if (header != null && header.VehicleCode != txtLicensePlate.Text)
@@ -790,6 +789,7 @@ namespace VCS.APP.Areas.CheckIn
                     header.VehicleCode = txtLicensePlate.Text;
                     _dbContext.TblBuHeader.Update(header);
                 }
+
                 var oldDOs = await _dbContext.TblBuDetailDO
                     .Where(x => x.HeaderId == selectedHeaderId)
                     .ToListAsync();
@@ -800,7 +800,6 @@ namespace VCS.APP.Areas.CheckIn
                         .Where(x => x.HeaderId == oldDO.Id)
                         .ToListAsync();
                     _dbContext.TblBuDetailMaterial.RemoveRange(oldMaterials);
-                    
                     _dbContext.TblBuDetailDO.Remove(oldDO);
                 }
 
@@ -841,11 +840,21 @@ namespace VCS.APP.Areas.CheckIn
                 }
 
                 await _dbContext.SaveChangesAsync();
-
                 txtStatus.Text = "Cập nhật thông tin thành công";
                 txtStatus.ForeColor = Color.Green;
 
+                string currentSelectedText = selectedItem.Text;
+                
                 GetListQueue();
+                for (int i = 0; i < comboBox1.Items.Count; i++)
+                {
+                    var item = (ComboBoxItem)comboBox1.Items[i];
+                    if (item.Text == currentSelectedText)
+                    {
+                        comboBox1.SelectedIndex = i;
+                        break;
+                    }
+                }
             }
             catch (Exception ex)
             {
