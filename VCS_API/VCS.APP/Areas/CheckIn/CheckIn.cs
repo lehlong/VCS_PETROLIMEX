@@ -251,6 +251,9 @@ namespace VCS.APP.Areas.CheckIn
                     x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == doNumber);
                 if (itemToRemove != null)
                 {
+                    _lstDOSAP.Remove(itemToRemove);
+                    MessageBox.Show($"Đã xóa thành công!\nSố lượng lệnh xuất còn lại: {_lstDOSAP.Count}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 
                 int deletedY = deleteButton.Location.Y;
