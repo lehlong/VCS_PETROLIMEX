@@ -18,6 +18,7 @@ using DMS.BUSINESS.Dtos.Auth;
 using Microsoft.Extensions.DependencyInjection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using AutoMapper;
+using System.Windows.Forms;
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -411,67 +412,13 @@ namespace VCS.APP.Areas.CheckIn
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            //var _s = new CommonService();
-            //var token = _s.LoginSmoApi();
-
-            //if (_lstDOSAP.Count() == 0)
-            //{
-            //    DialogResult result = MessageBox.Show("Chưa có thông tin lệnh xuất! Vẫn cho xe vào?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //    switch (result)
-            //    {
-            //        case DialogResult.No:
-            //            break;
-            //        case DialogResult.Yes:
-            //            if (string.IsNullOrEmpty(txtLicensePlate.Text))
-            //            {
-            //                txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
-            //                txtStatus.ForeColor = Color.Red;
-            //                return;
-            //            }
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //    return;
-            //}
-            //if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
-            //{
-            //    txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
-            //    txtStatus.ForeColor = Color.Red;
-            //    return;
-            //}
-
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
                 txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
-            var _s = new CommonService();
-            var token = _s.LoginSmoApi();
 
-            if (string.IsNullOrEmpty(token) || _lstDOSAP.Count() == 0)
-            {
-                var message = string.IsNullOrEmpty(token) ?
-                    "Không thể kết nối đến hệ thống SMO!" :
-                    "Chưa có thông tin lệnh xuất!";
-
-                if (MessageBox.Show($"{message} Vẫn cho xe vào?", "Cảnh báo",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-                {
-                    txtStatus.Text = message;
-                    txtStatus.ForeColor = Color.Red;
-                    return;
-                }
-                return;
-            }
-
-            if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
-            {
-                txtStatus.Text = "Lưu ý! Phương tiện vào không trùng với phương tiện trong lệnh xuất!";
-                txtStatus.ForeColor = Color.Red;
-                return;
-            }
             var headerId = Guid.NewGuid().ToString();
             var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
             _dbContext.TblBuHeader.Add(new TblBuHeader
@@ -634,9 +581,9 @@ namespace VCS.APP.Areas.CheckIn
 
         private void GetListQueue()
         {
-            //var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
-            //&& x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
-            var lstQueue = _dbContext.TblBuQueue.ToList();
+            var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
+            && x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
+            //var lstQueue = _dbContext.TblBuQueue.ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem(" -", ""));
             foreach (var item in lstQueue)
