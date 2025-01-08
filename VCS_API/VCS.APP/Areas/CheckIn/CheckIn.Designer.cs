@@ -43,7 +43,7 @@
             panel4 = new Panel();
             comboBox1 = new ComboBox();
             button3 = new Button();
-            button2 = new Button();
+            btnCheckIn = new Button();
             panel3 = new Panel();
             pictureBox1 = new PictureBox();
             txtNumber = new TextBox();
@@ -106,7 +106,7 @@
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
+            panel1.Controls.Add(btnCheckIn);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(button1);
@@ -251,20 +251,20 @@
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
-            // button2
+            // btnCheckIn
             // 
-            button2.BackColor = Color.FromArgb(66, 66, 66);
-            button2.Cursor = Cursors.Hand;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(646, 14);
-            button2.Name = "button2";
-            button2.Size = new Size(181, 40);
-            button2.TabIndex = 14;
-            button2.Text = "Cho vào kho - Cấp số";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            btnCheckIn.BackColor = Color.FromArgb(66, 66, 66);
+            btnCheckIn.Cursor = Cursors.Hand;
+            btnCheckIn.FlatStyle = FlatStyle.Flat;
+            btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCheckIn.ForeColor = Color.White;
+            btnCheckIn.Location = new Point(646, 14);
+            btnCheckIn.Name = "btnCheckIn";
+            btnCheckIn.Size = new Size(181, 40);
+            btnCheckIn.TabIndex = 14;
+            btnCheckIn.Text = "Cho vào kho - Cấp số";
+            btnCheckIn.UseVisualStyleBackColor = false;
+            btnCheckIn.Click += btnCheckIn_Click;
             // 
             // panel3
             // 
@@ -549,5 +549,6 @@
         private Label label6;
         private Panel statusDB;
         private PictureBox pictureBox2;
+        private Button btnCheckIn;
     }
 }

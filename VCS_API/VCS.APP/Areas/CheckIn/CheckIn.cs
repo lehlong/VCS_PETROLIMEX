@@ -33,6 +33,7 @@ namespace VCS.APP.Areas.CheckIn
         private string PLATEPATH;
         private AppDbContext dbContext;
 
+
         public CheckIn(AppDbContext dbContext)
         {
             InitializeComponent();
@@ -420,6 +421,8 @@ namespace VCS.APP.Areas.CheckIn
             {
                 Id = headerId,
                 VehicleCode = txtLicensePlate.Text,
+                CompanyCode = ProfileUtilities.User.OrganizeCode,
+                WarehouseCode = ProfileUtilities.User.WarehouseCode
             });
 
             foreach (var i in _lstDOSAP)
@@ -521,9 +524,100 @@ namespace VCS.APP.Areas.CheckIn
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void btnCheckIn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtLicensePlate.Text))
+            {
+                txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedHeaderId = selectedItem.Value;
+            if (string.IsNullOrEmpty(selectedHeaderId))
+            {
+                var headerId = Guid.NewGuid().ToString();
+               
+                _dbContext.TblBuHeader.Add(new TblBuHeader
+                {
+                    Id = headerId,
+                    VehicleCode = txtLicensePlate.Text,
+                    CompanyCode = ProfileUtilities.User.OrganizeCode,
+                    WarehouseCode = ProfileUtilities.User.WarehouseCode
+                });
 
+                foreach (var i in _lstDOSAP)
+                {
+                    var hId = Guid.NewGuid().ToString();
+                    _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
+                    {
+                        Id = hId,
+                        HeaderId = headerId,
+                        Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
+                        VehicleCode = i.DATA.VEHICLE
+                    });
+                    foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                    {
+                        _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            HeaderId = hId,
+                            MaterialCode = l.MATERIAL,
+                            Quantity = l.QUANTITY,
+                            UnitCode = l.UNIT,
+                        });
+
+                    }
+                }
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    Path = PLATEPATH,
+                    FullPath = PLATEPATH,
+                    IsPlate = true,
+                    IsActive = true,
+                });
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    Path = IMGPATH,
+                    FullPath = IMGPATH,
+                    IsPlate = false,
+                    IsActive = true
+                });
+                _dbContext.TblBuOrders.Add(new TblBuOrder
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    VehicleCode = txtLicensePlate.Text,
+                    Name = name,
+                    Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                    Stt = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                    Count = 0,
+                    IsActive = true
+                });
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                var itemDelete = _dbContext.TblBuQueue.FirstOrDefault(x => x.HeaderId == selectedHeaderId);
+                _dbContext.TblBuQueue.Remove(itemDelete);
+                _dbContext.TblBuOrders.Add(new TblBuOrder
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = selectedHeaderId,
+                    VehicleCode = txtLicensePlate.Text,
+                    Name = name,
+                    Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                    Stt = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                    Count = 0,
+                    IsActive = true
+                });
+                _dbContext.SaveChanges();
+            }  
         }
 
         private async void CheckStatusSystem()
