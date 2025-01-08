@@ -430,6 +430,7 @@ namespace VCS.APP.Areas.CheckIn
                     Id = hId,
                     HeaderId = headerId,
                     Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
+                    VehicleCode = i.DATA.VEHICLE
                 });
                 foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
                 {
@@ -738,7 +739,7 @@ namespace VCS.APP.Areas.CheckIn
                         STATUS = true,
                         DATA = new DMS.BUSINESS.Dtos.SMO.Data
                         {
-                            VEHICLE = header.VehicleCode,
+                            VEHICLE = doDetail.VehicleCode,
                             LIST_DO = new List<DO>
                             {
                                 new DO
@@ -811,6 +812,7 @@ namespace VCS.APP.Areas.CheckIn
                         Id = hId,
                         HeaderId = selectedHeaderId,
                         Do1Sap = doSap.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
+                        VehicleCode = doSap.DATA.VEHICLE,
                     });
 
                     foreach (var material in doSap.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)

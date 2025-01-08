@@ -16,7 +16,8 @@ namespace DMS.CORE.Entities.BU
 
         [Column("DO1_SAP", TypeName = "NVARCHAR(50)")]
         public string Do1Sap { get; set; }
-
+        [Column("VEHICLE_CODE", TypeName = "NVARCHAR(50)")]
+        public string VehicleCode { get; set; }
 
     }
 }
