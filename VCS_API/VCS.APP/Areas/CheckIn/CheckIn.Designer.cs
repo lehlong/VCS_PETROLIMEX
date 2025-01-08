@@ -249,6 +249,7 @@
             button3.TabIndex = 15;
             button3.Text = "Cập nhật";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // button2
             // 

@@ -247,26 +247,26 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
-                // Xóa khỏi danh sách DOSAP
-                _lstDOSAP.RemoveAll(x => x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == doNumber);
+                var itemToRemove = _lstDOSAP.FirstOrDefault(x => 
+                    x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == doNumber);
+                if (itemToRemove != null)
+                {
+                }
                 
-                // Lấy vị trí Y của button bị xóa
                 int deletedY = deleteButton.Location.Y;
                 
-                // Xóa DataGridView và Button khỏi giao diện
                 var gridToRemove = panel1.Controls.OfType<DataGridView>()
                     .FirstOrDefault(g => g.Location.Y == deleteButton.Location.Y + 35);
                 int heightRemoved = 0;
                 if (gridToRemove != null)
                 {
-                    heightRemoved = gridToRemove.Height + 35; // Chiều cao của grid + khoảng cách
+                    heightRemoved = gridToRemove.Height + 35; 
                     panel1.Controls.Remove(gridToRemove);
                     gridToRemove.Dispose();
                 }
                 panel1.Controls.Remove(deleteButton);
                 deleteButton.Dispose();
 
-                // Di chuyển chỉ các DataGridView và Button phía dưới lên
                 foreach (Control control in panel1.Controls)
                 {
                     if (control.Location.Y > deletedY && (control is DataGridView || (control is Button && control.Size.Width == 30)))
@@ -299,37 +299,32 @@ namespace VCS.APP.Areas.CheckIn
                     }
                 }
 
-                // Tạo nút xóa
                 var deleteButton = new Button
                 {
                     Size = new System.Drawing.Size(30, 30),
                     Location = new Point(797, yPosition),
                     FlatStyle = FlatStyle.Flat,
-                    BackColor = Color.FromArgb(230, 230, 230), // Màu xám nhạt
+                    BackColor = Color.FromArgb(230, 230, 230),
                     ForeColor = Color.Black,
                     Cursor = Cursors.Hand,
-                    Image = Properties.Resources.delete_icon, // Thêm icon từ Resources
-                    ImageAlign = ContentAlignment.MiddleCenter // Căn giữa icon
+                    Image = Properties.Resources.delete_icon, 
+                    ImageAlign = ContentAlignment.MiddleCenter 
                 };
                 deleteButton.FlatAppearance.BorderSize = 0;
 
-                // Điều chỉnh kích thước icon nếu cần
                 if (deleteButton.Image != null)
                 {
                     deleteButton.Image = new Bitmap(deleteButton.Image, new System.Drawing.Size(16, 16));
                 }
 
-                // Xử lý sự kiện click nút xóa
                 deleteButton.Click += (sender, e) =>
                 {
                     var doNumber = data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER;
                     DeleteDOSAPDetail(doNumber, deleteButton);
                 };
 
-                // Thêm nút xóa vào panel1
                 panel1.Controls.Add(deleteButton);
 
-                // Tạo và cấu hình DataGridView
                 var dataGridView1 = new DataGridView();
                 dataGridView1.BackgroundColor = Color.White;
                 dataGridView1.BorderStyle = BorderStyle.None;
@@ -380,7 +375,6 @@ namespace VCS.APP.Areas.CheckIn
                     (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
                 dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
-                // Thêm DataGridView vào panel1
                 panel1.Controls.Add(dataGridView1);
             }
             catch (Exception ex)
@@ -770,6 +764,92 @@ namespace VCS.APP.Areas.CheckIn
                 MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
+            }
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+                string selectedHeaderId = selectedItem.Value;
+
+                if (string.IsNullOrEmpty(selectedHeaderId))
+                {
+                    txtStatus.Text = "Vui lòng chọn một phương tiện để cập nhật";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+
+                var header = await _dbContext.TblBuHeader.FindAsync(selectedHeaderId);
+                if (header != null && header.VehicleCode != txtLicensePlate.Text)
+                {
+                    header.VehicleCode = txtLicensePlate.Text;
+                    _dbContext.TblBuHeader.Update(header);
+                }
+                var oldDOs = await _dbContext.TblBuDetailDO
+                    .Where(x => x.HeaderId == selectedHeaderId)
+                    .ToListAsync();
+
+                foreach (var oldDO in oldDOs)
+                {
+                    var oldMaterials = await _dbContext.TblBuDetailMaterial
+                        .Where(x => x.HeaderId == oldDO.Id)
+                        .ToListAsync();
+                    _dbContext.TblBuDetailMaterial.RemoveRange(oldMaterials);
+                    
+                    _dbContext.TblBuDetailDO.Remove(oldDO);
+                }
+
+                foreach (var doSap in _lstDOSAP)
+                {
+                    var hId = Guid.NewGuid().ToString();
+                    _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
+                    {
+                        Id = hId,
+                        HeaderId = selectedHeaderId,
+                        Do1Sap = doSap.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
+                    });
+
+                    foreach (var material in doSap.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                    {
+                        _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            HeaderId = hId,
+                            MaterialCode = material.MATERIAL,
+                            Quantity = material.QUANTITY,
+                            UnitCode = material.UNIT,
+                        });
+                    }
+                }
+
+                var queue = await _dbContext.TblBuQueue
+                    .FirstOrDefaultAsync(x => x.HeaderId == selectedHeaderId);
+                if (queue != null && queue.VehicleCode != txtLicensePlate.Text)
+                {
+                    queue.VehicleCode = txtLicensePlate.Text;
+                    var name = _dbContext.TblMdVehicle
+                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + 
+                        _dbContext.TblMdVehicle
+                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
+                    queue.Name = name;
+                    _dbContext.TblBuQueue.Update(queue);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                txtStatus.Text = "Cập nhật thông tin thành công";
+                txtStatus.ForeColor = Color.Green;
+
+                GetListQueue();
+            }
+            catch (Exception ex)
+            {
+                txtStatus.Text = $"Lỗi khi cập nhật thông tin: {ex.Message}";
+                txtStatus.ForeColor = Color.Red;
+                MessageBox.Show($"Lỗi khi cập nhật thông tin: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
