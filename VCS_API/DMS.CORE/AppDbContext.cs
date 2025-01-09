@@ -149,6 +149,7 @@ namespace DMS.CORE
         public DbSet<TblMdLocal> tblMdLocal { get; set; }
         public DbSet<TblMdPosition> TblMdPosition { get; set; }
         public DbSet<TblMdAccountType> tblMdAccountType { get; set; }
+        public DbSet<TblMdSequence> tblMdSequence { get; set; }
 
         #endregion
 

@@ -588,18 +588,32 @@ namespace VCS.APP.Areas.CheckIn
                     IsPlate = false,
                     IsActive = true
                 });
+
+                var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
+                _stt = _stt == 0 ? 1 : _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.STT) + 1;
+
+                _dbContext.tblMdSequence.Add(new TblMdSequence
+                {
+                    Code = Guid.NewGuid().ToString(),
+                    STT = _stt,
+                    WarehouseCode = ProfileUtilities.User.WarehouseCode,
+                    OrgCode = ProfileUtilities.User.OrganizeCode
+                });
+                var _order = _dbContext.TblBuOrders.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
+                _order = _order == 0 ? 1 : _dbContext.TblBuOrders.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.Order) + 1;
                 _dbContext.TblBuOrders.Add(new TblBuOrder
                 {
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
                     VehicleCode = txtLicensePlate.Text,
                     Name = name,
-                    Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
-                    Stt = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
+                    Order = _order,
+                    Stt = _stt,
                     Count = 0,
                     IsActive = true
                 });
                 await _dbContext.SaveChangesAsync();
+                MessageBox.Show("Cho vào kho cấp số thành công!");
             }
             else
             {
