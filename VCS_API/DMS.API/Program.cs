@@ -178,6 +178,7 @@ app.UseAuthorization();
 app.UseMiddleware<ActionLoggingMiddleware>();
 app.MapHub<SystemTraceServiceHub>("/SystemTrace");
 app.MapHub<RefreshServiceHub>("/Refresh");
+app.MapHub<OrderHub>("/order");
 
 app.UseStaticFiles();
 

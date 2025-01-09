@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using DMS.BUSINESS.Common;
 using DMS.BUSINESS.Dtos.BU;
+using DMS.BUSINESS.Services.HUB;
 using DMS.CORE;
 using DMS.CORE.Entities.BU;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 
 
 namespace DMS.BUSINESS.Services.BU
@@ -18,9 +22,29 @@ namespace DMS.BUSINESS.Services.BU
         Task<IList<OrderDto>> GetAll(BaseMdFilter filter);
         //Task<byte[]> Export(BaseMdFilter filter);
     }
-    public class OrderService(AppDbContext dbContext, IMapper mapper) : GenericService<TblBuOrder, OrderDto>(dbContext, mapper), IOrderService
+    public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
-         public async Task<IList<OrderDto>> GetAll(BaseMdFilter filter)
+        private readonly IHubContext<OrderHub> _hubContext;
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public OrderService(
+            AppDbContext dbContext,
+            IMapper mapper,
+            IHubContext<OrderHub> hubContext,
+            IHttpContextAccessor contextAccessor)
+            : base(dbContext, mapper)
+        {
+            _hubContext = hubContext;
+            _contextAccessor = contextAccessor;
+        }
+        private string CurrentUser
+        {
+            get
+            {
+                return _contextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+            }
+        }
+        public async Task<IList<OrderDto>> GetAll(BaseMdFilter filter)
         {
             try
             {
