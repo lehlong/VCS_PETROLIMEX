@@ -23,6 +23,7 @@ namespace DMS.CORE.Entities.MD
         public string OrgCode { get; set; }
         [Description("Kho")]
         public string WarehouseCode { get; set; }
+       
 
         public void Mapping(Profile profile)
         {

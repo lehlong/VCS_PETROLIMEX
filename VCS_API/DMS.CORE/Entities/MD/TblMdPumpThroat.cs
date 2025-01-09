@@ -22,6 +22,7 @@ namespace DMS.CORE.Entities.MD
         public string PumpRigCode { get; set; }
         [Column("GOODS_CODE", TypeName = "NVARCHAR(255)")]
         public string GoodsCode { get; set; }
-
+        [Column("CAPACITY")]
+        public decimal? Capacity { get; set; }
     }
 }

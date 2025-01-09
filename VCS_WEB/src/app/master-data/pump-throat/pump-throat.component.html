@@ -20,6 +20,7 @@
           <th>Tên họng bơm</th>
           <th>Giàn bơm</th>
           <th>Mặt hàng</th>
+          <th>Công suất</th>
           <th>Trạng thái</th>
         </tr>
       </thead>
@@ -30,6 +31,7 @@
           <td>{{ data.name }}</td>
           <td>{{ getNamePumpRig(data.pumpRigCode) }}</td>
           <td>{{ getNameGoods(data.goodsCode) }}</td>
+          <td>{{ data.capacity }}</td>
           <td>
             <nz-tag nzColor="success" *ngIf="data.isActive">
               <span nz-icon nzType="check-circle"></span>
@@ -67,6 +69,8 @@
             <nz-option *ngFor="let item of lstGoods" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
           </nz-select>
         </div>
+        <label>Công suất</label>
+        <input nz-input class="input-form" placeholder="Công suất" [(ngModel)]="itemEdit.capacity" />
         <label>Trạng thái</label>
         <div>
           <nz-radio-group [(ngModel)]="itemEdit.isActive">

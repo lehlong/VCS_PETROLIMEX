@@ -24,6 +24,7 @@ export class PumpThroatComponent {
     warehouseCode: '',
     pumpRigCode: '',
     goodsCode: '',
+    capacity: '',
     isActive: true
   }
 

@@ -24,9 +24,11 @@ namespace DMS.BUSINESS.Dtos.MD
         [Description("Đơn vị")]
         public string OrgCode { get; set; }
         [Description("Trung gian bơm xuất")]
-        public string tgbx { get; set; }
+        public string Tgbx { get; set; }
         [Description("Tự động hóa")]
-        public string tdh { get; set; }
+        public string Tdh { get; set; }
+        [Description("Tự động hóa E5")]
+        public string? Tdh_e5 { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblMdWarehouse, WarehouseDto>().ReverseMap();

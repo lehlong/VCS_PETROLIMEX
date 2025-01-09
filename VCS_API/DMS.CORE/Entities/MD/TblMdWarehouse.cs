@@ -21,8 +21,10 @@ namespace DMS.CORE.Entities.MD
         [Column("ORG_CODE", TypeName = "NVARCHAR(50)")]
         public string OrgCode { get; set; }
         [Column("TGBX", TypeName = "NVARCHAR(50)")]
-        public string tgbx { get; set; }
+        public string Tgbx { get; set; }
         [Column("TDH", TypeName = "NVARCHAR(50)")]
-        public string tdh { get; set; }
+        public string Tdh { get; set; }
+        [Column("TDH_E5", TypeName = "NVARCHAR(50)")]
+        public string? Tdh_e5 { get; set; }
     }
 }

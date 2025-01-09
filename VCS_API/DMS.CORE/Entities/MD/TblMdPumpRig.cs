@@ -18,6 +18,8 @@ namespace DMS.CORE.Entities.MD
         public string OrgCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(255)")]
         public string WarehouseCode { get; set; }
+     
+
 
 
     }

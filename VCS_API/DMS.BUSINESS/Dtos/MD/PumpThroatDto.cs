@@ -29,6 +29,8 @@ namespace DMS.CORE.Entities.MD
 
         [Description("Mặt hàng")]
         public string GoodsCode { get; set; }
+        [Description("Công Suất")]
+        public decimal? Capacity { get; set; }
 
         public void Mapping(Profile profile)
         {

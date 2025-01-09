@@ -27,6 +27,7 @@ export class WarehouseComponent implements OnInit {
     name: '',
     tgbx: '',
     tdh: '',
+    tdh_e5: '',
     orgCode: '',
     isActive: true
   }
@@ -70,6 +71,7 @@ export class WarehouseComponent implements OnInit {
       name: '',
       tgbx: '',
       tdh: '',
+      tdh_e5: '',
       orgCode: '',
       isActive: true
     }
