@@ -6,6 +6,7 @@ export class AccountFilter extends BaseFilter {
   SortColumn: string = 'name';
   PartnerId! : number ;
   AccountType : string = '';
+  positionCode : string = '';
   IsActive! : boolean;
 }
 
@@ -27,7 +28,7 @@ export interface AdAccount {
     phoneNumber: string;
     isActive: boolean;
   }
-  
+
   export interface AdAccountGroup {
     id: string;
     name: string;
@@ -47,11 +48,10 @@ export interface AdAccount {
     oldPassword: string;
     newPassword: string;
   }
-  
+
   export interface AdAccountModel {
     userName?: string;
     fullName?: string;
     groupId?: string;
     isActive?: boolean | string;
   }
-  

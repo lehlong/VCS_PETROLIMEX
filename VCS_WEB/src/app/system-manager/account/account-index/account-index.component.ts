@@ -10,6 +10,7 @@ import { AccountFilter } from '../../../models/system-manager/account.model'
 import { AccountEditComponent } from '../account-edit/account-edit.component'
 import { AccountGroupEditComponent } from '../../account-group/account-group-edit/account-group-edit.component'
 import { ActivatedRoute, Router } from '@angular/router'
+import { PositionService } from '../../../services/master-data/position.service'
 
 @Component({
   selector: 'app-account-index',
@@ -33,6 +34,7 @@ export class AccountIndexComponent {
   listAccountGroup: any[] = []
   //listPartner: any[] = []
   accountType: any[] = []
+  positionList: any[] = []
   listStatus: any[] = [
     { id: 'true', name: 'Kích hoạt' },
     { id: 'false', name: 'Khoá' },
@@ -50,6 +52,7 @@ export class AccountIndexComponent {
     private dropdownService: DropdownService,
     // private _service: PartnerManagementService,
     private _as: AccountService,
+    private _positionService: PositionService,
     private globalService: GlobalService,
     private route: ActivatedRoute,
     private router: Router,
@@ -93,6 +96,7 @@ export class AccountIndexComponent {
   loadInit() {
     this.getAllAccountGroup()
     this.getAllAccountType()
+    this.getAllPosition()
     this.search()
   }
 
@@ -151,6 +155,7 @@ export class AccountIndexComponent {
       },
     })
   }
+
   getAllAccountType() {
     this.dropdownService.getAllAccountType().subscribe({
       next: (data) => {
@@ -163,11 +168,28 @@ export class AccountIndexComponent {
       },
     })
   }
+  getAllPosition() {
+    this._positionService.getall().subscribe({
+      next: (data) => {
+        console.log(data);
+
+        this.positionList = data
+      },
+      error: (response) => {
+        console.log(response)
+      },
+    })
+  }
+
   getAccountTypeNameById(id: string | number): string {
     const accountType = this.accountType.find(item => item.id === id);
     return accountType ? accountType.name : 'N/A';
   }
 
+  getPositionCodeNameById(positionCode: string | number): string {
+    const positionName = this.positionList.find(item => item.code === positionCode);
+    return positionName ? positionName.name : 'N/A';
+  }
   // exportExcel() {
   //   return this._service.exportExcel(this.filter).subscribe((result: Blob) => {
   //     const blob = new Blob([result], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});

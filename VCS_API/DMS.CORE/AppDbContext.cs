@@ -147,6 +147,7 @@ namespace DMS.CORE
         public DbSet<TblMdCurrency> tblMdCurrency { get; set; }
         public DbSet<TblMdUnit> tblMdUnit { get; set; }
         public DbSet<TblMdLocal> tblMdLocal { get; set; }
+        public DbSet<TblMdPosition> TblMdPosition { get; set; }
         public DbSet<TblMdAccountType> tblMdAccountType { get; set; }
 
         #endregion

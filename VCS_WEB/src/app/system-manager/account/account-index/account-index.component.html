@@ -22,6 +22,12 @@
             <nz-option cdkScrollable *ngFor="let item of accountType" [nzLabel]="item.name" [nzValue]="item.id">
             </nz-option>
           </nz-select>
+
+          <nz-select class="flex-grow" nzShowSearch nzAllowClear nzPlaceHolder="Chức vụ"
+            [(ngModel)]="filter.positionCode">
+            <nz-option cdkScrollable *ngFor="let item of positionList" [nzLabel]="item.name" [nzValue]="item.Code">
+            </nz-option>
+          </nz-select>
           <!-- <nz-select
             class="flex-grow"
             nzShowSearch
@@ -68,17 +74,14 @@
             Tên đầy đủ
           </th>
           <th>Kiểu người dùng</th>
+          <th>Chức vụ</th>
           <th nzAlign="center">Trạng thái</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of headerTable.data; let i = index">
           <td>
-            {{
-            (paginationResult.currentPage - 1) * paginationResult.pageSize +
-            i +
-            1
-            }}
+            {{ (paginationResult.currentPage - 1) * paginationResult.pageSize + i + 1 }}
           </td>
           <td>
             <div *ngFor="let item of data?.accountGroups">
@@ -90,6 +93,7 @@
           </td>
           <td>{{ data.fullName }}</td>
           <td>{{ getAccountTypeNameById(data?.accountType) }}</td>
+          <td>{{ getPositionCodeNameById(data?.positionCode) }}</td>
           <td nzAlign="center">
             <span [ngClass]="data?.isActive ? '!text-green-500' : '!text-red-500'" nz-icon nzType="check-circle"
               nzTheme="outline"></span>

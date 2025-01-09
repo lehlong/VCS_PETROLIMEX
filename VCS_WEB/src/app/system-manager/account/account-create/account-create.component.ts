@@ -7,6 +7,7 @@ import { UserTypeCodes } from '../../../shared/constants/account.constants'
 import { ActivatedRoute } from '@angular/router'
 import { error } from '@ant-design/icons-angular'
 import { WarehouseService } from '../../../services/master-data/warehouse.service'
+import { PositionService } from '../../../services/master-data/position.service'
 
 @Component({
   selector: 'app-account-create',
@@ -31,16 +32,14 @@ export class AccountCreateComponent {
     accountType: ['', [Validators.required]],
     organizeCode: ['', [Validators.required]],
     warehouseCode: ['', [Validators.required]],
-    //partnerId: [''],
+    positionCode: ['', [Validators.required]],
   })
 
-  // UserTypeCodes = UserTypeCodes;
-  // isShowSelectPartner: boolean = false;
-  // listPartnerCustomer: any[] = [];
   passwordVisible: boolean = false
   accountType: any[] = []
   orgList: any[] = []
   warehouseList: any[] = []
+  positionList: any[] = []
   selectedOrg = ''
 
   constructor(
@@ -48,12 +47,14 @@ export class AccountCreateComponent {
     private fb: NonNullableFormBuilder,
     private dropdownService: DropdownService,
     private _whService: WarehouseService,
+    private _positionService: PositionService,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.loadInit()
     this.getAllAccountType()
+    this.getAllPosition()
     this.getAllOrg()
   }
 
@@ -110,6 +111,17 @@ export class AccountCreateComponent {
     this._whService.getByOrg(this.selectedOrg).subscribe({
       next: (data) => {
         this.warehouseList = data
+      },
+      error: (response) => {
+        console.log(response)
+      },
+    })
+  }
+
+  getAllPosition() {
+    this._positionService.getall().subscribe({
+      next: (data) => {
+        this.positionList = data
       },
       error: (response) => {
         console.log(response)

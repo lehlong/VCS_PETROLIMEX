@@ -37,6 +37,17 @@
           </div>
           <div nz-col [nzXs]="24" [nzMd]="12">
             <nz-form-item>
+              <nz-form-label>Chức vụ</nz-form-label>
+              <nz-form-control nzErrorTip="Không được để trống">
+                <nz-select nzShowSearch nzAllowClear placeholder="Chọn chức vụ" formControlName="positionCode">
+                  <nz-option cdkScrollable *ngFor="let item of positionList" [nzLabel]="item.name" [nzValue]="item.code">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="24" [nzMd]="12">
+            <nz-form-item>
               <nz-form-label>Đơn vị</nz-form-label>
               <nz-form-control nzErrorTip="Không được để trống">
                 <nz-select nzShowSearch nzAllowClear placeholder="Chọn đơn vị" formControlName="organizeCode">

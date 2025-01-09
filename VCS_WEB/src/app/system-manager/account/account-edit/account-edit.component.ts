@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router'
 import { AuthService } from '../../../services/auth.service'
 import { GlobalService } from '../../../services/global.service'
 import { AccountGroupService } from '../../../services/system-manager/account-group.service'
+import { PositionService } from '../../../services/master-data/position.service'
 
 @Component({
   selector: 'app-account-edit',
@@ -46,6 +47,7 @@ export class AccountEditComponent {
     accountType: ['', [Validators.required]],
     organizeCode: ['', [Validators.required]],
     warehouseCode: ['', [Validators.required]],
+    positionCode: ['', [Validators.required]],
     //partnerId: [''],
   })
 
@@ -59,6 +61,8 @@ export class AccountEditComponent {
   accountType: any[] = []
   orgList: any[] = []
   warehouseList: any[] = []
+  positionList: any[] = []
+
   constructor(
     private _service: AccountService,
     private fb: NonNullableFormBuilder,
@@ -68,6 +72,7 @@ export class AccountEditComponent {
     private route: ActivatedRoute,
     private authService: AuthService,
     private globalService: GlobalService,
+    private _positionService: PositionService,
   ) {
     this.widthDeault =
       window.innerWidth <= 767
@@ -84,6 +89,7 @@ export class AccountEditComponent {
     this.getAllAccountType()
     this.getRight()
     this.getAllOrg()
+    this.getAllPosition()
   }
 
   getAllOrg() {
@@ -98,12 +104,15 @@ export class AccountEditComponent {
       },
     })
   }
+
   changeSaleType(value: string) { }
+
   getRight() {
     this.rightService.GetRightTree().subscribe((res) => {
       this.nodes = this.mapTreeNodes(res)
     })
   }
+
   mapTreeNodes(data: any): any[] {
     return data.children
       ? data.children.map((node: any) => ({
@@ -248,6 +257,7 @@ export class AccountEditComponent {
             accountType: data.accountType,
             organizeCode: data.organizeCode,
             warehouseCode: data.warehouseCode,
+            positionCode: data.positionCode,
             //partnerId: data.partnerId || '',
           })
           //this.isShowSelectPartner = data.accountType === 'KH' ? true : false
@@ -257,13 +267,14 @@ export class AccountEditComponent {
           this.nodes = this.mapTreeNodes(data.treeRight)
           this.nodesConstant = [...this.mapTreeNodes(data.treeRight)]
           this.loadGroupRights(data.account_AccountGroups)
-          console.log('detai Data', data)
+          // console.log('detai Data', data)
         },
         error: (response) => {
           console.log(response)
         },
       })
   }
+
   loadGroupRights(accountGroups: any[]) {
     const groupIds = accountGroups.map((group) => group.groupId)
 
@@ -339,6 +350,16 @@ export class AccountEditComponent {
       })
   }
 
+  getAllPosition() {
+    this._positionService.getall().subscribe({
+      next: (data) => {
+        this.positionList = data
+      },
+      error: (response) => {
+        console.log(response)
+      },
+    })
+  }
   submitForm(): void {
     const listAccountGroupRight = this.getCheckedNodes(this.nodes).map(
       (element: any) => ({
@@ -415,10 +436,13 @@ export class AccountEditComponent {
       })
     }
   }
+
   onDrop(event: any): void {
     // Handle drop event
   }
+
   onClick(event: any): void { }
+
   closeDrawer() {
     this.close()
     this.resetForm()

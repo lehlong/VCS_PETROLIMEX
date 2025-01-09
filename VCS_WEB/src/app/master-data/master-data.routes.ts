@@ -15,10 +15,12 @@ import { MarketCompetitorComponent } from './market-competitor/market-competitor
 import { PumpRigComponent } from './pump-rig/pump-rig.component'
 import { PumpThroatComponent } from './pump-throat/pump-throat.component'
 import { CameraComponent } from './camera/camera.component'
+import { PositionComponent } from './position/position.component'
 export const masterDataRoutes: Routes = [
   { path: 'currency', component: CurrencyComponent },
   { path: 'unit', component: UnitComponent },
   { path: 'local', component: LocalComponent },
+  { path: 'position', component: PositionComponent },
   { path: 'area', component: AreaComponent },
   { path: 'audit-year', component: PeriodTimeComponent },
   { path: 'account-type', component: AccountTypeComponent },

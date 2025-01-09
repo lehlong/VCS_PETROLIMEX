@@ -36,6 +36,10 @@ namespace DMS.CORE.Entities.AD
 
         [Column("WAREHOUSE_CODE", TypeName = "VARCHAR(50)")]
         public string? WarehouseCode { get; set; }
+
+        [Column("POSITION_CODE", TypeName = "VARCHAR(50)")]
+        public string? PositionCode { get; set; }
+
         public virtual ICollection<TblAdAccount_AccountGroup> Account_AccountGroups { get; set; }
 
         public virtual ICollection<TblAdAccountRight> AccountRights { get; set; }
