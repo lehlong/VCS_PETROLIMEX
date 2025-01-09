@@ -19,6 +19,8 @@ using Microsoft.Extensions.DependencyInjection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using AutoMapper;
 using System.Windows.Forms;
+using System.Windows;
+
 
 namespace VCS.APP.Areas.CheckIn
 {
@@ -526,12 +528,43 @@ namespace VCS.APP.Areas.CheckIn
 
         private async void btnCheckIn_Click(object sender, EventArgs e)
         {
+            
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
                 txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
+            if (_lstDOSAP.Count() == 0)
+            {
+                var result = MessageBox.Show("Không có thông tin lệnh xuất! Bạn có chắc chắn muốn cho xe vào!",
+                                             "Xác nhận",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            if (_lstDOSAP.Count() != 0)
+            {
+                if (txtLicensePlate.Text != _lstDOSAP.FirstOrDefault().DATA.VEHICLE)
+                {
+                    var result = MessageBox.Show("Thông tin phương tiện không trùng khớp với lệnh xuất! Bạn có chắc chắn muốn cho xe vào!",
+                                                 "Xác nhận",
+                                                 MessageBoxButtons.YesNo,
+                                                 MessageBoxIcon.Question);
+
+                    if (result == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
+
+
             var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
             string selectedHeaderId = selectedItem.Value;
