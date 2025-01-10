@@ -3,6 +3,7 @@ using DMS.API.AppCode.Enum;
 using DMS.API.AppCode.Extensions;
 using Common;
 using DMS.BUSINESS.Services.BU;
+using DMS.BUSINESS.Dtos.BU;
 
 namespace DMS.API.Controllers.BU
 {
@@ -29,6 +30,68 @@ namespace DMS.API.Controllers.BU
             }
             return Ok(transferObject);
         }
-       
+
+        [HttpPost("Add")]
+        public async Task<IActionResult> Add([FromBody] OrderDto orderDto)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.Add(orderDto);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0100", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0101", _service); // Thêm mới thất bại
+            }
+            return Ok(transferObject);
+        }
+
+        [HttpPut("UpdateOrderCall")]
+        public async Task<IActionResult> UpdateOrderCall(string orderId, [FromQuery] BaseFilter filter)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.UpdateOrderCall(orderId, filter);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0103", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0104", _service);
+            }
+            return Ok(transferObject);
+        }
+
+        [HttpPut("UpdateOrderCome")] 
+        public async Task<IActionResult> UpdateOrderCome(string orderId, [FromQuery] BaseFilter filter)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.UpdateOrderCome(orderId, filter);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0103", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0104", _service);
+            }
+            return Ok(transferObject);
+        }
     }
 }

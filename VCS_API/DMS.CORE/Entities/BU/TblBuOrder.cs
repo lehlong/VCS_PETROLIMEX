@@ -28,6 +28,11 @@ namespace DMS.CORE.Entities.BU
         [Column("COMPANY_CODE", TypeName = "NVARCHAR(50)")]
         public string CompanyCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
-        public string WarehouseCode { get; set; }
+        public string WarehouseCode { get; set; }     
+        
+        [Column("IS_COME")]
+        public bool? IsCome { get; set; }        
+        [Column("IS_CALL")]
+        public bool? IsCall { get; set; }
     }
 }

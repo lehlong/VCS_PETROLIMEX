@@ -32,6 +32,9 @@ namespace DMS.BUSINESS.Dtos.BU
         public string Order { get; set; }
         public string CompanyCode { get; set; }
         public string WarehouseCode { get; set; }
+        public bool? IsCome { get; set; }
+        public bool? IsCall { get; set; }
+
 
         public void Mapping(Profile profile)
         {

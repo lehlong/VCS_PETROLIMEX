@@ -1,7 +1,6 @@
 <div class="container-list">
     <div class="site-page-header-ghost-wrapper">
-        <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket"
-            class="site-page-header">
+        <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket" class="site-page-header">
             <nz-page-header-extra>
                 <nz-space [nzWrap]="true" class="gap-[5px]">
 
@@ -10,7 +9,7 @@
         </nz-page-header>
     </div>
     <div class="overflow-auto flex-grow">
-        <nz-table>
+        <nz-table [nzData]="lstOrder" #headerTable>
             <thead>
                 <tr>
                     <th nzWidth="40px">STT</th>
@@ -22,15 +21,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i of lstOrder">
+                <tr *ngFor="let i of headerTable.data">
                     <td>{{i.stt}}</td>
                     <td>{{i.name}}</td>
                     <td>{{i.vehicleCode}}</td>
                     <td>{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-                    <td></td>
+                    <td>{{i.count}}</td>
                     <td nzAlign="center">
-                        <button nz-button>Mời vào</button>
-                        <button nz-button>Xếp xe</button>
+                        <button nz-button (click)="updateOrderCall(i.id)" [disabled]="i.isCall">Mời vào</button>
+                        <button nz-button (click)="updateOrderCome(i.id)" [disabled]="i.isCome">Xếp xe</button>
                         <button nz-button><span nz-icon nzType="printer" nzTheme="outline"></span></button>
                         <button nz-button><span nz-icon nzType="check" nzTheme="outline"></span></button>
                         <button nz-button><span nz-icon nzType="delete" nzTheme="outline"></span></button>

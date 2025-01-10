@@ -8,5 +8,7 @@ export class OrderModel extends BaseFilter {
     headerId?: any;
     count?: string;
     order?: string;
-    hasMore?: boolean = true;
+    companyCode?: string;
+    isCome?: boolean;
+    isCall?: boolean;
 }

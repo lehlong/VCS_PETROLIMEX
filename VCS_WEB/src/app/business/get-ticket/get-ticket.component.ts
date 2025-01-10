@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ShareModule } from '../../shared/share-module'
 import { BaseFilter } from '../../models/base.model'
 import { OrderService } from '../../services/business/order.service'
 import { GlobalService } from '../../services/global.service'
+import { Subscription } from 'rxjs'
+
 @Component({
   selector: 'app-get-ticket',
   standalone: true,
@@ -10,7 +12,8 @@ import { GlobalService } from '../../services/global.service'
   templateUrl: './get-ticket.component.html',
   styleUrl: './get-ticket.component.scss',
 })
-export class GetTicketComponent implements OnInit {
+export class GetTicketComponent implements OnInit, OnDestroy {
+  private orderSubscription?: Subscription;
   companyCode?: string = localStorage.getItem('companyCode')?.toString()
   warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
   filter: BaseFilter = {
@@ -22,6 +25,7 @@ export class GetTicketComponent implements OnInit {
   }
   loading: boolean = false
   lstOrder: any[] = []
+
   constructor(
     private _service: OrderService,
     private globalService: GlobalService,
@@ -36,21 +40,59 @@ export class GetTicketComponent implements OnInit {
       this.loading = value
     })
   }
-  ngOnDestroy() {
-    this.globalService.setBreadcrumb([])
-  }
-  ngOnInit(): void {
+
+  async ngOnInit() {
+    await this._service.initializeConnection();
+    await this._service.joinGroup(this.companyCode || '');
     this.getOrder();
+
+    // Subscribe to real-time updates
+    this.orderSubscription = this._service.getOrderList().subscribe(orders => {
+      if (orders) {
+        this.lstOrder = orders;
+      }
+    });
   }
+
+  ngOnDestroy() {
+    this.globalService.setBreadcrumb([]);
+    if (this.orderSubscription) {
+      this.orderSubscription.unsubscribe();
+    }
+    this._service.leaveGroup(this.companyCode || '');
+    this._service.disconnect();
+  }
+
   getOrder() {
     this._service.GetOrder(this.filter).subscribe({
       next: (data) => {
-        this.lstOrder = data
-        console.log(data)
+        this.lstOrder = data.data
       },
       error: (err) => {
-
+        console.error('Error fetching orders:', err);
       }
     })
+  }
+
+  updateOrderCall(orderId: string) {
+    this._service.UpdateOrderCall(orderId, this.filter).subscribe({
+      next: (data) => {
+        this.getOrder()
+      },
+      error: (err) => {
+        console.error('Error calling order:', err);
+      }
+    });
+  }
+
+  updateOrderCome(orderId: string) {
+    this._service.UpdateOrderCome(orderId, this.filter).subscribe({
+      next: (data) => {
+        this.getOrder()
+      },
+      error: (err) => {
+        console.error('Error marking order as come:', err);
+      }
+    });
   }
 }

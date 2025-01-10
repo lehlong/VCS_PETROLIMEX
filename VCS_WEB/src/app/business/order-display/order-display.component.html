@@ -1,45 +1,40 @@
 <div class="bg-order" [ngClass]="isFullscreen ? 'zoom' : ''">
-    <div class="order-header">
-        <div class="app-header flex justify-between items-center">
-            <div class="header-trigger flex items-center gap-[24px]">
-                <img src="assets/img/plx-order.png" class="logo-plx">
-            </div>
-            <div class="header-trigger flex items-center gap-[24px]">
-                <div class="text-notif">Xin mời xe có biển số 29H123456 vào lấy Ticket</div>
-            </div>
-            <div class="header-trigger flex items-center gap-[24px]">
-                <span nz-icon nzType="fullscreen" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(true)" *ngIf="!isFullscreen"></span>
-                <span nz-icon nzType="fullscreen-exit" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(false)" *ngIf="isFullscreen"></span>
-            </div>
+  <div class="order-header">
+    <div class="app-header flex justify-between items-center">
+      <div class="header-trigger flex items-center gap-[24px]">
+        <img src="assets/img/plx-order.png" class="logo-plx">
+      </div>
+      <div class="header-trigger flex items-center gap-[24px]">
+        <div class="text-notif" *ngIf="currentCallOrder">
+          Xin mời xe có biển số {{currentCallOrder.vehicleCode}} vào lấy Ticket
         </div>
+      </div>
+      <div class="header-trigger flex items-center gap-[24px]">
+        <span nz-icon nzType="fullscreen" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(true)"
+          *ngIf="!isFullscreen"></span>
+        <span nz-icon nzType="fullscreen-exit" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(false)"
+          *ngIf="isFullscreen"></span>
+      </div>
     </div>
-    <div class="order-main" >
-        <table>
-
-            <thead>
-              <tr>
-                <th>Số thứ tự</th>
-                <th>Tài xế</th>
-                <th>Biển số xe</th>
-                <th>Ghi chú</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Lê Hải Long</td>
-                <td>35K154047</td>
-                <td>Hihi</td>
-              </tr>
-
-              <tr>
-                <td>2</td>
-                <td>Hoả Xuân Huynh</td>
-                <td>29H123456</td>
-                <td>Hehe</td>
-              </tr>
-            </tbody>
-          </table>
-    </div>
+  </div>
+  <div class="order-main">
+    <table>
+      <thead>
+        <tr>
+          <th>Số thứ tự</th>
+          <th>Tài xế</th>
+          <th>Biển số xe</th>
+          <th>Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{order.stt}}</td>
+          <td>{{order.name}}</td>
+          <td>{{order.vehicleCode}}</td>
+          <td>{{order.count}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
