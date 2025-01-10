@@ -6,6 +6,7 @@ import { CommonService } from '../common.service';
 import * as signalR from '@microsoft/signalr';
 import { filter } from 'rxjs/operators';
 import { BaseFilter } from '../../models/base.model';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,11 @@ export class OrderService {
 
   // API Methods
   GetOrder(filter: BaseFilter): Observable<any> {
-    return this.commonService.get('Order/GetOrder', filter);
+    return this.commonService.get('Order/GetOrder', filter).pipe(
+      tap((data: any) => {
+        this.orderListSubject.next(data);
+      })
+    );
   }
 
   Add(order: OrderModel): Observable<any> {

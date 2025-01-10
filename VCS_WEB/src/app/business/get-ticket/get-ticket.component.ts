@@ -45,11 +45,11 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    await this._service.initializeConnection();
-    await this._service.joinGroup(this.companyCode || '');
     this.getOrder();
 
-    // Subscribe to real-time updates
+    await this._service.initializeConnection();
+    await this._service.joinGroup(this.companyCode || '');
+
     this.orderSubscription = this._service.getOrderList().subscribe(orders => {
       if (orders) {
         this.lstOrder = orders;
@@ -73,13 +73,12 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   getOrder() {
     this._service.GetOrder(this.filter).subscribe({
       next: (data) => {
-        this.lstOrder = data.data
-
+        this.lstOrder = data;
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
       }
-    })
+    });
   }
 
   updateOrderCall(params: any) {
