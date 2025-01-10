@@ -25,6 +25,9 @@ namespace DMS.CORE.Entities.BU
         [Column("STT", TypeName = "INT")]
         public int Stt { get; set; }
 
-
+        [Column("COMPANY_CODE", TypeName = "NVARCHAR(50)")]
+        public string CompanyCode { get; set; }
+        [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
+        public string WarehouseCode { get; set; }
     }
 }

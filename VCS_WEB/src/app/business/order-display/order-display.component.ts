@@ -12,26 +12,26 @@ export class OrderDisplayComponent implements OnInit {
   isFullscreen: boolean = false;
 
 
-  ngOnInit(){
-this.speechNotify();
+  ngOnInit() {
+    this.speechNotify();
   }
-  speechNotify() : void{
+  speechNotify(): void {
     const utterance = new SpeechSynthesisUtterance('Xin chào! Đây là bản văn bản chuyển đổi thành giọng nói.')
     utterance.lang = 'vi-VN';
     window.speechSynthesis.speak(utterance);
   }
 
-  toggleFullscreen(check : boolean) {
+  toggleFullscreen(check: boolean) {
     this.isFullscreen = check;
-    if(check == true){
+    if (check == true) {
       // this.isZoom = true
       document.documentElement.requestFullscreen()
-    }else{
+    } else {
       document.exitFullscreen()
         .then(() => {
-      })
+        })
         .catch(() => {
-      })
+        })
     }
   }
 }

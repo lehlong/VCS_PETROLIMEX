@@ -9,51 +9,31 @@ using Common;
 using DMS.BUSINESS.Common;
 using DMS.BUSINESS.Dtos.BU;
 using DMS.BUSINESS.Services.HUB;
+using DMS.BUSINESS.Services.MD;
 using DMS.CORE;
 using DMS.CORE.Entities.BU;
+using DMS.CORE.Entities.MD;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace DMS.BUSINESS.Services.BU
 {
     public interface IOrderService : IGenericService<TblBuOrder, OrderDto>
     {
-        Task<IList<OrderDto>> GetAll(BaseMdFilter filter);
-        //Task<byte[]> Export(BaseMdFilter filter);
+        Task<List<TblBuOrder>> GetOrder(BaseFilter filter);
     }
-    public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
+    public class OrderService(AppDbContext dbContext, IMapper mapper) : GenericService<TblBuOrder, OrderDto>(dbContext, mapper), IOrderService
     {
-        private readonly IHubContext<OrderHub> _hubContext;
-        private readonly IHttpContextAccessor _contextAccessor;
-
-        public OrderService(
-            AppDbContext dbContext,
-            IMapper mapper,
-            IHubContext<OrderHub> hubContext,
-            IHttpContextAccessor contextAccessor)
-            : base(dbContext, mapper)
-        {
-            _hubContext = hubContext;
-            _contextAccessor = contextAccessor;
-        }
-        private string CurrentUser
-        {
-            get
-            {
-                return _contextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
-            }
-        }
-        public async Task<IList<OrderDto>> GetAll(BaseMdFilter filter)
+        public async Task<List<TblBuOrder>> GetOrder(BaseFilter filter)
         {
             try
             {
-                var query = _dbContext.TblBuOrders.AsQueryable();
-                if (filter.IsActive.HasValue)
-                {
-                    query = query.Where(x => x.IsActive == filter.IsActive);
-                }
-                return await base.GetAllMd(query, filter);
+                var data = await _dbContext.TblBuOrders.Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
+                x.WarehouseCode == filter.WarehouseCode &&
+                x.CompanyCode == filter.OrgCode).OrderBy(x => x.Stt).ToListAsync();
+                return data;
             }
             catch (Exception ex)
             {
@@ -62,6 +42,5 @@ namespace DMS.BUSINESS.Services.BU
                 return null;
             }
         }
-      
     }
 }

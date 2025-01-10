@@ -1,1 +1,42 @@
-<p>get-ticket works!</p>
+<div class="container-list">
+    <div class="site-page-header-ghost-wrapper">
+        <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket"
+            class="site-page-header">
+            <nz-page-header-extra>
+                <nz-space [nzWrap]="true" class="gap-[5px]">
+
+                </nz-space>
+            </nz-page-header-extra>
+        </nz-page-header>
+    </div>
+    <div class="overflow-auto flex-grow">
+        <nz-table>
+            <thead>
+                <tr>
+                    <th nzWidth="40px">STT</th>
+                    <th>Tài xế</th>
+                    <th>Biển số</th>
+                    <th>Thời gian vào</th>
+                    <th>Ghi chú</th>
+                    <th nzAlign="center">Thực hiện</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of lstOrder">
+                    <td>{{i.stt}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.vehicleCode}}</td>
+                    <td>{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                    <td></td>
+                    <td nzAlign="center">
+                        <button nz-button>Mời vào</button>
+                        <button nz-button>Xếp xe</button>
+                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline"></span></button>
+                        <button nz-button><span nz-icon nzType="check" nzTheme="outline"></span></button>
+                        <button nz-button><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

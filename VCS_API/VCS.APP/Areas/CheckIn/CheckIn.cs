@@ -643,7 +643,9 @@ namespace VCS.APP.Areas.CheckIn
                     Order = _order,
                     Stt = _stt,
                     Count = 0,
-                    IsActive = true
+                    IsActive = true,
+                    WarehouseCode = ProfileUtilities.User.WarehouseCode,
+                    CompanyCode = ProfileUtilities.User.OrganizeCode
                 });
                 await _dbContext.SaveChangesAsync();
                 MessageBox.Show("Cho vào kho cấp số thành công!");

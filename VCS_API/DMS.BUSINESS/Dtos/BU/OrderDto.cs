@@ -30,6 +30,8 @@ namespace DMS.BUSINESS.Dtos.BU
         public string Count { get; set; }
         [Description("Thứ tự")]
         public string Order { get; set; }
+        public string CompanyCode { get; set; }
+        public string WarehouseCode { get; set; }
 
         public void Mapping(Profile profile)
         {

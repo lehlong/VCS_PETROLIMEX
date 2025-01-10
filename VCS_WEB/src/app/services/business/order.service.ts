@@ -10,6 +10,12 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class OrderService {
+
+  GetOrder(params: any): Observable<any> {
+    return this.commonService.get('Order/GetOrder', params)
+  }
+
+
   private hubUrl = `${environment.baseApiUrl.replace('/api', '')}/order`;
   private hubConnection!: signalR.HubConnection;
   private notificationSubject = new BehaviorSubject<OrderModel | null>(null);
@@ -22,6 +28,10 @@ export class OrderService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private unreadCountSubject = new BehaviorSubject<number>(0);
   constructor(private commonService: CommonService) { }
+
+
+
+
 
   public async initializeConnection(): Promise<void> {
     try {
