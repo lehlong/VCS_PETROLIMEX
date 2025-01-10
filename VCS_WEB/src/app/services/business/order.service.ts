@@ -26,22 +26,12 @@ export class OrderService {
     return this.commonService.post('Order/Add', order);
   }
 
-  UpdateOrderCall(orderId: string, filter: BaseFilter): Observable<any> {
-    const params = {
-      orderId: orderId,
-      orgCode: filter.orgCode,
-      warehouseCode: filter.warehouseCode
-    };
-    return this.commonService.put(`Order/UpdateOrderCall`, params);
+  UpdateOrderCall(params: any): Observable<any> {
+    return this.commonService.put('Order/UpdateOrderCall', params);
   }
 
-  UpdateOrderCome(orderId: string, filter: BaseFilter): Observable<any> {
-    const params = {
-      orderId: orderId,
-      orgCode: filter.orgCode,
-      warehouseCode: filter.warehouseCode
-    };
-    return this.commonService.put(`Order/UpdateOrderCome`, params);
+  UpdateOrderCome(params: any): Observable<any> {
+    return this.commonService.put('Order/UpdateOrderCome', params);
   }
 
   // SignalR Methods

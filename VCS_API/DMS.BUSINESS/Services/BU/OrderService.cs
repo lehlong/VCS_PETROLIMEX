@@ -23,8 +23,8 @@ namespace DMS.BUSINESS.Services.BU
     public interface IOrderService : IGenericService<TblBuOrder, OrderDto>
     {
         Task<List<TblBuOrder>> GetOrder(BaseFilter filter);
-        Task<List<TblBuOrder>> UpdateOrderCall(string orderId, BaseFilter filter);
-        Task<List<TblBuOrder>> UpdateOrderCome(string orderId, BaseFilter filter); 
+        Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto);
+        Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -59,15 +59,15 @@ namespace DMS.BUSINESS.Services.BU
             }
         }
 
-        public async Task<List<TblBuOrder>> UpdateOrderCall(string orderId, BaseFilter filter)
+        public async Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto)
         {
             try
             {
                 // Lấy danh sách orders theo điều kiện
                 var orders = await _dbContext.TblBuOrders
                     .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
-                               x.WarehouseCode == filter.WarehouseCode &&
-                               x.CompanyCode == filter.OrgCode)
+                               x.WarehouseCode == orderDto.WarehouseCode &&
+                               x.CompanyCode == orderDto.CompanyCode)
                     .OrderBy(x => x.Stt)
                     .ToListAsync();
 
@@ -76,7 +76,7 @@ namespace DMS.BUSINESS.Services.BU
                     order.IsCall = false;
                 }
 
-                var selectedOrder = orders.FirstOrDefault(x => x.Id == orderId);
+                var selectedOrder = orders.FirstOrDefault(x => x.Id == orderDto.Id);
                 if (selectedOrder != null)
                 {
                     selectedOrder.IsCall = true;
@@ -96,15 +96,15 @@ namespace DMS.BUSINESS.Services.BU
             }
         }
 
-        public async Task<List<TblBuOrder>> UpdateOrderCome(string orderId, BaseFilter filter)
+        public async Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto)
         {
             try
             {
                 var order = await _dbContext.TblBuOrders
-                    .FirstOrDefaultAsync(x => x.Id == orderId &&
+                    .FirstOrDefaultAsync(x => x.Id == orderDto.Id &&
                                             x.CreateDate.Value.Date == DateTime.Now.Date &&
-                                            x.WarehouseCode == filter.WarehouseCode &&
-                                            x.CompanyCode == filter.OrgCode);
+                                            x.WarehouseCode == orderDto.WarehouseCode &&
+                                            x.CompanyCode == orderDto.CompanyCode);
 
                 if (order != null)
                 {
@@ -112,8 +112,8 @@ namespace DMS.BUSINESS.Services.BU
                     await _dbContext.SaveChangesAsync();
                     var updatedOrders = await _dbContext.TblBuOrders
                         .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
-                                   x.WarehouseCode == filter.WarehouseCode &&
-                                   x.CompanyCode == filter.OrgCode)
+                                   x.WarehouseCode == orderDto.WarehouseCode &&
+                                   x.CompanyCode == orderDto.CompanyCode)
                         .OrderBy(x => x.Stt)
                         .ToListAsync();
 

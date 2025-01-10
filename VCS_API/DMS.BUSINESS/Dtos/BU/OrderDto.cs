@@ -42,4 +42,19 @@ namespace DMS.BUSINESS.Dtos.BU
         }
 
     }
+    public class OrderUpdateDto : IDto, IMapFrom
+    {
+        
+        [Key]
+        public string Id { get; set; }
+        public string CompanyCode { get; set; }
+        public string WarehouseCode { get; set; }
+        public bool? IsCome { get; set; }
+        public bool? IsCall { get; set; }
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<TblBuOrder, OrderUpdateDto>().ReverseMap();
+        }
+
+    }
 }

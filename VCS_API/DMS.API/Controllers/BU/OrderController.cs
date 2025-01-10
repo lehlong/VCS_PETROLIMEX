@@ -53,10 +53,10 @@ namespace DMS.API.Controllers.BU
         }
 
         [HttpPut("UpdateOrderCall")]
-        public async Task<IActionResult> UpdateOrderCall(string orderId, [FromQuery] BaseFilter filter)
+        public async Task<IActionResult> UpdateOrderCall([FromBody] OrderUpdateDto orderDto)
         {
             var transferObject = new TransferObject();
-            var result = await _service.UpdateOrderCall(orderId, filter);
+            var result = await _service.UpdateOrderCall(orderDto);
             if (_service.Status)
             {
                 transferObject.Data = result;
@@ -74,10 +74,10 @@ namespace DMS.API.Controllers.BU
         }
 
         [HttpPut("UpdateOrderCome")] 
-        public async Task<IActionResult> UpdateOrderCome(string orderId, [FromQuery] BaseFilter filter)
+        public async Task<IActionResult> UpdateOrderCome([FromBody] OrderUpdateDto orderDto)
         {
             var transferObject = new TransferObject();
-            var result = await _service.UpdateOrderCome(orderId, filter);
+            var result = await _service.UpdateOrderCome(orderDto);
             if (_service.Status)
             {
                 transferObject.Data = result;

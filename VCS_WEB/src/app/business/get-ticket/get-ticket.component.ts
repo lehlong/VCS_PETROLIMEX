@@ -50,6 +50,8 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this.orderSubscription = this._service.getOrderList().subscribe(orders => {
       if (orders) {
         this.lstOrder = orders;
+        console.log("listOrder", this.lstOrder);
+
       }
     });
   }
@@ -67,6 +69,10 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this._service.GetOrder(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data.data
+        console.log("this.filter", this.filter);
+
+        console.log("data", this.lstOrder);
+
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
@@ -74,24 +80,29 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateOrderCall(orderId: string) {
-    this._service.UpdateOrderCall(orderId, this.filter).subscribe({
-      next: (data) => {
+  updateOrderCall(params: any) {
+    console.log("params", params);
+
+    this._service.UpdateOrderCall(params).subscribe({
+      next: (response) => {
         this.getOrder()
       },
       error: (err) => {
         console.error('Error calling order:', err);
+
       }
     });
   }
 
-  updateOrderCome(orderId: string) {
-    this._service.UpdateOrderCome(orderId, this.filter).subscribe({
-      next: (data) => {
+  updateOrderCome(params: any) {
+
+    this._service.UpdateOrderCome(params).subscribe({
+      next: (response) => {
         this.getOrder()
       },
       error: (err) => {
         console.error('Error marking order as come:', err);
+
       }
     });
   }
