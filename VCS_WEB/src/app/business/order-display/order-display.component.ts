@@ -3,6 +3,7 @@ import { ShareModule } from '../../shared/share-module';
 import { OrderService } from '../../services/business/order.service';
 import { Subscription } from 'rxjs';
 import { OrderModel } from '../../models/bussiness/order.model';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'app-order-display',
@@ -17,8 +18,17 @@ export class OrderDisplayComponent implements OnInit, OnDestroy {
   orders: OrderModel[] = [];
   companyCode?: string = localStorage.getItem('companyCode')?.toString();
   currentCallOrder?: OrderModel;
+  userName: any
+  loading: boolean = false
+  private readonly SHOULD_PLAY_VOICE = true;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService, private globalService: GlobalService) {
+    this.globalService.getLoading().subscribe((value) => {
+      this.loading = value;
+    });
+    const UserInfo = this.globalService.getUserInfo()
+    this.userName = UserInfo?.userName
+  }
 
   async ngOnInit() {
     await this.orderService.initializeConnection();
@@ -27,21 +37,29 @@ export class OrderDisplayComponent implements OnInit, OnDestroy {
     this.orderSubscription = this.orderService.getOrderList().subscribe(orders => {
       if (orders) {
         this.orders = orders;
-        const calledOrder = orders.find(o => o.isCall);
-        if (calledOrder && calledOrder !== this.currentCallOrder) {
-          this.currentCallOrder = calledOrder;
-          this.speechNotify(calledOrder.vehicleCode || '');
+        if (this.SHOULD_PLAY_VOICE) {
+          const calledOrder = orders.find(o => o.isCall);
+          if (calledOrder && calledOrder !== this.currentCallOrder) {
+            this.currentCallOrder = calledOrder;
+            this.speechNotify(calledOrder.vehicleCode || '');
+          }
         }
       }
     });
   }
 
-  ngOnDestroy() {
+  async ngOnDestroy() {
     if (this.orderSubscription) {
       this.orderSubscription.unsubscribe();
     }
-    this.orderService.leaveGroup(this.companyCode || '');
-    this.orderService.disconnect();
+
+    try {
+      await this.orderService.leaveGroup(this.userName || '');
+      await this.orderService.disconnect();
+    } catch (error) {
+      console.error('Error during cleanup:', error);
+    }
+    this.globalService.setBreadcrumb([]);
   }
 
   speechNotify(vehicleCode: string): void {

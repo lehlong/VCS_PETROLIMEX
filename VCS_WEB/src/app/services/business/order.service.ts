@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderModel } from '../../models/bussiness/order.model';
 import { CommonService } from '../common.service';
-import * as signalR from '@aspnet/signalr';
+import * as signalR from '@microsoft/signalr';
 import { filter } from 'rxjs/operators';
 import { BaseFilter } from '../../models/base.model';
 
@@ -84,7 +84,9 @@ export class OrderService {
 
   public async leaveGroup(userName: string): Promise<void> {
     try {
-      await this.hubConnection.invoke('LeaveGroup', userName);
+      if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+        await this.hubConnection.invoke('LeaveGroup', userName);
+      }
     } catch (error) {
       console.error('Error leaving group:', error);
     }
@@ -96,9 +98,13 @@ export class OrderService {
   }
 
   // Cleanup method
-  public disconnect() {
-    if (this.hubConnection) {
-      this.hubConnection.stop();
+  public async disconnect() {
+    try {
+      if (this.hubConnection?.state === signalR.HubConnectionState.Connected) {
+        await this.hubConnection.stop();
+      }
+    } catch (error) {
+      console.error('Error disconnecting:', error);
     }
   }
 }
