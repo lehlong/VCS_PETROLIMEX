@@ -20,6 +20,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using AutoMapper;
 using System.Windows.Forms;
 using System.Windows;
+using DMS.BUSINESS.Dtos.BU;
+using DMS.BUSINESS.Services.BU;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -632,22 +634,31 @@ namespace VCS.APP.Areas.CheckIn
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     OrgCode = ProfileUtilities.User.OrganizeCode
                 });
-                var _order = _dbContext.TblBuOrders.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
-                _order = _order == 0 ? 1 : _dbContext.TblBuOrders.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.Order) + 1;
-                _dbContext.TblBuOrders.Add(new TblBuOrder
+                
+                var orderDto = new OrderDto
                 {
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
                     VehicleCode = txtLicensePlate.Text,
                     Name = name,
-                    Order = _order,
-                    Stt = _stt,
-                    Count = 0,
+                    Count = "0",
                     IsActive = true,
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     CompanyCode = ProfileUtilities.User.OrganizeCode
-                });
-                await _dbContext.SaveChangesAsync();
+                };
+
+                using (var scope = Program.ServiceProvider.CreateScope())
+                {
+                    var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
+                    var result = await orderService.Add(orderDto);
+                    
+                    if (result == null)
+                    {
+                        MessageBox.Show("Thêm mới thất bại!");
+                        return;
+                    }
+                }
+
                 MessageBox.Show("Cho vào kho cấp số thành công!");
             }
             else

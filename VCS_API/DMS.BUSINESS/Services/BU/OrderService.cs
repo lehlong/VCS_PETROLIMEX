@@ -145,10 +145,20 @@ namespace DMS.BUSINESS.Services.BU
                     return null;
                 }
 
+                // Tính Order mới
+                var maxOrder = await _dbContext.TblBuOrders
+                    .Where(q => q.CreateDate.Value.Date == DateTime.Now.Date &&
+                               q.WarehouseCode == orderDto.WarehouseCode &&
+                               q.CompanyCode == orderDto.CompanyCode)
+                    .MaxAsync(x => (int?)x.Order) ?? 0;
+
+                orderDto.Order = (maxOrder + 1).ToString();
+
+                // Tính STT mới
                 var maxStt = await _dbContext.TblBuOrders
-                    .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
-                               x.WarehouseCode == orderDto.WarehouseCode &&
-                               x.CompanyCode == orderDto.CompanyCode)
+                    .Where(q => q.CreateDate.Value.Date == DateTime.Now.Date &&
+                               q.WarehouseCode == orderDto.WarehouseCode &&
+                               q.CompanyCode == orderDto.CompanyCode)
                     .MaxAsync(x => (int?)x.Stt) ?? 0;
 
                 orderDto.Stt = maxStt + 1;

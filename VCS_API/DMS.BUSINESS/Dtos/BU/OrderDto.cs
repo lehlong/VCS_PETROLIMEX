@@ -16,7 +16,7 @@ namespace DMS.BUSINESS.Dtos.BU
     public class OrderDto : BaseMdDto, IDto, IMapFrom
     {
         [Description("STT")]
-        public int Stt { get; set; }
+        public int? Stt { get; set; }
         [Key]
         [Description("Mã")]
         public string Id { get; set; }
@@ -27,9 +27,9 @@ namespace DMS.BUSINESS.Dtos.BU
         [Description("header id")]
         public string HeaderId { get; set; }
         [Description("Lần gọi")]
-        public string Count { get; set; }
+        public string? Count { get; set; }
         [Description("Thứ tự")]
-        public string Order { get; set; }
+        public string? Order { get; set; }
         public string CompanyCode { get; set; }
         public string WarehouseCode { get; set; }
         public bool? IsCome { get; set; }

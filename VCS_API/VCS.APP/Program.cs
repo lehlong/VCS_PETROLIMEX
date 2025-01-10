@@ -48,6 +48,9 @@ namespace VCS.APP
             services.AddTransient<Areas.Login.Login>();
             services.AddTransient<Main>();
             services.AddTransient<CheckIn>();
+
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IHubContext<OrderHub>>();
         }
     }
 }
