@@ -31,9 +31,10 @@ export class OrderDisplayComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    await this.orderService.initializeConnection();
-    await this.orderService.joinGroup(this.companyCode || '');
-
+    if (!this.orderService.isConnected()) {
+      await this.orderService.initializeConnection();
+      await this.orderService.joinGroup(this.userName || '');
+    }
     this.orderSubscription = this.orderService.getOrderList().subscribe(orders => {
       if (orders) {
         this.orders = orders;
@@ -51,13 +52,6 @@ export class OrderDisplayComponent implements OnInit, OnDestroy {
   async ngOnDestroy() {
     if (this.orderSubscription) {
       this.orderSubscription.unsubscribe();
-    }
-
-    try {
-      await this.orderService.leaveGroup(this.userName || '');
-      await this.orderService.disconnect();
-    } catch (error) {
-      console.error('Error during cleanup:', error);
     }
     this.globalService.setBreadcrumb([]);
   }

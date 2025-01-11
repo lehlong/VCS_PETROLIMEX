@@ -34,6 +34,7 @@ namespace DMS.BUSINESS.Dtos.BU
         public string WarehouseCode { get; set; }
         public bool? IsCome { get; set; }
         public bool? IsCall { get; set; }
+        public bool? IsDone { get; set; }
 
 
         public void Mapping(Profile profile)
@@ -51,6 +52,7 @@ namespace DMS.BUSINESS.Dtos.BU
         public string WarehouseCode { get; set; }
         public bool? IsCome { get; set; }
         public bool? IsCall { get; set; }
+        public bool? IsDone { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblBuOrder, OrderUpdateDto>().ReverseMap();

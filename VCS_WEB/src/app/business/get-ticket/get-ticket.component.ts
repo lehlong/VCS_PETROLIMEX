@@ -46,10 +46,10 @@ export class GetTicketComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.getOrder();
-
-    await this._service.initializeConnection();
-    await this._service.joinGroup(this.companyCode || '');
-
+    if (!this._service.isConnected()) {
+      await this._service.initializeConnection();
+      await this._service.joinGroup(this.companyCode || '');
+    }
     this.orderSubscription = this._service.getOrderList().subscribe(orders => {
       if (orders) {
         this.lstOrder = orders;
@@ -60,12 +60,6 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   async ngOnDestroy() {
     if (this.orderSubscription) {
       this.orderSubscription.unsubscribe();
-    }
-    try {
-      await this._service.leaveGroup(this.userName || '');
-      await this._service.disconnect();
-    } catch (error) {
-      console.error('Error during cleanup:', error);
     }
     this.globalService.setBreadcrumb([]);
   }
@@ -94,7 +88,27 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
   updateOrderCome(params: any) {
-    this._service.UpdateOrderCome(params).subscribe({
+    const updatedParams = {
+      ...params,
+      isCome: true,
+      isDone: false
+    };
+
+    this._service.UpdateOrderCome(updatedParams).subscribe({
+      next: (response) => {
+      },
+      error: (err) => {
+        console.error('Error marking order as come:', err);
+      }
+    });
+  }
+  updateOrderDone(params: any) {
+    const updatedParams = {
+      ...params,
+      isDone: true
+    };
+
+    this._service.UpdateOrderCome(updatedParams).subscribe({
       next: (response) => {
       },
       error: (err) => {

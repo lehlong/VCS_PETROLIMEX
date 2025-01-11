@@ -79,6 +79,9 @@ export class OrderService {
       this.orderListSubject.next(orders);
     });
   }
+  public isConnected(): boolean {
+    return this.hubConnection?.state === signalR.HubConnectionState.Connected;
+  }
   public async joinGroup(userName: string): Promise<void> {
     try {
       await this.hubConnection.invoke('JoinGroup', userName);

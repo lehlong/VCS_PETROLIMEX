@@ -108,7 +108,8 @@ namespace DMS.BUSINESS.Services.BU
 
                 if (order != null)
                 {
-                    order.IsCome = true;
+                    order.IsCome = orderDto.IsCome;
+                    order.IsDone = orderDto.IsDone;
                     await _dbContext.SaveChangesAsync();
                     var updatedOrders = await _dbContext.TblBuOrders
                         .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&

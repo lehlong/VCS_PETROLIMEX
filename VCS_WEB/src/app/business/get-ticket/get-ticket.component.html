@@ -28,11 +28,14 @@
                     <td>{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
                     <td>{{i.count}}</td>
                     <td nzAlign="center">
-                        <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isCall">Mời vào</button>
-                        <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isCome">Xếp xe</button>
-                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline"></span></button>
-                        <button nz-button><span nz-icon nzType="check" nzTheme="outline"></span></button>
-                        <button nz-button><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                        <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isDone">Mời vào</button>
+                        <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone">Xếp xe</button>
+                        <button nz-button [disabled]="i.isDone"><span nz-icon nzType="printer"
+                                nzTheme="outline"></span></button>
+                        <button nz-button (click)="updateOrderDone(i)" [disabled]="i.isDone"><span nz-icon
+                                nzType="check" nzTheme="outline"></span></button>
+                        <button nz-button [disabled]="i.isDone"><span nz-icon nzType="delete"
+                                nzTheme="outline"></span></button>
                     </td>
                 </tr>
             </tbody>

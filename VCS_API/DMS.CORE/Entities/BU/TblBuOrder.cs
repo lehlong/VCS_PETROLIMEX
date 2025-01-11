@@ -33,6 +33,8 @@ namespace DMS.CORE.Entities.BU
         [Column("IS_COME")]
         public bool? IsCome { get; set; }        
         [Column("IS_CALL")]
-        public bool? IsCall { get; set; }
+        public bool? IsCall { get; set; }        
+        [Column("IS_DONE")]
+        public bool? IsDone { get; set; }
     }
 }
