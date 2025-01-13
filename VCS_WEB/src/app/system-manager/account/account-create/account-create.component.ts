@@ -66,7 +66,18 @@ export class AccountCreateComponent {
   //   })
   // }
 
-  loadInit() { }
+  loadInit() {
+    const organizeCode = localStorage.getItem('companyCode') || '';
+    const warehouseCode = localStorage.getItem('warehouseCode') || '';
+    this.validateForm.patchValue({
+      organizeCode: organizeCode,
+      warehouseCode: warehouseCode,
+    });
+    if (organizeCode) {
+      this.selectedOrg = organizeCode;
+      this.getWareHouse();
+    }
+   }
 
   changeSaleType(value: string) { }
 
@@ -107,16 +118,29 @@ export class AccountCreateComponent {
       },
     })
   }
+ 
   getWareHouse() {
-    this._whService.getByOrg(this.selectedOrg).subscribe({
-      next: (data) => {
-        this.warehouseList = data
-      },
-      error: (response) => {
-        console.log(response)
-      },
-    })
+      if (this.selectedOrg) {
+        this.validateForm.patchValue({ warehouseCode: null });
+        this._whService.getByOrg(this.selectedOrg).subscribe({
+          next: (data) => {
+            this.warehouseList = data;
+            if (this.warehouseList.length > 0) {
+              const defaultWarehouse = this.warehouseList[0].code;
+              this.validateForm.patchValue({ warehouseCode: defaultWarehouse });
+            }
+          },
+          error: (response) => {
+            console.log(response);
+          },
+        });
+      } else {
+        this.warehouseList = [];
+        this.validateForm.patchValue({ warehouseCode: null });
+      }
   }
+    
+  
 
   getAllPosition() {
     this._positionService.getall().subscribe({

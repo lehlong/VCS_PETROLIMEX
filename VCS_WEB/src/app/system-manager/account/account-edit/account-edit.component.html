@@ -50,7 +50,7 @@
             <nz-form-item>
               <nz-form-label>Đơn vị</nz-form-label>
               <nz-form-control nzErrorTip="Không được để trống">
-                <nz-select nzShowSearch nzAllowClear placeholder="Chọn đơn vị" formControlName="organizeCode">
+                <nz-select nzShowSearch nzAllowClear placeholder="Chọn đơn vị" formControlName="organizeCode" [(ngModel)]="selectedOrg" (ngModelChange)="getWareHouse()">
                   <nz-option cdkScrollable *ngFor="let item of orgList" [nzLabel]="item.name" [nzValue]="item.id">
                   </nz-option>
                 </nz-select>

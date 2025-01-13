@@ -11,6 +11,7 @@ import { AuthService } from '../../../services/auth.service'
 import { GlobalService } from '../../../services/global.service'
 import { AccountGroupService } from '../../../services/system-manager/account-group.service'
 import { PositionService } from '../../../services/master-data/position.service'
+import { WarehouseService } from '../../../services/master-data/warehouse.service'
 
 @Component({
   selector: 'app-account-edit',
@@ -62,6 +63,7 @@ export class AccountEditComponent {
   orgList: any[] = []
   warehouseList: any[] = []
   positionList: any[] = []
+  selectedOrg = ''
 
   constructor(
     private _service: AccountService,
@@ -73,6 +75,7 @@ export class AccountEditComponent {
     private authService: AuthService,
     private globalService: GlobalService,
     private _positionService: PositionService,
+    private _whService: WarehouseService,
   ) {
     this.widthDeault =
       window.innerWidth <= 767
@@ -83,6 +86,7 @@ export class AccountEditComponent {
 
   ngOnInit(): void {
     this.loadInit()
+    this.selectedOrg = this.validateForm.getRawValue().organizeCode
   }
 
   loadInit() {
@@ -96,14 +100,36 @@ export class AccountEditComponent {
     this.dropdownService.getAllOrg().subscribe({
       next: (data) => {
         this.orgList = data
-        console.log("đơn vị", this.orgList);
-
       },
       error: (response) => {
         console.log(response)
       },
     })
   }
+  getWareHouse() {
+    if (this.selectedOrg) {
+      this._whService.getByOrg(this.selectedOrg).subscribe({
+        next: (data) => {
+          this.warehouseList = data;
+          const currentWarehouseCode = this.validateForm.get('warehouseCode')?.value;
+          const isValidWarehouse =
+            currentWarehouseCode &&
+            this.warehouseList.some((warehouse) => warehouse.code === currentWarehouseCode);
+          if (!isValidWarehouse && this.warehouseList.length > 0) {
+            const defaultWarehouse = this.warehouseList[0].code;
+            this.validateForm.patchValue({ warehouseCode: defaultWarehouse });
+          }
+        },
+        error: (response) => {
+          console.log(response);
+        },
+      });
+    } else {
+      this.warehouseList = [];
+      this.validateForm.patchValue({ warehouseCode: null });
+    }
+  }
+  
 
   changeSaleType(value: string) { }
 
