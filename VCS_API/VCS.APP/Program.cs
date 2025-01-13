@@ -1,7 +1,10 @@
 ﻿using DMS.BUSINESS.Common;
 using DMS.BUSINESS.Services.Auth;
+using DMS.BUSINESS.Services.BU;
+using DMS.BUSINESS.Services.HUB;
 using DMS.CORE;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,8 +52,9 @@ namespace VCS.APP
             services.AddTransient<Main>();
             services.AddTransient<CheckIn>();
 
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IHubContext<OrderHub>>();
+            //services.AddScoped<IOrderService, OrderService>();
+            //services.AddScoped<IHubContext<OrderHub>>();
+            services.AddSignalR();
         }
     }
 }
