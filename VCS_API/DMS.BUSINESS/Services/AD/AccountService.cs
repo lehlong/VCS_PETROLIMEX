@@ -44,6 +44,14 @@ namespace DMS.BUSINESS.Services.AD
                         x.FullName.Contains(filter.KeyWord)
                     );
                 }
+                if (!string.IsNullOrWhiteSpace(filter.OrgCode))
+                {
+                    query = query.Where(x => x.OrganizeCode == filter.OrgCode);
+                }
+                if (!string.IsNullOrWhiteSpace(filter.WarehouseCode))
+                {
+                    query = query.Where(x => x.WarehouseCode == filter.WarehouseCode);
+                }
 
                 if (!string.IsNullOrWhiteSpace(filter.RoleCode))
                 {

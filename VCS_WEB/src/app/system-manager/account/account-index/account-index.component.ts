@@ -31,6 +31,9 @@ export class AccountIndexComponent {
   showEdit: boolean = false
   userName: string = ''
 
+  orgCode?: string = localStorage.getItem('companyCode')?.toString()
+  warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
+
   listAccountGroup: any[] = []
   //listPartner: any[] = []
   accountType: any[] = []
@@ -132,6 +135,8 @@ export class AccountIndexComponent {
   // }
 
   search() {
+    this.filter.orgCode = this.orgCode;
+    this.filter.warehouseCode = this.warehouseCode;
     this._as
       .search({
         ...this.filter,
