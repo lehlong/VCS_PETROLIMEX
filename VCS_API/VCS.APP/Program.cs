@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using VCS.APP.Areas.CheckIn;
+using VCS.APP.Services;
 using VCS.APP.Utilities;
 
 namespace VCS.APP
@@ -21,6 +22,8 @@ namespace VCS.APP
         [STAThread]
         static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
             
             var services = new ServiceCollection();
@@ -45,16 +48,15 @@ namespace VCS.APP
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            
             services.AddScoped<IAuthService, AuthService>();
             
             services.AddTransient<Areas.Login.Login>();
             services.AddTransient<Main>();
             services.AddTransient<CheckIn>();
-
-            //services.AddScoped<IOrderService, OrderService>();
-            //services.AddScoped<IHubContext<OrderHub>>();
-            services.AddSignalR();
+            services.AddScoped<IWOrderService, WOrderService>();
+            // services.AddTransient<IOrderService, OrderService>();
+            //services.AddHttpClient();
         }
     }
 }

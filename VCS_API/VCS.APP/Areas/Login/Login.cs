@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Utilities;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace VCS.APP.Areas.Login
 {
@@ -19,10 +21,11 @@ namespace VCS.APP.Areas.Login
     {
         private readonly IAuthService _authService;
         private readonly AppDbContext _dbContext;
-
+        private HubConnection _hubConnection;
         public Login(IAuthService authService, AppDbContext dbContext)
         {
             InitializeComponent();
+            InitializeSignalRConnection();
             _authService = authService;
             _dbContext = dbContext;
             LoadSavedCredentials();
@@ -30,7 +33,47 @@ namespace VCS.APP.Areas.Login
             username.KeyPress += TextBox_KeyPress;
             password.KeyPress += TextBox_KeyPress;
         }
+        private async void InitializeSignalRConnection()
+        {
+            _hubConnection = new HubConnectionBuilder()
+                .WithUrl("https://localhost:4008/order") 
+                .Build();
 
+            _hubConnection.On<string>("JoinGroupSuccess", (groupName) =>
+            {
+                MessageBox.Show($"Joined group: {groupName}");
+            });
+
+            _hubConnection.On<string>("JoinGroupError", (error) =>
+            {
+                MessageBox.Show($"Error joining group: {error}");
+            });
+
+            try
+            {
+                await _hubConnection.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Connection failed: {ex.Message}");
+            }
+        }
+
+        private async void JoinGroup(string groupName)
+        {
+            if (_hubConnection.State == HubConnectionState.Connected)
+            {
+                await _hubConnection.InvokeAsync("JoinGroup", groupName);
+            }
+        }
+
+        private async void LeaveGroup(string groupName)
+        {
+            if (_hubConnection.State == HubConnectionState.Connected)
+            {
+                await _hubConnection.InvokeAsync("LeaveGroup", groupName);
+            }
+        }
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Kiểm tra nếu phím nhấn là Enter

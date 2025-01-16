@@ -57,10 +57,12 @@ export class OrderDisplayComponent implements OnInit, OnDestroy {
   }
 
   speechNotify(vehicleCode: string): void {
+    const space = vehicleCode.split('').join(' ');
     const utterance = new SpeechSynthesisUtterance(
-      `Xin mời xe có biển số ${vehicleCode} vào lấy Ticket`
+      `Xin mời xe có biển số, ${space}, vào lấy Tích kê`
     );
     utterance.lang = 'vi-VN';
+    utterance.rate = 0.65;
     window.speechSynthesis.speak(utterance);
   }
 

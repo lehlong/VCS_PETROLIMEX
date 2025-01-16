@@ -1,4 +1,5 @@
-﻿using DMS.CORE;
+﻿using DMS.BUSINESS.Services.BU;
+using DMS.CORE;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
 using VCS.APP.Areas.Home;
 using VCS.APP.Areas.Login;
+using VCS.APP.Services;
 using VCS.APP.Utilities;
 
 namespace VCS.APP
@@ -21,18 +23,20 @@ namespace VCS.APP
     {
         private Form activeForm;
         private AppDbContext _dbContext;
-        public Main(AppDbContext dbContext)
+        private IWOrderService _orderService;
+        public Main(AppDbContext dbContext, IWOrderService orderService)
         {
             InitializeComponent();
             OpenChildForm(new Home(dbContext));
             _dbContext = dbContext;
+            _orderService = orderService;
             btnUser.Text = ProfileUtilities.User.FullName;
         }
 
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Quản lý cổng vào";
-            OpenChildForm(new CheckIn(_dbContext));
+            OpenChildForm(new CheckIn(_dbContext, _orderService));
         }
 
         private void btnHome_Click(object sender, EventArgs e)

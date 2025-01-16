@@ -44,18 +44,24 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this.userName = UserInfo?.userName
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getOrder();
+    this.setupSignalRConnection();
+  }
+  
+  async setupSignalRConnection() {
     if (!this._service.isConnected()) {
       await this._service.initializeConnection();
       await this._service.joinGroup(this.companyCode || '');
     }
     this.orderSubscription = this._service.getOrderList().subscribe(orders => {
       if (orders) {
+        console.log('Nhận được đơn hàng mới:', orders);
         this.lstOrder = orders;
       }
     });
   }
+  
 
   async ngOnDestroy() {
     if (this.orderSubscription) {

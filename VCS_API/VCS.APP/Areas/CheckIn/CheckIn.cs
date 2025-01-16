@@ -28,6 +28,7 @@ namespace VCS.APP.Areas.CheckIn
 {
     public partial class CheckIn : Form
     {
+        private readonly IWOrderService _orderService;
         private AppDbContext _dbContext;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
@@ -35,13 +36,14 @@ namespace VCS.APP.Areas.CheckIn
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private string IMGPATH;
         private string PLATEPATH;
-        private AppDbContext dbContext;
+        
 
 
-        public CheckIn(AppDbContext dbContext)
+        public CheckIn(AppDbContext dbContext, IWOrderService orderService)
         {
             InitializeComponent();
             _dbContext = dbContext;
+            _orderService = orderService;
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
@@ -647,17 +649,14 @@ namespace VCS.APP.Areas.CheckIn
                     CompanyCode = ProfileUtilities.User.OrganizeCode
                 };
 
-                using (var scope = Program.ServiceProvider.CreateScope())
-                {
-                    var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
-                    var result = await orderService.Add(orderDto);
+                var result = await _orderService.Add(orderDto);
                     
-                    if (result == null)
-                    {
-                        MessageBox.Show("Thêm mới thất bại!");
-                        return;
-                    }
-                }
+                if (result == null)
+                 {
+                   MessageBox.Show("Thêm mới thất bại!");
+                   return;
+                 }
+                
 
                 MessageBox.Show("Cho vào kho cấp số thành công!");
             }

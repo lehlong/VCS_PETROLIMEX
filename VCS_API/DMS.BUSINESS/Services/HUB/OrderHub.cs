@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DMS.CORE.Entities.BU;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,10 @@ namespace DMS.BUSINESS.Services.HUB
                 }
             }
         }
-
+        public async Task ORDER_LIST_CHANGED(object data)
+        {
+            await Clients.All.SendAsync("ORDER_LIST_CHANGED", data);
+        }
         public override async Task OnConnectedAsync()
         {
             if (!string.IsNullOrEmpty(UserName))
