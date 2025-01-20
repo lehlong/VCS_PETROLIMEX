@@ -62,7 +62,10 @@ namespace DMS.BUSINESS.Services.AD
                 {
                     query = query.Where(x => x.AccountType == filter.AccountType);
                 }
-
+                if (!string.IsNullOrWhiteSpace(filter.positionCode))
+                {
+                    query = query.Where(x => x.PositionCode == filter.positionCode);
+                }
                 //if (!string.IsNullOrWhiteSpace(filter.OrganizeCode))
                 //{
                 //    query = query.Where(x => x.OrganizeCode == filter.OrganizeCode);
