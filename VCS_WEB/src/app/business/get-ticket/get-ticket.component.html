@@ -17,6 +17,7 @@
                     <th>Biển số</th>
                     <th>Thời gian vào</th>
                     <th>Ghi chú</th>
+                    <th>Trạng thái</th>
                     <th nzAlign="center">Thực hiện</th>
                 </tr>
             </thead>
@@ -27,11 +28,22 @@
                     <td>{{i.vehicleCode}}</td>
                     <td>{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
                     <td>{{i.count}}</td>
+                    <td *ngIf="i.isDone">
+                        <nz-tag nzColor="success">
+                            <span nz-icon nzType="check-circle"></span>
+                            <span>Đã xử lý</span>
+                        </nz-tag>
+                    </td>
+                    <td *ngIf="!i.isDone">
+                        <nz-tag nzColor="error">
+                            <span nz-icon nzType="close-circle"></span>
+                            <span>Chưa xử lý</span>
+                        </nz-tag>
+                    </td>
                     <td nzAlign="center">
                         <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isDone">Mời vào</button>
                         <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone">Xếp xe</button>
-                        <button nz-button [disabled]="i.isDone"><span nz-icon nzType="printer"
-                                nzTheme="outline"></span></button>
+                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline"></span></button>
                         <button nz-button (click)="updateOrderDone(i)" [disabled]="i.isDone"><span nz-icon
                                 nzType="check" nzTheme="outline"></span></button>
                         <button nz-button [disabled]="i.isDone"><span nz-icon nzType="delete"

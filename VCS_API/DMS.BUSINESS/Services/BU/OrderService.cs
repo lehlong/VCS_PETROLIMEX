@@ -13,6 +13,7 @@ using DMS.BUSINESS.Services.MD;
 using DMS.CORE;
 using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
+using DMS.CORE.Migrations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -25,12 +26,13 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> GetOrder(BaseFilter filter);
         Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto);
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
+        Task Order(OrderDto orderDto);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
         private readonly IHubContext<OrderHub> _hubContext;
 
-        public OrderService(AppDbContext dbContext, IMapper mapper, IHubContext<OrderHub> hubContext) 
+        public OrderService(AppDbContext dbContext, IMapper mapper, IHubContext<OrderHub> hubContext)
             : base(dbContext, mapper)
         {
             _hubContext = hubContext;
@@ -44,11 +46,11 @@ namespace DMS.BUSINESS.Services.BU
                     .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
                                x.WarehouseCode == filter.WarehouseCode &&
                                x.CompanyCode == filter.OrgCode)
-                    .OrderBy(x => x.Stt)
+                    .OrderBy(x =>x.IsDone).ThenBy(x => x.Stt)
                     .ToListAsync();
 
                 await _hubContext.Clients.All.SendAsync(SignalRMethod.ORDER_LIST_CHANGED.ToString(), data);
-            
+
                 return data;
             }
             catch (Exception ex)
@@ -163,7 +165,7 @@ namespace DMS.BUSINESS.Services.BU
                     .MaxAsync(x => (int?)x.Stt) ?? 0;
 
                 orderDto.Stt = maxStt + 1;
-                
+
                 var result = await base.Add(dto);
 
                 if (result != null)
@@ -186,6 +188,29 @@ namespace DMS.BUSINESS.Services.BU
                 Status = false;
                 Exception = ex;
                 return null;
+            }
+        }
+
+        public async Task Order(OrderDto orderDto)
+        {
+            try
+            {
+                var w = _dbContext.TblMdWarehouse.Find(orderDto.WarehouseCode);
+                if (w == null)
+                {
+                    Status = false;
+                    MessageObject.MessageDetail = "Lỗi hệ thống! Vui lòng liên hệ với quản trị viên!";
+                    return;
+                }
+                if (string.IsNullOrEmpty(w.Tgbx) || string.IsNullOrEmpty(w.Tdh) || string.IsNullOrEmpty(w.Tdh_e5))
+                {
+                    MessageObject.MessageDetail = "Chưa cấu hình đủ thông tin kết nối hệ thống tại kho! Vui lòng kiểm tra lại!";
+                }
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                Exception = ex;
             }
         }
     }

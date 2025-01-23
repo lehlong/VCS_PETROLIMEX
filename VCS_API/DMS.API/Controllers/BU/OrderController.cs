@@ -93,5 +93,25 @@ namespace DMS.API.Controllers.BU
             }
             return Ok(transferObject);
         }
+
+        [HttpPost("Order")]
+        public async Task<IActionResult> Order([FromBody] OrderDto orderDto)
+        {
+            var transferObject = new TransferObject();
+            await _service.Order(orderDto);
+            if (_service.Status)
+            {
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0100", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0101", _service); // Thêm mới thất bại
+            }
+            return Ok(transferObject);
+        }
     }
 }
