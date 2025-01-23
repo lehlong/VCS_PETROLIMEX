@@ -36,9 +36,10 @@ namespace VCS.APP
         private static void ConfigureServices(ServiceCollection services)
         {
             var configuration = new ConfigurationBuilder()
-               .SetBasePath(Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\")))
-               .AddJsonFile("appsettings.json")
-               .Build();
+              .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.json", optional: true)
+                .AddEnvironmentVariables().Build();
             services.AddSingleton<IConfiguration>(configuration);
             services.AddDbContext<AppDbContext>(options =>
             {
