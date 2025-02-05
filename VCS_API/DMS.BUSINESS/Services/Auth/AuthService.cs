@@ -147,6 +147,8 @@ namespace DMS.BUSINESS.Services.Auth
                 return null;
             }
 
+            var p = Utils.CryptographyMD5(loginInfo.Password);
+
             var account = await _dbContext.TblAdAccount
                 .Include(x => x.Account_AccountGroups)
                 .ThenInclude(x => x.AccountGroup)
