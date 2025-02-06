@@ -42,21 +42,21 @@
             cameraPanel.AutoScroll = true;
             cameraPanel.BackColor = Color.Transparent;
             cameraPanel.ForeColor = SystemColors.ControlText;
-            cameraPanel.Location = new Point(2, 73);
+            cameraPanel.Location = new Point(4, 71);
             cameraPanel.Margin = new Padding(4);
             cameraPanel.Name = "cameraPanel";
             cameraPanel.Padding = new Padding(13, 14, 13, 14);
-            cameraPanel.Size = new Size(1785, 1008);
+            cameraPanel.Size = new Size(1374, 1008);
             cameraPanel.TabIndex = 0;
             // 
             // panel1
             // 
             panel1.BackColor = Color.Transparent;
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(2, 3);
+            panel1.Location = new Point(4, 4);
             panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1785, 73);
+            panel1.Size = new Size(1370, 73);
             panel1.TabIndex = 1;
             // 
             // button1
@@ -82,19 +82,21 @@
             // 
             // panel2
             // 
+            panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(cameraPanel);
-            panel2.Location = new Point(-1, -2);
+            panel2.Location = new Point(10, 9);
+            panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1785, 1065);
+            panel2.Size = new Size(1382, 1048);
             panel2.TabIndex = 2;
             // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1779, 1061);
+            ClientSize = new Size(1890, 1061);
             Controls.Add(panel2);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);

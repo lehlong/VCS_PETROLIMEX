@@ -46,6 +46,7 @@ namespace VCS.APP
             btnCheckIn = new Button();
             btnHome = new Button();
             panelLogo = new Panel();
+            label2 = new Label();
             pictureBox1 = new PictureBox();
             panelMain = new Panel();
             panelTitle = new Panel();
@@ -299,6 +300,7 @@ namespace VCS.APP
             // panelLogo
             // 
             panelLogo.BackColor = Color.FromArgb(52, 58, 64);
+            panelLogo.Controls.Add(label2);
             panelLogo.Controls.Add(pictureBox1);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -307,12 +309,24 @@ namespace VCS.APP
             panelLogo.Size = new Size(200, 60);
             panelLogo.TabIndex = 0;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(78, 11);
+            label2.Name = "label2";
+            label2.Size = new Size(69, 40);
+            label2.TabIndex = 2;
+            label2.Text = "VCS";
+            label2.Click += label2_Click;
+            // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(16, 13);
+            pictureBox1.Location = new Point(45, 13);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(178, 35);
+            pictureBox1.Size = new Size(36, 36);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -371,7 +385,8 @@ namespace VCS.APP
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(25, 20);
+            label1.ImageAlign = ContentAlignment.MiddleLeft;
+            label1.Location = new Point(2, 20);
             label1.Name = "label1";
             label1.Size = new Size(231, 21);
             label1.TabIndex = 2;
@@ -381,7 +396,8 @@ namespace VCS.APP
             // 
             labelTitle.AutoSize = true;
             labelTitle.ForeColor = Color.White;
-            labelTitle.Location = new Point(251, 19);
+            labelTitle.ImageAlign = ContentAlignment.MiddleLeft;
+            labelTitle.Location = new Point(228, 19);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(88, 21);
             labelTitle.TabIndex = 0;
@@ -396,7 +412,11 @@ namespace VCS.APP
             ClientSize = new Size(1600, 900);
             Controls.Add(panelMain);
             Controls.Add(panelMenu);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MdiChildrenMinimizedAnchorBottom = false;
+            MinimizeBox = false;
             Name = "Main";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
@@ -411,6 +431,7 @@ namespace VCS.APP
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelLogo.ResumeLayout(false);
+            panelLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMain.ResumeLayout(false);
             panelTitle.ResumeLayout(false);
@@ -441,5 +462,6 @@ namespace VCS.APP
         private PictureBox pictureBox6;
         private PictureBox pictureBox8;
         private PictureBox pictureBox7;
+        private Label label2;
     }
 }
