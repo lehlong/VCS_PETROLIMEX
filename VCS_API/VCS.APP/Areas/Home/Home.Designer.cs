@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             cameraPanel = new FlowLayoutPanel();
             panel1 = new Panel();
             button1 = new Button();
@@ -60,17 +61,22 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(24, 144, 255);
+            button1.BackColor = Color.FromArgb(220, 53, 69);
             button1.Cursor = Cursors.Hand;
             button1.FlatAppearance.BorderSize = 0;
             button1.FlatStyle = FlatStyle.Flat;
             button1.ForeColor = Color.White;
+            button1.Image = (Image)resources.GetObject("button1.Image");
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
             button1.Location = new Point(13, 19);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
+            button1.Padding = new Padding(6, 0, 0, 0);
             button1.Size = new Size(138, 40);
             button1.TabIndex = 0;
             button1.Text = "Reset Camera";
+            button1.TextAlign = ContentAlignment.MiddleLeft;
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 

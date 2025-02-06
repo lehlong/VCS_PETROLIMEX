@@ -130,5 +130,75 @@ namespace VCS.APP.Areas.CheckOut
         {
 
         }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            //var number = txtNumber.Text.Trim();
+            //if (string.IsNullOrEmpty(number))
+            //{
+            //    txtStatus.Text = "Vui lòng nhập số lệnh xuất";
+            //    txtStatus.ForeColor = Color.Red;
+            //    return;
+            //}
+            //var _s = new CommonService();
+            //var token = _s.LoginSmoApi();
+            //if (string.IsNullOrEmpty(token))
+            //{
+            //    txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+            //    txtStatus.ForeColor = Color.Red;
+            //    return;
+            //}
+
+            //var dataDetail = _s.CheckInvoice(number, token);
+            //if (!dataDetail.STATUS)
+            //{
+            //    txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
+            //    txtStatus.ForeColor = Color.Red;
+            //}
+            //else
+            //{
+            //    txtStatus.Text = $"Thành công! Lệnh xuất đã có hoá đơn!";
+            //    txtStatus.ForeColor = Color.Green;
+            //}
+        }
+
+        private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (e.KeyChar == (char)Keys.Enter)
+            //{
+            //    var number = txtNumber.Text.Trim();
+            //    if (string.IsNullOrEmpty(number))
+            //    {
+            //        txtStatus.Text = "Vui lòng nhập số lệnh xuất";
+            //        txtStatus.ForeColor = Color.Red;
+            //        return;
+            //    }
+            //    var _s = new CommonService();
+            //    var token = _s.LoginSmoApi();
+            //    if (string.IsNullOrEmpty(token))
+            //    {
+            //        txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+            //        txtStatus.ForeColor = Color.Red;
+            //        return;
+            //    }
+
+            //    var dataDetail = _s.CheckInvoice(number, token);
+            //    if (!dataDetail.STATUS)
+            //    {
+            //        txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
+            //        txtStatus.ForeColor = Color.Red;
+            //    }
+            //    else
+            //    {
+            //        txtStatus.Text = $"Thành công! Lệnh xuất đã có hoá đơn!";
+            //        txtStatus.ForeColor = Color.Green;
+            //    }
+            //}
+        }
     }
 }

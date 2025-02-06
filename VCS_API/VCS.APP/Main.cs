@@ -37,18 +37,33 @@ namespace VCS.APP
         {
             labelTitle.Text = "/ Quản lý cổng vào";
             OpenChildForm(new CheckIn(_dbContext, _orderService));
+            btnHome.BackColor = Color.White;
+            btnCheckIn.BackColor = SystemColors.Control;
+            btnCheckOut.BackColor = Color.White;
+            btnConfig.BackColor = Color.White;
+            btnHistory.BackColor = Color.White;
         }
 
         private void btnHome_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Trang chủ";
             OpenChildForm(new Home(_dbContext));
+            btnHome.BackColor = SystemColors.Control;
+            btnCheckIn.BackColor = Color.White;
+            btnCheckOut.BackColor = Color.White;
+            btnConfig.BackColor = Color.White;
+            btnHistory.BackColor = Color.White;
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Quản lý cổng ra";
             OpenChildForm(new CheckOut(_dbContext));
+            btnHome.BackColor = Color.White;
+            btnCheckIn.BackColor = Color.White;
+            btnCheckOut.BackColor = SystemColors.Control;
+            btnConfig.BackColor = Color.White;
+            btnHistory.BackColor = Color.White;
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -111,6 +126,33 @@ namespace VCS.APP
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            labelTitle.Text = "/ Lịch sử ra vào";
+            //OpenChildForm(new CheckOut(_dbContext));
+            btnHome.BackColor = Color.White;
+            btnCheckIn.BackColor = Color.White;
+            btnCheckOut.BackColor = Color.White;
+            btnConfig.BackColor = Color.White;
+            btnHistory.BackColor = SystemColors.Control;
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            labelTitle.Text = "/ Cấu hình chung";
+            //OpenChildForm(new CheckOut(_dbContext));
+            btnHome.BackColor = Color.White;
+            btnCheckIn.BackColor = Color.White;
+            btnCheckOut.BackColor = Color.White;
+            btnConfig.BackColor = SystemColors.Control;
+            btnHistory.BackColor = Color.White;
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
         {
 
         }

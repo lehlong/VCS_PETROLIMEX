@@ -32,6 +32,12 @@ namespace VCS.APP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelMenu = new Panel();
+            pictureBox8 = new PictureBox();
+            pictureBox7 = new PictureBox();
+            pictureBox6 = new PictureBox();
+            pictureBox5 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            pictureBox3 = new PictureBox();
             btnHistory = new Button();
             btnConfig = new Button();
             pictureBox2 = new PictureBox();
@@ -40,24 +46,36 @@ namespace VCS.APP
             btnCheckIn = new Button();
             btnHome = new Button();
             panelLogo = new Panel();
+            pictureBox1 = new PictureBox();
             panelMain = new Panel();
             panelTitle = new Panel();
-            btnUser = new Button();
+            btnUser = new NoHoverButton();
             label1 = new Label();
             labelTitle = new Label();
-            pictureBox1 = new PictureBox();
             panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panelLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelMain.SuspendLayout();
             panelTitle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panelMenu
             // 
             panelMenu.AllowDrop = true;
-            panelMenu.BackColor = Color.FromArgb(66, 66, 66);
+            panelMenu.BackColor = Color.White;
+            panelMenu.Controls.Add(pictureBox8);
+            panelMenu.Controls.Add(pictureBox7);
+            panelMenu.Controls.Add(pictureBox6);
+            panelMenu.Controls.Add(pictureBox5);
+            panelMenu.Controls.Add(pictureBox4);
+            panelMenu.Controls.Add(pictureBox3);
             panelMenu.Controls.Add(btnHistory);
             panelMenu.Controls.Add(btnConfig);
             panelMenu.Controls.Add(pictureBox2);
@@ -68,52 +86,121 @@ namespace VCS.APP
             panelMenu.Controls.Add(panelLogo);
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            panelMenu.ForeColor = Color.Black;
             panelMenu.Location = new Point(0, 0);
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(200, 900);
             panelMenu.TabIndex = 0;
             panelMenu.Paint += panelMenu_Paint;
             // 
+            // pictureBox8
+            // 
+            pictureBox8.BackColor = Color.Transparent;
+            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
+            pictureBox8.Location = new Point(16, 382);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(18, 18);
+            pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox8.TabIndex = 13;
+            pictureBox8.TabStop = false;
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.BackColor = Color.Transparent;
+            pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
+            pictureBox7.Location = new Point(16, 322);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(18, 18);
+            pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox7.TabIndex = 12;
+            pictureBox7.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.BackColor = Color.Transparent;
+            pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
+            pictureBox6.Location = new Point(16, 261);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(18, 18);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox6.TabIndex = 11;
+            pictureBox6.TabStop = false;
+            pictureBox6.Click += pictureBox6_Click;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.BackColor = Color.Transparent;
+            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
+            pictureBox5.Location = new Point(16, 202);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(18, 18);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox5.TabIndex = 10;
+            pictureBox5.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.BackColor = Color.Transparent;
+            pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
+            pictureBox4.Location = new Point(16, 142);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(18, 18);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 9;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.BackColor = Color.Transparent;
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(16, 82);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(18, 18);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 8;
+            pictureBox3.TabStop = false;
+            // 
             // btnHistory
             // 
+            btnHistory.BackColor = Color.White;
             btnHistory.Cursor = Cursors.Hand;
             btnHistory.Dock = DockStyle.Top;
             btnHistory.FlatAppearance.BorderSize = 0;
             btnHistory.FlatStyle = FlatStyle.Flat;
             btnHistory.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnHistory.ForeColor = Color.White;
-            btnHistory.Image = (Image)resources.GetObject("btnHistory.Image");
+            btnHistory.ForeColor = Color.Black;
             btnHistory.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHistory.Location = new Point(0, 310);
+            btnHistory.Location = new Point(0, 360);
             btnHistory.Name = "btnHistory";
-            btnHistory.Padding = new Padding(12, 0, 0, 0);
-            btnHistory.Size = new Size(200, 50);
+            btnHistory.Padding = new Padding(38, 0, 0, 0);
+            btnHistory.Size = new Size(200, 60);
             btnHistory.TabIndex = 7;
             btnHistory.Text = "Lịch sử ra vào";
             btnHistory.TextAlign = ContentAlignment.MiddleLeft;
             btnHistory.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnHistory.UseVisualStyleBackColor = true;
+            btnHistory.UseVisualStyleBackColor = false;
             btnHistory.Click += button2_Click;
             // 
             // btnConfig
             // 
+            btnConfig.BackColor = Color.White;
             btnConfig.Cursor = Cursors.Hand;
             btnConfig.Dock = DockStyle.Top;
             btnConfig.FlatAppearance.BorderSize = 0;
             btnConfig.FlatStyle = FlatStyle.Flat;
             btnConfig.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnConfig.ForeColor = Color.White;
-            btnConfig.Image = (Image)resources.GetObject("btnConfig.Image");
+            btnConfig.ForeColor = Color.Black;
             btnConfig.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConfig.Location = new Point(0, 260);
+            btnConfig.Location = new Point(0, 300);
             btnConfig.Name = "btnConfig";
-            btnConfig.Padding = new Padding(12, 0, 0, 0);
-            btnConfig.Size = new Size(200, 50);
+            btnConfig.Padding = new Padding(38, 0, 0, 0);
+            btnConfig.Size = new Size(200, 60);
             btnConfig.TabIndex = 6;
             btnConfig.Text = "Cấu hình chung";
             btnConfig.TextAlign = ContentAlignment.MiddleLeft;
             btnConfig.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnConfig.UseVisualStyleBackColor = true;
+            btnConfig.UseVisualStyleBackColor = false;
+            btnConfig.Click += btnConfig_Click;
             // 
             // pictureBox2
             // 
@@ -127,82 +214,81 @@ namespace VCS.APP
             // 
             // btnLogOut
             // 
+            btnLogOut.BackColor = Color.White;
             btnLogOut.Cursor = Cursors.Hand;
             btnLogOut.Dock = DockStyle.Top;
             btnLogOut.FlatAppearance.BorderSize = 0;
             btnLogOut.FlatStyle = FlatStyle.Flat;
             btnLogOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLogOut.ForeColor = Color.White;
-            btnLogOut.Image = Properties.Resources.padlock_menu;
+            btnLogOut.ForeColor = Color.Black;
             btnLogOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogOut.Location = new Point(0, 210);
+            btnLogOut.Location = new Point(0, 240);
             btnLogOut.Name = "btnLogOut";
-            btnLogOut.Padding = new Padding(12, 0, 0, 0);
-            btnLogOut.Size = new Size(200, 50);
+            btnLogOut.Padding = new Padding(38, 0, 0, 0);
+            btnLogOut.Size = new Size(200, 60);
             btnLogOut.TabIndex = 4;
             btnLogOut.Text = "Đăng xuất";
             btnLogOut.TextAlign = ContentAlignment.MiddleLeft;
             btnLogOut.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnLogOut.UseVisualStyleBackColor = true;
+            btnLogOut.UseVisualStyleBackColor = false;
             btnLogOut.Click += btnLogOut_Click;
             // 
             // btnCheckOut
             // 
+            btnCheckOut.BackColor = Color.White;
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.Dock = DockStyle.Top;
             btnCheckOut.FlatAppearance.BorderSize = 0;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
             btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCheckOut.ForeColor = Color.White;
-            btnCheckOut.Image = Properties.Resources.log_out;
+            btnCheckOut.ForeColor = Color.Black;
             btnCheckOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckOut.Location = new Point(0, 160);
+            btnCheckOut.Location = new Point(0, 180);
             btnCheckOut.Name = "btnCheckOut";
-            btnCheckOut.Padding = new Padding(12, 0, 0, 0);
-            btnCheckOut.Size = new Size(200, 50);
+            btnCheckOut.Padding = new Padding(38, 0, 0, 0);
+            btnCheckOut.Size = new Size(200, 60);
             btnCheckOut.TabIndex = 3;
             btnCheckOut.Text = "Quản lý cổng ra";
             btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCheckOut.UseVisualStyleBackColor = true;
+            btnCheckOut.UseVisualStyleBackColor = false;
             btnCheckOut.Click += btnCheckOut_Click;
             // 
             // btnCheckIn
             // 
+            btnCheckIn.BackColor = Color.White;
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.Dock = DockStyle.Top;
             btnCheckIn.FlatAppearance.BorderSize = 0;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
             btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCheckIn.ForeColor = Color.White;
-            btnCheckIn.Image = Properties.Resources.log_in;
+            btnCheckIn.ForeColor = Color.Black;
             btnCheckIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckIn.Location = new Point(0, 110);
+            btnCheckIn.Location = new Point(0, 120);
             btnCheckIn.Name = "btnCheckIn";
-            btnCheckIn.Padding = new Padding(12, 0, 0, 0);
-            btnCheckIn.Size = new Size(200, 50);
+            btnCheckIn.Padding = new Padding(38, 0, 0, 0);
+            btnCheckIn.Size = new Size(200, 60);
             btnCheckIn.TabIndex = 2;
             btnCheckIn.Text = "Quản lý cổng vào";
             btnCheckIn.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckIn.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnCheckIn.UseVisualStyleBackColor = true;
+            btnCheckIn.UseVisualStyleBackColor = false;
             btnCheckIn.Click += btnCheckIn_Click;
             // 
             // btnHome
             // 
-            btnHome.BackColor = Color.FromArgb(66, 66, 66);
+            btnHome.BackColor = Color.White;
             btnHome.Cursor = Cursors.Hand;
             btnHome.Dock = DockStyle.Top;
             btnHome.FlatAppearance.BorderSize = 0;
             btnHome.FlatStyle = FlatStyle.Flat;
             btnHome.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnHome.ForeColor = Color.White;
-            btnHome.Image = Properties.Resources.home_icon2;
+            btnHome.ForeColor = Color.Black;
             btnHome.ImageAlign = ContentAlignment.MiddleLeft;
             btnHome.Location = new Point(0, 60);
             btnHome.Name = "btnHome";
-            btnHome.Padding = new Padding(12, 0, 0, 0);
-            btnHome.Size = new Size(200, 50);
+            btnHome.Padding = new Padding(38, 0, 0, 0);
+            btnHome.Size = new Size(200, 60);
             btnHome.TabIndex = 1;
             btnHome.Text = "Trang chủ";
             btnHome.TextAlign = ContentAlignment.MiddleLeft;
@@ -212,7 +298,7 @@ namespace VCS.APP
             // 
             // panelLogo
             // 
-            panelLogo.BackColor = Color.FromArgb(66, 66, 66);
+            panelLogo.BackColor = Color.FromArgb(52, 58, 64);
             panelLogo.Controls.Add(pictureBox1);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -221,8 +307,19 @@ namespace VCS.APP
             panelLogo.Size = new Size(200, 60);
             panelLogo.TabIndex = 0;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(16, 13);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(178, 35);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
             // panelMain
             // 
+            panelMain.BackColor = Color.White;
             panelMain.BackgroundImageLayout = ImageLayout.None;
             panelMain.Controls.Add(panelTitle);
             panelMain.Dock = DockStyle.Fill;
@@ -235,7 +332,7 @@ namespace VCS.APP
             // 
             // panelTitle
             // 
-            panelTitle.BackColor = Color.White;
+            panelTitle.BackColor = Color.FromArgb(52, 58, 64);
             panelTitle.BackgroundImageLayout = ImageLayout.None;
             panelTitle.Controls.Add(btnUser);
             panelTitle.Controls.Add(label1);
@@ -256,6 +353,7 @@ namespace VCS.APP
             btnUser.FlatAppearance.BorderColor = Color.White;
             btnUser.FlatAppearance.BorderSize = 0;
             btnUser.FlatStyle = FlatStyle.Flat;
+            btnUser.ForeColor = Color.White;
             btnUser.Image = (Image)resources.GetObject("btnUser.Image");
             btnUser.ImageAlign = ContentAlignment.MiddleRight;
             btnUser.Location = new Point(1117, 0);
@@ -272,6 +370,7 @@ namespace VCS.APP
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
             label1.Location = new Point(25, 20);
             label1.Name = "label1";
             label1.Size = new Size(231, 21);
@@ -281,22 +380,13 @@ namespace VCS.APP
             // labelTitle
             // 
             labelTitle.AutoSize = true;
+            labelTitle.ForeColor = Color.White;
             labelTitle.Location = new Point(251, 19);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(88, 21);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "/ Trang chủ";
             labelTitle.Click += labelTitle_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.VCS_3;
-            pictureBox1.Location = new Point(56, 13);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(80, 35);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
             // 
             // Main
             // 
@@ -311,13 +401,20 @@ namespace VCS.APP
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
+            Load += Main_Load;
             panelMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelLogo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelMain.ResumeLayout(false);
             panelTitle.ResumeLayout(false);
             panelTitle.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -334,9 +431,15 @@ namespace VCS.APP
         private Label labelTitle;
         private Label label1;
         private PictureBox pictureBox2;
-        private Button btnUser;
         private Button btnHistory;
         private Button btnConfig;
         private PictureBox pictureBox1;
+        private NoHoverButton btnUser;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox4;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox6;
+        private PictureBox pictureBox8;
+        private PictureBox pictureBox7;
     }
 }

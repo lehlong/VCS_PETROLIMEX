@@ -190,7 +190,7 @@ namespace VCS.APP.Services
                     client.DefaultRequestHeaders.Accept.Clear(); 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}{number}");
+                    var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}PO/GetDO?doNumber={number}");
                     HttpResponseMessage response = client.Send(request);
                     if (response.IsSuccessStatusCode)
                     {
@@ -213,6 +213,41 @@ namespace VCS.APP.Services
                 return resEx;
             }
         }
+
+        public ResponseLoginSmoApi CheckInvoice(string number, string token)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}PO/CheckInvoice?doNumber={number}");
+                    HttpResponseMessage response = client.Send(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseContent = response.Content.ReadAsStringAsync().Result;
+                        var data = JsonSerializer.Deserialize<ResponseLoginSmoApi>(responseContent);
+                        return data;
+                    }
+                    else
+                    {
+                        var resEx = new ResponseLoginSmoApi();
+                        resEx.STATUS = false;
+                        return resEx;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var resEx = new ResponseLoginSmoApi();
+                resEx.STATUS = false;
+                return resEx;
+            }
+        }
+
+
     }
 
     public class ResponseLoginSmoApi

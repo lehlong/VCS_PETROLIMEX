@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBox1 = new PictureBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckOut));
             cameraPanel = new Panel();
             videoView = new LibVLCSharp.WinForms.VideoView();
             infoPanel = new Panel();
@@ -40,7 +40,6 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
-            txtNumber = new TextBox();
             pictureBox2 = new PictureBox();
             label9 = new Label();
             panel8 = new Panel();
@@ -53,17 +52,14 @@
             label5 = new Label();
             panel4 = new Panel();
             comboBox1 = new ComboBox();
-            btnCheck = new Button();
             btnCheckOut = new Button();
-            label4 = new Label();
             txtStatus = new Label();
             label3 = new Label();
             panel2 = new Panel();
             panel5 = new Panel();
             mainPanel = new Panel();
             panel1 = new Panel();
-            panel3 = new Panel();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            btnCheck = new Button();
             cameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView).BeginInit();
             infoPanel.SuspendLayout();
@@ -75,19 +71,7 @@
             panel5.SuspendLayout();
             mainPanel.SuspendLayout();
             panel1.SuspendLayout();
-            panel3.SuspendLayout();
             SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Image = Properties.Resources.search;
-            pictureBox1.Location = new Point(368, 11);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(18, 18);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 16;
-            pictureBox1.TabStop = false;
             // 
             // cameraPanel
             // 
@@ -187,41 +171,41 @@
             // 
             // btnReset
             // 
-            btnReset.BackColor = Color.FromArgb(66, 66, 66);
+            btnReset.BackColor = Color.FromArgb(220, 53, 69);
             btnReset.Cursor = Cursors.Hand;
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(380, 17);
+            btnReset.Image = (Image)resources.GetObject("btnReset.Image");
+            btnReset.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReset.Location = new Point(367, 17);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(130, 40);
+            btnReset.Padding = new Padding(6, 0, 0, 0);
+            btnReset.Size = new Size(143, 40);
             btnReset.TabIndex = 5;
             btnReset.Text = "Reset Camera";
+            btnReset.TextAlign = ContentAlignment.MiddleLeft;
+            btnReset.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnReset.UseVisualStyleBackColor = false;
             // 
             // btnDetect
             // 
-            btnDetect.BackColor = Color.FromArgb(66, 66, 66);
+            btnDetect.BackColor = Color.FromArgb(0, 123, 255);
             btnDetect.Cursor = Cursors.Hand;
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDetect.ForeColor = Color.White;
-            btnDetect.Location = new Point(244, 17);
+            btnDetect.Image = (Image)resources.GetObject("btnDetect.Image");
+            btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDetect.Location = new Point(226, 17);
             btnDetect.Name = "btnDetect";
-            btnDetect.Size = new Size(130, 40);
+            btnDetect.Padding = new Padding(6, 0, 0, 0);
+            btnDetect.Size = new Size(135, 40);
             btnDetect.TabIndex = 2;
             btnDetect.Text = "Nhận diện xe";
+            btnDetect.TextAlign = ContentAlignment.MiddleLeft;
+            btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
-            // 
-            // txtNumber
-            // 
-            txtNumber.BackColor = Color.WhiteSmoke;
-            txtNumber.BorderStyle = BorderStyle.None;
-            txtNumber.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNumber.Location = new Point(13, 9);
-            txtNumber.Name = "txtNumber";
-            txtNumber.Size = new Size(348, 22);
-            txtNumber.TabIndex = 10;
             // 
             // pictureBox2
             // 
@@ -310,7 +294,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(430, 74);
+            label5.Location = new Point(11, 74);
             label5.Name = "label5";
             label5.Size = new Size(153, 21);
             label5.TabIndex = 16;
@@ -321,9 +305,9 @@
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(comboBox1);
-            panel4.Location = new Point(430, 101);
+            panel4.Location = new Point(11, 101);
             panel4.Name = "panel4";
-            panel4.Size = new Size(396, 40);
+            panel4.Size = new Size(816, 40);
             panel4.TabIndex = 14;
             // 
             // comboBox1
@@ -339,53 +323,34 @@
             comboBox1.Location = new Point(0, 0);
             comboBox1.Margin = new Padding(0);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(396, 41);
+            comboBox1.Size = new Size(816, 41);
             comboBox1.TabIndex = 16;
-            // 
-            // btnCheck
-            // 
-            btnCheck.BackColor = Color.FromArgb(66, 66, 66);
-            btnCheck.Cursor = Cursors.Hand;
-            btnCheck.FlatStyle = FlatStyle.Flat;
-            btnCheck.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCheck.ForeColor = Color.White;
-            btnCheck.Location = new Point(578, 14);
-            btnCheck.Name = "btnCheck";
-            btnCheck.Size = new Size(148, 40);
-            btnCheck.TabIndex = 15;
-            btnCheck.Text = "Kiểm tra hoá đơn";
-            btnCheck.UseVisualStyleBackColor = false;
             // 
             // btnCheckOut
             // 
-            btnCheckOut.BackColor = Color.FromArgb(66, 66, 66);
+            btnCheckOut.BackColor = Color.FromArgb(0, 123, 255);
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
             btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckOut.ForeColor = Color.White;
-            btnCheckOut.Location = new Point(732, 14);
+            btnCheckOut.Image = (Image)resources.GetObject("btnCheckOut.Image");
+            btnCheckOut.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCheckOut.Location = new Point(718, 14);
             btnCheckOut.Name = "btnCheckOut";
-            btnCheckOut.Size = new Size(95, 40);
+            btnCheckOut.Padding = new Padding(6, 0, 0, 0);
+            btnCheckOut.Size = new Size(109, 40);
             btnCheckOut.TabIndex = 14;
             btnCheckOut.Text = "Cho xe ra";
+            btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
+            btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckOut.UseVisualStyleBackColor = false;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(22, 74);
-            label4.Name = "label4";
-            label4.Size = new Size(98, 21);
-            label4.TabIndex = 9;
-            label4.Text = "Số lệnh xuất:";
             // 
             // txtStatus
             // 
             txtStatus.AutoSize = true;
             txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtStatus.ForeColor = Color.WhiteSmoke;
-            txtStatus.Location = new Point(16, 14);
+            txtStatus.Location = new Point(11, 12);
             txtStatus.Name = "txtStatus";
             txtStatus.Size = new Size(84, 21);
             txtStatus.TabIndex = 0;
@@ -431,13 +396,14 @@
             mainPanel.Location = new Point(0, 0);
             mainPanel.Name = "mainPanel";
             mainPanel.Padding = new Padding(20);
-            mainPanel.Size = new Size(1404, 848);
+            mainPanel.Size = new Size(1473, 848);
             mainPanel.TabIndex = 1;
             // 
             // panel1
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnCheck);
             panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(panel8);
@@ -449,35 +415,40 @@
             panel1.Controls.Add(statusSMO);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
-            panel1.Controls.Add(btnCheck);
             panel1.Controls.Add(btnCheckOut);
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(label4);
             panel1.Location = new Point(545, 9);
             panel1.Name = "panel1";
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
-            // panel3
+            // btnCheck
             // 
-            panel3.BackColor = Color.WhiteSmoke;
-            panel3.Controls.Add(pictureBox1);
-            panel3.Controls.Add(txtNumber);
-            panel3.Location = new Point(19, 101);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(396, 40);
-            panel3.TabIndex = 13;
+            btnCheck.BackColor = Color.FromArgb(52, 58, 64);
+            btnCheck.Cursor = Cursors.Hand;
+            btnCheck.FlatStyle = FlatStyle.Flat;
+            btnCheck.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCheck.ForeColor = Color.White;
+            btnCheck.Image = (Image)resources.GetObject("btnCheck.Image");
+            btnCheck.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCheck.Location = new Point(541, 14);
+            btnCheck.Name = "btnCheck";
+            btnCheck.Padding = new Padding(6, 0, 0, 0);
+            btnCheck.Size = new Size(169, 40);
+            btnCheck.TabIndex = 26;
+            btnCheck.Text = "Kiểm tra hoá đơn";
+            btnCheck.TextAlign = ContentAlignment.MiddleLeft;
+            btnCheck.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCheck.UseVisualStyleBackColor = false;
             // 
             // CheckOut
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1404, 848);
+            ClientSize = new Size(1473, 848);
             Controls.Add(mainPanel);
             Name = "CheckOut";
             Text = "Quản lý cổng ra";
             Load += CheckOut_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             cameraPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)videoView).EndInit();
             infoPanel.ResumeLayout(false);
@@ -493,14 +464,10 @@
             mainPanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private PictureBox pictureBox1;
         private Panel cameraPanel;
         private LibVLCSharp.WinForms.VideoView videoView;
         private Panel infoPanel;
@@ -512,7 +479,6 @@
         private PictureBox pictureBoxLicensePlate;
         private Button btnReset;
         private Button btnDetect;
-        private TextBox txtNumber;
         private PictureBox pictureBox2;
         private Label label9;
         private Panel panel8;
@@ -525,15 +491,13 @@
         private Label label5;
         private Panel panel4;
         private ComboBox comboBox1;
-        private Button btnCheck;
         private Button btnCheckOut;
-        private Label label4;
         private Label txtStatus;
         private Label label3;
         private Panel panel2;
         private Panel panel5;
         private Panel mainPanel;
         private Panel panel1;
-        private Panel panel3;
+        private Button btnCheck;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckIn));
             mainPanel = new Panel();
             panel5 = new Panel();
             label3 = new Label();
@@ -128,7 +129,7 @@
             txtStatus.AutoSize = true;
             txtStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtStatus.ForeColor = Color.WhiteSmoke;
-            txtStatus.Location = new Point(16, 14);
+            txtStatus.Location = new Point(11, 12);
             txtStatus.Name = "txtStatus";
             txtStatus.Size = new Size(84, 21);
             txtStatus.TabIndex = 0;
@@ -282,31 +283,41 @@
             // 
             // button3
             // 
-            button3.BackColor = Color.FromArgb(66, 66, 66);
+            button3.BackColor = Color.FromArgb(40, 167, 69);
             button3.Cursor = Cursors.Hand;
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
-            button3.Location = new Point(375, 14);
+            button3.Image = (Image)resources.GetObject("button3.Image");
+            button3.ImageAlign = ContentAlignment.MiddleLeft;
+            button3.Location = new Point(332, 14);
             button3.Name = "button3";
-            button3.Size = new Size(96, 40);
+            button3.Padding = new Padding(6, 0, 6, 0);
+            button3.Size = new Size(114, 40);
             button3.TabIndex = 15;
             button3.Text = "Cập nhật";
+            button3.TextAlign = ContentAlignment.MiddleLeft;
+            button3.TextImageRelation = TextImageRelation.ImageBeforeText;
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
             // 
             // btnCheckIn
             // 
-            btnCheckIn.BackColor = Color.FromArgb(66, 66, 66);
+            btnCheckIn.BackColor = Color.FromArgb(0, 123, 255);
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
             btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckIn.ForeColor = Color.White;
-            btnCheckIn.Location = new Point(646, 14);
+            btnCheckIn.Image = (Image)resources.GetObject("btnCheckIn.Image");
+            btnCheckIn.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCheckIn.Location = new Point(635, 14);
             btnCheckIn.Name = "btnCheckIn";
-            btnCheckIn.Size = new Size(181, 40);
+            btnCheckIn.Padding = new Padding(6, 0, 0, 0);
+            btnCheckIn.Size = new Size(192, 40);
             btnCheckIn.TabIndex = 14;
             btnCheckIn.Text = "Cho vào kho - Cấp số";
+            btnCheckIn.TextAlign = ContentAlignment.MiddleLeft;
+            btnCheckIn.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckIn.UseVisualStyleBackColor = false;
             btnCheckIn.Click += btnCheckIn_Click;
             // 
@@ -356,16 +367,21 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(66, 66, 66);
+            button1.BackColor = Color.FromArgb(52, 58, 64);
             button1.Cursor = Cursors.Hand;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(477, 14);
+            button1.Image = (Image)resources.GetObject("button1.Image");
+            button1.ImageAlign = ContentAlignment.MiddleLeft;
+            button1.Location = new Point(453, 14);
             button1.Name = "button1";
-            button1.Size = new Size(163, 40);
+            button1.Padding = new Padding(6, 0, 0, 0);
+            button1.Size = new Size(174, 40);
             button1.TabIndex = 6;
             button1.Text = "Cho vào hàng chờ";
+            button1.TextAlign = ContentAlignment.MiddleLeft;
+            button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -469,31 +485,41 @@
             // 
             // btnReset
             // 
-            btnReset.BackColor = Color.FromArgb(66, 66, 66);
+            btnReset.BackColor = Color.FromArgb(220, 53, 69);
             btnReset.Cursor = Cursors.Hand;
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(380, 17);
+            btnReset.Image = (Image)resources.GetObject("btnReset.Image");
+            btnReset.ImageAlign = ContentAlignment.MiddleLeft;
+            btnReset.Location = new Point(364, 17);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(130, 40);
+            btnReset.Padding = new Padding(6, 0, 0, 0);
+            btnReset.Size = new Size(146, 40);
             btnReset.TabIndex = 5;
             btnReset.Text = "Reset Camera";
+            btnReset.TextAlign = ContentAlignment.MiddleLeft;
+            btnReset.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
             // btnDetect
             // 
-            btnDetect.BackColor = Color.FromArgb(66, 66, 66);
+            btnDetect.BackColor = Color.FromArgb(0, 123, 255);
             btnDetect.Cursor = Cursors.Hand;
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDetect.ForeColor = Color.White;
-            btnDetect.Location = new Point(244, 17);
+            btnDetect.Image = (Image)resources.GetObject("btnDetect.Image");
+            btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDetect.Location = new Point(220, 17);
             btnDetect.Name = "btnDetect";
-            btnDetect.Size = new Size(130, 40);
+            btnDetect.Padding = new Padding(6, 0, 0, 0);
+            btnDetect.Size = new Size(136, 40);
             btnDetect.TabIndex = 2;
             btnDetect.Text = "Nhận diện xe";
+            btnDetect.TextAlign = ContentAlignment.MiddleLeft;
+            btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
             // 
