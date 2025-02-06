@@ -42,10 +42,10 @@
             cameraPanel.AutoScroll = true;
             cameraPanel.BackColor = Color.Transparent;
             cameraPanel.ForeColor = SystemColors.ControlText;
-            cameraPanel.Location = new Point(4, 71);
+            cameraPanel.Location = new Point(2, 61);
             cameraPanel.Margin = new Padding(4);
             cameraPanel.Name = "cameraPanel";
-            cameraPanel.Padding = new Padding(13, 14, 13, 14);
+            cameraPanel.Padding = new Padding(10, 14, 13, 14);
             cameraPanel.Size = new Size(1374, 1008);
             cameraPanel.TabIndex = 0;
             // 
@@ -56,7 +56,8 @@
             panel1.Location = new Point(4, 4);
             panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1370, 73);
+            panel1.Padding = new Padding(10, 0, 0, 0);
+            panel1.Size = new Size(1370, 53);
             panel1.TabIndex = 1;
             // 
             // button1
@@ -68,7 +69,7 @@
             button1.ForeColor = Color.White;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(13, 19);
+            button1.Location = new Point(8, 9);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Padding = new Padding(6, 0, 0, 0);

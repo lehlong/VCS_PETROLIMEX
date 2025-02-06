@@ -59,8 +59,8 @@ namespace VCS.APP.Areas.Home
                 {
                     var cameraContainer = new Panel
                     {
-                        Width = 674,
-                        Height = 382,
+                        Width = 620,
+                        Height = 360,
                         Margin = new Padding(0, 0, 10, 10),
                         BorderStyle = BorderStyle.FixedSingle
                     };
@@ -74,8 +74,8 @@ namespace VCS.APP.Areas.Home
                     cameraContainer.Controls.Add(label);
                     var videoView = new VideoView
                     {
-                        Width = 674,
-                        Height = 382,
+                        Width = 620,
+                        Height = 360,
                     };
 
                     string rtspUrl = $"{camera.Rtsp}";
