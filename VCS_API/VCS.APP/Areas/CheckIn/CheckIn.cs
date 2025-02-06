@@ -34,10 +34,9 @@ namespace VCS.APP.Areas.CheckIn
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         private LibVLCSharp.Shared.LibVLC? _libVLC;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
+        private List<string> lstCheckDo = new List<string>();
         private string IMGPATH;
         private string PLATEPATH;
-        
-
 
         public CheckIn(AppDbContext dbContext, IWOrderService orderService)
         {
@@ -216,6 +215,12 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
+                if (lstCheckDo.Where(x => x == number).Count() == 1)
+                {
+                    txtStatus.Text = "Đã kiểm tra thông tin lệnh xuất! Vui lòng thử lệnh xuất khác!";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
                 if (string.IsNullOrEmpty(token))
@@ -237,7 +242,7 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Green;
 
                 _lstDOSAP.Add(dataDetail);
-
+                lstCheckDo.Add(number);
 
 
                 AppendPanelDetail(dataDetail);
@@ -254,21 +259,22 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
-                var itemToRemove = _lstDOSAP.FirstOrDefault(x => 
+                var itemToRemove = _lstDOSAP.FirstOrDefault(x =>
                     x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == doNumber);
                 if (itemToRemove != null)
                 {
                     _lstDOSAP.Remove(itemToRemove);
                 }
-                
+                lstCheckDo.Remove(doNumber);
+
                 int deletedY = deleteButton.Location.Y;
-                
+
                 var gridToRemove = panel1.Controls.OfType<DataGridView>()
                     .FirstOrDefault(g => g.Location.Y == deleteButton.Location.Y + 35);
                 int heightRemoved = 0;
                 if (gridToRemove != null)
                 {
-                    heightRemoved = gridToRemove.Height + 35; 
+                    heightRemoved = gridToRemove.Height + 35;
                     panel1.Controls.Remove(gridToRemove);
                     gridToRemove.Dispose();
                 }
@@ -315,8 +321,8 @@ namespace VCS.APP.Areas.CheckIn
                     BackColor = Color.FromArgb(230, 230, 230),
                     ForeColor = Color.Black,
                     Cursor = Cursors.Hand,
-                    Image = Properties.Resources.delete_icon, 
-                    ImageAlign = ContentAlignment.MiddleCenter 
+                    Image = Properties.Resources.delete_icon,
+                    ImageAlign = ContentAlignment.MiddleCenter
                 };
                 deleteButton.FlatAppearance.BorderSize = 0;
 
@@ -379,7 +385,7 @@ namespace VCS.APP.Areas.CheckIn
                     col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
 
-                int totalHeight = dataGridView1.ColumnHeadersHeight + 
+                int totalHeight = dataGridView1.ColumnHeadersHeight +
                     (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
                 dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
@@ -391,7 +397,7 @@ namespace VCS.APP.Areas.CheckIn
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         private void txtLicensePlate_TextChanged(object sender, EventArgs e)
         {
 
@@ -417,6 +423,13 @@ namespace VCS.APP.Areas.CheckIn
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
                 txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+            var check = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Date == DateTime.Now.Date && x.VehicleCode == txtLicensePlate.Text).Count();
+            if (check > 0)
+            {
+                txtStatus.Text = "Phương tiện đã có trong hàng chờ! Vui lòng kiểm tra lại!";
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
@@ -497,6 +510,12 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
+                if (lstCheckDo.Where(x => x == number).Count() == 1)
+                {
+                    txtStatus.Text = "Đã có thông tin! Vui lòng thử lệnh xuất khác!";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
                 if (string.IsNullOrEmpty(token))
@@ -518,7 +537,7 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Green;
 
                 _lstDOSAP.Add(dataDetail);
-
+                lstCheckDo.Add(number);
 
 
                 AppendPanelDetail(dataDetail);
@@ -532,7 +551,7 @@ namespace VCS.APP.Areas.CheckIn
 
         private async void btnCheckIn_Click(object sender, EventArgs e)
         {
-            
+
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
                 txtStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
@@ -575,7 +594,7 @@ namespace VCS.APP.Areas.CheckIn
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
-               
+
                 _dbContext.TblBuHeader.Add(new TblBuHeader
                 {
                     Id = headerId,
@@ -636,7 +655,7 @@ namespace VCS.APP.Areas.CheckIn
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     OrgCode = ProfileUtilities.User.OrganizeCode
                 });
-                
+
                 var orderDto = new OrderDto
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -650,15 +669,16 @@ namespace VCS.APP.Areas.CheckIn
                 };
 
                 var result = await _orderService.Add(orderDto);
-                    
+
                 if (result == null)
-                 {
-                   MessageBox.Show("Thêm mới thất bại!");
-                   return;
-                 }
-                
+                {
+                    MessageBox.Show("Thêm mới thất bại!");
+                    return;
+                }
+
 
                 MessageBox.Show("Cho vào kho cấp số thành công!");
+                ReloadForm(_dbContext);
             }
             else
             {
@@ -676,7 +696,7 @@ namespace VCS.APP.Areas.CheckIn
                     IsActive = true
                 });
                 _dbContext.SaveChanges();
-            }  
+            }
         }
 
         private async void CheckStatusSystem()
@@ -721,7 +741,14 @@ namespace VCS.APP.Areas.CheckIn
             InitializeControls();
             CheckStatusSystem();
             GetListQueue();
+            ResetVarible();
         }
+        private void ResetVarible()
+        {
+            _lstDOSAP = new List<DOSAPDataDto>();
+            lstCheckDo = new List<string>();
+        }
+
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -750,7 +777,7 @@ namespace VCS.APP.Areas.CheckIn
             {
                 ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
                 string selectedValue = selectedItem.Value;
-                
+
                 if (string.IsNullOrEmpty(selectedValue)) return;
 
                 var detail = GetCheckInDetail(selectedValue);
@@ -818,7 +845,7 @@ namespace VCS.APP.Areas.CheckIn
             {
                 txtStatus.Text = $"Lỗi khi tải thông tin: {ex.Message}";
                 txtStatus.ForeColor = Color.Red;
-                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -826,11 +853,11 @@ namespace VCS.APP.Areas.CheckIn
         private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index < 0) return;
-            
+
             ComboBox combo = sender as ComboBox;
-            
+
             Color backColor = combo.BackColor;
-            
+
             if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
                 backColor = Color.FromArgb(230, 230, 230);
@@ -855,11 +882,11 @@ namespace VCS.APP.Areas.CheckIn
 
         private CheckInDetailModel GetCheckInDetail(string headerId)
         {
-            try 
+            try
             {
                 var header = _dbContext.TblBuHeader
                     .FirstOrDefault(x => x.Id == headerId);
-                    
+
                 if (header == null)
                 {
                     throw new InvalidOperationException($"Không tìm thấy header với ID: {headerId}");
@@ -874,7 +901,7 @@ namespace VCS.APP.Areas.CheckIn
                 var images = _dbContext.TblBuImage
                     .Where(x => x.HeaderId.Contains(headerId))
                     .ToArray();
-                    
+
                 result.VehicleImagePath = images.FirstOrDefault(x => !x.IsPlate)?.FullPath;
                 result.PlateImagePath = images.FirstOrDefault(x => x.IsPlate)?.FullPath;
                 var doDetails = _dbContext.TblBuDetailDO
@@ -916,7 +943,7 @@ namespace VCS.APP.Areas.CheckIn
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
@@ -987,7 +1014,7 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     queue.VehicleCode = txtLicensePlate.Text;
                     var name = _dbContext.TblMdVehicle
-                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + 
+                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch +
                         _dbContext.TblMdVehicle
                         .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
                     queue.Name = name;
@@ -999,7 +1026,7 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Green;
 
                 string currentSelectedText = selectedItem.Text;
-                
+
                 GetListQueue();
                 for (int i = 0; i < comboBox1.Items.Count; i++)
                 {
@@ -1017,6 +1044,64 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 MessageBox.Show($"Lỗi khi cập nhật thông tin: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void videoView_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                try
+                {
+                    var number = txtNumber.Text.Trim();
+                    if (string.IsNullOrEmpty(number))
+                    {
+                        txtStatus.Text = "Vui lòng nhập số lệnh xuất";
+                        txtStatus.ForeColor = Color.Red;
+                        return;
+                    }
+                    if (lstCheckDo.Where(x => x == number).Count() == 1)
+                    {
+                        txtStatus.Text = "Đã có thông tin! Vui lòng thử lệnh xuất khác!";
+                        txtStatus.ForeColor = Color.Red;
+                        return;
+                    }
+                    var _s = new CommonService();
+                    var token = _s.LoginSmoApi();
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+                        txtStatus.ForeColor = Color.Red;
+                        return;
+                    }
+
+                    var dataDetail = _s.GetInformationNumber(number, token);
+                    if (!dataDetail.STATUS)
+                    {
+                        txtStatus.Text = "Số lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại!";
+                        txtStatus.ForeColor = Color.Red;
+                        return;
+                    }
+
+                    txtStatus.Text = "Kiểm tra lệnh xuất thành công!";
+                    txtStatus.ForeColor = Color.Green;
+
+                    _lstDOSAP.Add(dataDetail);
+                    lstCheckDo.Add(number);
+
+
+                    AppendPanelDetail(dataDetail);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Vui lòng liện hệ đến quản trị viên hệ thống: {ex.Message}",
+                            "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

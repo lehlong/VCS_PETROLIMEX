@@ -24,6 +24,7 @@ namespace VCS.APP.Areas.Login
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             pictureBox1 = new PictureBox();
             username = new TextBox();
             password = new TextBox();
@@ -33,17 +34,19 @@ namespace VCS.APP.Areas.Login
             pictureBox4 = new PictureBox();
             label1 = new Label();
             rememberMe = new CheckBox();
+            pictureBox5 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.petrolimex;
-            pictureBox1.Location = new Point(347, 172);
+            pictureBox1.Location = new Point(345, 116);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(359, 70);
@@ -132,12 +135,24 @@ namespace VCS.APP.Areas.Login
             // 
             // rememberMe
             // 
-            rememberMe.AutoSize = false;
-            rememberMe.Location = new Point(347, 375);
-            rememberMe.Size = new Size(200, 30);
             rememberMe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            rememberMe.Location = new Point(347, 375);
+            rememberMe.Name = "rememberMe";
+            rememberMe.Size = new Size(200, 30);
+            rememberMe.TabIndex = 8;
             rememberMe.Text = "Ghi nhớ tài khoản";
             rememberMe.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.BackColor = Color.Transparent;
+            pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
+            pictureBox5.Location = new Point(465, 205);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(116, 50);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox5.TabIndex = 9;
+            pictureBox5.TabStop = false;
             // 
             // Login
             // 
@@ -147,6 +162,7 @@ namespace VCS.APP.Areas.Login
             BackgroundImage = Properties.Resources.bg_auth;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1029, 630);
+            Controls.Add(pictureBox5);
             Controls.Add(label1);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
@@ -168,6 +184,7 @@ namespace VCS.APP.Areas.Login
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -183,5 +200,6 @@ namespace VCS.APP.Areas.Login
         private PictureBox pictureBox4;
         private Label label1;
         private CheckBox rememberMe;
+        private PictureBox pictureBox5;
     }
 }

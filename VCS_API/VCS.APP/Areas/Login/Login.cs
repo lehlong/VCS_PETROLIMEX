@@ -36,7 +36,7 @@ namespace VCS.APP.Areas.Login
         private async void InitializeSignalRConnection()
         {
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:4008/order") 
+                .WithUrl("http://sso.d2s.com.vn:1000/order") 
                 .Build();
 
             _hubConnection.On<string>("JoinGroupSuccess", (groupName) =>

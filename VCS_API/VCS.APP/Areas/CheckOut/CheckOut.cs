@@ -1,4 +1,6 @@
 ﻿using DMS.CORE;
+using DMS.CORE.Entities.MD;
+using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VCS.APP.Services;
 using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.CheckOut
@@ -15,13 +18,115 @@ namespace VCS.APP.Areas.CheckOut
     public partial class CheckOut : Form
     {
         private readonly AppDbContext _dbContext;
+        private LibVLCSharp.Shared.LibVLC? _libVLC;
+        private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
+        private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
         public CheckOut(AppDbContext dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
+            InitializeLibVLC();
+            GetListCameras();
+            InitializeControls();
+            CheckStatusSystem();
+        }
+        private void InitializeLibVLC()
+        {
+            Core.Initialize();
+            _libVLC = new LibVLC(
+                "--network-caching=100",
+                "--live-caching=100",
+                "--file-caching=100",
+                "--clock-jitter=0",
+                "--clock-synchro=0",
+                "--no-audio",
+                "--rtsp-tcp"
+            );
+        }
+        private void GetListCameras()
+        {
+            try
+            {
+                _lstCamera = _dbContext.TblMdCamera
+                    .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
+                        && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
+                        && x.IsOut) // Lọc camera cổng vào
+                    .ToList();
+
+                InitializeCameraStreams();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void InitializeCameraStreams()
+        {
+            foreach (var camera in _lstCamera)
+            {
+                try
+                {
+                    var media = new Media(_libVLC, camera.Rtsp, FromType.FromLocation);
+                    var mediaPlayer = new MediaPlayer(media);
+                    _mediaPlayers[camera.Code] = mediaPlayer;
+
+                    // Nếu là camera đầu tiên, hiển thị trong videoView
+                    if (_lstCamera.IndexOf(camera) == 0)
+                    {
+                        videoView.MediaPlayer = mediaPlayer;
+                        mediaPlayer.Play();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi khởi tạo camera {camera.Code}: {ex.Message}",
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void InitializeControls()
+        {
+            // Khởi tạo các control khác nếu cần
+        }
+        private async void CheckStatusSystem()
+        {
+            try
+            {
+                if (!await _dbContext.Database.CanConnectAsync())
+                {
+                    statusDB.BackColor = Color.Red;
+                }
+                else
+                {
+                    statusDB.BackColor = Color.LimeGreen;
+                }
+                var _s = new CommonService();
+                var token = _s.LoginSmoApi();
+                if (string.IsNullOrEmpty(token))
+                {
+                    statusSMO.BackColor = Color.Red;
+                }
+                else
+                {
+                    statusSMO.BackColor = Color.LimeGreen;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void CheckOut_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }
