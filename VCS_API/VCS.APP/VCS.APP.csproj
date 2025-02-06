@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageIcon>VSC.png</PackageIcon>
-    <ApplicationIcon>Content\img\VSC.ico</ApplicationIcon>
+    <PackageIcon>icons8-camera-128.png</PackageIcon>
+    <ApplicationIcon>Content\icon\icons8-camera-128.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="Content\img\VSC.ico" />
+    <Content Include="Content\icon\icons8-camera-128.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +55,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Content\icon\icons8-camera-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Update="Content\img\VSC.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
