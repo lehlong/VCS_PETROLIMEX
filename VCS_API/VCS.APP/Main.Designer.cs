@@ -106,7 +106,7 @@ namespace VCS.APP
             pictureBox9.Image = (Image)resources.GetObject("pictureBox9.Image");
             pictureBox9.Location = new Point(13, 438);
             pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(24, 24);
+            pictureBox9.Size = new Size(26, 26);
             pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox9.TabIndex = 15;
             pictureBox9.TabStop = false;
@@ -140,7 +140,7 @@ namespace VCS.APP
             pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
             pictureBox8.Location = new Point(13, 379);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(24, 24);
+            pictureBox8.Size = new Size(26, 26);
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 13;
             pictureBox8.TabStop = false;
@@ -151,7 +151,7 @@ namespace VCS.APP
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
             pictureBox7.Location = new Point(13, 318);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(24, 24);
+            pictureBox7.Size = new Size(26, 26);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 12;
             pictureBox7.TabStop = false;
@@ -162,7 +162,7 @@ namespace VCS.APP
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
             pictureBox6.Location = new Point(13, 258);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(24, 24);
+            pictureBox6.Size = new Size(26, 26);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 11;
             pictureBox6.TabStop = false;
@@ -174,7 +174,7 @@ namespace VCS.APP
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
             pictureBox5.Location = new Point(13, 198);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(24, 24);
+            pictureBox5.Size = new Size(26, 26);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 10;
             pictureBox5.TabStop = false;
@@ -185,7 +185,7 @@ namespace VCS.APP
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
             pictureBox4.Location = new Point(13, 139);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(24, 24);
+            pictureBox4.Size = new Size(26, 26);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 9;
             pictureBox4.TabStop = false;
@@ -196,7 +196,7 @@ namespace VCS.APP
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
             pictureBox3.Location = new Point(13, 77);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(24, 24);
+            pictureBox3.Size = new Size(26, 26);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 8;
             pictureBox3.TabStop = false;

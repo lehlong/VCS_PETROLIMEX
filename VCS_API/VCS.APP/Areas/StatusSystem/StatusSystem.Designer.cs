@@ -1,4 +1,6 @@
-﻿namespace VCS.APP.Areas.StatusSystem
+﻿using VCS.APP.Utilities;
+
+namespace VCS.APP.Areas.StatusSystem
 {
     partial class StatusSystem
     {
@@ -36,7 +38,7 @@
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             label10 = new Label();
-            panel2 = new Panel();
+            panel2 = new CircularPanel();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -44,13 +46,13 @@
             label1 = new Label();
             button1 = new Button();
             label9 = new Label();
-            panel8 = new Panel();
+            panel8 = new CircularPanel();
             label8 = new Label();
-            panel7 = new Panel();
+            panel7 = new CircularPanel();
             label7 = new Label();
             label6 = new Label();
-            statusDB = new Panel();
-            statusSMO = new Panel();
+            statusDB = new CircularPanel();
+            statusSMO = new CircularPanel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -151,9 +153,9 @@
             // panel2
             // 
             panel2.BackColor = Color.DarkGray;
-            panel2.Location = new Point(42, 298);
+            panel2.Location = new Point(46, 301);
             panel2.Name = "panel2";
-            panel2.Size = new Size(20, 20);
+            panel2.Size = new Size(12, 12);
             panel2.TabIndex = 26;
             // 
             // label5
@@ -241,9 +243,9 @@
             // panel8
             // 
             panel8.BackColor = Color.DarkGray;
-            panel8.Location = new Point(42, 136);
+            panel8.Location = new Point(46, 139);
             panel8.Name = "panel8";
-            panel8.Size = new Size(20, 20);
+            panel8.Size = new Size(12, 12);
             panel8.TabIndex = 31;
             // 
             // label8
@@ -259,9 +261,9 @@
             // panel7
             // 
             panel7.BackColor = Color.DarkGray;
-            panel7.Location = new Point(42, 88);
+            panel7.Location = new Point(46, 91);
             panel7.Name = "panel7";
-            panel7.Size = new Size(20, 20);
+            panel7.Size = new Size(12, 12);
             panel7.TabIndex = 29;
             // 
             // label7
@@ -287,17 +289,17 @@
             // statusDB
             // 
             statusDB.BackColor = Color.DarkGray;
-            statusDB.Location = new Point(42, 188);
+            statusDB.Location = new Point(46, 192);
             statusDB.Name = "statusDB";
-            statusDB.Size = new Size(20, 20);
+            statusDB.Size = new Size(12, 12);
             statusDB.TabIndex = 26;
             // 
             // statusSMO
             // 
             statusSMO.BackColor = Color.DarkGray;
-            statusSMO.Location = new Point(42, 242);
+            statusSMO.Location = new Point(46, 245);
             statusSMO.Name = "statusSMO";
-            statusSMO.Size = new Size(20, 20);
+            statusSMO.Size = new Size(12, 12);
             statusSMO.TabIndex = 25;
             // 
             // StatusSystem
@@ -323,16 +325,11 @@
 
         private Panel panel1;
         private Label label9;
-        private Panel panel8;
         private Label label8;
-        private Panel panel7;
         private Label label7;
         private Label label6;
-        private Panel statusDB;
-        private Panel statusSMO;
         private Button button1;
         private Label label10;
-        private Panel panel2;
         private Label label5;
         private Label label4;
         private Label label3;
@@ -343,5 +340,10 @@
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;
         private PictureBox pictureBox2;
+        private CircularPanel statusDB;
+        private CircularPanel panel8;
+        private CircularPanel panel7;
+        private CircularPanel statusSMO;
+        private CircularPanel panel2;
     }
 }
