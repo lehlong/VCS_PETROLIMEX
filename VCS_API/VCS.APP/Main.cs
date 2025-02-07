@@ -33,7 +33,20 @@ namespace VCS.APP
             OpenChildForm(new Home(dbContext));
             _dbContext = dbContext;
             _orderService = orderService;
-            btnUser.Text = ProfileUtilities.User.FullName;
+            txtUsername.Text = ProfileUtilities.User.FullName;
+            txtWarehouse.Text = GetNameWarehouse();
+        }
+
+        private string? GetNameWarehouse()
+        {
+            try
+            {
+                return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         private void btnCheckIn_Click(object sender, EventArgs e)

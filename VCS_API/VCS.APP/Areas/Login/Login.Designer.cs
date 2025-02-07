@@ -88,10 +88,10 @@ namespace VCS.APP.Areas.Login
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(346, 277);
+            pictureBox2.Location = new Point(353, 283);
             pictureBox2.Margin = new Padding(4);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(30, 30);
+            pictureBox2.Size = new Size(18, 18);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
@@ -99,10 +99,10 @@ namespace VCS.APP.Areas.Login
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(346, 332);
+            pictureBox3.Location = new Point(353, 337);
             pictureBox3.Margin = new Padding(4);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(30, 30);
+            pictureBox3.Size = new Size(18, 18);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
