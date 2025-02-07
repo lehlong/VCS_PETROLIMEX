@@ -59,6 +59,12 @@ namespace VCS.APP.Areas.ConfigApp
                 _dbContext.SaveChanges();
 
                 MessageBox.Show("Cập nhật thông tin thành công!");
+                Global.SmoApiUrl = _config.SmoApiUrl;
+                Global.SmoApiUsername= _config.SmoApiUsername;
+                Global.SmoApiPassword= _config.SmoApiPassword;
+                Global.PathSaveFile= _config.PathSaveFile;
+                Global.DetectApiUrl= _config.DetectApiUrl;
+
             }
             catch (Exception ex)
             {

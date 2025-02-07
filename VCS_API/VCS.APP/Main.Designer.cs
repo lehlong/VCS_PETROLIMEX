@@ -74,7 +74,6 @@ namespace VCS.APP
             // 
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
-            panelMenu.BackgroundImage = (Image)resources.GetObject("panelMenu.BackgroundImage");
             panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
             panelMenu.Controls.Add(pictureBox12);
             panelMenu.Controls.Add(pictureBox11);
