@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using VCS.APP.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
+using VCS.APP.Services;
 
 namespace VCS.APP.Areas.Login
 {
@@ -166,6 +167,9 @@ namespace VCS.APP.Areas.Login
                 }
 
                 ProfileUtilities.User = _dbContext.TblAdAccount.Find(query.UserName);
+                
+                // Tải cấu hình người dùng
+                CommonService.LoadUserConfig(_dbContext);
                 var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
                 mainForm.Show();
                 this.Hide();

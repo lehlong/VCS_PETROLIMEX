@@ -10,12 +10,14 @@ using VCS.APP.Utilities;
 using System.Net.Http;
 using DMS.BUSINESS.Dtos.SMO;
 using System.Text.Json;
+using DMS.CORE;
 
 namespace VCS.APP.Services
 {
     public class CommonService
     {
         private static readonly HttpClient _client = new HttpClient();
+        private readonly AppDbContext _dbContext;
         public static async Task<(string? filePath, Image? image)> TakeSnapshot(LibVLCSharp.Shared.MediaPlayer player)
         {
             try
@@ -247,7 +249,39 @@ namespace VCS.APP.Services
             }
         }
 
+        public static void LoadUserConfig(AppDbContext dbContext)
+        {
+            try
+            {
+                var config = dbContext.TblAdConfigApp.FirstOrDefault(x => 
+                    x.OrgCode == ProfileUtilities.User.OrganizeCode && 
+                    x.WarehouseCode == ProfileUtilities.User.WarehouseCode);
 
+                if (config != null)
+                {
+                    Global.SmoApiUsername = config.SmoApiUsername;
+                    Global.SmoApiPassword = config.SmoApiPassword;
+                    Global.SmoApiUrl = config.SmoApiUrl;
+                    Global.PathSaveFile = config.PathSaveFile;
+                    Global.DetectApiUrl = config.DetectApiUrl;
+                    Global.Connection = config.ConnectionDb;
+                }
+                else
+                {
+                    // Reset tất cả các giá trị về null
+                    Global.SmoApiUsername = null;
+                    Global.SmoApiPassword = null;
+                    Global.SmoApiUrl = null;
+                    Global.PathSaveFile = null;
+                    Global.DetectApiUrl = null;
+                    Global.Connection = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi tải cấu hình người dùng: {ex.Message}");
+            }
+        }
     }
 
     public class ResponseLoginSmoApi
