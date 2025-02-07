@@ -110,7 +110,7 @@
             // 
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(txtStatus);
-            panel2.Location = new Point(11, 35);
+            panel2.Location = new Point(11, 32);
             panel2.Name = "panel2";
             panel2.Size = new Size(502, 47);
             panel2.TabIndex = 12;
@@ -238,7 +238,7 @@
             panel3.BackColor = Color.WhiteSmoke;
             panel3.Controls.Add(pictureBox1);
             panel3.Controls.Add(txtNumber);
-            panel3.Location = new Point(19, 101);
+            panel3.Location = new Point(22, 101);
             panel3.Name = "panel3";
             panel3.Size = new Size(396, 40);
             panel3.TabIndex = 13;

@@ -17,6 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Content\icon\chip.gif" />
+    <None Remove="Content\icon\graphic-card.gif" />
+    <None Remove="Content\icon\memory-card.gif" />
+    <None Remove="Content\icon\ssd.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -38,6 +45,13 @@
   <ItemGroup>
     <ProjectReference Include="..\DMS.BUSINESS\DMS.BUSINESS.csproj" />
     <ProjectReference Include="..\DMS.COMMON\DMS.COMMON.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Content\icon\chip.gif" />
+    <Resource Include="Content\icon\graphic-card.gif" />
+    <Resource Include="Content\icon\memory-card.gif" />
+    <Resource Include="Content\icon\ssd.gif" />
   </ItemGroup>
 
   <ItemGroup>
