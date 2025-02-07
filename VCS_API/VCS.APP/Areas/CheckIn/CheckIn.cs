@@ -109,6 +109,7 @@ namespace VCS.APP.Areas.CheckIn
             {
                 txtStatus.Text = "Lỗi không nhận diện được biển số";
                 txtStatus.ForeColor = Color.Red;
+                txtLicensePlate.Text = "";
             }
             finally
             {

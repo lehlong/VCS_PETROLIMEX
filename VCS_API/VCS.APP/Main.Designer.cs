@@ -71,6 +71,8 @@ namespace VCS.APP
             // 
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
+            panelMenu.BackgroundImage = (Image)resources.GetObject("panelMenu.BackgroundImage");
+            panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
             panelMenu.Controls.Add(pictureBox8);
             panelMenu.Controls.Add(pictureBox7);
             panelMenu.Controls.Add(pictureBox6);
@@ -163,7 +165,7 @@ namespace VCS.APP
             // 
             // btnHistory
             // 
-            btnHistory.BackColor = Color.White;
+            btnHistory.BackColor = Color.Transparent;
             btnHistory.Cursor = Cursors.Hand;
             btnHistory.Dock = DockStyle.Top;
             btnHistory.FlatAppearance.BorderSize = 0;
@@ -184,7 +186,7 @@ namespace VCS.APP
             // 
             // btnConfig
             // 
-            btnConfig.BackColor = Color.White;
+            btnConfig.BackColor = Color.Transparent;
             btnConfig.Cursor = Cursors.Hand;
             btnConfig.Dock = DockStyle.Top;
             btnConfig.FlatAppearance.BorderSize = 0;
@@ -215,7 +217,7 @@ namespace VCS.APP
             // 
             // btnLogOut
             // 
-            btnLogOut.BackColor = Color.White;
+            btnLogOut.BackColor = Color.Transparent;
             btnLogOut.Cursor = Cursors.Hand;
             btnLogOut.Dock = DockStyle.Top;
             btnLogOut.FlatAppearance.BorderSize = 0;
@@ -236,7 +238,7 @@ namespace VCS.APP
             // 
             // btnCheckOut
             // 
-            btnCheckOut.BackColor = Color.White;
+            btnCheckOut.BackColor = Color.Transparent;
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.Dock = DockStyle.Top;
             btnCheckOut.FlatAppearance.BorderSize = 0;
@@ -257,7 +259,7 @@ namespace VCS.APP
             // 
             // btnCheckIn
             // 
-            btnCheckIn.BackColor = Color.White;
+            btnCheckIn.BackColor = Color.Transparent;
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.Dock = DockStyle.Top;
             btnCheckIn.FlatAppearance.BorderSize = 0;
@@ -278,7 +280,7 @@ namespace VCS.APP
             // 
             // btnHome
             // 
-            btnHome.BackColor = Color.White;
+            btnHome.BackColor = Color.Transparent;
             btnHome.Cursor = Cursors.Hand;
             btnHome.Dock = DockStyle.Top;
             btnHome.FlatAppearance.BorderSize = 0;
