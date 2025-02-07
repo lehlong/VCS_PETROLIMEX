@@ -59,25 +59,25 @@ namespace VCS.APP.Areas.StatusSystem
             {
                 if (!await _dbContext.Database.CanConnectAsync())
                 {
-                    statusDB.BackColor = Color.Red;
                     label4.Text = "( Mất kết nối)";
+                    label4.ForeColor = Color.Red;
                 }
                 else
                 {
-                    statusDB.BackColor = Color.LimeGreen;
                     label4.Text = "( Kết nối bình thường)";
+                    label4.ForeColor = Color.LimeGreen;
                 }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
                 if (string.IsNullOrEmpty(token))
                 {
-                    statusSMO.BackColor = Color.Red;
                     label3.Text = "( Mất kết nối)";
+                    label3.ForeColor = Color.Red;
                 }
                 else
                 {
-                    statusSMO.BackColor = Color.LimeGreen;
                     label3.Text = "( Kết nối bình thường)";
+                    label3.ForeColor = Color.LimeGreen;
                 }
 
 
@@ -159,7 +159,7 @@ namespace VCS.APP.Areas.StatusSystem
         {
             label17.Text = GetRAMInfo();
         }
-        
+
         private string GetStorageInfo()
         {
             double totalStorage = 0;
@@ -188,8 +188,9 @@ namespace VCS.APP.Areas.StatusSystem
             CheckStatusSystem();
         }
 
-     
+        private void label24_Click(object sender, EventArgs e)
+        {
 
-    
+        }
     }
 }
