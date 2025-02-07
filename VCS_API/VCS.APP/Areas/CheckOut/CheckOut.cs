@@ -28,6 +28,7 @@ namespace VCS.APP.Areas.CheckOut
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
+            GetListQueue();
         }
         private void InitializeLibVLC()
         {
@@ -88,7 +89,7 @@ namespace VCS.APP.Areas.CheckOut
         {
             // Khởi tạo các control khác nếu cần
         }
-      
+
         private void CheckOut_Load(object sender, EventArgs e)
         {
 
@@ -167,6 +168,61 @@ namespace VCS.APP.Areas.CheckOut
             //        txtStatus.ForeColor = Color.Green;
             //    }
             //}
+        }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GetListQueue()
+        {
+            var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
+            && x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
+            //var lstQueue = _dbContext.TblBuQueue.ToList();
+            List<ComboBoxItem> items = new List<ComboBoxItem>();
+            items.Add(new ComboBoxItem(" -", ""));
+            foreach (var item in lstQueue)
+            {
+                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.Name}", item.HeaderId));
+            }
+            comboBox1.DataSource = items;
+            comboBox1.DisplayMember = "Text";
+            comboBox1.ValueMember = "Value";
+        }
+        private void comboBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            ComboBox combo = sender as ComboBox;
+
+            Color backColor = combo.BackColor;
+
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                backColor = Color.FromArgb(230, 230, 230);
+            }
+            else if ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight)
+            {
+                backColor = Color.FromArgb(245, 245, 245);
+            }
+            e.Graphics.FillRectangle(new SolidBrush(backColor), e.Bounds);
+            if (e.Index >= 0)
+            {
+                string text = combo.Items[e.Index].ToString();
+                SizeF textSize = e.Graphics.MeasureString(text, e.Font);
+                float yPos = e.Bounds.Y + (e.Bounds.Height - textSize.Height) / 2;
+
+                e.Graphics.DrawString(text,
+                    e.Font,
+                    new SolidBrush(Color.Black),
+                    new Point(e.Bounds.X + 3, (int)yPos));
+            }
+        }
+
+        private void btnCheck_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

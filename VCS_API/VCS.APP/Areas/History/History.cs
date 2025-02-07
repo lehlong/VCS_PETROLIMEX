@@ -22,14 +22,19 @@ namespace VCS.APP.Areas.History
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
 
         }
 
         private void History_Load(object sender, EventArgs e)
         {
-
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
         }
     }
 }

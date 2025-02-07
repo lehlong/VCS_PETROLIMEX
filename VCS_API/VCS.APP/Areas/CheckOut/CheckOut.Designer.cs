@@ -245,6 +245,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(816, 41);
             comboBox1.TabIndex = 16;
+            comboBox1.DrawItem += comboBox1_DrawItem;
             // 
             // btnCheckOut
             // 
@@ -264,6 +265,7 @@
             btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckOut.UseVisualStyleBackColor = false;
+            btnCheckOut.Click += btnCheckOut_Click;
             // 
             // txtStatus
             // 
@@ -351,6 +353,7 @@
             btnCheck.TextAlign = ContentAlignment.MiddleLeft;
             btnCheck.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheck.UseVisualStyleBackColor = false;
+            btnCheck.Click += btnCheck_Click_1;
             // 
             // CheckOut
             // 
