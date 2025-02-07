@@ -32,10 +32,10 @@ namespace VCS.APP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelMenu = new Panel();
-            pictureBox9 = new PictureBox();
+            pictureBox12 = new PictureBox();
+            pictureBox11 = new PictureBox();
             btnOut = new NoHoverButton();
-            pictureBox8 = new PictureBox();
-            pictureBox7 = new PictureBox();
+            pictureBox10 = new PictureBox();
             pictureBox6 = new PictureBox();
             pictureBox5 = new PictureBox();
             pictureBox4 = new PictureBox();
@@ -56,9 +56,9 @@ namespace VCS.APP
             label1 = new Label();
             labelTitle = new Label();
             panelMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -74,11 +74,12 @@ namespace VCS.APP
             // 
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
+            panelMenu.BackgroundImage = (Image)resources.GetObject("panelMenu.BackgroundImage");
             panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
-            panelMenu.Controls.Add(pictureBox9);
+            panelMenu.Controls.Add(pictureBox12);
+            panelMenu.Controls.Add(pictureBox11);
             panelMenu.Controls.Add(btnOut);
-            panelMenu.Controls.Add(pictureBox8);
-            panelMenu.Controls.Add(pictureBox7);
+            panelMenu.Controls.Add(pictureBox10);
             panelMenu.Controls.Add(pictureBox6);
             panelMenu.Controls.Add(pictureBox5);
             panelMenu.Controls.Add(pictureBox4);
@@ -100,17 +101,28 @@ namespace VCS.APP
             panelMenu.TabIndex = 0;
             panelMenu.Paint += panelMenu_Paint;
             // 
-            // pictureBox9
+            // pictureBox12
             // 
-            pictureBox9.BackColor = Color.Transparent;
-            pictureBox9.Image = (Image)resources.GetObject("pictureBox9.Image");
-            pictureBox9.Location = new Point(13, 438);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(26, 26);
-            pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox9.TabIndex = 15;
-            pictureBox9.TabStop = false;
-            pictureBox9.Click += pictureBox9_Click;
+            pictureBox12.BackColor = Color.Transparent;
+            pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
+            pictureBox12.Location = new Point(17, 440);
+            pictureBox12.Name = "pictureBox12";
+            pictureBox12.Size = new Size(22, 22);
+            pictureBox12.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox12.TabIndex = 15;
+            pictureBox12.TabStop = false;
+            pictureBox12.Click += pictureBox9_Click;
+            // 
+            // pictureBox11
+            // 
+            pictureBox11.BackColor = Color.Transparent;
+            pictureBox11.Image = (Image)resources.GetObject("pictureBox11.Image");
+            pictureBox11.Location = new Point(17, 381);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(22, 22);
+            pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox11.TabIndex = 13;
+            pictureBox11.TabStop = false;
             // 
             // btnOut
             // 
@@ -134,35 +146,24 @@ namespace VCS.APP
             btnOut.UseVisualStyleBackColor = false;
             btnOut.Click += btnOut_Click;
             // 
-            // pictureBox8
+            // pictureBox10
             // 
-            pictureBox8.BackColor = Color.Transparent;
-            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
-            pictureBox8.Location = new Point(13, 379);
-            pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(26, 26);
-            pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox8.TabIndex = 13;
-            pictureBox8.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            pictureBox7.BackColor = Color.Transparent;
-            pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(13, 318);
-            pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(26, 26);
-            pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox7.TabIndex = 12;
-            pictureBox7.TabStop = false;
+            pictureBox10.BackColor = Color.Transparent;
+            pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
+            pictureBox10.Location = new Point(17, 320);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(22, 22);
+            pictureBox10.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox10.TabIndex = 12;
+            pictureBox10.TabStop = false;
             // 
             // pictureBox6
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
-            pictureBox6.Location = new Point(13, 258);
+            pictureBox6.Location = new Point(17, 260);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(26, 26);
+            pictureBox6.Size = new Size(22, 22);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 11;
             pictureBox6.TabStop = false;
@@ -172,9 +173,9 @@ namespace VCS.APP
             // 
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(13, 198);
+            pictureBox5.Location = new Point(17, 199);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(26, 26);
+            pictureBox5.Size = new Size(22, 22);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 10;
             pictureBox5.TabStop = false;
@@ -183,9 +184,9 @@ namespace VCS.APP
             // 
             pictureBox4.BackColor = Color.Transparent;
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(13, 139);
+            pictureBox4.Location = new Point(17, 140);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(26, 26);
+            pictureBox4.Size = new Size(22, 22);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 9;
             pictureBox4.TabStop = false;
@@ -194,9 +195,9 @@ namespace VCS.APP
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(13, 77);
+            pictureBox3.Location = new Point(17, 79);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(26, 26);
+            pictureBox3.Size = new Size(22, 22);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 8;
             pictureBox3.TabStop = false;
@@ -468,9 +469,9 @@ namespace VCS.APP
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -504,12 +505,12 @@ namespace VCS.APP
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;
         private Label label2;
-        private PictureBox pictureBox8;
-        private PictureBox pictureBox7;
         private NoHoverButton btnHistory;
-        private PictureBox pictureBox9;
         private NoHoverButton btnOut;
         private PictureBox pictureBox6;
         private NoHoverButton btnStatus;
+        private PictureBox pictureBox12;
+        private PictureBox pictureBox11;
+        private PictureBox pictureBox10;
     }
 }

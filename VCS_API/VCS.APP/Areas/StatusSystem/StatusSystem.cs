@@ -28,24 +28,26 @@ namespace VCS.APP.Areas.StatusSystem
             InitializeComponent();
             _dbContext = dbContext;
             CheckStatusSystem();
-            GetCPUInfo();
-            GetRAMInfo();
-            GetStorageInfo();
-            ramTimer.Interval = 1000; // 1 giây
-            ramTimer.Tick += new EventHandler(UpdateRAMInfo);
-            ramTimer.Start();
-            // Cấu hình Timer cho CPU
-            cpuTimer.Interval = 1000; // 1 giây
-            cpuTimer.Tick += new EventHandler(UpdateCPUInfo);
-            cpuTimer.Start();
-            //memory
-            storageTimer.Interval = 1000; // 1 giây
-            storageTimer.Tick += new EventHandler((s, ev) => UpdateStorageInfo());
-            storageTimer.Start();
-            //gpu
-            gpuTimer.Interval = 1000;
-            gpuTimer.Tick += new EventHandler(UpdateGPUInfo);
-            gpuTimer.Start();
+            UpdateRAMInfo();
+            UpdateCPUInfo();
+            UpdateStorageInfo();
+            UpdateGPUInfo();
+
+            //ramTimer.Interval = 1000; // 1 giây
+            //ramTimer.Tick += new EventHandler(UpdateRAMInfo);
+            //ramTimer.Start();
+            //// Cấu hình Timer cho CPU
+            //cpuTimer.Interval = 1000; // 1 giây
+            //cpuTimer.Tick += new EventHandler(UpdateCPUInfo);
+            //cpuTimer.Start();
+            ////memory
+            //storageTimer.Interval = 1000; // 1 giây
+            //storageTimer.Tick += new EventHandler((s, ev) => UpdateStorageInfo());
+            //storageTimer.Start();
+            ////gpu
+            //gpuTimer.Interval = 1000;
+            //gpuTimer.Tick += new EventHandler(UpdateGPUInfo);
+            //gpuTimer.Start();
         }
 
         private void StatusSystem_Load(object sender, EventArgs e)
@@ -103,7 +105,7 @@ namespace VCS.APP.Areas.StatusSystem
 
             return $"{Math.Round(cpuUsage, 2)}% / {maxClockSpeed} GHz";
         }
-        private void UpdateGPUInfo(object sender, EventArgs e)
+        private void UpdateGPUInfo()
         {
             label18.Text = GetGPUInfo();
         }
@@ -131,7 +133,7 @@ namespace VCS.APP.Areas.StatusSystem
             return $"{gpuName} ({gpuUsage}%)";
         }
 
-        private void UpdateCPUInfo(object sender, EventArgs e)
+        private void UpdateCPUInfo()
         {
             label16.Text = GetCPUInfo();
         }
@@ -155,7 +157,7 @@ namespace VCS.APP.Areas.StatusSystem
             // Trả về chuỗi định dạng: {RAM đang sử dụng} / {Tổng RAM}
             return $"{usedRAM} GB / {totalRAM} GB";
         }
-        private void UpdateRAMInfo(object sender, EventArgs e)
+        private void UpdateRAMInfo()
         {
             label17.Text = GetRAMInfo();
         }
@@ -185,6 +187,10 @@ namespace VCS.APP.Areas.StatusSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
+            UpdateRAMInfo();
+            UpdateCPUInfo();
+            UpdateStorageInfo();
+            UpdateGPUInfo();
             CheckStatusSystem();
         }
 
