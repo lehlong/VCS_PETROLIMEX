@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
+using VCS.APP.Areas.ConfigApp;
 using VCS.APP.Areas.Home;
 using VCS.APP.Areas.Login;
 using VCS.APP.Areas.StatusSystem;
@@ -117,7 +118,7 @@ namespace VCS.APP
         private void btnConfig_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Cấu hình chung";
-            //OpenChildForm(new CheckOut(_dbContext));
+            OpenChildForm(new ConfigApp(_dbContext));
 
         }
 
