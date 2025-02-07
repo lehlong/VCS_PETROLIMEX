@@ -32,19 +32,21 @@ namespace VCS.APP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelMenu = new Panel();
+            pictureBox9 = new PictureBox();
+            btnOut = new NoHoverButton();
             pictureBox8 = new PictureBox();
             pictureBox7 = new PictureBox();
             pictureBox6 = new PictureBox();
             pictureBox5 = new PictureBox();
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
-            btnHistory = new Button();
-            btnConfig = new Button();
+            btnHistory = new NoHoverButton();
+            btnConfig = new NoHoverButton();
             pictureBox2 = new PictureBox();
-            btnLogOut = new Button();
-            btnCheckOut = new Button();
-            btnCheckIn = new Button();
-            btnHome = new Button();
+            btnStatus = new NoHoverButton();
+            btnCheckOut = new NoHoverButton();
+            btnCheckIn = new NoHoverButton();
+            btnHome = new NoHoverButton();
             panelLogo = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
@@ -54,6 +56,7 @@ namespace VCS.APP
             label1 = new Label();
             labelTitle = new Label();
             panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
@@ -71,8 +74,9 @@ namespace VCS.APP
             // 
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
-            panelMenu.BackgroundImage = (Image)resources.GetObject("panelMenu.BackgroundImage");
             panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            panelMenu.Controls.Add(pictureBox9);
+            panelMenu.Controls.Add(btnOut);
             panelMenu.Controls.Add(pictureBox8);
             panelMenu.Controls.Add(pictureBox7);
             panelMenu.Controls.Add(pictureBox6);
@@ -82,7 +86,7 @@ namespace VCS.APP
             panelMenu.Controls.Add(btnHistory);
             panelMenu.Controls.Add(btnConfig);
             panelMenu.Controls.Add(pictureBox2);
-            panelMenu.Controls.Add(btnLogOut);
+            panelMenu.Controls.Add(btnStatus);
             panelMenu.Controls.Add(btnCheckOut);
             panelMenu.Controls.Add(btnCheckIn);
             panelMenu.Controls.Add(btnHome);
@@ -96,13 +100,47 @@ namespace VCS.APP
             panelMenu.TabIndex = 0;
             panelMenu.Paint += panelMenu_Paint;
             // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.Transparent;
+            pictureBox9.Image = (Image)resources.GetObject("pictureBox9.Image");
+            pictureBox9.Location = new Point(13, 438);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(24, 24);
+            pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox9.TabIndex = 15;
+            pictureBox9.TabStop = false;
+            pictureBox9.Click += pictureBox9_Click;
+            // 
+            // btnOut
+            // 
+            btnOut.BackColor = Color.Transparent;
+            btnOut.Cursor = Cursors.Hand;
+            btnOut.Dock = DockStyle.Top;
+            btnOut.FlatAppearance.BorderColor = Color.White;
+            btnOut.FlatAppearance.BorderSize = 0;
+            btnOut.FlatStyle = FlatStyle.Flat;
+            btnOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnOut.ForeColor = Color.Black;
+            btnOut.ImageAlign = ContentAlignment.MiddleLeft;
+            btnOut.Location = new Point(0, 420);
+            btnOut.Name = "btnOut";
+            btnOut.Padding = new Padding(38, 0, 0, 0);
+            btnOut.Size = new Size(200, 60);
+            btnOut.TabIndex = 14;
+            btnOut.Text = "Đăng xuất";
+            btnOut.TextAlign = ContentAlignment.MiddleLeft;
+            btnOut.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnOut.UseVisualStyleBackColor = false;
+            btnOut.Click += btnOut_Click;
+            // 
             // pictureBox8
             // 
             pictureBox8.BackColor = Color.Transparent;
             pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
-            pictureBox8.Location = new Point(16, 382);
+            pictureBox8.Location = new Point(13, 379);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(18, 18);
+            pictureBox8.Size = new Size(24, 24);
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 13;
             pictureBox8.TabStop = false;
@@ -111,9 +149,9 @@ namespace VCS.APP
             // 
             pictureBox7.BackColor = Color.Transparent;
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(16, 322);
+            pictureBox7.Location = new Point(13, 318);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(18, 18);
+            pictureBox7.Size = new Size(24, 24);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 12;
             pictureBox7.TabStop = false;
@@ -122,9 +160,9 @@ namespace VCS.APP
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
-            pictureBox6.Location = new Point(16, 261);
+            pictureBox6.Location = new Point(13, 258);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(18, 18);
+            pictureBox6.Size = new Size(24, 24);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 11;
             pictureBox6.TabStop = false;
@@ -134,9 +172,9 @@ namespace VCS.APP
             // 
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(16, 202);
+            pictureBox5.Location = new Point(13, 198);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(18, 18);
+            pictureBox5.Size = new Size(24, 24);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 10;
             pictureBox5.TabStop = false;
@@ -145,9 +183,9 @@ namespace VCS.APP
             // 
             pictureBox4.BackColor = Color.Transparent;
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(16, 142);
+            pictureBox4.Location = new Point(13, 139);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(18, 18);
+            pictureBox4.Size = new Size(24, 24);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 9;
             pictureBox4.TabStop = false;
@@ -156,9 +194,9 @@ namespace VCS.APP
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(16, 82);
+            pictureBox3.Location = new Point(13, 77);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(18, 18);
+            pictureBox3.Size = new Size(24, 24);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 8;
             pictureBox3.TabStop = false;
@@ -168,6 +206,7 @@ namespace VCS.APP
             btnHistory.BackColor = Color.Transparent;
             btnHistory.Cursor = Cursors.Hand;
             btnHistory.Dock = DockStyle.Top;
+            btnHistory.FlatAppearance.BorderColor = Color.White;
             btnHistory.FlatAppearance.BorderSize = 0;
             btnHistory.FlatStyle = FlatStyle.Flat;
             btnHistory.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -189,6 +228,7 @@ namespace VCS.APP
             btnConfig.BackColor = Color.Transparent;
             btnConfig.Cursor = Cursors.Hand;
             btnConfig.Dock = DockStyle.Top;
+            btnConfig.FlatAppearance.BorderColor = Color.White;
             btnConfig.FlatAppearance.BorderSize = 0;
             btnConfig.FlatStyle = FlatStyle.Flat;
             btnConfig.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -215,32 +255,34 @@ namespace VCS.APP
             pictureBox2.TabIndex = 5;
             pictureBox2.TabStop = false;
             // 
-            // btnLogOut
+            // btnStatus
             // 
-            btnLogOut.BackColor = Color.Transparent;
-            btnLogOut.Cursor = Cursors.Hand;
-            btnLogOut.Dock = DockStyle.Top;
-            btnLogOut.FlatAppearance.BorderSize = 0;
-            btnLogOut.FlatStyle = FlatStyle.Flat;
-            btnLogOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLogOut.ForeColor = Color.Black;
-            btnLogOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogOut.Location = new Point(0, 240);
-            btnLogOut.Name = "btnLogOut";
-            btnLogOut.Padding = new Padding(38, 0, 0, 0);
-            btnLogOut.Size = new Size(200, 60);
-            btnLogOut.TabIndex = 4;
-            btnLogOut.Text = "Đăng xuất";
-            btnLogOut.TextAlign = ContentAlignment.MiddleLeft;
-            btnLogOut.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnLogOut.UseVisualStyleBackColor = false;
-            btnLogOut.Click += btnLogOut_Click;
+            btnStatus.BackColor = Color.Transparent;
+            btnStatus.Cursor = Cursors.Hand;
+            btnStatus.Dock = DockStyle.Top;
+            btnStatus.FlatAppearance.BorderColor = Color.White;
+            btnStatus.FlatAppearance.BorderSize = 0;
+            btnStatus.FlatStyle = FlatStyle.Flat;
+            btnStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnStatus.ForeColor = Color.Black;
+            btnStatus.ImageAlign = ContentAlignment.MiddleLeft;
+            btnStatus.Location = new Point(0, 240);
+            btnStatus.Name = "btnStatus";
+            btnStatus.Padding = new Padding(38, 0, 0, 0);
+            btnStatus.Size = new Size(200, 60);
+            btnStatus.TabIndex = 4;
+            btnStatus.Text = "Trạng thái kết nối";
+            btnStatus.TextAlign = ContentAlignment.MiddleLeft;
+            btnStatus.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnStatus.UseVisualStyleBackColor = false;
+            btnStatus.Click += btnLogOut_Click;
             // 
             // btnCheckOut
             // 
             btnCheckOut.BackColor = Color.Transparent;
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.Dock = DockStyle.Top;
+            btnCheckOut.FlatAppearance.BorderColor = Color.White;
             btnCheckOut.FlatAppearance.BorderSize = 0;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
             btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -262,6 +304,7 @@ namespace VCS.APP
             btnCheckIn.BackColor = Color.Transparent;
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.Dock = DockStyle.Top;
+            btnCheckIn.FlatAppearance.BorderColor = Color.White;
             btnCheckIn.FlatAppearance.BorderSize = 0;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
             btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -283,6 +326,7 @@ namespace VCS.APP
             btnHome.BackColor = Color.Transparent;
             btnHome.Cursor = Cursors.Hand;
             btnHome.Dock = DockStyle.Top;
+            btnHome.FlatAppearance.BorderColor = Color.White;
             btnHome.FlatAppearance.BorderSize = 0;
             btnHome.FlatStyle = FlatStyle.Flat;
             btnHome.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -420,11 +464,11 @@ namespace VCS.APP
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
             Name = "Main";
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
@@ -445,25 +489,27 @@ namespace VCS.APP
 
         private Panel panelMenu;
         private Panel panelLogo;
-        private Button btnHome;
-        private Button btnLogOut;
-        private Button btnCheckOut;
-        private Button btnCheckIn;
+        private NoHoverButton btnHome;
+        private NoHoverButton btnCheckOut;
+        private NoHoverButton btnCheckIn;
         private Panel panelMain;
         private Panel panelTitle;
         private Label labelTitle;
         private Label label1;
         private PictureBox pictureBox2;
-        private Button btnHistory;
-        private Button btnConfig;
+        private NoHoverButton btnConfig;
         private PictureBox pictureBox1;
         private NoHoverButton btnUser;
         private PictureBox pictureBox5;
         private PictureBox pictureBox4;
         private PictureBox pictureBox3;
-        private PictureBox pictureBox6;
+        private Label label2;
         private PictureBox pictureBox8;
         private PictureBox pictureBox7;
-        private Label label2;
+        private NoHoverButton btnHistory;
+        private PictureBox pictureBox9;
+        private NoHoverButton btnOut;
+        private PictureBox pictureBox6;
+        private NoHoverButton btnStatus;
     }
 }

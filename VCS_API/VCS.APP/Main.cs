@@ -14,6 +14,7 @@ using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
 using VCS.APP.Areas.Home;
 using VCS.APP.Areas.Login;
+using VCS.APP.Areas.StatusSystem;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
 
@@ -37,51 +38,27 @@ namespace VCS.APP
         {
             labelTitle.Text = "/ Quản lý cổng vào";
             OpenChildForm(new CheckIn(_dbContext, _orderService));
-            btnHome.BackColor = Color.White;
-            btnCheckIn.BackColor = SystemColors.Control;
-            btnCheckOut.BackColor = Color.White;
-            btnConfig.BackColor = Color.White;
-            btnHistory.BackColor = Color.White;
+
         }
 
         private void btnHome_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Trang chủ";
             OpenChildForm(new Home(_dbContext));
-            btnHome.BackColor = SystemColors.Control;
-            btnCheckIn.BackColor = Color.White;
-            btnCheckOut.BackColor = Color.White;
-            btnConfig.BackColor = Color.White;
-            btnHistory.BackColor = Color.White;
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Quản lý cổng ra";
             OpenChildForm(new CheckOut(_dbContext));
-            btnHome.BackColor = Color.White;
-            btnCheckIn.BackColor = Color.White;
-            btnCheckOut.BackColor = SystemColors.Control;
-            btnConfig.BackColor = Color.White;
-            btnHistory.BackColor = Color.White;
+
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
-                "Xác nhận đăng xuất",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            labelTitle.Text = "/ Trạng thái kết nối";
+            OpenChildForm(new StatusSystem(_dbContext));
 
-            if (result == DialogResult.Yes)
-            {
-                // Đóng form hiện tại
-                this.Hide();
-
-                // Tạo và hiển thị form đăng nhập mới
-                var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
-                loginForm.Show();
-            }
         }
 
         private void OpenChildForm(Form childForm)
@@ -129,11 +106,7 @@ namespace VCS.APP
         {
             labelTitle.Text = "/ Lịch sử ra vào";
             //OpenChildForm(new CheckOut(_dbContext));
-            btnHome.BackColor = Color.White;
-            btnCheckIn.BackColor = Color.White;
-            btnCheckOut.BackColor = Color.White;
-            btnConfig.BackColor = Color.White;
-            btnHistory.BackColor = SystemColors.Control;
+
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -145,11 +118,7 @@ namespace VCS.APP
         {
             labelTitle.Text = "/ Cấu hình chung";
             //OpenChildForm(new CheckOut(_dbContext));
-            btnHome.BackColor = Color.White;
-            btnCheckIn.BackColor = Color.White;
-            btnCheckOut.BackColor = Color.White;
-            btnConfig.BackColor = SystemColors.Control;
-            btnHistory.BackColor = Color.White;
+
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
@@ -158,6 +127,39 @@ namespace VCS.APP
         }
 
         private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOut_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
+               "Xác nhận đăng xuất",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Đóng form hiện tại
+                this.Hide();
+
+                // Tạo và hiển thị form đăng nhập mới
+                var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
+                loginForm.Show();
+            }
+        }
+
+        private void btnHome_MouseHover(object sender, EventArgs e)
+        {
+            btnHome.Font = new Font(btnHome.Font, FontStyle.Bold);
+        }
+
+        private void btnHome_MouseLeave(object sender, EventArgs e)
+        {
+            btnHome.Font = new Font(btnHome.Font, FontStyle.Regular);
+        }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
         {
 
         }

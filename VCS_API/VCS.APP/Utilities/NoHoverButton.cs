@@ -6,11 +6,11 @@ public class NoHoverButton : Button
 {
     protected override void OnMouseEnter(EventArgs e)
     {
-        // Do nothing to prevent hover effect
+       // this.Font = new Font(this.Font, FontStyle.Bold);
     }
 
     protected override void OnMouseLeave(EventArgs e)
     {
-        // Do nothing to prevent hover effect
+       // this.Font = new Font(this.Font, FontStyle.Regular);
     }
 }

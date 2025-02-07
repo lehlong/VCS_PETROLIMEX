@@ -41,14 +41,6 @@
             btnReset = new Button();
             btnDetect = new Button();
             pictureBox2 = new PictureBox();
-            label9 = new Label();
-            panel8 = new Panel();
-            label8 = new Label();
-            panel7 = new Panel();
-            label7 = new Label();
-            label6 = new Label();
-            statusDB = new Panel();
-            statusSMO = new Panel();
             label5 = new Label();
             panel4 = new Panel();
             comboBox1 = new ComboBox();
@@ -218,78 +210,6 @@
             pictureBox2.TabIndex = 25;
             pictureBox2.TabStop = false;
             // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(503, 796);
-            label9.Name = "label9";
-            label9.Size = new Size(87, 15);
-            label9.TabIndex = 24;
-            label9.Text = "Hệ thống TGBX";
-            // 
-            // panel8
-            // 
-            panel8.BackColor = Color.DarkGray;
-            panel8.Location = new Point(490, 799);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(10, 10);
-            panel8.TabIndex = 23;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label8.Location = new Point(346, 796);
-            label8.Name = "label8";
-            label8.Size = new Size(123, 15);
-            label8.TabIndex = 22;
-            label8.Text = "Hệ thống tự động hoá";
-            // 
-            // panel7
-            // 
-            panel7.BackColor = Color.DarkGray;
-            panel7.Location = new Point(332, 799);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(10, 10);
-            panel7.TabIndex = 21;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label7.Location = new Point(624, 796);
-            label7.Name = "label7";
-            label7.Size = new Size(76, 15);
-            label7.TabIndex = 20;
-            label7.Text = "Cơ sở dữ liệu";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(732, 796);
-            label6.Name = "label6";
-            label6.Size = new Size(84, 15);
-            label6.TabIndex = 19;
-            label6.Text = "Hệ thống SMO";
-            // 
-            // statusDB
-            // 
-            statusDB.BackColor = Color.DarkGray;
-            statusDB.Location = new Point(612, 799);
-            statusDB.Name = "statusDB";
-            statusDB.Size = new Size(10, 10);
-            statusDB.TabIndex = 18;
-            // 
-            // statusSMO
-            // 
-            statusSMO.BackColor = Color.DarkGray;
-            statusSMO.Location = new Point(718, 799);
-            statusSMO.Name = "statusSMO";
-            statusSMO.Size = new Size(10, 10);
-            statusSMO.TabIndex = 17;
-            // 
             // label5
             // 
             label5.AutoSize = true;
@@ -405,14 +325,6 @@
             panel1.BackColor = Color.White;
             panel1.Controls.Add(btnCheck);
             panel1.Controls.Add(pictureBox2);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(panel8);
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(panel7);
-            panel1.Controls.Add(label7);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(statusDB);
-            panel1.Controls.Add(statusSMO);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(btnCheckOut);
@@ -480,14 +392,6 @@
         private Button btnReset;
         private Button btnDetect;
         private PictureBox pictureBox2;
-        private Label label9;
-        private Panel panel8;
-        private Label label8;
-        private Panel panel7;
-        private Label label7;
-        private Label label6;
-        private Panel statusDB;
-        private Panel statusSMO;
         private Label label5;
         private Panel panel4;
         private ComboBox comboBox1;

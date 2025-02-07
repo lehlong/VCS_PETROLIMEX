@@ -132,9 +132,11 @@
   <data name="btnCheckIn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAIxJREFUOE/t000KQEAYxvEJt7D2cR5O4ONMUhaychMbN3AAuQTjb7LQbIzIQp76
-        RdPTs3vF45FSRujg7k/bW4UC1v50HsoeJgxQY3wTLGhwaSzAiONYhhktHFU0CeVXx2xVNAnlr49RDKEP
-        5TAfovSPaKH0yIgP/WhTXDtaijF6qJEt/NcoYX759yLECldTsBxn87TnAAAAAElFTkSuQmCC
+        DAAACwwBP0AiyAAAAOpJREFUOE/N1D8OAUEUx/EtJW6gU2zobOLPDRxApxR6kSg0DuAG7kChsA2NUqHS
+        arX+VBqJrO9MXjaWGUwiG7/kI3lvZl6y2PFMiaIoiw4GH/RRk2OvYTHEFhOLKfZQuaEqR5Nh4YSylHHo
+        5TDEDmeMsUFXtiQjmwIp49BbYo0mMtKboac3PIcF26AVWlLqUKcz6IAS8tLSoXYepIb4uKAh7feD+Chi
+        ZKF+kSvqciiFQaawoB6tgO8fzRQW1JcdwJeWDrXzoP/7H9kGLeD0ihzxk5d2DpdrpCJHk2FBXWxtmC6z
+        R+pi4y7yvDse60qC0yhBVwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

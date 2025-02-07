@@ -28,7 +28,6 @@ namespace VCS.APP.Areas.CheckOut
             InitializeLibVLC();
             GetListCameras();
             InitializeControls();
-            CheckStatusSystem();
         }
         private void InitializeLibVLC()
         {
@@ -89,38 +88,7 @@ namespace VCS.APP.Areas.CheckOut
         {
             // Khởi tạo các control khác nếu cần
         }
-        private async void CheckStatusSystem()
-        {
-            try
-            {
-                if (!await _dbContext.Database.CanConnectAsync())
-                {
-                    statusDB.BackColor = Color.Red;
-                }
-                else
-                {
-                    statusDB.BackColor = Color.LimeGreen;
-                }
-                var _s = new CommonService();
-                var token = _s.LoginSmoApi();
-                if (string.IsNullOrEmpty(token))
-                {
-                    statusSMO.BackColor = Color.Red;
-                }
-                else
-                {
-                    statusSMO.BackColor = Color.LimeGreen;
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+      
         private void CheckOut_Load(object sender, EventArgs e)
         {
 
