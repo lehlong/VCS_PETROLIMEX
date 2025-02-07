@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
 using VCS.APP.Areas.ConfigApp;
+using VCS.APP.Areas.History;
 using VCS.APP.Areas.Home;
 using VCS.APP.Areas.Login;
 using VCS.APP.Areas.StatusSystem;
@@ -106,7 +107,7 @@ namespace VCS.APP
         private void button2_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Lịch sử ra vào";
-            //OpenChildForm(new CheckOut(_dbContext));
+            OpenChildForm(new History());
 
         }
 
