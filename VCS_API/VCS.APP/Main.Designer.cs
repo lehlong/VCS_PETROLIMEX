@@ -100,7 +100,6 @@ namespace VCS.APP
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(200, 840);
             panelMenu.TabIndex = 0;
-            panelMenu.Paint += panelMenu_Paint;
             // 
             // pictureBox12
             // 
@@ -112,7 +111,6 @@ namespace VCS.APP
             pictureBox12.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox12.TabIndex = 15;
             pictureBox12.TabStop = false;
-            pictureBox12.Click += pictureBox9_Click;
             // 
             // pictureBox11
             // 
@@ -168,7 +166,6 @@ namespace VCS.APP
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 11;
             pictureBox6.TabStop = false;
-            pictureBox6.Click += pictureBox6_Click;
             // 
             // pictureBox5
             // 
@@ -355,7 +352,6 @@ namespace VCS.APP
             label2.Size = new Size(69, 40);
             label2.TabIndex = 2;
             label2.Text = "VCS";
-            label2.Click += label2_Click;
             // 
             // pictureBox1
             // 
@@ -376,7 +372,6 @@ namespace VCS.APP
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1400, 840);
             panelMain.TabIndex = 1;
-            panelMain.Paint += panelMain_Paint;
             // 
             // panelTitle
             // 
@@ -394,7 +389,6 @@ namespace VCS.APP
             panelTitle.Name = "panelTitle";
             panelTitle.Size = new Size(1600, 60);
             panelTitle.TabIndex = 0;
-            panelTitle.Paint += panelTitle_Paint;
             // 
             // pictureBox7
             // 
@@ -470,7 +464,6 @@ namespace VCS.APP
             labelTitle.Size = new Size(88, 21);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "/ Trang chủ";
-            labelTitle.Click += labelTitle_Click;
             // 
             // Main
             // 

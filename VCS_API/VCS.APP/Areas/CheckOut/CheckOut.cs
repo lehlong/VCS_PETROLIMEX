@@ -19,9 +19,9 @@ namespace VCS.APP.Areas.CheckOut
     public partial class CheckOut : Form
     {
         private readonly AppDbContext _dbContext;
-        private LibVLCSharp.Shared.LibVLC? _libVLC;
+        private LibVLC? _libVLC;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
-        private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
+        private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
         private string IMGPATH;
         private string PLATEPATH;
         public CheckOut(AppDbContext dbContext)
@@ -29,8 +29,10 @@ namespace VCS.APP.Areas.CheckOut
             InitializeComponent();
             _dbContext = dbContext;
             InitializeLibVLC();
+        }
+        private void CheckOut_Load(object sender, EventArgs e)
+        {
             GetListCameras();
-            InitializeControls();
             GetListQueue();
         }
         private void InitializeLibVLC()
@@ -88,57 +90,6 @@ namespace VCS.APP.Areas.CheckOut
                 }
             }
         }
-        private void InitializeControls()
-        {
-            // Khởi tạo các control khác nếu cần
-        }
-
-        private void CheckOut_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCheck_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            //var number = txtNumber.Text.Trim();
-            //if (string.IsNullOrEmpty(number))
-            //{
-            //    txtStatus.Text = "Vui lòng nhập số lệnh xuất";
-            //    txtStatus.ForeColor = Color.Red;
-            //    return;
-            //}
-            //var _s = new CommonService();
-            //var token = _s.LoginSmoApi();
-            //if (string.IsNullOrEmpty(token))
-            //{
-            //    txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
-            //    txtStatus.ForeColor = Color.Red;
-            //    return;
-            //}
-
-            //var dataDetail = _s.CheckInvoice(number, token);
-            //if (!dataDetail.STATUS)
-            //{
-            //    txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
-            //    txtStatus.ForeColor = Color.Red;
-            //}
-            //else
-            //{
-            //    txtStatus.Text = $"Thành công! Lệnh xuất đã có hoá đơn!";
-            //    txtStatus.ForeColor = Color.Green;
-            //}
-        }
-
         private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             //if (e.KeyChar == (char)Keys.Enter)
@@ -171,11 +122,6 @@ namespace VCS.APP.Areas.CheckOut
             //        txtStatus.ForeColor = Color.Green;
             //    }
             //}
-        }
-
-        private void btnCheckOut_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void GetListQueue()
@@ -221,11 +167,6 @@ namespace VCS.APP.Areas.CheckOut
                     new SolidBrush(Color.Black),
                     new Point(e.Bounds.X + 3, (int)yPos));
             }
-        }
-
-        private void btnCheck_Click_1(object sender, EventArgs e)
-        {
-
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -292,5 +233,7 @@ namespace VCS.APP.Areas.CheckOut
                 btnDetect.Enabled = true;
             }
         }
+
+        
     }
 }

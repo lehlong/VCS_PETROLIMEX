@@ -237,10 +237,9 @@
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(11, 74);
             label5.Name = "label5";
-            label5.Size = new Size(153, 21);
+            label5.Size = new Size(139, 21);
             label5.TabIndex = 16;
-            label5.Text = "Phương tiện chưa ra:";
-            label5.Click += label5_Click;
+            label5.Text = "Chọn phương tiện:";
             // 
             // panel4
             // 
@@ -286,7 +285,6 @@
             btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckOut.UseVisualStyleBackColor = false;
-            btnCheckOut.Click += btnCheckOut_Click;
             // 
             // txtStatus
             // 
@@ -374,7 +372,6 @@
             btnCheck.TextAlign = ContentAlignment.MiddleLeft;
             btnCheck.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheck.UseVisualStyleBackColor = false;
-            btnCheck.Click += btnCheck_Click_1;
             // 
             // CheckOut
             // 
