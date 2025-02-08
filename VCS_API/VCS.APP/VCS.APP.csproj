@@ -48,13 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Content\icon\chip.gif" />
-    <Resource Include="Content\icon\graphic-card.gif" />
-    <Resource Include="Content\icon\memory-card.gif" />
-    <Resource Include="Content\icon\ssd.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
