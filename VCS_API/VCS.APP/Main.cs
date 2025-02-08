@@ -120,7 +120,7 @@ namespace VCS.APP
         private void button2_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Lịch sử ra vào";
-            OpenChildForm(new History());
+            OpenChildForm(new History(_dbContext));
 
         }
 

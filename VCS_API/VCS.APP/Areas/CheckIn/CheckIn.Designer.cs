@@ -49,6 +49,7 @@
             cameraPanel = new Panel();
             videoView = new LibVLCSharp.WinForms.VideoView();
             infoPanel = new Panel();
+            btnViewAll = new Button();
             txtLicensePlate = new TextBox();
             label2 = new Label();
             label1 = new Label();
@@ -57,7 +58,6 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
-            btnViewAll = new Button();
             mainPanel.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
@@ -337,6 +337,24 @@
             infoPanel.TabIndex = 1;
             infoPanel.Paint += infoPanel_Paint;
             // 
+            // btnViewAll
+            // 
+            btnViewAll.BackColor = Color.Gold;
+            btnViewAll.Cursor = Cursors.Hand;
+            btnViewAll.FlatStyle = FlatStyle.Flat;
+            btnViewAll.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnViewAll.ForeColor = Color.White;
+            btnViewAll.Image = (Image)resources.GetObject("btnViewAll.Image");
+            btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.Location = new Point(420, 17);
+            btnViewAll.Name = "btnViewAll";
+            btnViewAll.Padding = new Padding(6, 0, 0, 0);
+            btnViewAll.Size = new Size(42, 40);
+            btnViewAll.TabIndex = 10;
+            btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnViewAll.UseVisualStyleBackColor = false;
+            // 
             // txtLicensePlate
             // 
             txtLicensePlate.BackColor = Color.WhiteSmoke;
@@ -435,24 +453,6 @@
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
-            // 
-            // btnViewAll
-            // 
-            btnViewAll.BackColor = Color.Gold;
-            btnViewAll.Cursor = Cursors.Hand;
-            btnViewAll.FlatStyle = FlatStyle.Flat;
-            btnViewAll.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnViewAll.ForeColor = Color.White;
-            btnViewAll.Image = (Image)resources.GetObject("btnViewAll.Image");
-            btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(420, 17);
-            btnViewAll.Name = "btnViewAll";
-            btnViewAll.Padding = new Padding(6, 0, 0, 0);
-            btnViewAll.Size = new Size(42, 40);
-            btnViewAll.TabIndex = 10;
-            btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnViewAll.UseVisualStyleBackColor = false;
             // 
             // CheckIn
             // 
