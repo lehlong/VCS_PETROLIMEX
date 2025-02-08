@@ -15,6 +15,7 @@ namespace VCS.APP.Areas.History
         public History()
         {
             InitializeComponent();
+
         }
 
         private void fromDate_ValueChanged(object sender, EventArgs e)
@@ -29,48 +30,13 @@ namespace VCS.APP.Areas.History
 
         private void History_Load(object sender, EventArgs e)
         {
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
-            dataGridView.Rows.Add(new object[] { "Test", "Test", "Test", "Test", "Test", "Test", "Test" });
+            for (int i = 0; i < 40; i++)
+            {
+                dataGridView.Rows.Add(new object[] { (i + 1).ToString(), "Test", "Test", "Test", "Test", "Test", "Test" });
+            }
+
         }
+
+
     }
 }

@@ -144,6 +144,7 @@ namespace VCS.APP.Areas.History
             // Stt
             // 
             Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             Stt.HeaderText = "STT";
             Stt.Name = "Stt";
             Stt.ReadOnly = true;

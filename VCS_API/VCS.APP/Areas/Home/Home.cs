@@ -61,23 +61,28 @@ namespace VCS.APP.Areas.Home
                     {
                         Width = 620,
                         Height = 360,
-                        Margin = new Padding(0, 0, 10, 10),
-                        BorderStyle = BorderStyle.FixedSingle
+                        Margin = new Padding(10),
+                        BorderStyle = BorderStyle.FixedSingle,
+                        BackColor = Color.FromArgb(40, 40, 40)
                     };
                     var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
 
                     var label = new Label
                     {
                         Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
-                        Dock = DockStyle.Top, 
-                        Height = 25,
+                        Dock = DockStyle.Top,
+                        Height = 30,
+                        ForeColor = Color.White,
+                        BackColor = Color.FromArgb(60, 60, 60),
+                        Font = new Font("Segoe UI", 12, FontStyle.Regular),
                         TextAlign = ContentAlignment.MiddleCenter
                     };
                     cameraContainer.Controls.Add(label);
                     var videoView = new VideoView
                     {
-                        Width = 620,
-                        Height = 360,
+                        //Width = 620,
+                        //Height = 360,
+                        Dock = DockStyle.Fill
                     };
 
                     string rtspUrl = $"{camera.Rtsp}";

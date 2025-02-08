@@ -1,5 +1,6 @@
 ﻿using DMS.CORE;
 using DMS.CORE.Entities.MD;
+using DocumentFormat.OpenXml;
 using LibVLCSharp.Shared;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace VCS.APP.Areas.CheckOut
         private LibVLCSharp.Shared.LibVLC? _libVLC;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
+        private string IMGPATH;
+        private string PLATEPATH;
         public CheckOut(AppDbContext dbContext)
         {
             InitializeComponent();
@@ -227,7 +230,67 @@ namespace VCS.APP.Areas.CheckOut
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            try
+            {
+                btnReset.Enabled = true;
+                CleanupResources();
+                InitializeLibVLC();
+                GetListCameras();
+                txtStatus.Text = "Reset camera thành công!";
+                txtStatus.ForeColor = Color.Green;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void CleanupResources()
+        {
+            foreach (var player in _mediaPlayers.Values)
+            {
+                player.Stop();
+                player.Dispose();
+            }
+            _mediaPlayers.Clear();
 
+            _libVLC?.Dispose();
+            _libVLC = null;
+
+            videoView.MediaPlayer = null;
+        }
+
+        private async void btnDetect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                btnDetect.Enabled = false;
+                var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
+                IMGPATH = filePath;
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    pictureBoxVehicle.Image = snapshotImage;
+
+                    var (licensePlate, croppedImage, savedImagePath) = await CommonService.DetectLicensePlateAsync(filePath);
+                    PLATEPATH = savedImagePath;
+                    if (!string.IsNullOrEmpty(licensePlate))
+                    {
+                        txtLicensePlate.Text = licensePlate;
+                        pictureBoxLicensePlate.Image = croppedImage;
+                    }
+                }
+                txtStatus.Text = "Nhận diện thành công";
+                txtStatus.ForeColor = Color.Green;
+            }
+            catch (Exception ex)
+            {
+                txtStatus.Text = "Lỗi không nhận diện được biển số";
+                txtStatus.ForeColor = Color.Red;
+                txtLicensePlate.Text = "";
+            }
+            finally
+            {
+                btnDetect.Enabled = true;
+            }
         }
     }
 }

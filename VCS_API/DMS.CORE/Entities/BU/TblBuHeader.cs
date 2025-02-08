@@ -25,9 +25,9 @@ namespace DMS.CORE.Entities.BU
         public DateTime? TimeCheckout { get; set; }
 
         [Column("NOTE_IN", TypeName = "NVARCHAR(500)")]
-        public string NoteIn { get; set; }
+        public string? NoteIn { get; set; }
 
         [Column("NOTE_OUT", TypeName = "NVARCHAR(500)")]
-        public string NoteOut { get; set; }
+        public string? NoteOut { get; set; }
     }
 }

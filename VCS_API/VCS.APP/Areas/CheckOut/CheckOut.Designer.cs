@@ -199,6 +199,7 @@
             btnDetect.TextAlign = ContentAlignment.MiddleLeft;
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
+            btnDetect.Click += btnDetect_Click;
             // 
             // pictureBox2
             // 
