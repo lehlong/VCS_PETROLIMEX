@@ -17,37 +17,13 @@ namespace VCS.APP.Areas.StatusSystem
     public partial class StatusSystem : Form
     {
         private readonly AppDbContext _dbContext;
-        private System.Windows.Forms.Timer ramTimer = new System.Windows.Forms.Timer();
-        private System.Windows.Forms.Timer cpuTimer = new System.Windows.Forms.Timer();
         private PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        private System.Windows.Forms.Timer storageTimer = new System.Windows.Forms.Timer();
-        private System.Windows.Forms.Timer gpuTimer = new System.Windows.Forms.Timer();
         private PerformanceCounter gpuCounter = new PerformanceCounter("GPU Engine", "Utilization Percentage", "engtype_3D");
         public StatusSystem(AppDbContext dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            CheckStatusSystem();
-            UpdateRAMInfo();
-            UpdateCPUInfo();
-            UpdateStorageInfo();
-            UpdateGPUInfo();
 
-            //ramTimer.Interval = 1000; // 1 giây
-            //ramTimer.Tick += new EventHandler(UpdateRAMInfo);
-            //ramTimer.Start();
-            //// Cấu hình Timer cho CPU
-            //cpuTimer.Interval = 1000; // 1 giây
-            //cpuTimer.Tick += new EventHandler(UpdateCPUInfo);
-            //cpuTimer.Start();
-            ////memory
-            //storageTimer.Interval = 1000; // 1 giây
-            //storageTimer.Tick += new EventHandler((s, ev) => UpdateStorageInfo());
-            //storageTimer.Start();
-            ////gpu
-            //gpuTimer.Interval = 1000;
-            //gpuTimer.Tick += new EventHandler(UpdateGPUInfo);
-            //gpuTimer.Start();
         }
 
         private void StatusSystem_Load(object sender, EventArgs e)
@@ -61,24 +37,24 @@ namespace VCS.APP.Areas.StatusSystem
             {
                 if (!await _dbContext.Database.CanConnectAsync())
                 {
-                    label4.Text = "( Mất kết nối)";
+                    label4.Text = "Mất kết nối";
                     label4.ForeColor = Color.Red;
                 }
                 else
                 {
-                    label4.Text = "( Kết nối bình thường)";
+                    label4.Text = "Kết nối bình thường";
                     label4.ForeColor = Color.LimeGreen;
                 }
                 var _s = new CommonService();
                 var token = _s.LoginSmoApi();
                 if (string.IsNullOrEmpty(token))
                 {
-                    label3.Text = "( Mất kết nối)";
+                    label3.Text = "Mất kết nối";
                     label3.ForeColor = Color.Red;
                 }
                 else
                 {
-                    label3.Text = "( Kết nối bình thường)";
+                    label3.Text = "Kết nối bình thường";
                     label3.ForeColor = Color.LimeGreen;
                 }
 
@@ -195,6 +171,16 @@ namespace VCS.APP.Areas.StatusSystem
         }
 
         private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel11_Paint(object sender, PaintEventArgs e)
         {
 
         }

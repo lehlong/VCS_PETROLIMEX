@@ -9,6 +9,6 @@ namespace VCS.APP.Utilities
 {
     public static class ProfileUtilities
     {
-        public static TblAdAccount User { get; set; } = new TblAdAccount();
+        public static TblAdAccount? User { get; set; } = new TblAdAccount();
     }
 }

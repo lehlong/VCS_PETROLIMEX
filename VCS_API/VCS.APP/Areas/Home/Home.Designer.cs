@@ -46,7 +46,7 @@
             cameraPanel.Margin = new Padding(4);
             cameraPanel.Name = "cameraPanel";
             cameraPanel.Padding = new Padding(10, 14, 13, 14);
-            cameraPanel.Size = new Size(1374, 1008);
+            cameraPanel.Size = new Size(1374, 745);
             cameraPanel.TabIndex = 0;
             // 
             // panel1
@@ -90,7 +90,7 @@
             panel2.Location = new Point(10, 9);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1382, 1048);
+            panel2.Size = new Size(1382, 824);
             panel2.TabIndex = 2;
             // 
             // Home

@@ -33,7 +33,6 @@ namespace VCS.APP.Areas.Login
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
             label1 = new Label();
-            rememberMe = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -44,10 +43,10 @@ namespace VCS.APP.Areas.Login
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.petrolimex;
-            pictureBox1.Location = new Point(347, 177);
+            pictureBox1.Location = new Point(353, 177);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(359, 70);
+            pictureBox1.Size = new Size(353, 70);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -76,10 +75,10 @@ namespace VCS.APP.Areas.Login
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(347, 420);
+            btnLogin.Location = new Point(353, 388);
             btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(359, 40);
+            btnLogin.Size = new Size(353, 40);
             btnLogin.TabIndex = 3;
             btnLogin.Text = "Đăng nhập";
             btnLogin.UseVisualStyleBackColor = false;
@@ -123,23 +122,13 @@ namespace VCS.APP.Areas.Login
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(402, 596);
+            label1.Location = new Point(389, 600);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(279, 21);
             label1.TabIndex = 7;
             label1.Text = "Design by Dynamic Software Solutions";
             label1.Click += label1_Click;
-            // 
-            // rememberMe
-            // 
-            rememberMe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            rememberMe.Location = new Point(347, 375);
-            rememberMe.Name = "rememberMe";
-            rememberMe.Size = new Size(200, 30);
-            rememberMe.TabIndex = 8;
-            rememberMe.Text = "Ghi nhớ tài khoản";
-            rememberMe.UseVisualStyleBackColor = true;
             // 
             // Login
             // 
@@ -157,7 +146,6 @@ namespace VCS.APP.Areas.Login
             Controls.Add(password);
             Controls.Add(username);
             Controls.Add(pictureBox1);
-            Controls.Add(rememberMe);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
@@ -184,7 +172,6 @@ namespace VCS.APP.Areas.Login
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
         private Label label1;
-        private CheckBox rememberMe;
         private PictureBox pictureBox5;
     }
 }

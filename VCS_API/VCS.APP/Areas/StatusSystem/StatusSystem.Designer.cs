@@ -32,6 +32,7 @@ namespace VCS.APP.Areas.StatusSystem
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusSystem));
             panel1 = new Panel();
+            btnClean = new Button();
             panel9 = new Panel();
             label21 = new Label();
             pictureBox11 = new PictureBox();
@@ -98,6 +99,7 @@ namespace VCS.APP.Areas.StatusSystem
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnClean);
             panel1.Controls.Add(panel9);
             panel1.Controls.Add(panel10);
             panel1.Controls.Add(panel11);
@@ -112,6 +114,28 @@ namespace VCS.APP.Areas.StatusSystem
             panel1.Name = "panel1";
             panel1.Size = new Size(1382, 1048);
             panel1.TabIndex = 0;
+            // 
+            // btnClean
+            // 
+            btnClean.BackColor = Color.FromArgb(0, 123, 255);
+            btnClean.Cursor = Cursors.Hand;
+            btnClean.FlatAppearance.BorderSize = 0;
+            btnClean.FlatStyle = FlatStyle.Flat;
+            btnClean.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnClean.ForeColor = Color.White;
+            btnClean.Image = (Image)resources.GetObject("btnClean.Image");
+            btnClean.ImageAlign = ContentAlignment.MiddleLeft;
+            btnClean.Location = new Point(138, 21);
+            btnClean.Margin = new Padding(4);
+            btnClean.Name = "btnClean";
+            btnClean.Padding = new Padding(6, 0, 0, 0);
+            btnClean.Size = new Size(159, 40);
+            btnClean.TabIndex = 47;
+            btnClean.Text = "Dọn dẹp bộ nhớ";
+            btnClean.TextAlign = ContentAlignment.MiddleLeft;
+            btnClean.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // panel9
             // 
@@ -161,9 +185,9 @@ namespace VCS.APP.Areas.StatusSystem
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(65, 39);
             label2.Name = "label2";
-            label2.Size = new Size(160, 21);
+            label2.Size = new Size(146, 21);
             label2.TabIndex = 35;
-            label2.Text = "( Không có trạng thái)";
+            label2.Text = "Không có trạng thái";
             // 
             // panel10
             // 
@@ -214,9 +238,9 @@ namespace VCS.APP.Areas.StatusSystem
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(65, 39);
             label5.Name = "label5";
-            label5.Size = new Size(160, 21);
+            label5.Size = new Size(146, 21);
             label5.TabIndex = 38;
-            label5.Text = "( Không có trạng thái)";
+            label5.Text = "Không có trạng thái";
             // 
             // panel11
             // 
@@ -230,6 +254,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel11.Padding = new Padding(12);
             panel11.Size = new Size(300, 77);
             panel11.TabIndex = 46;
+            panel11.Paint += panel11_Paint;
             // 
             // label25
             // 
@@ -266,9 +291,9 @@ namespace VCS.APP.Areas.StatusSystem
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(65, 39);
             label4.Name = "label4";
-            label4.Size = new Size(160, 21);
+            label4.Size = new Size(146, 21);
             label4.TabIndex = 37;
-            label4.Text = "( Không có trạng thái)";
+            label4.Text = "Không có trạng thái";
             // 
             // panel12
             // 
@@ -318,9 +343,9 @@ namespace VCS.APP.Areas.StatusSystem
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(65, 39);
             label3.Name = "label3";
-            label3.Size = new Size(160, 21);
+            label3.Size = new Size(146, 21);
             label3.TabIndex = 36;
-            label3.Text = "( Không có trạng thái)";
+            label3.Text = "Không có trạng thái";
             // 
             // panel7
             // 
@@ -370,9 +395,9 @@ namespace VCS.APP.Areas.StatusSystem
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(65, 39);
             label1.Name = "label1";
-            label1.Size = new Size(160, 21);
+            label1.Size = new Size(146, 21);
             label1.TabIndex = 34;
-            label1.Text = "( Không có trạng thái)";
+            label1.Text = "Không có trạng thái";
             // 
             // panel6
             // 
@@ -560,9 +585,9 @@ namespace VCS.APP.Areas.StatusSystem
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Padding = new Padding(6, 0, 0, 0);
-            button1.Size = new Size(125, 40);
+            button1.Size = new Size(106, 40);
             button1.TabIndex = 33;
-            button1.Text = "Kiểm tra lại";
+            button1.Text = "Kiểm tra ";
             button1.TextAlign = ContentAlignment.MiddleLeft;
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = false;
@@ -661,5 +686,6 @@ namespace VCS.APP.Areas.StatusSystem
         private PictureBox pictureBox8;
         private PictureBox pictureBox7;
         private PictureBox pictureBox6;
+        private Button btnClean;
     }
 }

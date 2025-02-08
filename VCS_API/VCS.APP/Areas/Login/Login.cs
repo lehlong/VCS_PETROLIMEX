@@ -15,6 +15,7 @@ using VCS.APP.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using VCS.APP.Services;
+using Common.Util;
 
 namespace VCS.APP.Areas.Login
 {
@@ -113,8 +114,6 @@ namespace VCS.APP.Areas.Login
             if (savedCredentials != null)
             {
                 username.Text = savedCredentials.Username;
-                password.Text = savedCredentials.Password;
-                rememberMe.Checked = true;
             }
         }
 
@@ -140,35 +139,18 @@ namespace VCS.APP.Areas.Login
                     UserName = username.Text.Trim(),
                     Password = password.Text.Trim(),
                 };
-                var response = await _authService.Login(query);
+                var c = _dbContext.TblAdAccount.FirstOrDefault(x => x.UserName == username.Text.Trim() && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
 
-                if (response == null)
+
+                if (c == null)
                 {
                     MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     _authService.Status = true;
                     return;
                 }
-
-                // Lưu thông tin đăng nhập nếu checkbox được chọn
-                if (rememberMe.Checked)
-                {
-                    CredentialManager.SaveCredentials(new LoginCredentials
-                    {
-                        Username = username.Text,
-                        Password = password.Text,
-                        RememberMe = true
-                    });
-                }
-                else
-                {
-                    // Xóa thông tin đăng nhập đã lưu nếu không check
-                    CredentialManager.DeleteCredentials();
-                }
-
                 ProfileUtilities.User = _dbContext.TblAdAccount.Find(query.UserName);
                 
-                // Tải cấu hình người dùng
                 CommonService.LoadUserConfig(_dbContext);
                 var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
                 mainForm.Show();
