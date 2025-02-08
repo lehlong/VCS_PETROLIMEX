@@ -18,6 +18,9 @@ namespace VCS.APP.Areas.Home
         {
             InitializeComponent();
             _dbContext = dbContext;
+        }
+        private void Home_Load(object sender, EventArgs e)
+        {
             InitializeLibVLC();
             GetListCameras();
         }
@@ -63,7 +66,7 @@ namespace VCS.APP.Areas.Home
                         Height = 360,
                         Margin = new Padding(10),
                         BorderStyle = BorderStyle.FixedSingle,
-                        BackColor = Color.FromArgb(40, 40, 40)
+                        BackColor = Color.FromArgb(52, 58, 64)
                     };
                     var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
 
@@ -73,7 +76,7 @@ namespace VCS.APP.Areas.Home
                         Dock = DockStyle.Top,
                         Height = 30,
                         ForeColor = Color.White,
-                        BackColor = Color.FromArgb(60, 60, 60),
+                        BackColor = Color.FromArgb(52, 58, 64),
                         Font = new Font("Segoe UI", 12, FontStyle.Regular),
                         TextAlign = ContentAlignment.MiddleCenter
                     };
@@ -130,10 +133,8 @@ namespace VCS.APP.Areas.Home
             try
             {
                 CleanupResources();
-
                 InitializeLibVLC();
                 GetListCameras();
-
             }
             catch (Exception ex)
             {
@@ -146,11 +147,6 @@ namespace VCS.APP.Areas.Home
         {
             CleanupResources();
             base.OnFormClosing(e);
-        }
-
-        private void Home_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
