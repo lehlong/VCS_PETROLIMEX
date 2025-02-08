@@ -52,6 +52,7 @@
             mainPanel = new Panel();
             panel1 = new Panel();
             btnCheck = new Button();
+            btnViewAll = new Button();
             cameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView).BeginInit();
             infoPanel.SuspendLayout();
@@ -87,6 +88,7 @@
             // infoPanel
             // 
             infoPanel.BackColor = Color.White;
+            infoPanel.Controls.Add(btnViewAll);
             infoPanel.Controls.Add(txtLicensePlate);
             infoPanel.Controls.Add(label2);
             infoPanel.Controls.Add(label1);
@@ -170,12 +172,11 @@
             btnReset.ForeColor = Color.White;
             btnReset.Image = (Image)resources.GetObject("btnReset.Image");
             btnReset.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReset.Location = new Point(367, 17);
+            btnReset.Location = new Point(468, 17);
             btnReset.Name = "btnReset";
             btnReset.Padding = new Padding(6, 0, 0, 0);
-            btnReset.Size = new Size(143, 40);
+            btnReset.Size = new Size(42, 40);
             btnReset.TabIndex = 5;
-            btnReset.Text = "Reset Camera";
             btnReset.TextAlign = ContentAlignment.MiddleLeft;
             btnReset.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnReset.UseVisualStyleBackColor = false;
@@ -190,7 +191,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = (Image)resources.GetObject("btnDetect.Image");
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(226, 17);
+            btnDetect.Location = new Point(279, 17);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(135, 40);
@@ -357,6 +358,24 @@
             btnCheck.UseVisualStyleBackColor = false;
             btnCheck.Click += btnCheck_Click_1;
             // 
+            // btnViewAll
+            // 
+            btnViewAll.BackColor = Color.Gold;
+            btnViewAll.Cursor = Cursors.Hand;
+            btnViewAll.FlatStyle = FlatStyle.Flat;
+            btnViewAll.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnViewAll.ForeColor = Color.White;
+            btnViewAll.Image = (Image)resources.GetObject("btnViewAll.Image");
+            btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.Location = new Point(420, 17);
+            btnViewAll.Name = "btnViewAll";
+            btnViewAll.Padding = new Padding(6, 0, 0, 0);
+            btnViewAll.Size = new Size(42, 40);
+            btnViewAll.TabIndex = 27;
+            btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnViewAll.UseVisualStyleBackColor = false;
+            // 
             // CheckOut
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -408,5 +427,6 @@
         private Panel mainPanel;
         private Panel panel1;
         private Button btnCheck;
+        private Button btnViewAll;
     }
 }
