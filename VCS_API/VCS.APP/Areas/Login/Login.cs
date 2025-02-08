@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using VCS.APP.Services;
 using Common.Util;
+using System.Diagnostics;
 
 namespace VCS.APP.Areas.Login
 {
@@ -153,6 +154,10 @@ namespace VCS.APP.Areas.Login
                 
                 CommonService.LoadUserConfig(_dbContext);
                 var mainForm = Program.ServiceProvider.GetRequiredService<Main>();
+
+                // Chạy file nhận diện
+                Process.Start(Global.DetectFilePath);
+                
                 mainForm.Show();
                 this.Hide();
             }

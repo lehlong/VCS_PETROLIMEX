@@ -43,6 +43,7 @@ namespace VCS.APP.Areas.ConfigApp
                 txtSmoApiPassword.Text = config.SmoApiPassword;
                 txtPathSaveFile.Text = config.PathSaveFile;
                 txtUrlDetect.Text = config.DetectApiUrl;
+                txtDetectFilePath.Text = config.DetectFilePath;
             }
         }
 
@@ -55,6 +56,7 @@ namespace VCS.APP.Areas.ConfigApp
                 _config.SmoApiPassword = txtSmoApiPassword.Text;
                 _config.PathSaveFile = txtPathSaveFile.Text;
                 _config.DetectApiUrl = txtUrlDetect.Text;
+                _config.DetectFilePath = txtDetectFilePath.Text;
                 _dbContext.TblAdConfigApp.Update(_config);
                 _dbContext.SaveChanges();
 
@@ -64,7 +66,7 @@ namespace VCS.APP.Areas.ConfigApp
                 Global.SmoApiPassword= _config.SmoApiPassword;
                 Global.PathSaveFile= _config.PathSaveFile;
                 Global.DetectApiUrl= _config.DetectApiUrl;
-
+                Global.DetectFilePath = _config.DetectFilePath;
             }
             catch (Exception ex)
             {

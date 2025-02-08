@@ -265,6 +265,7 @@ namespace VCS.APP.Services
                     Global.PathSaveFile = config.PathSaveFile;
                     Global.DetectApiUrl = config.DetectApiUrl;
                     Global.Connection = config.ConnectionDb;
+                    Global.DetectFilePath = config.DetectFilePath;
                 }
                 else
                 {
@@ -275,6 +276,7 @@ namespace VCS.APP.Services
                     Global.PathSaveFile = null;
                     Global.DetectApiUrl = null;
                     Global.Connection = null;
+                    Global.DetectFilePath = null; 
                 }
             }
             catch (Exception ex)

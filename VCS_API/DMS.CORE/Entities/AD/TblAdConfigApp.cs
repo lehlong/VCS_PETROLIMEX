@@ -15,19 +15,21 @@ namespace DMS.CORE.Entities.AD
         [Column("ORG_CODE", TypeName = "NVARCHAR(50)")]
         public string OrgCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
-        public string WarehouseCode { get; set; }
+        public string? WarehouseCode { get; set; }
         [Column("SMO_API_USERNAME", TypeName = "NVARCHAR(50)")]
-        public string SmoApiUsername { get; set; }
+        public string? SmoApiUsername { get; set; }
         [Column("SMO_API_PASSWORD", TypeName = "NVARCHAR(50)")]
-        public string SmoApiPassword { get; set; }
+        public string? SmoApiPassword { get; set; }
         [Column("SMO_API_URL", TypeName = "NVARCHAR(500)")]
-        public string SmoApiUrl { get; set; }
+        public string? SmoApiUrl { get; set; }
         [Column("PATH_SAVE_FILE", TypeName = "NVARCHAR(500)")]
-        public string PathSaveFile { get; set; }
+        public string? PathSaveFile { get; set; }
         [Column("DETECT_API_URL", TypeName = "NVARCHAR(500)")]
-        public string DetectApiUrl { get; set; }
+        public string? DetectApiUrl { get; set; }
         [Column("CONNECTION_DB", TypeName = "NVARCHAR(1000)")]
-        public string ConnectionDb { get; set; }
+        public string? ConnectionDb { get; set; }
+        [Column("DETECT_FILE_PATH", TypeName = "NVARCHAR(500)")]
+        public string? DetectFilePath { get; set; }
 
 
     }

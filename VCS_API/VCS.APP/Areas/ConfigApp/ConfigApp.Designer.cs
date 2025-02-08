@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigApp));
             panel1 = new Panel();
+            panel7 = new Panel();
+            txtDetectFilePath = new TextBox();
+            label6 = new Label();
             panel6 = new Panel();
             txtPathSaveFile = new TextBox();
             panel5 = new Panel();
@@ -47,6 +50,7 @@
             label1 = new Label();
             button1 = new Button();
             panel1.SuspendLayout();
+            panel7.SuspendLayout();
             panel6.SuspendLayout();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
@@ -57,6 +61,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel7);
+            panel1.Controls.Add(label6);
             panel1.Controls.Add(panel6);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(panel4);
@@ -73,11 +79,40 @@
             panel1.Size = new Size(1382, 1048);
             panel1.TabIndex = 0;
             // 
+            // panel7
+            // 
+            panel7.BackColor = Color.WhiteSmoke;
+            panel7.Controls.Add(txtDetectFilePath);
+            panel7.Location = new Point(193, 296);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(1166, 40);
+            panel7.TabIndex = 44;
+            // 
+            // txtDetectFilePath
+            // 
+            txtDetectFilePath.BackColor = Color.WhiteSmoke;
+            txtDetectFilePath.BorderStyle = BorderStyle.None;
+            txtDetectFilePath.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtDetectFilePath.Location = new Point(13, 9);
+            txtDetectFilePath.Name = "txtDetectFilePath";
+            txtDetectFilePath.Size = new Size(1140, 22);
+            txtDetectFilePath.TabIndex = 10;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(45, 306);
+            label6.Name = "label6";
+            label6.Size = new Size(141, 21);
+            label6.TabIndex = 43;
+            label6.Text = "Path file nhận diện:";
+            // 
             // panel6
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(txtPathSaveFile);
-            panel6.Location = new Point(193, 294);
+            panel6.Location = new Point(193, 350);
             panel6.Name = "panel6";
             panel6.Size = new Size(1166, 40);
             panel6.TabIndex = 42;
@@ -173,7 +208,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(40, 303);
+            label5.Location = new Point(40, 359);
             label5.Name = "label5";
             label5.Size = new Size(147, 21);
             label5.TabIndex = 39;
@@ -252,6 +287,8 @@
             Load += ConfigApp_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
             panel5.ResumeLayout(false);
@@ -284,5 +321,8 @@
         private TextBox txtSmoApiPassword;
         private Panel panel2;
         private TextBox txtSmoApiUsername;
+        private Panel panel7;
+        private TextBox txtDetectFilePath;
+        private Label label6;
     }
 }
