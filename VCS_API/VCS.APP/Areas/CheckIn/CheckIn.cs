@@ -427,10 +427,11 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
-            var check = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Date == DateTime.Now.Date && x.VehicleCode == txtLicensePlate.Text).Count();
-            if (check > 0)
+            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
+            && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
+            if (c != 0)
             {
-                txtStatus.Text = "Phương tiện đã có trong hàng chờ! Vui lòng kiểm tra lại!";
+                txtStatus.Text = "Phương tiện đã có trong hàng chờ hoặc trong kho!";
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
@@ -497,7 +498,7 @@ namespace VCS.APP.Areas.CheckIn
                 IsActive = true
             });
             await _dbContext.SaveChangesAsync();
-
+            ReloadForm(_dbContext);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -559,6 +560,21 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
+
+
+            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
+            && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
+           
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedHeaderId = selectedItem.Value;
+
+            if (c != 0 && string.IsNullOrEmpty(selectedHeaderId))
+            {
+                txtStatus.Text = "Phương tiện đã có trong hàng chờ hoặc trong kho!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+
             if (_lstDOSAP.Count() == 0)
             {
                 var result = MessageBox.Show("Không có thông tin lệnh xuất! Bạn có chắc chắn muốn cho xe vào!",
@@ -587,11 +603,7 @@ namespace VCS.APP.Areas.CheckIn
                     }
                 }
             }
-
-
-            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
-            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
-            string selectedHeaderId = selectedItem.Value;
+            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";          
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
@@ -673,13 +685,14 @@ namespace VCS.APP.Areas.CheckIn
 
                 if (result == null)
                 {
-                    MessageBox.Show("Thêm mới thất bại!");
+                    txtStatus.Text = "Cho xe vào không thành công! Vui lòng kiểm tra lại!";
+                    txtStatus.ForeColor = Color.Red;
                     return;
                 }
 
 
-                MessageBox.Show("Cho vào kho cấp số thành công!");
-                ReloadForm(_dbContext);
+                txtStatus.Text = "Cho xe vào thành công!";
+                txtStatus.ForeColor = Color.Green;
             }
             else
             {
@@ -698,6 +711,7 @@ namespace VCS.APP.Areas.CheckIn
                 });
                 _dbContext.SaveChanges();
             }
+            ReloadForm(_dbContext);
         }
         private void ReloadForm(AppDbContext dbContext)
         {
@@ -1079,10 +1093,10 @@ namespace VCS.APP.Areas.CheckIn
                 _lstCamera = _dbContext.TblMdCamera
                     .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
                         && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
-                        && x.IsIn) 
+                        && x.IsIn)
                     .ToList();
 
-                if (_lstCamera.Any()) 
+                if (_lstCamera.Any())
                 {
                     AllCamera allCameraForm = new AllCamera(_lstCamera);
                     allCameraForm.ShowDialog();

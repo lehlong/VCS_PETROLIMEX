@@ -120,6 +120,7 @@
             btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
             btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnViewAll.UseVisualStyleBackColor = false;
+            btnViewAll.Click += btnViewAll_Click;
             // 
             // txtLicensePlate
             // 

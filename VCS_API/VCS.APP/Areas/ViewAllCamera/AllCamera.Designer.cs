@@ -42,7 +42,7 @@
             cameraPanel.Margin = new Padding(4);
             cameraPanel.Name = "cameraPanel";
             cameraPanel.Padding = new Padding(10, 14, 13, 14);
-            cameraPanel.Size = new Size(1344, 726);
+            cameraPanel.Size = new Size(1315, 803);
             cameraPanel.TabIndex = 1;
             // 
             // AllCamera
@@ -50,7 +50,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1384, 766);
+            ClientSize = new Size(1355, 843);
             Controls.Add(cameraPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AllCamera";
