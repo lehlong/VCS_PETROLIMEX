@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.Windows;
 using DMS.BUSINESS.Dtos.BU;
 using DMS.BUSINESS.Services.BU;
+using VCS.APP.Areas.ViewAllCamera;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -1070,5 +1071,34 @@ namespace VCS.APP.Areas.CheckIn
                 }
             }
         }
+
+        private void btnViewAll_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _lstCamera = _dbContext.TblMdCamera
+                    .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
+                        && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
+                        && x.IsIn) 
+                    .ToList();
+
+                if (_lstCamera.Any()) 
+                {
+                    AllCamera allCameraForm = new AllCamera(_lstCamera);
+                    allCameraForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Không có camera nào được tìm thấy!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
