@@ -69,7 +69,7 @@ namespace VCS.APP.Areas.Home
                     var label = new Label
                     {
                         Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
-                        Dock = DockStyle.Top,
+                        Dock = DockStyle.Top, 
                         Height = 25,
                         TextAlign = ContentAlignment.MiddleCenter
                     };
