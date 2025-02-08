@@ -75,6 +75,7 @@ namespace VCS.APP.Areas.StatusSystem
             pictureBox6 = new PictureBox();
             label12 = new Label();
             button1 = new Button();
+            btnRestartDetect = new Button();
             panel1.SuspendLayout();
             panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
@@ -140,6 +141,7 @@ namespace VCS.APP.Areas.StatusSystem
             // panel9
             // 
             panel9.BackColor = Color.WhiteSmoke;
+            panel9.Controls.Add(btnRestartDetect);
             panel9.Controls.Add(label21);
             panel9.Controls.Add(pictureBox11);
             panel9.Controls.Add(label22);
@@ -147,7 +149,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel9.Location = new Point(356, 312);
             panel9.Name = "panel9";
             panel9.Padding = new Padding(12);
-            panel9.Size = new Size(300, 77);
+            panel9.Size = new Size(431, 77);
             panel9.TabIndex = 46;
             // 
             // label21
@@ -593,6 +595,28 @@ namespace VCS.APP.Areas.StatusSystem
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // btnRestartDetect
+            // 
+            btnRestartDetect.BackColor = Color.FromArgb(40, 167, 69);
+            btnRestartDetect.Cursor = Cursors.Hand;
+            btnRestartDetect.FlatAppearance.BorderSize = 0;
+            btnRestartDetect.FlatStyle = FlatStyle.Flat;
+            btnRestartDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRestartDetect.ForeColor = Color.White;
+            btnRestartDetect.Image = (Image)resources.GetObject("btnRestartDetect.Image");
+            btnRestartDetect.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRestartDetect.Location = new Point(272, 19);
+            btnRestartDetect.Margin = new Padding(4);
+            btnRestartDetect.Name = "btnRestartDetect";
+            btnRestartDetect.Padding = new Padding(6, 0, 0, 0);
+            btnRestartDetect.Size = new Size(139, 40);
+            btnRestartDetect.TabIndex = 48;
+            btnRestartDetect.Text = "Khởi động lại";
+            btnRestartDetect.TextAlign = ContentAlignment.MiddleLeft;
+            btnRestartDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnRestartDetect.UseVisualStyleBackColor = false;
+            btnRestartDetect.Click += btnRestartDetect_Click;
+            // 
             // StatusSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -687,5 +711,6 @@ namespace VCS.APP.Areas.StatusSystem
         private PictureBox pictureBox7;
         private PictureBox pictureBox6;
         private Button btnClean;
+        private Button btnRestartDetect;
     }
 }

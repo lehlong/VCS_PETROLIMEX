@@ -54,7 +54,7 @@
             panel1.BackColor = Color.Transparent;
             panel1.Controls.Add(button1);
             panel1.Location = new Point(4, 4);
-            panel1.Margin = new Padding(4);
+            panel1.Margin = new Padding(10, 4, 4, 4);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(10, 0, 0, 0);
             panel1.Size = new Size(1370, 53);
@@ -69,7 +69,7 @@
             button1.ForeColor = Color.White;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(8, 9);
+            button1.Location = new Point(18, 10);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Padding = new Padding(6, 0, 0, 0);

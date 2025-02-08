@@ -36,6 +36,13 @@ namespace VCS.APP.Areas.History
             panel1 = new Panel();
             panel7 = new Panel();
             dataGridView = new DataGridView();
+            Stt = new DataGridViewTextBoxColumn();
+            Driver = new DataGridViewTextBoxColumn();
+            Plate = new DataGridViewTextBoxColumn();
+            TimeIn = new DataGridViewTextBoxColumn();
+            TimeOut = new DataGridViewTextBoxColumn();
+            Note = new DataGridViewTextBoxColumn();
+            SttPrint = new DataGridViewTextBoxColumn();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -52,13 +59,6 @@ namespace VCS.APP.Areas.History
             panel2 = new Panel();
             toDate = new BorderlessDateTimePicker();
             btnSearch = new Button();
-            Stt = new DataGridViewTextBoxColumn();
-            Driver = new DataGridViewTextBoxColumn();
-            Plate = new DataGridViewTextBoxColumn();
-            TimeIn = new DataGridViewTextBoxColumn();
-            TimeOut = new DataGridViewTextBoxColumn();
-            Note = new DataGridViewTextBoxColumn();
-            SttPrint = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -113,9 +113,8 @@ namespace VCS.APP.Areas.History
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             dataGridViewCellStyle1.ForeColor = Color.White;
             dataGridViewCellStyle1.Padding = new Padding(12);
-            dataGridViewCellStyle1.SelectionBackColor = Color.Transparent;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 58, 64);
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { Stt, Driver, Plate, TimeIn, TimeOut, Note, SttPrint });
@@ -142,6 +141,62 @@ namespace VCS.APP.Areas.History
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.Size = new Size(1345, 685);
             dataGridView.TabIndex = 0;
+            // 
+            // Stt
+            // 
+            Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Stt.HeaderText = "STT";
+            Stt.Name = "Stt";
+            Stt.ReadOnly = true;
+            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Driver
+            // 
+            Driver.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Driver.HeaderText = "TÀI XẾ";
+            Driver.Name = "Driver";
+            Driver.ReadOnly = true;
+            Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Plate
+            // 
+            Plate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Plate.HeaderText = "BIỂN SỐ";
+            Plate.Name = "Plate";
+            Plate.ReadOnly = true;
+            Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // TimeIn
+            // 
+            TimeIn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            TimeIn.HeaderText = "THỜI GIAN VÀO";
+            TimeIn.Name = "TimeIn";
+            TimeIn.ReadOnly = true;
+            TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // TimeOut
+            // 
+            TimeOut.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            TimeOut.HeaderText = "THỜI GIAN RA";
+            TimeOut.Name = "TimeOut";
+            TimeOut.ReadOnly = true;
+            TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Note
+            // 
+            Note.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Note.HeaderText = "GHI CHÚ";
+            Note.Name = "Note";
+            Note.ReadOnly = true;
+            Note.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // SttPrint
+            // 
+            SttPrint.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            SttPrint.HeaderText = "IN STT";
+            SttPrint.Name = "SttPrint";
+            SttPrint.ReadOnly = true;
+            SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // label5
             // 
@@ -314,62 +369,6 @@ namespace VCS.APP.Areas.History
             btnSearch.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
-            // 
-            // Stt
-            // 
-            Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Stt.HeaderText = "STT";
-            Stt.Name = "Stt";
-            Stt.ReadOnly = true;
-            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Driver
-            // 
-            Driver.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Driver.HeaderText = "TÀI XẾ";
-            Driver.Name = "Driver";
-            Driver.ReadOnly = true;
-            Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Plate
-            // 
-            Plate.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Plate.HeaderText = "BIỂN SỐ";
-            Plate.Name = "Plate";
-            Plate.ReadOnly = true;
-            Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // TimeIn
-            // 
-            TimeIn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            TimeIn.HeaderText = "THỜI GIAN VÀO";
-            TimeIn.Name = "TimeIn";
-            TimeIn.ReadOnly = true;
-            TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // TimeOut
-            // 
-            TimeOut.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            TimeOut.HeaderText = "THỜI GIAN RA";
-            TimeOut.Name = "TimeOut";
-            TimeOut.ReadOnly = true;
-            TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Note
-            // 
-            Note.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Note.HeaderText = "GHI CHÚ";
-            Note.Name = "Note";
-            Note.ReadOnly = true;
-            Note.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // SttPrint
-            // 
-            SttPrint.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            SttPrint.HeaderText = "IN STT";
-            SttPrint.Name = "SttPrint";
-            SttPrint.ReadOnly = true;
-            SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // History
             // 

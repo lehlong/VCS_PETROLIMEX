@@ -47,7 +47,6 @@ namespace VCS.APP
             btnCheckOut = new NoHoverButton();
             btnCheckIn = new NoHoverButton();
             btnHome = new NoHoverButton();
-            panelLogo = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
             panelMain = new Panel();
@@ -68,9 +67,7 @@ namespace VCS.APP
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panelMain.SuspendLayout();
             panelTitle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             panel3.SuspendLayout();
@@ -97,13 +94,11 @@ namespace VCS.APP
             panelMenu.Controls.Add(btnCheckOut);
             panelMenu.Controls.Add(btnCheckIn);
             panelMenu.Controls.Add(btnHome);
-            panelMenu.Controls.Add(panelLogo);
-            panelMenu.Dock = DockStyle.Left;
             panelMenu.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelMenu.ForeColor = Color.Black;
-            panelMenu.Location = new Point(0, 0);
+            panelMenu.Location = new Point(0, 60);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(200, 900);
+            panelMenu.Size = new Size(200, 840);
             panelMenu.TabIndex = 0;
             panelMenu.Paint += panelMenu_Paint;
             // 
@@ -111,7 +106,7 @@ namespace VCS.APP
             // 
             pictureBox12.BackColor = Color.Transparent;
             pictureBox12.Image = (Image)resources.GetObject("pictureBox12.Image");
-            pictureBox12.Location = new Point(17, 376);
+            pictureBox12.Location = new Point(17, 316);
             pictureBox12.Name = "pictureBox12";
             pictureBox12.Size = new Size(18, 18);
             pictureBox12.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -123,7 +118,7 @@ namespace VCS.APP
             // 
             pictureBox11.BackColor = Color.Transparent;
             pictureBox11.Image = (Image)resources.GetObject("pictureBox11.Image");
-            pictureBox11.Location = new Point(17, 326);
+            pictureBox11.Location = new Point(17, 266);
             pictureBox11.Name = "pictureBox11";
             pictureBox11.Size = new Size(18, 18);
             pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -141,7 +136,7 @@ namespace VCS.APP
             btnOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnOut.ForeColor = Color.Black;
             btnOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnOut.Location = new Point(0, 360);
+            btnOut.Location = new Point(0, 300);
             btnOut.Name = "btnOut";
             btnOut.Padding = new Padding(38, 0, 0, 0);
             btnOut.Size = new Size(200, 50);
@@ -156,7 +151,7 @@ namespace VCS.APP
             // 
             pictureBox10.BackColor = Color.Transparent;
             pictureBox10.Image = (Image)resources.GetObject("pictureBox10.Image");
-            pictureBox10.Location = new Point(17, 276);
+            pictureBox10.Location = new Point(17, 216);
             pictureBox10.Name = "pictureBox10";
             pictureBox10.Size = new Size(18, 18);
             pictureBox10.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -167,7 +162,7 @@ namespace VCS.APP
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = (Image)resources.GetObject("pictureBox6.Image");
-            pictureBox6.Location = new Point(17, 227);
+            pictureBox6.Location = new Point(17, 167);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(18, 18);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -179,7 +174,7 @@ namespace VCS.APP
             // 
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(17, 177);
+            pictureBox5.Location = new Point(17, 117);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(18, 18);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -190,7 +185,7 @@ namespace VCS.APP
             // 
             pictureBox4.BackColor = Color.Transparent;
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(17, 127);
+            pictureBox4.Location = new Point(17, 67);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(18, 18);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -201,7 +196,7 @@ namespace VCS.APP
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(17, 76);
+            pictureBox3.Location = new Point(17, 16);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(18, 18);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -219,7 +214,7 @@ namespace VCS.APP
             btnHistory.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnHistory.ForeColor = Color.Black;
             btnHistory.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHistory.Location = new Point(0, 310);
+            btnHistory.Location = new Point(0, 250);
             btnHistory.Name = "btnHistory";
             btnHistory.Padding = new Padding(38, 0, 0, 0);
             btnHistory.Size = new Size(200, 50);
@@ -241,7 +236,7 @@ namespace VCS.APP
             btnConfig.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnConfig.ForeColor = Color.Black;
             btnConfig.ImageAlign = ContentAlignment.MiddleLeft;
-            btnConfig.Location = new Point(0, 260);
+            btnConfig.Location = new Point(0, 200);
             btnConfig.Name = "btnConfig";
             btnConfig.Padding = new Padding(38, 0, 0, 0);
             btnConfig.Size = new Size(200, 50);
@@ -273,7 +268,7 @@ namespace VCS.APP
             btnStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnStatus.ForeColor = Color.Black;
             btnStatus.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStatus.Location = new Point(0, 210);
+            btnStatus.Location = new Point(0, 150);
             btnStatus.Name = "btnStatus";
             btnStatus.Padding = new Padding(38, 0, 0, 0);
             btnStatus.Size = new Size(200, 50);
@@ -295,7 +290,7 @@ namespace VCS.APP
             btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckOut.ForeColor = Color.Black;
             btnCheckOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckOut.Location = new Point(0, 160);
+            btnCheckOut.Location = new Point(0, 100);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.Padding = new Padding(38, 0, 0, 0);
             btnCheckOut.Size = new Size(200, 50);
@@ -317,7 +312,7 @@ namespace VCS.APP
             btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCheckIn.ForeColor = Color.Black;
             btnCheckIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckIn.Location = new Point(0, 110);
+            btnCheckIn.Location = new Point(0, 50);
             btnCheckIn.Name = "btnCheckIn";
             btnCheckIn.Padding = new Padding(38, 0, 0, 0);
             btnCheckIn.Size = new Size(200, 50);
@@ -339,7 +334,7 @@ namespace VCS.APP
             btnHome.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnHome.ForeColor = Color.Black;
             btnHome.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHome.Location = new Point(0, 60);
+            btnHome.Location = new Point(0, 0);
             btnHome.Name = "btnHome";
             btnHome.Padding = new Padding(38, 0, 0, 0);
             btnHome.Size = new Size(200, 50);
@@ -350,24 +345,12 @@ namespace VCS.APP
             btnHome.UseVisualStyleBackColor = false;
             btnHome.Click += btnHome_Click;
             // 
-            // panelLogo
-            // 
-            panelLogo.BackColor = Color.FromArgb(52, 58, 64);
-            panelLogo.Controls.Add(label2);
-            panelLogo.Controls.Add(pictureBox1);
-            panelLogo.Dock = DockStyle.Top;
-            panelLogo.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panelLogo.Location = new Point(0, 0);
-            panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(200, 60);
-            panelLogo.TabIndex = 0;
-            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(78, 11);
+            label2.Location = new Point(71, 9);
             label2.Name = "label2";
             label2.Size = new Size(69, 40);
             label2.TabIndex = 2;
@@ -377,7 +360,7 @@ namespace VCS.APP
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(45, 13);
+            pictureBox1.Location = new Point(38, 11);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(36, 36);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -388,12 +371,10 @@ namespace VCS.APP
             // 
             panelMain.BackColor = Color.White;
             panelMain.BackgroundImageLayout = ImageLayout.None;
-            panelMain.Controls.Add(panelTitle);
-            panelMain.Dock = DockStyle.Fill;
             panelMain.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panelMain.Location = new Point(200, 0);
+            panelMain.Location = new Point(200, 60);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1400, 900);
+            panelMain.Size = new Size(1400, 840);
             panelMain.TabIndex = 1;
             panelMain.Paint += panelMain_Paint;
             // 
@@ -401,23 +382,24 @@ namespace VCS.APP
             // 
             panelTitle.BackColor = Color.FromArgb(52, 58, 64);
             panelTitle.BackgroundImageLayout = ImageLayout.None;
+            panelTitle.Controls.Add(label2);
             panelTitle.Controls.Add(pictureBox7);
+            panelTitle.Controls.Add(pictureBox1);
             panelTitle.Controls.Add(panel3);
             panelTitle.Controls.Add(panel2);
             panelTitle.Controls.Add(label1);
             panelTitle.Controls.Add(labelTitle);
-            panelTitle.Dock = DockStyle.Top;
             panelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             panelTitle.Location = new Point(0, 0);
             panelTitle.Name = "panelTitle";
-            panelTitle.Size = new Size(1400, 60);
+            panelTitle.Size = new Size(1600, 60);
             panelTitle.TabIndex = 0;
             panelTitle.Paint += panelTitle_Paint;
             // 
             // pictureBox7
             // 
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(1351, 13);
+            pictureBox7.Location = new Point(1557, 13);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(32, 32);
             pictureBox7.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -428,7 +410,7 @@ namespace VCS.APP
             // 
             panel3.BackColor = Color.Transparent;
             panel3.Controls.Add(txtWarehouse);
-            panel3.Location = new Point(1036, 31);
+            panel3.Location = new Point(1242, 31);
             panel3.Name = "panel3";
             panel3.Size = new Size(307, 25);
             panel3.TabIndex = 2;
@@ -449,7 +431,7 @@ namespace VCS.APP
             // 
             panel2.BackColor = Color.Transparent;
             panel2.Controls.Add(txtUsername);
-            panel2.Location = new Point(1036, 6);
+            panel2.Location = new Point(1242, 6);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(0, 4, 0, 0);
             panel2.Size = new Size(307, 27);
@@ -472,7 +454,7 @@ namespace VCS.APP
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
             label1.ImageAlign = ContentAlignment.MiddleLeft;
-            label1.Location = new Point(2, 20);
+            label1.Location = new Point(136, 19);
             label1.Name = "label1";
             label1.Size = new Size(231, 21);
             label1.TabIndex = 2;
@@ -483,7 +465,7 @@ namespace VCS.APP
             labelTitle.AutoSize = true;
             labelTitle.ForeColor = Color.White;
             labelTitle.ImageAlign = ContentAlignment.MiddleLeft;
-            labelTitle.Location = new Point(228, 19);
+            labelTitle.Location = new Point(362, 19);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(88, 21);
             labelTitle.TabIndex = 0;
@@ -496,6 +478,7 @@ namespace VCS.APP
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1600, 900);
+            Controls.Add(panelTitle);
             Controls.Add(panelMain);
             Controls.Add(panelMenu);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -516,10 +499,7 @@ namespace VCS.APP
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            panelLogo.ResumeLayout(false);
-            panelLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panelMain.ResumeLayout(false);
             panelTitle.ResumeLayout(false);
             panelTitle.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
@@ -533,7 +513,6 @@ namespace VCS.APP
         #endregion
 
         private Panel panelMenu;
-        private Panel panelLogo;
         private NoHoverButton btnHome;
         private NoHoverButton btnCheckOut;
         private NoHoverButton btnCheckIn;

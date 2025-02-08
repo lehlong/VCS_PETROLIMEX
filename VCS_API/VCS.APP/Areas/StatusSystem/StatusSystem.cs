@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Services;
+using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.StatusSystem
 {
@@ -183,6 +184,19 @@ namespace VCS.APP.Areas.StatusSystem
         private void panel11_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnRestartDetect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(Global.DetectFilePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
+                   "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
