@@ -19,5 +19,15 @@ namespace DMS.CORE.Entities.BU
         public string CompanyCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
         public string WarehouseCode { get; set; }
+        [Column("IS_CHECKOUT")]
+        public bool IsCheckout { get; set; }
+        [Column("TIME_CHECKOUT")]
+        public DateTime? TimeCheckout { get; set; }
+
+        [Column("NOTE_IN", TypeName = "NVARCHAR(500)")]
+        public string NoteIn { get; set; }
+
+        [Column("NOTE_OUT", TypeName = "NVARCHAR(500)")]
+        public string NoteOut { get; set; }
     }
 }

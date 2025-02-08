@@ -64,9 +64,11 @@ namespace VCS.APP.Areas.Home
                         Margin = new Padding(0, 0, 10, 10),
                         BorderStyle = BorderStyle.FixedSingle
                     };
+                    var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
+
                     var label = new Label
                     {
-                        Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO" : $"{camera.Name} - CAMERA CỔNG RA",
+                        Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
                         Dock = DockStyle.Top,
                         Height = 25,
                         TextAlign = ContentAlignment.MiddleCenter

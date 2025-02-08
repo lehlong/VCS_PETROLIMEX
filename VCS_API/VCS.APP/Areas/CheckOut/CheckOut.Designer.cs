@@ -179,6 +179,7 @@
             btnReset.TextAlign = ContentAlignment.MiddleLeft;
             btnReset.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
             // 
             // btnDetect
             // 

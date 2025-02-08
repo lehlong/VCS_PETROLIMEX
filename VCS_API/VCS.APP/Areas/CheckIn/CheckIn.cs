@@ -70,7 +70,7 @@ namespace VCS.APP.Areas.CheckIn
                 _lstCamera = _dbContext.TblMdCamera
                     .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
                         && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
-                        && x.IsIn) // Lọc camera cổng vào
+                        && x.IsIn && x.IsRecognition) // Lọc camera cổng vào
                     .ToList();
 
                 InitializeCameraStreams();

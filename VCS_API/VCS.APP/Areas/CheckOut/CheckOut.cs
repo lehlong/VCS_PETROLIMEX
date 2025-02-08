@@ -50,7 +50,7 @@ namespace VCS.APP.Areas.CheckOut
                 _lstCamera = _dbContext.TblMdCamera
                     .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
                         && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
-                        && x.IsOut) // Lọc camera cổng vào
+                        && x.IsOut && x.IsRecognition) // Lọc camera cổng ra
                     .ToList();
 
                 InitializeCameraStreams();
@@ -177,14 +177,14 @@ namespace VCS.APP.Areas.CheckOut
 
         private void GetListQueue()
         {
-            var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
-            && x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
-            //var lstQueue = _dbContext.TblBuQueue.ToList();
+            var lstQueue = _dbContext.TblBuHeader.Where(x => x.IsCheckout == false).ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem(" -", ""));
             foreach (var item in lstQueue)
             {
-                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.Name}", item.HeaderId));
+                var v = _dbContext.TblMdVehicle.FirstOrDefault(x => x.Code == item.VehicleCode)?.OicPbatch +
+                    _dbContext.TblMdVehicle.FirstOrDefault(x => x.Code == item.VehicleCode)?.OicPtrip;
+                items.Add(new ComboBoxItem($"{item.VehicleCode} - {v}", item.Id));
             }
             comboBox1.DataSource = items;
             comboBox1.DisplayMember = "Text";
@@ -221,6 +221,11 @@ namespace VCS.APP.Areas.CheckOut
         }
 
         private void btnCheck_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
         {
 
         }
