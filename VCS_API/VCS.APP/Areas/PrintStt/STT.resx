@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
-    Microsoft ResX Schema 
+    Microsoft ResX Schema
 
     Version 2.0
 
@@ -48,7 +48,7 @@
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
     value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
@@ -121,7 +121,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAA8EAAAC0CAYAAAC0Ty7vAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1
-        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACxIAAAsSAdLdfvwAAFrmSURBVHhe7d13gFTV2QbwFREV
+        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAACwwAAAsMAT9AIsgAAFrmSURBVHhe7d13gFTV2QbwFREV
         jV0Q6UgTe4u9G2PviltAOiqCDVERhIUFRBELFrB3ROndGltiSTQx6peYT030S1VjEoOwhd33e58zc5e7
         s+/OTrkzO3Pn+eO3ypZ7zr0zc+c8c1rRj8qebwnbqb7qODVGzVOr1bvqE6KAfaouVL2U9XwkyksiQkRE
         RERJMhtWGdJTFatH1eeqUglRlsxU+NDFem4S5SXrpk5ERERE8ZkNqwC1UZeoFep7ZYUTomyYoY5V1vOU
@@ -512,10 +512,10 @@
         evWd+pN6Rz2qhqoDVTvVqFFPRImzbupEREREFI8U/T8JkT4UsE2lXQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAQJJREFUOE/VlEFqwlAURVOMgpnpxFJooZ12D0JLBx100kEXUgSddgEuoCJdQAVX
+        DAAACwwBP0AiyAAAAQJJREFUOE/VlEFqwlAURVOMgpnpxFJooZ12D0JLBx100kEXUgSddgEuoCJdQAVX
         4AJcQOfdSjxH/i8haiKpEx8c8vPevZckP0lSrDzPW/B0JK1g2y2GGfzApAY1WbDtlkNYhtODpeYMgmi0
         4QNm8AW/YV2FGrWu9aYGPcIU7hqi98GgZ3gPF3h04ZnDUK8Z/wkawb1eMxoHxdobxLELPshVDWq6VUHb
         7YcLuIXyg7Xn7G/7OVYGDeATyttuz9neoBtYwwIUyCV8h15kotFiHXX29V7HQQo9uAIFHXiFtwIv4Dvn

@@ -18,6 +18,7 @@ namespace VCS.APP.Areas.PrintStt
         public STT()
         {
             InitializeComponent();
+            txtDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
             printDocument1.PrintPage += new PrintPageEventHandler(PrintDocument1_PrintPage);
         }
 
@@ -55,6 +56,29 @@ namespace VCS.APP.Areas.PrintStt
         private void labelWareHouse_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void lblVehicle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            CapturePanel(panel1); // Capture panel1 content
+
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDocument1;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
     }
 }
