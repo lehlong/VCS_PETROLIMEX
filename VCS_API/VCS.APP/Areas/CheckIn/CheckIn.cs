@@ -359,7 +359,7 @@ namespace VCS.APP.Areas.CheckIn
                         SelectionBackColor = Color.Transparent,
                         SelectionForeColor = Color.Black,
                         Padding = new Padding(5, 0, 5, 0),
-                        Font = new Font("Segoe UI", 10, FontStyle.Regular)
+                        Font = new Font("Segoe UI", 12, FontStyle.Regular)
                     },
                     RowTemplate = { Height = 35 }
                 };
@@ -368,17 +368,17 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     BackColor = Color.FromArgb(52, 58, 64), 
                     ForeColor = Color.White, 
-                    Font = new Font("Segoe UI", 11, FontStyle.Regular), 
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular), 
                     Alignment = DataGridViewContentAlignment.MiddleCenter 
                 };
                 dataGridView1.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
                 dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
                 dataGridView1.GridColor = Color.Gray;
                 System.Data.DataTable dataTable = new System.Data.DataTable();
-                dataTable.Columns.Add("Số lệnh xuất", typeof(string));
-                dataTable.Columns.Add("Phương tiện", typeof(string));
-                dataTable.Columns.Add("Mặt hàng", typeof(string));
-                dataTable.Columns.Add("Số lượng (ĐVT)", typeof(string));
+                dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
+                dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
+                dataTable.Columns.Add("MẶT HÀNG", typeof(string));
+                dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
 
                 if (data.DATA.LIST_DO.FirstOrDefault() != null)
                 {
