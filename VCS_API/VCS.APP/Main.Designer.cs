@@ -32,6 +32,8 @@ namespace VCS.APP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelMenu = new Panel();
+            label3 = new Label();
+            pictureBox8 = new PictureBox();
             pictureBox12 = new PictureBox();
             pictureBox11 = new PictureBox();
             btnOut = new NoHoverButton();
@@ -59,6 +61,7 @@ namespace VCS.APP
             label1 = new Label();
             labelTitle = new Label();
             panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
@@ -79,6 +82,8 @@ namespace VCS.APP
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
             panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            panelMenu.Controls.Add(label3);
+            panelMenu.Controls.Add(pictureBox8);
             panelMenu.Controls.Add(pictureBox12);
             panelMenu.Controls.Add(pictureBox11);
             panelMenu.Controls.Add(btnOut);
@@ -100,6 +105,27 @@ namespace VCS.APP
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(200, 840);
             panelMenu.TabIndex = 0;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.ForeColor = Color.Gray;
+            label3.Location = new Point(56, 781);
+            label3.Name = "label3";
+            label3.Size = new Size(98, 13);
+            label3.TabIndex = 17;
+            label3.Text = "Copyright © 2025";
+            // 
+            // pictureBox8
+            // 
+            pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
+            pictureBox8.Location = new Point(42, 797);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(120, 25);
+            pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox8.TabIndex = 16;
+            pictureBox8.TabStop = false;
             // 
             // pictureBox12
             // 
@@ -484,6 +510,8 @@ namespace VCS.APP
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelMenu.ResumeLayout(false);
+            panelMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
@@ -532,5 +560,7 @@ namespace VCS.APP
         private Panel panel2;
         private Label txtUsername;
         private Label txtWarehouse;
+        private Label label3;
+        private PictureBox pictureBox8;
     }
 }

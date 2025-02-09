@@ -81,6 +81,7 @@ namespace VCS.APP
         private void btnHome_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Trang chủ";
+            //btnHome.BackColor = Color.C;
             OpenChildForm(new Home(_dbContext));
         }
 

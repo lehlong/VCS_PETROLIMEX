@@ -115,7 +115,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(502, 47);
             panel2.TabIndex = 12;
-            panel2.Paint += panel2_Paint;
             // 
             // txtStatus
             // 
@@ -265,7 +264,6 @@
             txtNumber.Name = "txtNumber";
             txtNumber.Size = new Size(348, 22);
             txtNumber.TabIndex = 10;
-            txtNumber.TextChanged += textBox1_TextChanged;
             txtNumber.KeyPress += txtNumber_KeyPress;
             // 
             // label4
@@ -316,7 +314,6 @@
             videoView.Name = "videoView";
             videoView.Size = new Size(502, 298);
             videoView.TabIndex = 0;
-            videoView.Click += videoView_Click;
             // 
             // infoPanel
             // 
@@ -335,7 +332,6 @@
             infoPanel.Padding = new Padding(10);
             infoPanel.Size = new Size(525, 393);
             infoPanel.TabIndex = 1;
-            infoPanel.Paint += infoPanel_Paint;
             // 
             // btnViewAll
             // 

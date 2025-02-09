@@ -20,7 +20,6 @@ namespace VCS.APP.Areas.History
         {
             InitializeComponent();
             _dbContext = dbContext;
-          //  GetHistoryData();
         }
 
         private void fromDate_ValueChanged(object sender, EventArgs e)
@@ -38,10 +37,11 @@ namespace VCS.APP.Areas.History
             try
             {
                 var data = _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).ToList();
-                int i = 0;
+                int i = 1;
                 foreach (var d in data)
                 {
-                    dataGridView.Rows.Add(new object[] { (i + 1).ToString(), "Test", d.VehicleCode, d.CreateDate , d.TimeCheckout, $"{d.NoteIn}\n{d.NoteOut}", "Test" });                  
+                    dataGridView.Rows.Add(new object[] { i.ToString(), "Test", d.VehicleCode, d.CreateDate, d.TimeCheckout, d.NoteIn,d.NoteOut, "Test", d.Id });
+                    i++;
                 }
             }
             catch (Exception ex)
@@ -49,23 +49,18 @@ namespace VCS.APP.Areas.History
                 MessageBox.Show($"Lỗi khi lấy danh sách lịch sử vào ra: {ex.Message}", "Lỗi",
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
 
         }
-        //private async void GetHistoryData()
-        //{
-        //    try
-        //    {
-        //        var data = await _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).ToListAsync();
-        //    }
-        //    catch(Exception ex) 
-        //    {
-        //        MessageBox.Show($"Lỗi khi lấy danh sách lịch sử vào ra: {ex.Message}", "Lỗi",
-        //           MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-
-        //}
-
-
+        private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+                object cellValue = row.Cells[8].Value;
+                DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
+                detail.ShowDialog();
+            }
+        }
     }
 }

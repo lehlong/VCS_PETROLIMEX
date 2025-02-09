@@ -41,18 +41,18 @@ namespace VCS.APP.Areas.CheckIn
         private List<string> lstCheckDo = new List<string>();
         private string IMGPATH;
         private string PLATEPATH;
-   
         public CheckIn(AppDbContext dbContext, IWOrderService orderService)
         {
             InitializeComponent();
             _dbContext = dbContext;
             _orderService = orderService;
+        }
+        private void CheckIn_Load(object sender, EventArgs e)
+        {
             InitializeLibVLC();
             GetListCameras();
-            InitializeControls();
             GetListQueue();
         }
-
         private void InitializeLibVLC()
         {
             Core.Initialize();
@@ -66,7 +66,6 @@ namespace VCS.APP.Areas.CheckIn
                 "--rtsp-tcp"
             );
         }
-
         private void GetListCameras()
         {
             try
@@ -170,11 +169,6 @@ namespace VCS.APP.Areas.CheckIn
             }
         }
 
-        private void InitializeControls()
-        {
-            // Khởi tạo các control khác nếu cần
-        }
-
         private void CleanupResources()
         {
             foreach (var player in _mediaPlayers.Values)
@@ -188,26 +182,6 @@ namespace VCS.APP.Areas.CheckIn
             _libVLC = null;
 
             videoView.MediaPlayer = null;
-        }
-
-        private void lblCameraTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void infoPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void CheckIn_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btnCheckNumber_Click(object sender, EventArgs e)
@@ -422,26 +396,6 @@ namespace VCS.APP.Areas.CheckIn
                 MessageBox.Show($"Vui lòng liên hệ đến quản trị viên hệ thống: {ex.Message}",
                         "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void txtLicensePlate_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtStatus_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -736,17 +690,17 @@ namespace VCS.APP.Areas.CheckIn
                 _dbContext.SaveChanges();
             }
             // In STT
- 
-                STT Stt = new STT(new TicketInfo
-                {
-                    WarehouseName = GetNameWarehouse(),
-                    Vehicle = txtLicensePlate.Text,
-                    Name = name,
-                    STT = _stt.ToString("00"),
-                });
-                Stt.ShowDialog();
-            
-            
+
+            STT Stt = new STT(new TicketInfo
+            {
+                WarehouseName = GetNameWarehouse(),
+                Vehicle = txtLicensePlate.Text,
+                Name = name,
+                STT = _stt.ToString("00"),
+            });
+            Stt.ShowDialog();
+
+
             ReloadForm(_dbContext);
         }
         private string? GetNameWarehouse()
@@ -767,7 +721,6 @@ namespace VCS.APP.Areas.CheckIn
             _dbContext = dbContext;
             InitializeLibVLC();
             GetListCameras();
-            InitializeControls();
             GetListQueue();
             ResetVarible();
         }
@@ -1074,12 +1027,6 @@ namespace VCS.APP.Areas.CheckIn
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void videoView_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -1160,6 +1107,5 @@ namespace VCS.APP.Areas.CheckIn
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-  
     }
 }

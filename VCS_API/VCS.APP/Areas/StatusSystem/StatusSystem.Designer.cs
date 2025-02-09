@@ -34,6 +34,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel1 = new Panel();
             btnClean = new Button();
             panel9 = new Panel();
+            btnRestartDetect = new Button();
             label21 = new Label();
             pictureBox11 = new PictureBox();
             label22 = new Label();
@@ -75,7 +76,6 @@ namespace VCS.APP.Areas.StatusSystem
             pictureBox6 = new PictureBox();
             label12 = new Label();
             button1 = new Button();
-            btnRestartDetect = new Button();
             panel1.SuspendLayout();
             panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
@@ -136,7 +136,6 @@ namespace VCS.APP.Areas.StatusSystem
             btnClean.TextAlign = ContentAlignment.MiddleLeft;
             btnClean.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClean.UseVisualStyleBackColor = false;
-            btnClean.Click += btnClean_Click;
             // 
             // panel9
             // 
@@ -151,6 +150,28 @@ namespace VCS.APP.Areas.StatusSystem
             panel9.Padding = new Padding(12);
             panel9.Size = new Size(431, 77);
             panel9.TabIndex = 46;
+            // 
+            // btnRestartDetect
+            // 
+            btnRestartDetect.BackColor = Color.FromArgb(40, 167, 69);
+            btnRestartDetect.Cursor = Cursors.Hand;
+            btnRestartDetect.FlatAppearance.BorderSize = 0;
+            btnRestartDetect.FlatStyle = FlatStyle.Flat;
+            btnRestartDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRestartDetect.ForeColor = Color.White;
+            btnRestartDetect.Image = (Image)resources.GetObject("btnRestartDetect.Image");
+            btnRestartDetect.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRestartDetect.Location = new Point(272, 19);
+            btnRestartDetect.Margin = new Padding(4);
+            btnRestartDetect.Name = "btnRestartDetect";
+            btnRestartDetect.Padding = new Padding(6, 0, 0, 0);
+            btnRestartDetect.Size = new Size(139, 40);
+            btnRestartDetect.TabIndex = 48;
+            btnRestartDetect.Text = "Khởi động lại";
+            btnRestartDetect.TextAlign = ContentAlignment.MiddleLeft;
+            btnRestartDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnRestartDetect.UseVisualStyleBackColor = false;
+            btnRestartDetect.Click += btnRestartDetect_Click;
             // 
             // label21
             // 
@@ -232,7 +253,6 @@ namespace VCS.APP.Areas.StatusSystem
             label24.Size = new Size(135, 21);
             label24.TabIndex = 11;
             label24.Text = "HỆ THỐNG TGBX";
-            label24.Click += label24_Click;
             // 
             // label5
             // 
@@ -256,7 +276,6 @@ namespace VCS.APP.Areas.StatusSystem
             panel11.Padding = new Padding(12);
             panel11.Size = new Size(300, 77);
             panel11.TabIndex = 46;
-            panel11.Paint += panel11_Paint;
             // 
             // label25
             // 
@@ -594,28 +613,6 @@ namespace VCS.APP.Areas.StatusSystem
             button1.TextImageRelation = TextImageRelation.ImageBeforeText;
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
-            // 
-            // btnRestartDetect
-            // 
-            btnRestartDetect.BackColor = Color.FromArgb(40, 167, 69);
-            btnRestartDetect.Cursor = Cursors.Hand;
-            btnRestartDetect.FlatAppearance.BorderSize = 0;
-            btnRestartDetect.FlatStyle = FlatStyle.Flat;
-            btnRestartDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRestartDetect.ForeColor = Color.White;
-            btnRestartDetect.Image = (Image)resources.GetObject("btnRestartDetect.Image");
-            btnRestartDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRestartDetect.Location = new Point(272, 19);
-            btnRestartDetect.Margin = new Padding(4);
-            btnRestartDetect.Name = "btnRestartDetect";
-            btnRestartDetect.Padding = new Padding(6, 0, 0, 0);
-            btnRestartDetect.Size = new Size(139, 40);
-            btnRestartDetect.TabIndex = 48;
-            btnRestartDetect.Text = "Khởi động lại";
-            btnRestartDetect.TextAlign = ContentAlignment.MiddleLeft;
-            btnRestartDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnRestartDetect.UseVisualStyleBackColor = false;
-            btnRestartDetect.Click += btnRestartDetect_Click;
             // 
             // StatusSystem
             // 

@@ -60,6 +60,7 @@ namespace VCS.APP.Areas.History
             Note = new DataGridViewTextBoxColumn();
             NoteOut = new DataGridViewTextBoxColumn();
             SttPrint = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -95,7 +96,6 @@ namespace VCS.APP.Areas.History
             panel7.Controls.Add(dataGridView);
             panel7.Location = new Point(13, 113);
             panel7.Name = "panel7";
-            panel7.Padding = new Padding(6);
             panel7.Size = new Size(1357, 697);
             panel7.TabIndex = 47;
             // 
@@ -118,7 +118,7 @@ namespace VCS.APP.Areas.History
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Stt, Driver, Plate, TimeIn, TimeOut, Note, NoteOut, SttPrint });
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Stt, Driver, Plate, TimeIn, TimeOut, Note, NoteOut, SttPrint, Id });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -131,7 +131,7 @@ namespace VCS.APP.Areas.History
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = Color.LightGray;
-            dataGridView.Location = new Point(6, 6);
+            dataGridView.Location = new Point(0, 0);
             dataGridView.Margin = new Padding(6);
             dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
@@ -140,8 +140,9 @@ namespace VCS.APP.Areas.History
             dataGridView.RowTemplate.DividerHeight = 1;
             dataGridView.RowTemplate.Height = 47;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView.Size = new Size(1345, 685);
+            dataGridView.Size = new Size(1357, 697);
             dataGridView.TabIndex = 0;
+            dataGridView.CellDoubleClick += dataGridView_CellDoubleClick;
             // 
             // label5
             // 
@@ -377,6 +378,12 @@ namespace VCS.APP.Areas.History
             SttPrint.ReadOnly = true;
             SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
+            // Id
+            // 
+            Id.HeaderText = "ID";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            // 
             // History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -430,5 +437,6 @@ namespace VCS.APP.Areas.History
         private DataGridViewTextBoxColumn Note;
         private DataGridViewTextBoxColumn NoteOut;
         private DataGridViewTextBoxColumn SttPrint;
+        private DataGridViewTextBoxColumn Id;
     }
 }
