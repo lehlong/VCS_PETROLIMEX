@@ -1,4 +1,5 @@
-﻿using DMS.CORE;
+﻿using DMS.BUSINESS.Dtos.SMO;
+using DMS.CORE;
 using DMS.CORE.Entities.MD;
 using DocumentFormat.OpenXml;
 using LibVLCSharp.Shared;
@@ -25,6 +26,8 @@ namespace VCS.APP.Areas.CheckOut
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
         private string IMGPATH;
         private string PLATEPATH;
+        private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
+        private bool isHasInvoice { get; set; } = false;
         public CheckOut(AppDbContext dbContext)
         {
             InitializeComponent();
@@ -127,7 +130,10 @@ namespace VCS.APP.Areas.CheckOut
 
         private void GetListQueue()
         {
-            var lstQueue = _dbContext.TblBuHeader.Where(x => x.IsCheckout == false).ToList();
+            var lstQueue = _dbContext.TblBuHeader.Where(x =>
+            x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
+            x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
+            x.IsCheckout == false).ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem(" -", ""));
             foreach (var item in lstQueue)
@@ -216,6 +222,16 @@ namespace VCS.APP.Areas.CheckOut
                     PLATEPATH = savedImagePath;
                     if (!string.IsNullOrEmpty(licensePlate))
                     {
+                        var i = _dbContext.TblBuHeader.Where(x =>
+                            x.VehicleCode == licensePlate &&
+                            x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
+                            x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
+                            x.IsCheckout == false).ToList();
+                        if (i.Count() == 1)
+                        {
+                            comboBox1.SelectedValue = i.FirstOrDefault().Id;
+                        }
+
                         txtLicensePlate.Text = licensePlate;
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
@@ -260,6 +276,328 @@ namespace VCS.APP.Areas.CheckOut
             {
                 MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+                string selectedValue = selectedItem.Value;
+                if (string.IsNullOrEmpty(selectedValue)) return;
+
+                txtStatus.Text = "Đang kiểm tra thông tin! Vui lòng chờ...";
+                txtStatus.ForeColor = Color.DarkGoldenrod;
+
+                var detail = GetCheckInDetail(selectedValue);
+                if (detail == null) return;
+                txtLicensePlate.Text = detail.LicensePlate;
+                _lstDOSAP.Clear();
+                panel1.Controls.OfType<DataGridView>().ToList()
+                    .ForEach(x => { x.Dispose(); panel1.Controls.Remove(x); });
+                panel1.Controls.OfType<Button>()
+                    .Where(x => x.Size.Width == 30)
+                    .ToList()
+                    .ForEach(x => { x.Dispose(); panel1.Controls.Remove(x); });
+
+                _lstDOSAP.AddRange(detail.ListDOSAP);
+
+                foreach (var doSap in detail.ListDOSAP)
+                {
+                    AppendPanelDetail(doSap);
+                }
+                var number = "";
+
+                var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).ToList();
+                foreach (var x in lstDo) number += x.Do1Sap + ", ";
+                var _s = new CommonService();
+                var token = _s.LoginSmoApi();
+                if (string.IsNullOrEmpty(token))
+                {
+                    txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+
+                var dataDetail = _s.CheckInvoice(number, token);
+                if (!dataDetail.STATUS)
+                {
+                    txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
+                    txtStatus.ForeColor = Color.Red;
+                    this.isHasInvoice = false;
+                }
+                else
+                {
+                    txtStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
+                    txtStatus.ForeColor = Color.Green;
+                    this.isHasInvoice = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                txtStatus.Text = $"Lỗi khi tải thông tin: {ex.Message}";
+                txtStatus.ForeColor = Color.Red;
+                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private CheckInDetailModel GetCheckInDetail(string headerId)
+        {
+            try
+            {
+                var header = _dbContext.TblBuHeader
+                    .FirstOrDefault(x => x.Id == headerId);
+
+                if (header == null)
+                {
+                    throw new InvalidOperationException($"Không tìm thấy header với ID: {headerId}");
+                }
+
+                var result = new CheckInDetailModel
+                {
+                    LicensePlate = header.VehicleCode,
+                    ListDOSAP = new List<DOSAPDataDto>()
+                };
+
+                var images = _dbContext.TblBuImage
+                    .Where(x => x.HeaderId.Contains(headerId))
+                    .ToArray();
+
+                result.VehicleImagePath = images.FirstOrDefault(x => !x.IsPlate)?.FullPath;
+                result.PlateImagePath = images.FirstOrDefault(x => x.IsPlate)?.FullPath;
+                var doDetails = _dbContext.TblBuDetailDO
+                    .Where(x => x.HeaderId == headerId)
+                    .ToList();
+
+                foreach (var doDetail in doDetails)
+                {
+                    var materials = _dbContext.TblBuDetailMaterial
+                        .Where(x => x.HeaderId == doDetail.Id)
+                        .ToList();
+
+                    var doSapData = new DOSAPDataDto
+                    {
+                        STATUS = true,
+                        DATA = new DMS.BUSINESS.Dtos.SMO.Data
+                        {
+                            VEHICLE = doDetail.VehicleCode,
+                            LIST_DO = new List<DO>
+                            {
+                                new DO
+                                {
+                                    DO_NUMBER = doDetail.Do1Sap,
+                                    LIST_MATERIAL = materials.Select(m => new LIST_MATERIAL
+                                    {
+                                        MATERIAL = m.MaterialCode,
+                                        QUANTITY = m.Quantity,
+                                        UNIT = m.UnitCode
+                                    }).ToList()
+                                }
+                            }
+                        }
+                    };
+
+                    result.ListDOSAP.Add(doSapData);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+        private void AppendPanelDetail(DOSAPDataDto data)
+        {
+            try
+            {
+                int yPosition = 155;
+                if (_lstDOSAP.Count > 1)
+                {
+                    var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
+                    if (existingGrids.Any())
+                    {
+                        var lastGrid = existingGrids.Last();
+                        yPosition = lastGrid.Bottom + 1;
+                    }
+                }
+                var dataGridView1 = new DataGridView
+                {
+                    BackgroundColor = Color.White,
+                    BorderStyle = BorderStyle.None,
+                    ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+                    ColumnHeadersHeight = 35,
+                    Location = new Point(18, yPosition),
+                    Name = $"dataGridView_{_lstDOSAP.Count}",
+                    TabIndex = 14,
+                    ReadOnly = true,
+                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                    AllowUserToAddRows = false,
+                    AllowUserToResizeRows = false,
+                    RowHeadersVisible = false,
+                    SelectionMode = DataGridViewSelectionMode.CellSelect,
+                    DefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        SelectionBackColor = Color.Transparent,
+                        SelectionForeColor = Color.Black,
+                        Padding = new Padding(5, 0, 5, 0),
+                        Font = new Font("Segoe UI", 12, FontStyle.Regular)
+                    },
+                    RowTemplate = { Height = 35 }
+                };
+                dataGridView1.EnableHeadersVisualStyles = false;
+                dataGridView1.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(52, 58, 64),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                    Alignment = DataGridViewContentAlignment.MiddleCenter
+                };
+                dataGridView1.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+                dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+                dataGridView1.GridColor = Color.Gray;
+                System.Data.DataTable dataTable = new System.Data.DataTable();
+                dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
+                dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
+                dataTable.Columns.Add("MẶT HÀNG", typeof(string));
+                dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
+
+                if (data.DATA.LIST_DO.FirstOrDefault() != null)
+                {
+                    foreach (var i in data.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                    {
+                        var materials = _dbContext.TblMdGoods.Find(i.MATERIAL);
+                        dataTable.Rows.Add(
+                            data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER,
+                            data.DATA.VEHICLE,
+                            materials?.Name,
+                            $"{i.QUANTITY} ({i.UNIT})"
+                        );
+                    }
+                }
+
+                dataGridView1.DataSource = dataTable;
+
+                // Căn giữa nội dung trong các ô cột
+                foreach (DataGridViewColumn col in dataGridView1.Columns)
+                {
+                    col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                }
+                // Tính chiều cao tổng cộng của bảng
+                int totalHeight = dataGridView1.ColumnHeadersHeight +
+                    (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
+                dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
+
+                // Thêm bảng vào panel
+                panel1.Controls.Add(dataGridView1);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Vui lòng liên hệ đến quản trị viên hệ thống: {ex.Message}",
+                        "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedValue = selectedItem.Value;
+            if (string.IsNullOrEmpty(selectedValue))
+            {
+                txtStatus.Text = "Vui lòng chọn phương tiện!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            };
+
+            if (!this.isHasInvoice)
+            {
+                var result = MessageBox.Show("Hoá đơn chưa đầy đủ! Bạn có chắc chắn muốn cho xe ra!",
+                                             "Xác nhận",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    CheckOutProcess();
+                }
+            }
+            else
+            {
+                CheckOutProcess();
+            }
+        }
+
+        private void ReloadForm()
+        {
+            this.Controls.Clear();
+            InitializeComponent();
+            InitializeLibVLC();
+            GetListCameras();
+            GetListQueue();
+        }
+        private void CheckOutProcess()
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedValue = selectedItem.Value;
+            var i = _dbContext.TblBuHeader.Find(selectedValue);
+            i.IsCheckout = true;
+            i.TimeCheckout = DateTime.Now;
+            i.NoteOut = this.isHasInvoice ? "" : "Chưa đủ hoá đơn";
+            _dbContext.TblBuHeader.Update(i);
+            _dbContext.SaveChanges();
+            ReloadForm();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            ReloadForm();
+        }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
+            string selectedValue = selectedItem.Value;
+            if (string.IsNullOrEmpty(selectedValue))
+            {
+                txtStatus.Text = "Vui lòng chọn phương tiện!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            };
+            var number = "";
+            var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).ToList();
+            foreach (var x in lstDo) number += x.Do1Sap + ", ";
+            var _s = new CommonService();
+            var token = _s.LoginSmoApi();
+            if (string.IsNullOrEmpty(token))
+            {
+                txtStatus.Text = "Không thể kết nối đến hệ thống SMO";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
+
+            var dataDetail = _s.CheckInvoice(number, token);
+            if (!dataDetail.STATUS)
+            {
+                txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
+                txtStatus.ForeColor = Color.Red;
+                this.isHasInvoice = false;
+            }
+            else
+            {
+                txtStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
+                txtStatus.ForeColor = Color.Green;
+                this.isHasInvoice = true;
             }
         }
     }

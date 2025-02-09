@@ -231,12 +231,13 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 25;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(11, 74);
+            label5.Location = new Point(21, 74);
             label5.Name = "label5";
             label5.Size = new Size(139, 21);
             label5.TabIndex = 16;
@@ -246,9 +247,9 @@
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(comboBox1);
-            panel4.Location = new Point(11, 101);
+            panel4.Location = new Point(18, 101);
             panel4.Name = "panel4";
-            panel4.Size = new Size(816, 40);
+            panel4.Size = new Size(805, 40);
             panel4.TabIndex = 14;
             // 
             // comboBox1
@@ -264,9 +265,10 @@
             comboBox1.Location = new Point(0, 0);
             comboBox1.Margin = new Padding(0);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(816, 41);
+            comboBox1.Size = new Size(805, 41);
             comboBox1.TabIndex = 16;
             comboBox1.DrawItem += comboBox1_DrawItem;
+            comboBox1.SelectedValueChanged += comboBox1_SelectedValueChanged;
             // 
             // btnCheckOut
             // 
@@ -286,6 +288,7 @@
             btnCheckOut.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckOut.UseVisualStyleBackColor = false;
+            btnCheckOut.Click += btnCheckOut_Click;
             // 
             // txtStatus
             // 
@@ -373,6 +376,7 @@
             btnCheck.TextAlign = ContentAlignment.MiddleLeft;
             btnCheck.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheck.UseVisualStyleBackColor = false;
+            btnCheck.Click += btnCheck_Click;
             // 
             // CheckOut
             // 
