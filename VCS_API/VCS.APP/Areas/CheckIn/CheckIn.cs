@@ -339,26 +339,41 @@ namespace VCS.APP.Areas.CheckIn
                 };
 
                 panel1.Controls.Add(deleteButton);
-
-                var dataGridView1 = new DataGridView();
-                dataGridView1.BackgroundColor = Color.White;
-                dataGridView1.BorderStyle = BorderStyle.None;
-                dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-                dataGridView1.Location = new Point(18, yPosition + 35);
-                dataGridView1.Name = $"dataGridView_{_lstDOSAP.Count}";
-                dataGridView1.TabIndex = 14;
-                dataGridView1.ReadOnly = true;
-                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dataGridView1.ColumnHeadersHeight = 30;
-                dataGridView1.AllowUserToAddRows = false;
-                dataGridView1.AllowUserToResizeRows = false;
-                dataGridView1.RowHeadersVisible = false;
-                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dataGridView1.DefaultCellStyle.SelectionBackColor = Color.White;
-                dataGridView1.DefaultCellStyle.SelectionForeColor = Color.Black;
-                dataGridView1.RowTemplate.Height = 35;
-                dataGridView1.DefaultCellStyle.Padding = new Padding(5, 0, 5, 0);
-
+                var dataGridView1 = new DataGridView
+                {
+                    BackgroundColor = Color.White,
+                    BorderStyle = BorderStyle.None,
+                    ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+                    ColumnHeadersHeight = 35,
+                    Location = new Point(18, yPosition + 35),
+                    Name = $"dataGridView_{_lstDOSAP.Count}",
+                    TabIndex = 14,
+                    ReadOnly = true,
+                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                    AllowUserToAddRows = false,
+                    AllowUserToResizeRows = false,
+                    RowHeadersVisible = false,
+                    SelectionMode = DataGridViewSelectionMode.CellSelect,
+                    DefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        SelectionBackColor = Color.Transparent,
+                        SelectionForeColor = Color.Black,
+                        Padding = new Padding(5, 0, 5, 0),
+                        Font = new Font("Segoe UI", 10, FontStyle.Regular)
+                    },
+                    RowTemplate = { Height = 35 }
+                };
+                dataGridView1.EnableHeadersVisualStyles = false;
+                dataGridView1.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(52, 58, 64), 
+                    ForeColor = Color.White, 
+                    Font = new Font("Segoe UI", 11, FontStyle.Regular), 
+                    Alignment = DataGridViewContentAlignment.MiddleCenter 
+                };
+                dataGridView1.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
+                dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+                dataGridView1.GridColor = Color.Gray;
                 System.Data.DataTable dataTable = new System.Data.DataTable();
                 dataTable.Columns.Add("Số lệnh xuất", typeof(string));
                 dataTable.Columns.Add("Phương tiện", typeof(string));
@@ -381,16 +396,21 @@ namespace VCS.APP.Areas.CheckIn
 
                 dataGridView1.DataSource = dataTable;
 
+                // Căn giữa nội dung trong các ô cột
                 foreach (DataGridViewColumn col in dataGridView1.Columns)
                 {
                     col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 }
 
+                // Tính chiều cao tổng cộng của bảng
                 int totalHeight = dataGridView1.ColumnHeadersHeight +
                     (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
                 dataGridView1.Size = new System.Drawing.Size(809, totalHeight);
 
+                // Thêm bảng vào panel
                 panel1.Controls.Add(dataGridView1);
+
             }
             catch (Exception ex)
             {
