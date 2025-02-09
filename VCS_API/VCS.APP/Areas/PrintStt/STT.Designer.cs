@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(STT));
             panel1 = new Panel();
             txtDateTime = new Label();
-            label1 = new Label();
+            lblSTT = new Label();
             label3 = new Label();
             label2 = new Label();
             lblName = new Label();
@@ -47,7 +47,7 @@
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(txtDateTime);
-            panel1.Controls.Add(label1);
+            panel1.Controls.Add(lblSTT);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(lblName);
@@ -65,20 +65,18 @@
             txtDateTime.AutoSize = true;
             txtDateTime.Location = new Point(48, 184);
             txtDateTime.Name = "txtDateTime";
-            txtDateTime.Size = new Size(132, 15);
+            txtDateTime.Size = new Size(0, 15);
             txtDateTime.TabIndex = 8;
-            txtDateTime.Text = "dd/MM/yyyy hh:mm:ss";
             txtDateTime.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // lblSTT
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(65, 119);
-            label1.Name = "label1";
-            label1.Size = new Size(84, 65);
-            label1.TabIndex = 7;
-            label1.Text = "01";
+            lblSTT.AutoSize = true;
+            lblSTT.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSTT.Location = new Point(65, 119);
+            lblSTT.Name = "lblSTT";
+            lblSTT.Size = new Size(0, 65);
+            lblSTT.TabIndex = 7;
             // 
             // label3
             // 
@@ -106,9 +104,8 @@
             lblName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblName.Location = new Point(56, 98);
             lblName.Name = "lblName";
-            lblName.Size = new Size(65, 21);
+            lblName.Size = new Size(0, 21);
             lblName.TabIndex = 4;
-            lblName.Text = "Võ Tòng";
             // 
             // lblVehicle
             // 
@@ -116,9 +113,8 @@
             lblVehicle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblVehicle.Location = new Point(100, 75);
             lblVehicle.Name = "lblVehicle";
-            lblVehicle.Size = new Size(94, 21);
+            lblVehicle.Size = new Size(0, 21);
             lblVehicle.TabIndex = 3;
-            lblVehicle.Text = "29S1.12345";
             lblVehicle.Click += lblVehicle_Click;
             // 
             // txtWareHouse
@@ -127,9 +123,8 @@
             txtWareHouse.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtWareHouse.Location = new Point(6, 51);
             txtWareHouse.Name = "txtWareHouse";
-            txtWareHouse.Size = new Size(135, 25);
+            txtWareHouse.Size = new Size(0, 25);
             txtWareHouse.TabIndex = 2;
-            txtWareHouse.Text = "Kho Bến Thủy";
             txtWareHouse.Click += labelWareHouse_Click;
             // 
             // pictureBox1
@@ -191,7 +186,7 @@
         private Label label3;
         private Label label2;
         private Label txtDateTime;
-        private Label label1;
+        private Label lblSTT;
         private Button button2;
     }
 }

@@ -25,6 +25,7 @@ using DMS.BUSINESS.Services.BU;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Areas.PrintStt;
 using System.Drawing.Printing;
+using NPOI.OpenXmlFormats.Spreadsheet;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -626,6 +627,8 @@ namespace VCS.APP.Areas.CheckIn
                 }
             }
             var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
+            var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
+            _stt = _stt == 0 ? 1 : _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.STT) + 1;
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
@@ -680,8 +683,7 @@ namespace VCS.APP.Areas.CheckIn
                     IsActive = true
                 });
 
-                var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
-                _stt = _stt == 0 ? 1 : _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.STT) + 1;
+                
 
                 _dbContext.tblMdSequence.Add(new TblMdSequence
                 {
@@ -733,7 +735,30 @@ namespace VCS.APP.Areas.CheckIn
                 });
                 _dbContext.SaveChanges();
             }
+            // In STT
+ 
+                STT Stt = new STT(new TicketInfo
+                {
+                    WarehouseName = GetNameWarehouse(),
+                    Vehicle = txtLicensePlate.Text,
+                    Name = name,
+                    STT = _stt.ToString(),
+                });
+                Stt.ShowDialog();
+            
+            
             ReloadForm(_dbContext);
+        }
+        private string? GetNameWarehouse()
+        {
+            try
+            {
+                return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         private void ReloadForm(AppDbContext dbContext)
         {
@@ -1135,14 +1160,6 @@ namespace VCS.APP.Areas.CheckIn
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-      
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            STT Stt = new STT();
-            Stt.ShowDialog();
-        }
-      
+  
     }
 }
