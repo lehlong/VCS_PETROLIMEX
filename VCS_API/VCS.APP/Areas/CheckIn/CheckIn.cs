@@ -669,8 +669,9 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
-                    Path = PLATEPATH,
-                    FullPath = PLATEPATH,
+                    Path = IMGPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = IMGPATH,
+                    InOut = "in",
                     IsPlate = true,
                     IsActive = true,
                 });
@@ -678,8 +679,9 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
-                    Path = IMGPATH,
-                    FullPath = IMGPATH,
+                    Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = PLATEPATH,
+                    InOut = "in",
                     IsPlate = false,
                     IsActive = true
                 });

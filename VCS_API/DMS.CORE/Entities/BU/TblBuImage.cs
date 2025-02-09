@@ -19,7 +19,8 @@ namespace DMS.CORE.Entities.BU
         public string? FullPath { get; set; }
         [Column("IS_PLATE")]
         public bool IsPlate { get; set; }
-
+        [Column("IN_OUT", TypeName = "NVARCHAR(50)")]
+        public string? InOut { get; set; }
 
     }
 }

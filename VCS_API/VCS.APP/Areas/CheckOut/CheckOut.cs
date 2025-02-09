@@ -1,5 +1,6 @@
 ﻿using DMS.BUSINESS.Dtos.SMO;
 using DMS.CORE;
+using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DocumentFormat.OpenXml;
 using LibVLCSharp.Shared;
@@ -550,6 +551,26 @@ namespace VCS.APP.Areas.CheckOut
         {
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
             string selectedValue = selectedItem.Value;
+            _dbContext.TblBuImage.Add(new TblBuImage
+            {
+                Id = Guid.NewGuid().ToString(),
+                HeaderId = selectedValue,
+                Path = IMGPATH.Replace(Global.PathSaveFile,""),
+                FullPath = IMGPATH,
+                InOut = "out",
+                IsPlate = true,
+                IsActive = true,
+            });
+            _dbContext.TblBuImage.Add(new TblBuImage
+            {
+                Id = Guid.NewGuid().ToString(),
+                HeaderId = selectedValue,
+                Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
+                FullPath = PLATEPATH,
+                InOut = "out",
+                IsPlate = true,
+                IsActive = true,
+            });
             var i = _dbContext.TblBuHeader.Find(selectedValue);
             i.IsCheckout = true;
             i.TimeCheckout = DateTime.Now;
