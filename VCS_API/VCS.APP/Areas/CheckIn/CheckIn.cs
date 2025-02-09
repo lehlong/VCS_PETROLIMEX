@@ -23,6 +23,8 @@ using System.Windows;
 using DMS.BUSINESS.Dtos.BU;
 using DMS.BUSINESS.Services.BU;
 using VCS.APP.Areas.ViewAllCamera;
+using VCS.APP.Areas.PrintStt;
+using System.Drawing.Printing;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -38,7 +40,7 @@ namespace VCS.APP.Areas.CheckIn
         private List<string> lstCheckDo = new List<string>();
         private string IMGPATH;
         private string PLATEPATH;
-
+   
         public CheckIn(AppDbContext dbContext, IWOrderService orderService)
         {
             InitializeComponent();
@@ -366,10 +368,10 @@ namespace VCS.APP.Areas.CheckIn
                 dataGridView1.EnableHeadersVisualStyles = false;
                 dataGridView1.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                 {
-                    BackColor = Color.FromArgb(52, 58, 64), 
-                    ForeColor = Color.White, 
-                    Font = new Font("Segoe UI", 12, FontStyle.Regular), 
-                    Alignment = DataGridViewContentAlignment.MiddleCenter 
+                    BackColor = Color.FromArgb(52, 58, 64),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                    Alignment = DataGridViewContentAlignment.MiddleCenter
                 };
                 dataGridView1.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
                 dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -584,7 +586,7 @@ namespace VCS.APP.Areas.CheckIn
 
             var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
-           
+
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
             string selectedHeaderId = selectedItem.Value;
 
@@ -623,7 +625,7 @@ namespace VCS.APP.Areas.CheckIn
                     }
                 }
             }
-            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";          
+            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
@@ -1134,5 +1136,13 @@ namespace VCS.APP.Areas.CheckIn
             }
         }
 
+      
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            STT Stt = new STT();
+            Stt.ShowDialog();
+        }
+      
     }
 }

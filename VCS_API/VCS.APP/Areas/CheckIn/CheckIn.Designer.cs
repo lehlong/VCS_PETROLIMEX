@@ -35,6 +35,7 @@
             panel2 = new Panel();
             txtStatus = new Label();
             panel1 = new Panel();
+            button2 = new Button();
             pictureBox2 = new PictureBox();
             label5 = new Label();
             panel4 = new Panel();
@@ -132,6 +133,7 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(button2);
             panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
@@ -144,6 +146,26 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(23, 162, 184);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(227, 14);
+            button2.Name = "button2";
+            button2.Padding = new Padding(6, 0, 0, 0);
+            button2.Size = new Size(99, 40);
+            button2.TabIndex = 26;
+            button2.Text = "   Print";
+            button2.TextAlign = ContentAlignment.MiddleRight;
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // pictureBox2
             // 
@@ -516,5 +538,6 @@
         private PictureBox pictureBox2;
         private Button btnCheckIn;
         private Panel panel5;
+        private Button button2;
     }
 }
