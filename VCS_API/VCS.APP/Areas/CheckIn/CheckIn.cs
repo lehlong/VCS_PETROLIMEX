@@ -90,6 +90,8 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
+                txtStatus.Text = "Đang nhận diện...";
+                txtStatus.ForeColor = Color.DarkGoldenrod;
                 btnDetect.Enabled = false;
                 var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
                 IMGPATH = filePath;
@@ -105,12 +107,12 @@ namespace VCS.APP.Areas.CheckIn
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
-                txtStatus.Text = "Nhận diện thành công";
+                txtStatus.Text = "Nhận diện thành công!";
                 txtStatus.ForeColor = Color.Green;
             }
             catch (Exception ex)
             {
-                txtStatus.Text = "Lỗi không nhận diện được biển số";
+                txtStatus.Text = "Lỗi không nhận diện được biển số!";
                 txtStatus.ForeColor = Color.Red;
                 txtLicensePlate.Text = "";
             }
@@ -640,7 +642,6 @@ namespace VCS.APP.Areas.CheckIn
                     CompanyCode = ProfileUtilities.User.OrganizeCode,
                     WarehouseCode = ProfileUtilities.User.WarehouseCode
                 });
-
                 foreach (var i in _lstDOSAP)
                 {
                     var hId = Guid.NewGuid().ToString();
@@ -682,9 +683,6 @@ namespace VCS.APP.Areas.CheckIn
                     IsPlate = false,
                     IsActive = true
                 });
-
-                
-
                 _dbContext.tblMdSequence.Add(new TblMdSequence
                 {
                     Code = Guid.NewGuid().ToString(),
@@ -742,7 +740,7 @@ namespace VCS.APP.Areas.CheckIn
                     WarehouseName = GetNameWarehouse(),
                     Vehicle = txtLicensePlate.Text,
                     Name = name,
-                    STT = _stt.ToString(),
+                    STT = _stt.ToString("00"),
                 });
                 Stt.ShowDialog();
             
