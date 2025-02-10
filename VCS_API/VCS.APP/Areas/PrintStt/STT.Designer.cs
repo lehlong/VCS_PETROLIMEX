@@ -130,7 +130,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(28, 9);
+            pictureBox1.Location = new Point(23, 9);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(193, 38);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -167,9 +167,10 @@
             Controls.Add(button2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "STT";
             Padding = new Padding(8);
-            Text = "In số thự tự";
+            Text = "In STT";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

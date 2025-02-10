@@ -1,4 +1,5 @@
-﻿using VCS.APP.Utilities;
+﻿using System.Windows.Forms;
+using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.History
 {
@@ -36,6 +37,15 @@ namespace VCS.APP.Areas.History
             panel1 = new Panel();
             panel7 = new Panel();
             dataGridView = new DataGridView();
+            Stt = new DataGridViewTextBoxColumn();
+            Driver = new DataGridViewTextBoxColumn();
+            Plate = new DataGridViewTextBoxColumn();
+            TimeIn = new DataGridViewTextBoxColumn();
+            TimeOut = new DataGridViewTextBoxColumn();
+            Note = new DataGridViewTextBoxColumn();
+            NoteOut = new DataGridViewTextBoxColumn();
+            SttPrint = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -52,15 +62,6 @@ namespace VCS.APP.Areas.History
             panel2 = new Panel();
             toDate = new BorderlessDateTimePicker();
             btnSearch = new Button();
-            Stt = new DataGridViewTextBoxColumn();
-            Driver = new DataGridViewTextBoxColumn();
-            Plate = new DataGridViewTextBoxColumn();
-            TimeIn = new DataGridViewTextBoxColumn();
-            TimeOut = new DataGridViewTextBoxColumn();
-            Note = new DataGridViewTextBoxColumn();
-            NoteOut = new DataGridViewTextBoxColumn();
-            SttPrint = new DataGridViewTextBoxColumn();
-            Id = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -143,6 +144,87 @@ namespace VCS.APP.Areas.History
             dataGridView.Size = new Size(1357, 697);
             dataGridView.TabIndex = 0;
             dataGridView.CellDoubleClick += dataGridView_CellDoubleClick;
+            // 
+            // Stt
+            // 
+            Stt.HeaderText = "STT";
+            Stt.Name = "Stt";
+            Stt.ReadOnly = true;
+            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Stt.Width = 80;
+            // 
+            // Driver
+            // 
+            Driver.HeaderText = "TÀI XẾ";
+            Driver.Name = "Driver";
+            Driver.ReadOnly = true;
+            Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Driver.Width = 190;
+            // 
+            // Plate
+            // 
+            Plate.HeaderText = "BIỂN SỐ";
+            Plate.Name = "Plate";
+            Plate.ReadOnly = true;
+            Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Plate.Width = 180;
+            // 
+            // TimeIn
+            // 
+            TimeIn.HeaderText = "THỜI GIAN VÀO";
+            TimeIn.Name = "TimeIn";
+            TimeIn.ReadOnly = true;
+            TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            TimeIn.Width = 180;
+            // 
+            // TimeOut
+            // 
+            TimeOut.HeaderText = "THỜI GIAN RA";
+            TimeOut.Name = "TimeOut";
+            TimeOut.ReadOnly = true;
+            TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
+            TimeOut.Width = 180;
+            // 
+            // Note
+            // 
+            Note.HeaderText = "GHI CHÚ CỔNG VÀO";
+            Note.Name = "Note";
+            Note.ReadOnly = true;
+            Note.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Note.Width = 220;
+            // 
+            // NoteOut
+            // 
+            NoteOut.HeaderText = "GHI CHÚ CỔNG RA";
+            NoteOut.Name = "NoteOut";
+            NoteOut.ReadOnly = true;
+            NoteOut.Width = 220;
+            // 
+            // SttPrint
+            // 
+            SttPrint.HeaderText = "IN STT";
+            SttPrint.Name = "SttPrint";
+            SttPrint.ReadOnly = true;
+            SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Tạo cột button "In Lại STT"
+            DataGridViewButtonColumn rePrintColumn = new DataGridViewButtonColumn();
+            rePrintColumn.HeaderText = "IN Lại STT";
+            rePrintColumn.Name = "RePrint";
+            rePrintColumn.UseColumnTextForButtonValue = true;
+            rePrintColumn.FlatStyle = FlatStyle.Flat;
+            rePrintColumn.Width = 140;
+
+            dataGridView.Columns.Add(rePrintColumn);
+
+            dataGridView.CellPainting += dataGridView_CellPainting;
+
+
+            // Id
+            // 
+            Id.HeaderText = "ID";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
             // 
             // label5
             // 
@@ -316,74 +398,6 @@ namespace VCS.APP.Areas.History
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
-            // Stt
-            // 
-            Stt.HeaderText = "STT";
-            Stt.Name = "Stt";
-            Stt.ReadOnly = true;
-            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Stt.Width = 80;
-            // 
-            // Driver
-            // 
-            Driver.HeaderText = "TÀI XẾ";
-            Driver.Name = "Driver";
-            Driver.ReadOnly = true;
-            Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Driver.Width = 190;
-            // 
-            // Plate
-            // 
-            Plate.HeaderText = "BIỂN SỐ";
-            Plate.Name = "Plate";
-            Plate.ReadOnly = true;
-            Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Plate.Width = 180;
-            // 
-            // TimeIn
-            // 
-            TimeIn.HeaderText = "THỜI GIAN VÀO";
-            TimeIn.Name = "TimeIn";
-            TimeIn.ReadOnly = true;
-            TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeIn.Width = 180;
-            // 
-            // TimeOut
-            // 
-            TimeOut.HeaderText = "THỜI GIAN RA";
-            TimeOut.Name = "TimeOut";
-            TimeOut.ReadOnly = true;
-            TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeOut.Width = 180;
-            // 
-            // Note
-            // 
-            Note.HeaderText = "GHI CHÚ CỔNG VÀO";
-            Note.Name = "Note";
-            Note.ReadOnly = true;
-            Note.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Note.Width = 220;
-            // 
-            // NoteOut
-            // 
-            NoteOut.HeaderText = "GHI CHÚ CỔNG RA";
-            NoteOut.Name = "NoteOut";
-            NoteOut.ReadOnly = true;
-            NoteOut.Width = 220;
-            // 
-            // SttPrint
-            // 
-            SttPrint.HeaderText = "IN STT";
-            SttPrint.Name = "SttPrint";
-            SttPrint.ReadOnly = true;
-            SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Id
-            // 
-            Id.HeaderText = "ID";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            // 
             // History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -438,5 +452,6 @@ namespace VCS.APP.Areas.History
         private DataGridViewTextBoxColumn NoteOut;
         private DataGridViewTextBoxColumn SttPrint;
         private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn RePrint;
     }
 }

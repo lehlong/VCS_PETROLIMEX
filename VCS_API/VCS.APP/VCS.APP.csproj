@@ -19,8 +19,10 @@
   <ItemGroup>
     <None Remove="Content\icon\chip.gif" />
     <None Remove="Content\icon\graphic-card.gif" />
+    <None Remove="Content\icon\icons8-print-18.png" />
     <None Remove="Content\icon\memory-card.gif" />
     <None Remove="Content\icon\ssd.gif" />
+    <None Remove="Content\img\print-icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +47,13 @@
   <ItemGroup>
     <ProjectReference Include="..\DMS.BUSINESS\DMS.BUSINESS.csproj" />
     <ProjectReference Include="..\DMS.COMMON\DMS.COMMON.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Content\icon\icons8-print-18.png" />
+    <Resource Include="Content\img\print-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
