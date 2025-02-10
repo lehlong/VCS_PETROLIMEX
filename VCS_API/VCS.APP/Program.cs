@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO;
+using System.Reflection;
 using VCS.APP.Areas.CheckIn;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
@@ -31,6 +32,7 @@ namespace VCS.APP
             ServiceProvider = services.BuildServiceProvider();
 
             Application.Run(ServiceProvider.GetRequiredService<Areas.Login.Login>());
+            PreloadDlls();
         }
 
         private static void ConfigureServices(ServiceCollection services)
@@ -58,6 +60,23 @@ namespace VCS.APP
             services.AddScoped<IWOrderService, WOrderService>();
             // services.AddTransient<IOrderService, OrderService>();
             //services.AddHttpClient();
+        }
+        static void PreloadDlls()
+        {
+            string exePath = AppDomain.CurrentDomain.BaseDirectory;
+            string[] dllFiles = Directory.GetFiles(exePath, "*.dll");
+
+            foreach (string dll in dllFiles)
+            {
+                try
+                {
+                    Assembly.LoadFrom(dll);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to load {dll}: {ex.Message}");
+                }
+            }
         }
     }
 }
