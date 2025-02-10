@@ -30,8 +30,8 @@ namespace VCS.APP.Areas.History
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel13 = new Panel();
             lblStt = new Label();
@@ -333,7 +333,7 @@ namespace VCS.APP.Areas.History
             // 
             panel3.BackColor = Color.WhiteSmoke;
             panel3.Controls.Add(ptbIn2);
-            panel3.Location = new Point(661, 45);
+            panel3.Location = new Point(661, 39);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(8);
             panel3.Size = new Size(179, 117);
@@ -353,7 +353,7 @@ namespace VCS.APP.Areas.History
             // 
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(ptbIn1);
-            panel2.Location = new Point(465, 45);
+            panel2.Location = new Point(465, 39);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(8);
             panel2.Size = new Size(179, 117);
@@ -379,25 +379,25 @@ namespace VCS.APP.Areas.History
             dataGridView.BorderStyle = BorderStyle.None;
             dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.Padding = new Padding(12);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle3.SelectionForeColor = Color.White;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.Padding = new Padding(12);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { Slx, Driver, Product, dvt });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.Padding = new Padding(8);
-            dataGridViewCellStyle4.SelectionBackColor = Color.WhiteSmoke;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.Padding = new Padding(8);
+            dataGridViewCellStyle2.SelectionBackColor = Color.WhiteSmoke;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = Color.LightGray;
             dataGridView.Location = new Point(26, 378);
@@ -538,7 +538,7 @@ namespace VCS.APP.Areas.History
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label2.Location = new Point(579, 174);
+            label2.Location = new Point(579, 171);
             label2.Name = "label2";
             label2.Size = new Size(138, 17);
             label2.TabIndex = 9;
@@ -571,7 +571,7 @@ namespace VCS.APP.Areas.History
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label1.Location = new Point(579, 15);
+            label1.Location = new Point(579, 12);
             label1.Name = "label1";
             label1.Size = new Size(147, 17);
             label1.TabIndex = 2;
@@ -584,6 +584,7 @@ namespace VCS.APP.Areas.History
             ClientSize = new Size(909, 655);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "DetailHistory";
             Padding = new Padding(8);
             Text = "Thông tin chi tiết";

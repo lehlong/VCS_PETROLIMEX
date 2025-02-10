@@ -15,16 +15,18 @@ namespace VCS.APP.Areas.PrintStt
     {
         private PrintDocument printDocument1 = new PrintDocument();
         private Bitmap panelBitmap;
-        public STT(TicketInfo data)
+        public STT(TicketInfo data, List<string> lstDoNumber)
         {
             InitializeComponent();
-            txtDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
-            lblName.Text = data.Name;
-            lblVehicle.Text = data.Vehicle;
-            txtWareHouse.Text = data.WarehouseName;
-            lblSTT.Text = data.STT;
+            txtDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");  
+                lblVehicle.Text = data.Vehicle;
+                txtWareHouse.Text = data.WarehouseName;
+                lblSTT.Text = data.STT;
+                lblName.Text = string.Join("\n", lstDoNumber);
+
             printDocument1.PrintPage += new PrintPageEventHandler(PrintDocument1_PrintPage);
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {

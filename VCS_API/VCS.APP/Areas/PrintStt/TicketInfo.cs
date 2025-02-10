@@ -9,8 +9,8 @@ namespace VCS.APP.Areas.PrintStt
     public class TicketInfo
     {
         public string WarehouseName { get; set; }
-        public string Vehicle { get; set; }
-        public string Name { get; set; }
+        public string? Vehicle { get; set; }
+        public List<string>? DO_Code { get; set; }
         public string STT { get; set; }
     }
 }

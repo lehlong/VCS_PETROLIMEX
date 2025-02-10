@@ -55,15 +55,15 @@
             panel1.Controls.Add(txtWareHouse);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(8, 56);
+            panel1.Location = new Point(8, 68);
             panel1.Name = "panel1";
-            panel1.Size = new Size(213, 215);
+            panel1.Size = new Size(236, 261);
             panel1.TabIndex = 0;
             // 
             // txtDateTime
             // 
             txtDateTime.AutoSize = true;
-            txtDateTime.Location = new Point(48, 184);
+            txtDateTime.Location = new Point(50, 233);
             txtDateTime.Name = "txtDateTime";
             txtDateTime.Size = new Size(0, 15);
             txtDateTime.TabIndex = 8;
@@ -72,10 +72,10 @@
             // lblSTT
             // 
             lblSTT.AutoSize = true;
-            lblSTT.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSTT.Location = new Point(65, 119);
+            lblSTT.Font = new Font("Segoe UI", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSTT.Location = new Point(64, 142);
             lblSTT.Name = "lblSTT";
-            lblSTT.Size = new Size(0, 65);
+            lblSTT.Size = new Size(0, 86);
             lblSTT.TabIndex = 7;
             // 
             // label3
@@ -84,9 +84,9 @@
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label3.Location = new Point(6, 98);
             label3.Name = "label3";
-            label3.Size = new Size(53, 21);
+            label3.Size = new Size(103, 21);
             label3.TabIndex = 6;
-            label3.Text = "Tài xế:";
+            label3.Text = "Mã lệnh xuất:";
             // 
             // label2
             // 
@@ -102,7 +102,7 @@
             // 
             lblName.AutoSize = true;
             lblName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblName.Location = new Point(56, 98);
+            lblName.Location = new Point(111, 99);
             lblName.Name = "lblName";
             lblName.Size = new Size(0, 21);
             lblName.TabIndex = 4;
@@ -130,7 +130,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(10, 9);
+            pictureBox1.Location = new Point(28, 9);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(193, 38);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -163,7 +163,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(229, 279);
+            ClientSize = new Size(252, 337);
             Controls.Add(button2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;

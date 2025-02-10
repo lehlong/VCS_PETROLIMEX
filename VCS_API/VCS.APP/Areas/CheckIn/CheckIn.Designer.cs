@@ -35,7 +35,7 @@
             panel2 = new Panel();
             txtStatus = new Label();
             panel1 = new Panel();
-            pictureBox2 = new PictureBox();
+            button2 = new Button();
             label5 = new Label();
             panel4 = new Panel();
             comboBox1 = new ComboBox();
@@ -62,7 +62,6 @@
             panel5.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -131,7 +130,7 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(pictureBox2);
+            panel1.Controls.Add(button2);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(button3);
@@ -144,17 +143,24 @@
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
-            // pictureBox2
+            // button2
             // 
-            pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Image = Properties.Resources.refresh;
-            pictureBox2.Location = new Point(823, 796);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(16, 16);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 25;
-            pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
+            button2.BackColor = Color.FromArgb(220, 53, 69);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(785, 14);
+            button2.Name = "button2";
+            button2.Padding = new Padding(6, 0, 6, 0);
+            button2.Size = new Size(42, 40);
+            button2.TabIndex = 26;
+            button2.TextAlign = ContentAlignment.MiddleLeft;
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label5
             // 
@@ -202,7 +208,7 @@
             button3.ForeColor = Color.White;
             button3.Image = (Image)resources.GetObject("button3.Image");
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(332, 14);
+            button3.Location = new Point(284, 14);
             button3.Name = "button3";
             button3.Padding = new Padding(6, 0, 6, 0);
             button3.Size = new Size(114, 40);
@@ -222,7 +228,7 @@
             btnCheckIn.ForeColor = Color.White;
             btnCheckIn.Image = (Image)resources.GetObject("btnCheckIn.Image");
             btnCheckIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckIn.Location = new Point(635, 14);
+            btnCheckIn.Location = new Point(587, 14);
             btnCheckIn.Name = "btnCheckIn";
             btnCheckIn.Padding = new Padding(6, 0, 0, 0);
             btnCheckIn.Size = new Size(192, 40);
@@ -285,7 +291,7 @@
             button1.ForeColor = Color.White;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(453, 14);
+            button1.Location = new Point(405, 14);
             button1.Name = "button1";
             button1.Padding = new Padding(6, 0, 0, 0);
             button1.Size = new Size(174, 40);
@@ -468,7 +474,6 @@
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
@@ -509,8 +514,8 @@
         private PictureBox pictureBox1;
         private ComboBox comboBox1;
         private Label label5;
-        private PictureBox pictureBox2;
         private Button btnCheckIn;
         private Panel panel5;
+        private Button button2;
     }
 }
