@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -14,8 +15,10 @@ using DMS.CORE;
 using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DMS.CORE.Migrations;
+using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -27,6 +30,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto);
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
+        Task<bool> CheckTicket(string headerId);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -211,6 +215,74 @@ namespace DMS.BUSINESS.Services.BU
             {
                 Status = false;
                 Exception = ex;
+            }
+        }
+
+        public async Task<bool> CheckTicket(string headerId)
+        {
+            try
+            {
+                var i = _dbContext.TblBuHeader.Find(headerId);
+                var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
+                DataTable tableData = new DataTable();
+                switch (w.Code)
+                {
+                    #region Kho Bến Thuỷ
+                    case "2810-BT":
+                        
+                        using (SqlConnection con = new SqlConnection(w.Tdh))
+                        {
+                            SqlCommand cmd = new SqlCommand($"" +
+                                $"SELECT * FROM tblLenhXuatChiTiet " +
+                                $"WHERE NgayXuat='{DateTime.Now.ToString("yyyy/MM/dd")}'" +
+                                $"AND MaPhuongTien ='{i.VehicleCode}' " +
+                                $"AND ISNULL(ThoiGianDau, '3000-01-01') >= {i.CreateDate.Value.ToString("yyyy/MM/dd")}", con);
+                            cmd.CommandType = CommandType.Text;
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            try
+                            {
+                                adapter.Fill(tableData);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.Exception = ex;
+                            }
+                        }
+                        break;
+                    #endregion
+                    #region Kho Nghi Hương
+                    case "2810-NH":
+                        using (SqlConnection con = new SqlConnection(w.Tdh))
+                        {
+                            SqlCommand cmd = new SqlCommand($"SELECT 1 a FROM BX_BangMaLenh " +
+                                $"WHERE Time_tao_lenh = {DateTime.Now.ToString("yyyy/MM/dd")} " +
+                                $"AND SO_PTIEN = {i.VehicleCode} " +
+                                $"AND ISNULL(Time_bat_dau_lenh, '3000-01-01') >= {i.CreateDate.Value.ToString("yyyy/MM/dd")} " +
+                                $"UNION " +
+                                $"SELECT 1 a FROM Lenh_GH WHERE NGAY_DKY = {DateTime.Now.ToString("yyyy/MM/dd")} AND SO_PTIEN = {i.VehicleCode}", con);
+                            cmd.CommandType = CommandType.Text;
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            try
+                            {
+                                adapter.Fill(tableData);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.Exception = ex;
+                            }
+                        }
+                        break;
+                    #endregion
+                    #region Các kho còn lại
+                    default:
+                        break;
+                    #endregion
+                }
+                return tableData.Rows.Count > 0 ? true : false;
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
         }
     }

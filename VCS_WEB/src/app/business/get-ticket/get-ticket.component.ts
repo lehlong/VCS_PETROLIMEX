@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
 import { ShareModule } from '../../shared/share-module'
 import { BaseFilter } from '../../models/base.model'
 import { OrderService } from '../../services/business/order.service'
 import { GlobalService } from '../../services/global.service'
 import { Subscription } from 'rxjs'
+declare var $: any
 
 @Component({
   selector: 'app-get-ticket',
@@ -27,6 +28,8 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   loading: boolean = false
   lstOrder: any[] = []
   userName: any
+
+  @ViewChild('printSection') printSection!: ElementRef;
   constructor(
     private _service: OrderService,
     private globalService: GlobalService,
@@ -48,7 +51,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this.getOrder();
     this.setupSignalRConnection();
   }
-  
+
   async setupSignalRConnection() {
     if (!this._service.isConnected()) {
       await this._service.initializeConnection();
@@ -61,7 +64,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
 
   async ngOnDestroy() {
     if (this.orderSubscription) {
@@ -74,6 +77,17 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this._service.GetOrder(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data;
+      },
+      error: (err) => {
+        console.error('Error fetching orders:', err);
+      }
+    });
+  }
+
+  checkTicket(headerId: string) {
+    this._service.CheckTicket(headerId).subscribe({
+      next: (data) => {
+        console.log(data)
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
@@ -121,5 +135,15 @@ export class GetTicketComponent implements OnInit, OnDestroy {
         console.error('Error marking order as come:', err);
       }
     });
+  }
+
+  printTicket() {
+    let printContent = this.printSection.nativeElement.innerHTML;
+    let originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+    window.location.reload(); // To restore events like click handlers
   }
 }

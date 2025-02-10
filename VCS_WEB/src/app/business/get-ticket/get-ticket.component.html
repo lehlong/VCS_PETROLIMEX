@@ -18,7 +18,7 @@
                     <th>Thời gian vào</th>
                     <th>Ghi chú</th>
                     <th>Trạng thái</th>
-                    <th nzAlign="center">Thực hiện</th>
+                    <th nzAlign="center" nzWidth="500">Thực hiện</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,16 +41,139 @@
                         </nz-tag>
                     </td>
                     <td nzAlign="center">
-                        <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isDone">Mời vào</button>
-                        <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone">Xếp xe</button>
-                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline"></span></button>
+                        <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isDone" nz-popover
+                            nzPopoverTitle="Mời xe vào" [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                            nzPopoverPlacement="top">
+                            <span nz-icon nzType="right" nzTheme="outline"></span></button>
+
+                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline" nz-popover
+                                (click)="printTicket()" nzPopoverTitle="Kiểm tra và in ticket"
+                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.name" nzPopoverPlacement="top">
+                            </span></button>
+                        <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone" nz-popover
+                            nzPopoverTitle="Xếp xe vào họng" [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                            nzPopoverPlacement="top">
+                            <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
                         <button nz-button (click)="updateOrderDone(i)" [disabled]="i.isDone"><span nz-icon
-                                nzType="check" nzTheme="outline"></span></button>
-                        <button nz-button [disabled]="i.isDone"><span nz-icon nzType="delete"
-                                nzTheme="outline"></span></button>
+                                nzType="check" nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
+                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                                nzPopoverPlacement="top"></span></button>
+                        <button nz-button [disabled]="i.isDone" nz-popover nzPopoverTitle="Không xử lý"
+                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.name" nzPopoverPlacement="top"><span nz-icon
+                                nzType="close" nzTheme="outline"></span></button>
                     </td>
                 </tr>
             </tbody>
         </nz-table>
+    </div>
+</div>
+
+<div class="div-print" #printSection id="printSection" style="display: none;">
+    <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="12">
+            <div class="inner-box">
+                <span style="margin-left: 12px;float: left;">Đơn vị: VP Công ty XD Nghệ An</span>
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="12">
+            <div class="inner-box">
+                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span style="font-weight: normal;">004</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="16" style="margin-bottom: 12px;">
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <div class="inner-box">
+                <img src="assets/img/petrolimex-small.png" style="width: 62px;margin: 8px 24px;">
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="16"
+            style="text-align: center;align-items: center;display: inline-grid;">
+            <div class="inner-box">
+                <div style="font-weight: bold;font-size: 20px;">TÍCH KÊ XUẤT HÀNG ĐƯỜNG BỘ</div>
+                <div>Ngày 30 tháng 8 năm 2025</div>
+
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="4">
+            <div class="inner-box"></div>
+        </div>
+    </div>
+
+    <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="8">
+            <div class="inner-box">
+                <span>Số P.tiện: </span>
+                <span style="font-weight: bold;">35K154047</span>
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="8">
+            <div class="inner-box">
+                <span>Người V.chuyển: </span>
+                <span style="font-weight: bold;">Lê Hải Long</span>
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="8">
+            <div style="float: right;margin-right: 12px;">PT Bán: 10-Bán đlý/TNNQBLẻ</div>
+        </div>
+    </div>
+    <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="12">
+            <div class="inner-box">
+                <div>Khách hàng: 0000315816-T.Tâm TMTH Tương Dương</div>
+            </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="12">
+            <div class="inner-box">
+                <div style="float: right;margin-right: 12px;">Chuyến v/tải: 0004540289</div>
+            </div>
+        </div>
+    </div>
+
+    <table style="width: 100%;margin-top: 12px;" id="tbl-print">
+        <tr>
+            <th style="width: fit-content;">Số lệnh</th>
+            <th style="width: 42px;">Mã tự động hoá</th>
+            <th style="width: 140px;">Tên hàng hoá</th>
+            <th style="width: 42px;">Mã bể</th>
+            <th style="width: 42px;">Thứ tự ngăn</th>
+            <th>Dung tích ngăn</th>
+            <th>Mã số lượng kế/họng xuất</th>
+            <th>Lượng xuất thực tế</th>
+            <th>Nhiệt độ thực tế (oC)</th>
+            <th>Khoảng cách so với tấm mức (mm)</th>
+        </tr>
+        <tr>
+            <td>2033507573</td>
+            <td>46</td>
+            <td>DO 0,05S-II</td>
+            <td>BT15</td>
+            <td>002</td>
+            <td>2,560</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td colspan="3" style="font-weight: bold;">Tổng dung tích</td>
+            <td colspan="2" style="font-weight: bold;"></td>
+            <td style="font-weight: bold;">2,560</td>
+            <td colspan="4"></td>
+        </tr>
+    </table>
+
+    <div nz-row [nzGutter]="16" style="margin-top: 12px;">
+        <div nz-col class="gutter-row" [nzSpan]="24">
+            <div class="inner-box" style="font-weight: bold;">
+                <span style="margin-right: 36px;margin-left: 30px;">Người lập</span>
+                <span style="margin-right: 36px">Người phê duyệt</span>
+                <span style="margin-right: 36px">Người xuất hàng</span>
+                <span style="margin-right: 36px">Người giám sát</span>
+                <span style="margin-right: 36px">Người nhận hàng</span>
+            </div>
+        </div>
     </div>
 </div>
