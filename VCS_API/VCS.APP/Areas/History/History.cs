@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VCS.APP.Areas.PrintStt;
 using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.History
@@ -20,6 +21,8 @@ namespace VCS.APP.Areas.History
         {
             InitializeComponent();
             _dbContext = dbContext;
+            dataGridView.CellContentClick += dataGridView_CellContentClick;
+
         }
 
         private void fromDate_ValueChanged(object sender, EventArgs e)
@@ -38,9 +41,19 @@ namespace VCS.APP.Areas.History
             {
                 var data = _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).ToList();
                 int i = 1;
+               
                 foreach (var d in data)
                 {
-                    dataGridView.Rows.Add(new object[] { i.ToString(), _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "", d.VehicleCode, d.CreateDate, d.TimeCheckout, d.NoteIn,d.NoteOut, "Test", d.Id });
+                    dataGridView.Rows.Add(new object[] { 
+                        i.ToString(),
+                        _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "",
+                        d.VehicleCode,
+                        d.CreateDate,
+                        d.TimeCheckout,
+                        d.NoteIn,
+                        d.NoteOut,
+                        _dbContext.TblBuOrders.Where(x => x.HeaderId == d.Id).Select(x => x.Stt).FirstOrDefault(),
+                        d.Id });
                     i++;
                 }
             }
@@ -62,5 +75,72 @@ namespace VCS.APP.Areas.History
                 detail.ShowDialog();
             }
         }
+        private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridView.Columns["RePrint"].Index && e.RowIndex >= 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.Background);
+                int buttonWidth = 80; 
+                int buttonHeight = 30; 
+                int buttonX = e.CellBounds.Left + (e.CellBounds.Width - buttonWidth) / 2; 
+                int buttonY = e.CellBounds.Top + (e.CellBounds.Height - buttonHeight) / 2;
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(40, 167, 69))) 
+                {
+                    e.Graphics.FillRectangle(brush, new Rectangle(buttonX, buttonY, buttonWidth, buttonHeight));
+                }
+                Image icon = Properties.Resources.home_icon;
+                int iconSize = 18;
+                int iconX = buttonX + 8; 
+                int iconY = buttonY + (buttonHeight - iconSize) / 2; 
+                e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
+                using (Font textFont = new Font("Segoe UI", 10F, FontStyle.Bold))
+                {
+                    string buttonText = "In STT";
+                    SizeF textSize = e.Graphics.MeasureString(buttonText, textFont);
+                    int textX = iconX + iconSize + 5; 
+                    int textY = buttonY + (buttonHeight - (int)textSize.Height) / 2;
+
+                    e.Graphics.DrawString(buttonText, textFont, Brushes.White, new PointF(textX, textY));
+                }
+
+                e.Handled = true; 
+            }
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex == dataGridView.Columns["RePrint"].Index && e.RowIndex >= 0)
+            {
+                var headerId = dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
+                if (headerId != null)
+                {
+                    string id = headerId.ToString();
+                    var data = _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode && x.Id == id).FirstOrDefault();
+                    var lstDO = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == id).Select(x => x.Do1Sap).ToList();
+                    var ticketInfo = new TicketInfo
+                    {
+                        WarehouseName = GetNameWarehouse(),
+                        Vehicle = data.VehicleCode,                       
+                        STT = _dbContext.TblBuOrders.Where(x => x.HeaderId == id).Select(x => x.Stt).FirstOrDefault().ToString("00"),
+                    };
+                    STT sttForm = new STT(ticketInfo, lstDO);
+                    sttForm.ShowDialog();
+                }
+            }
+        }
+        private string? GetNameWarehouse()
+        {
+            try
+            {
+                return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
     }
 }

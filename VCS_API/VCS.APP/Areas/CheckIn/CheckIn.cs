@@ -26,6 +26,7 @@ using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Areas.PrintStt;
 using System.Drawing.Printing;
 using NPOI.OpenXmlFormats.Spreadsheet;
+using System.Collections.Generic;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -690,15 +691,18 @@ namespace VCS.APP.Areas.CheckIn
                 _dbContext.SaveChanges();
             }
             // In STT
+            
+                var ticketInfo = new TicketInfo
+                {
+                    WarehouseName = GetNameWarehouse(),
+                    Vehicle = txtLicensePlate.Text,
+                   // DO_Code = i.DATA.LIST_DO.Select(doItem => doItem.DO_NUMBER).ToList(),
+                    STT = _stt.ToString("00"),
+                };
 
-            STT Stt = new STT(new TicketInfo
-            {
-                WarehouseName = GetNameWarehouse(),
-                Vehicle = txtLicensePlate.Text,
-                Name = name,
-                STT = _stt.ToString("00"),
-            });
-            Stt.ShowDialog();
+            STT sttForm = new STT(ticketInfo, lstCheckDo);
+            sttForm.ShowDialog();
+
 
 
             ReloadForm(_dbContext);
@@ -1106,6 +1110,11 @@ namespace VCS.APP.Areas.CheckIn
                 MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ReloadForm(_dbContext);
         }
     }
 }
