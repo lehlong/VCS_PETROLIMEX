@@ -40,7 +40,7 @@ namespace VCS.APP.Areas.History
                 int i = 1;
                 foreach (var d in data)
                 {
-                    dataGridView.Rows.Add(new object[] { i.ToString(), "Test", d.VehicleCode, d.CreateDate, d.TimeCheckout, d.NoteIn,d.NoteOut, "Test", d.Id });
+                    dataGridView.Rows.Add(new object[] { i.ToString(), _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "", d.VehicleCode, d.CreateDate, d.TimeCheckout, d.NoteIn,d.NoteOut, "Test", d.Id });
                     i++;
                 }
             }
