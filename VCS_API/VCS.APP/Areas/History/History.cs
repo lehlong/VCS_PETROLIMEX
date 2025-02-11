@@ -79,30 +79,12 @@ namespace VCS.APP.Areas.History
         {
             if (e.ColumnIndex == dataGridView.Columns["RePrint"].Index && e.RowIndex >= 0)
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.Background);
-                int buttonWidth = 80; 
-                int buttonHeight = 30; 
-                int buttonX = e.CellBounds.Left + (e.CellBounds.Width - buttonWidth) / 2; 
-                int buttonY = e.CellBounds.Top + (e.CellBounds.Height - buttonHeight) / 2;
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(40, 167, 69))) 
-                {
-                    e.Graphics.FillRectangle(brush, new Rectangle(buttonX, buttonY, buttonWidth, buttonHeight));
-                }
-                Image icon = Properties.Resources.home_icon;
-                int iconSize = 18;
-                int iconX = buttonX + 8; 
-                int iconY = buttonY + (buttonHeight - iconSize) / 2; 
+                e.Paint(e.CellBounds, DataGridViewPaintParts.Background); 
+                Image icon = Properties.Resources.icons8_print_18__1_;
+                int iconSize = 18; 
+                int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
+                int iconY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
                 e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
-                using (Font textFont = new Font("Segoe UI", 10F, FontStyle.Bold))
-                {
-                    string buttonText = "In STT";
-                    SizeF textSize = e.Graphics.MeasureString(buttonText, textFont);
-                    int textX = iconX + iconSize + 5; 
-                    int textY = buttonY + (buttonHeight - (int)textSize.Height) / 2;
-
-                    e.Graphics.DrawString(buttonText, textFont, Brushes.White, new PointF(textX, textY));
-                }
-
                 e.Handled = true; 
             }
         }
