@@ -41,7 +41,6 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
-            pictureBox2 = new PictureBox();
             label5 = new Label();
             panel4 = new Panel();
             comboBox1 = new ComboBox();
@@ -52,13 +51,13 @@
             panel5 = new Panel();
             mainPanel = new Panel();
             panel1 = new Panel();
+            button2 = new Button();
             btnCheck = new Button();
             cameraPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView).BeginInit();
             infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel4.SuspendLayout();
             panel2.SuspendLayout();
             panel5.SuspendLayout();
@@ -112,7 +111,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = (Image)resources.GetObject("btnViewAll.Image");
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(420, 17);
+            btnViewAll.Location = new Point(424, 10);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -129,7 +128,7 @@
             txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtLicensePlate.Location = new Point(13, 88);
             txtLicensePlate.Name = "txtLicensePlate";
-            txtLicensePlate.Size = new Size(497, 47);
+            txtLicensePlate.Size = new Size(501, 47);
             txtLicensePlate.TabIndex = 9;
             // 
             // label2
@@ -177,7 +176,7 @@
             pictureBoxLicensePlate.BackColor = Color.WhiteSmoke;
             pictureBoxLicensePlate.Location = new Point(266, 174);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
-            pictureBoxLicensePlate.Size = new Size(244, 198);
+            pictureBoxLicensePlate.Size = new Size(247, 198);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLicensePlate.TabIndex = 4;
             pictureBoxLicensePlate.TabStop = false;
@@ -191,7 +190,7 @@
             btnReset.ForeColor = Color.White;
             btnReset.Image = (Image)resources.GetObject("btnReset.Image");
             btnReset.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReset.Location = new Point(468, 17);
+            btnReset.Location = new Point(472, 10);
             btnReset.Name = "btnReset";
             btnReset.Padding = new Padding(6, 0, 0, 0);
             btnReset.Size = new Size(42, 40);
@@ -210,7 +209,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = (Image)resources.GetObject("btnDetect.Image");
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(279, 17);
+            btnDetect.Location = new Point(283, 10);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(135, 40);
@@ -220,18 +219,6 @@
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Image = Properties.Resources.refresh;
-            pictureBox2.Location = new Point(823, 796);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(16, 16);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 25;
-            pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
             // 
             // label5
             // 
@@ -279,7 +266,7 @@
             btnCheckOut.ForeColor = Color.White;
             btnCheckOut.Image = (Image)resources.GetObject("btnCheckOut.Image");
             btnCheckOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheckOut.Location = new Point(718, 14);
+            btnCheckOut.Location = new Point(668, 14);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.Padding = new Padding(6, 0, 0, 0);
             btnCheckOut.Size = new Size(109, 40);
@@ -348,8 +335,8 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(button2);
             panel1.Controls.Add(btnCheck);
-            panel1.Controls.Add(pictureBox2);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(btnCheckOut);
@@ -357,6 +344,25 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(220, 53, 69);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(783, 14);
+            button2.Name = "button2";
+            button2.Padding = new Padding(6, 0, 6, 0);
+            button2.Size = new Size(40, 40);
+            button2.TabIndex = 27;
+            button2.TextAlign = ContentAlignment.MiddleLeft;
+            button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // btnCheck
             // 
@@ -367,7 +373,7 @@
             btnCheck.ForeColor = Color.White;
             btnCheck.Image = (Image)resources.GetObject("btnCheck.Image");
             btnCheck.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCheck.Location = new Point(541, 14);
+            btnCheck.Location = new Point(491, 14);
             btnCheck.Name = "btnCheck";
             btnCheck.Padding = new Padding(6, 0, 0, 0);
             btnCheck.Size = new Size(169, 40);
@@ -393,7 +399,6 @@
             infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel4.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -417,7 +422,6 @@
         private PictureBox pictureBoxLicensePlate;
         private Button btnReset;
         private Button btnDetect;
-        private PictureBox pictureBox2;
         private Label label5;
         private Panel panel4;
         private ComboBox comboBox1;
@@ -430,5 +434,6 @@
         private Panel panel1;
         private Button btnCheck;
         private Button btnViewAll;
+        private Button button2;
     }
 }

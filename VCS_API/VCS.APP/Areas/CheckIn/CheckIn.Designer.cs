@@ -58,6 +58,9 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
+            panel6 = new Panel();
+            txtNoteIn = new TextBox();
+            label6 = new Label();
             mainPanel.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
@@ -70,6 +73,7 @@
             infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // mainPanel
@@ -130,6 +134,8 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(label6);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(panel4);
@@ -155,7 +161,7 @@
             button2.Location = new Point(785, 14);
             button2.Name = "button2";
             button2.Padding = new Padding(6, 0, 6, 0);
-            button2.Size = new Size(42, 40);
+            button2.Size = new Size(40, 40);
             button2.TabIndex = 26;
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -166,7 +172,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(430, 74);
+            label5.Location = new Point(431, 74);
             label5.Name = "label5";
             label5.Size = new Size(164, 21);
             label5.TabIndex = 16;
@@ -276,7 +282,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(22, 74);
+            label4.Location = new Point(25, 74);
             label4.Name = "label4";
             label4.Size = new Size(98, 21);
             label4.TabIndex = 9;
@@ -348,7 +354,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = (Image)resources.GetObject("btnViewAll.Image");
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(420, 17);
+            btnViewAll.Location = new Point(424, 11);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -365,7 +371,7 @@
             txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtLicensePlate.Location = new Point(13, 88);
             txtLicensePlate.Name = "txtLicensePlate";
-            txtLicensePlate.Size = new Size(497, 47);
+            txtLicensePlate.Size = new Size(500, 47);
             txtLicensePlate.TabIndex = 9;
             // 
             // label2
@@ -413,7 +419,7 @@
             pictureBoxLicensePlate.BackColor = Color.WhiteSmoke;
             pictureBoxLicensePlate.Location = new Point(266, 174);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
-            pictureBoxLicensePlate.Size = new Size(244, 198);
+            pictureBoxLicensePlate.Size = new Size(248, 198);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLicensePlate.TabIndex = 4;
             pictureBoxLicensePlate.TabStop = false;
@@ -427,7 +433,7 @@
             btnReset.ForeColor = Color.White;
             btnReset.Image = (Image)resources.GetObject("btnReset.Image");
             btnReset.ImageAlign = ContentAlignment.MiddleLeft;
-            btnReset.Location = new Point(468, 17);
+            btnReset.Location = new Point(472, 11);
             btnReset.Name = "btnReset";
             btnReset.Padding = new Padding(6, 0, 0, 0);
             btnReset.Size = new Size(42, 40);
@@ -446,7 +452,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = (Image)resources.GetObject("btnDetect.Image");
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(278, 17);
+            btnDetect.Location = new Point(282, 11);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(136, 40);
@@ -456,6 +462,35 @@
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.WhiteSmoke;
+            panel6.Controls.Add(txtNoteIn);
+            panel6.Location = new Point(22, 175);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(803, 40);
+            panel6.TabIndex = 18;
+            // 
+            // txtNoteIn
+            // 
+            txtNoteIn.BackColor = Color.WhiteSmoke;
+            txtNoteIn.BorderStyle = BorderStyle.None;
+            txtNoteIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNoteIn.Location = new Point(13, 9);
+            txtNoteIn.Name = "txtNoteIn";
+            txtNoteIn.Size = new Size(778, 22);
+            txtNoteIn.TabIndex = 10;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(25, 148);
+            label6.Name = "label6";
+            label6.Size = new Size(66, 21);
+            label6.TabIndex = 17;
+            label6.Text = "Ghi chú:";
             // 
             // CheckIn
             // 
@@ -484,6 +519,8 @@
             infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             ResumeLayout(false);
         }
         #endregion
@@ -517,5 +554,8 @@
         private Button btnCheckIn;
         private Panel panel5;
         private Button button2;
+        private Panel panel6;
+        private TextBox txtNoteIn;
+        private Label label6;
     }
 }

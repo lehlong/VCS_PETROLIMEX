@@ -555,7 +555,7 @@ namespace VCS.APP.Areas.CheckOut
             {
                 Id = Guid.NewGuid().ToString(),
                 HeaderId = selectedValue,
-                Path = IMGPATH.Replace(Global.PathSaveFile,""),
+                Path = IMGPATH.Replace(Global.PathSaveFile, ""),
                 FullPath = IMGPATH,
                 InOut = "out",
                 IsPlate = true,
@@ -620,6 +620,11 @@ namespace VCS.APP.Areas.CheckOut
                 txtStatus.ForeColor = Color.Green;
                 this.isHasInvoice = true;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ReloadForm();
         }
     }
 }
