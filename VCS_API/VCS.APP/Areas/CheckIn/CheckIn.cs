@@ -763,7 +763,11 @@ namespace VCS.APP.Areas.CheckIn
                 ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
                 string selectedValue = selectedItem.Value;
 
-                if (string.IsNullOrEmpty(selectedValue)) return;
+                if (string.IsNullOrEmpty(selectedValue)) {
+                    button3.Visible = false;
+                    return;
+                }
+                button3.Visible = true;
 
                 var detail = GetCheckInDetail(selectedValue);
                 if (detail == null) return;

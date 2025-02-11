@@ -35,6 +35,9 @@
             panel2 = new Panel();
             txtStatus = new Label();
             panel1 = new Panel();
+            panel6 = new Panel();
+            txtNoteIn = new TextBox();
+            label6 = new Label();
             button2 = new Button();
             label5 = new Label();
             panel4 = new Panel();
@@ -58,13 +61,11 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
-            panel6 = new Panel();
-            txtNoteIn = new TextBox();
-            label6 = new Label();
             mainPanel.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -73,7 +74,6 @@
             infoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
-            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // mainPanel
@@ -149,6 +149,35 @@
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
             // 
+            // panel6
+            // 
+            panel6.BackColor = Color.WhiteSmoke;
+            panel6.Controls.Add(txtNoteIn);
+            panel6.Location = new Point(22, 175);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(803, 40);
+            panel6.TabIndex = 18;
+            // 
+            // txtNoteIn
+            // 
+            txtNoteIn.BackColor = Color.WhiteSmoke;
+            txtNoteIn.BorderStyle = BorderStyle.None;
+            txtNoteIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNoteIn.Location = new Point(13, 9);
+            txtNoteIn.Name = "txtNoteIn";
+            txtNoteIn.Size = new Size(778, 22);
+            txtNoteIn.TabIndex = 10;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(25, 148);
+            label6.Name = "label6";
+            label6.Size = new Size(66, 21);
+            label6.TabIndex = 17;
+            label6.Text = "Ghi chú:";
+            // 
             // button2
             // 
             button2.BackColor = Color.FromArgb(220, 53, 69);
@@ -223,6 +252,7 @@
             button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.TextImageRelation = TextImageRelation.ImageBeforeText;
             button3.UseVisualStyleBackColor = false;
+            button3.Visible = false;
             button3.Click += button3_Click;
             // 
             // btnCheckIn
@@ -463,35 +493,6 @@
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
             // 
-            // panel6
-            // 
-            panel6.BackColor = Color.WhiteSmoke;
-            panel6.Controls.Add(txtNoteIn);
-            panel6.Location = new Point(22, 175);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(803, 40);
-            panel6.TabIndex = 18;
-            // 
-            // txtNoteIn
-            // 
-            txtNoteIn.BackColor = Color.WhiteSmoke;
-            txtNoteIn.BorderStyle = BorderStyle.None;
-            txtNoteIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtNoteIn.Location = new Point(13, 9);
-            txtNoteIn.Name = "txtNoteIn";
-            txtNoteIn.Size = new Size(778, 22);
-            txtNoteIn.TabIndex = 10;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(25, 148);
-            label6.Name = "label6";
-            label6.Size = new Size(66, 21);
-            label6.TabIndex = 17;
-            label6.Text = "Ghi chú:";
-            // 
             // CheckIn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -509,6 +510,8 @@
             panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel4.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
@@ -519,8 +522,6 @@
             infoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
             ResumeLayout(false);
         }
         #endregion
