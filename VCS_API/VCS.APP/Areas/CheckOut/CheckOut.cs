@@ -517,7 +517,12 @@ namespace VCS.APP.Areas.CheckOut
                 txtStatus.ForeColor = Color.Red;
                 return;
             };
-
+            if (txtLicensePlate.Text.Length > 8)
+            {
+                txtStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
             if (!this.isHasInvoice)
             {
                 var result = MessageBox.Show("Hoá đơn chưa đầy đủ! Bạn có chắc chắn muốn cho xe ra!",
@@ -596,6 +601,12 @@ namespace VCS.APP.Areas.CheckOut
                 txtStatus.ForeColor = Color.Red;
                 return;
             };
+            if (txtLicensePlate.Text.Length > 8)
+            {
+                txtStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
             var number = "";
             var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).ToList();
             foreach (var x in lstDo) number += x.Do1Sap + ", ";

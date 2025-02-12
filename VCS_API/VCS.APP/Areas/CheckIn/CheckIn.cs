@@ -407,6 +407,12 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
+            if (txtLicensePlate.Text.Length > 8)
+            {
+                txtStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
             var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
             if (c != 0)
@@ -493,6 +499,12 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
+                if (number.Length > 10)
+                {
+                    txtStatus.Text = "Số lệnh xuất không vượt quá 10 ký tự";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
                 if (lstCheckDo.Where(x => x == number).Count() == 1)
                 {
                     txtStatus.Text = "Đã có thông tin! Vui lòng thử lệnh xuất khác!";
@@ -541,7 +553,12 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
-
+            if (txtLicensePlate.Text.Length > 8)
+            {
+                txtStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự!";
+                txtStatus.ForeColor = Color.Red;
+                return;
+            }
 
             var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
@@ -950,6 +967,12 @@ namespace VCS.APP.Areas.CheckIn
                 if (string.IsNullOrEmpty(selectedHeaderId))
                 {
                     txtStatus.Text = "Vui lòng chọn một phương tiện để cập nhật";
+                    txtStatus.ForeColor = Color.Red;
+                    return;
+                }
+                if (txtLicensePlate.Text.Length > 8)
+                {
+                    txtStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự";
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
