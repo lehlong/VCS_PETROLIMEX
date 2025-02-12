@@ -474,5 +474,37 @@ namespace DMS.BUSINESS.Services.BU
                 return new List<TblBuDetailTgbx>();
             }
         }
+        public async Task<List<string>> AsyncUploadFile(string uploadPath, List<IFormFile> files)
+        {
+            try
+            {
+                // Kiểm tra thư mục lưu file, nếu chưa có thì tạo mới
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+                List<string> savedFiles = new List<string>();
+
+                //  lưu từng file vào thư mục cố định
+                foreach (var file in files)
+                {
+                    if (file.Length > 0)
+                    {
+                        string filePath = Path.Combine(uploadPath, file.FileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        savedFiles.Add(filePath);
+                    }
+                }
+                return savedFiles;
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                return null;
+            }
+        }
     }
 }
