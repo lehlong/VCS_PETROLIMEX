@@ -168,7 +168,7 @@ namespace DMS.CORE.Entities.BU
         [Column("Inco2", TypeName = "nvarchar(20)")]
         public string? Inco2 { get; set; }
         [Column("SoPXK", TypeName = "nvarchar(20)")]
-        public string? t { get; set; }
+        public string? SoPXK { get; set; }
         [Column("NgayPXK")]
         public DateTime? NgayPXK { get; set; }
         [Column("MaTuyenDuong", TypeName = "nvarchar(10)")]

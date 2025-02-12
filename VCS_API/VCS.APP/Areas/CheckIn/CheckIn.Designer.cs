@@ -196,9 +196,9 @@
             button2.TabIndex = 26;
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
+            toolTip.SetToolTip(button2, "Làm mới cửa sổ");
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
-            toolTip.SetToolTip(button2, "Làm mới cửa sổ");
             // 
             // label5
             // 
