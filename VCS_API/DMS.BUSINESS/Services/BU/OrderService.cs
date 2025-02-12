@@ -12,6 +12,7 @@ using DMS.BUSINESS.Dtos.BU;
 using DMS.BUSINESS.Services.HUB;
 using DMS.BUSINESS.Services.MD;
 using DMS.CORE;
+using DMS.CORE.Common;
 using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DMS.CORE.Migrations;
@@ -20,6 +21,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NPOI.HSSF.Record.Chart;
 
 
 namespace DMS.BUSINESS.Services.BU
@@ -31,19 +33,18 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
         Task<bool> CheckTicket(string headerId);
+        Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
         private readonly IHubContext<OrderHub> _hubContext;
-
         public OrderService(AppDbContext dbContext, IMapper mapper, IHubContext<OrderHub> hubContext)
             : base(dbContext, mapper)
         {
             _hubContext = hubContext;
         }
-
         public async Task<List<TblBuOrder>> GetOrder(BaseFilter filter)
         {
             try
@@ -66,7 +67,6 @@ namespace DMS.BUSINESS.Services.BU
                 return null;
             }
         }
-
         public async Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto)
         {
             try
@@ -103,7 +103,6 @@ namespace DMS.BUSINESS.Services.BU
                 return null;
             }
         }
-
         public async Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto)
         {
             try
@@ -141,7 +140,6 @@ namespace DMS.BUSINESS.Services.BU
                 return null;
             }
         }
-
         public override async Task<OrderDto> Add(IDto dto)
         {
             try
@@ -196,7 +194,6 @@ namespace DMS.BUSINESS.Services.BU
                 return null;
             }
         }
-
         public async Task Order(OrderDto orderDto)
         {
             try
@@ -219,7 +216,6 @@ namespace DMS.BUSINESS.Services.BU
                 Exception = ex;
             }
         }
-
         public async Task<bool> CheckTicket(string headerId)
         {
             try
@@ -232,7 +228,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(queryTest , con);
+                    SqlCommand cmd = new SqlCommand(queryTest, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try
@@ -244,15 +240,77 @@ namespace DMS.BUSINESS.Services.BU
                         this.Exception = ex;
                     }
                 }
-
-
-
-
-                return tableData.Rows.Count > 0 ? true : false;
+                if (tableData.Rows.Count > 0 || i.IsPrint == true)
+                {
+                    if (i.IsPrint == null || i.IsPrint == false)
+                    {
+                        var lstDetail = new List<TblBuDetailTgbx>();
+                        var h = ConvertToHeader(tableData, i.Id);
+                        foreach (var _h in h)
+                        {
+                            DataTable tblDetail = new DataTable();
+                            using (SqlConnection con = new SqlConnection(w.Tgbx))
+                            {
+                                SqlCommand cmd = new SqlCommand($"SELECT * FROM tblLenhXuat_HangHoaE5 WHERE SoLenh = '{_h.SoLenh}'", con);
+                                cmd.CommandType = CommandType.Text;
+                                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                                try
+                                {
+                                    adapter.Fill(tblDetail);
+                                    lstDetail.AddRange(ConvertToDetail(tblDetail, i.Id));
+                                }
+                                catch (Exception ex)
+                                {
+                                    this.Exception = ex;
+                                }
+                            }
+                        }
+                        i.IsPrint = true;
+                        _dbContext.TblBuHeader.Update(i);
+                        _dbContext.TblBuHeaderTgbx.AddRange(h);
+                        _dbContext.TblBuDetailTgbx.AddRange(lstDetail);
+                        _dbContext.SaveChanges();
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
+            }
+        }
+        public async Task<TicketModel> GetTicket(string headerId)
+        {
+            try
+            {
+                var i = _dbContext.TblBuHeader.Find(headerId);
+                var tgbx = _dbContext.TblBuHeaderTgbx.FirstOrDefault(x => x.HeaderId == headerId);
+                var d = new TicketModel
+                {
+                    CompanyName = _dbContext.tblAdOrganize.Find(i.CompanyCode).Name,
+                    DateTime = $"Ngày {DateTime.Now.Day} tháng {DateTime.Now.Month} năm {DateTime.Now.Year}",
+                    Vehicle = i.VehicleCode,
+                    DriverName = tgbx?.NguoiVanChuyen,
+                    PtBan = tgbx?.MaPhuongThucBan,
+                    CustmerName = tgbx?.MaKhachHang,
+                    ChuyenVt = tgbx?.MaTuyenDuong,
+                };
+                d.Detail = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).OrderBy(x => x.SoLenh).ThenBy(x => x.MaHangHoa).ToList();
+                foreach(var _d in d.Detail)
+                {
+                    var gCode = "000000000000" + _d.MaHangHoa;
+                    _d.MaHangHoa = _dbContext.TblMdGoods.Find(gCode)?.Name;
+                }
+                return d;
+
+            }
+            catch (Exception ex)
+            {
+                return new TicketModel();
             }
         }
         public List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId)

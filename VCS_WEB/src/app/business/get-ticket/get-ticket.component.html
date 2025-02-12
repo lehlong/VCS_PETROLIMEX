@@ -72,12 +72,12 @@
     <div nz-row [nzGutter]="16">
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <span style="margin-left: 12px;float: left;">Đơn vị: VP Công ty XD Nghệ An</span>
+                <span style="margin-left: 12px;float: left;">Đơn vị: {{ticketDetail.companyName}}</span>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span style="font-weight: normal;">004</span></span>
+                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span style="font-weight: normal;">{{ticketDetail.ticketNumber}}</span></span>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
             style="text-align: center;align-items: center;display: inline-grid;">
             <div class="inner-box">
                 <div style="font-weight: bold;font-size: 20px;">TÍCH KÊ XUẤT HÀNG ĐƯỜNG BỘ</div>
-                <div>Ngày 30 tháng 8 năm 2025</div>
+                <div>{{ticketDetail.dateTime}}</div>
 
             </div>
         </div>
@@ -105,28 +105,28 @@
         <div nz-col class="gutter-row" [nzSpan]="8">
             <div class="inner-box">
                 <span>Số P.tiện: </span>
-                <span style="font-weight: bold;">35K154047</span>
+                <span style="font-weight: bold;">{{ticketDetail.vehicle}}</span>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="8">
             <div class="inner-box">
                 <span>Người V.chuyển: </span>
-                <span style="font-weight: bold;">Lê Hải Long</span>
+                <span style="font-weight: bold;">{{ticketDetail.driverName}}</span>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="8">
-            <div style="float: right;margin-right: 12px;">PT Bán: 10-Bán đlý/TNNQBLẻ</div>
+            <div style="float: right;margin-right: 12px;">PT Bán: {{ticketDetail.ptBan}}</div>
         </div>
     </div>
     <div nz-row [nzGutter]="16">
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <div>Khách hàng: 0000315816-T.Tâm TMTH Tương Dương</div>
+                <div>Khách hàng: {{ticketDetail.customerName}}</div>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <div style="float: right;margin-right: 12px;">Chuyến v/tải: 0004540289</div>
+                <div style="float: right;margin-right: 12px;">Chuyến v/tải: {{ticketDetail.chuyenVt}}</div>
             </div>
         </div>
     </div>
@@ -144,13 +144,13 @@
             <th>Nhiệt độ thực tế (oC)</th>
             <th>Khoảng cách so với tấm mức (mm)</th>
         </tr>
-        <tr>
-            <td>2033507573</td>
+        <tr *ngFor="let i of ticketDetail.detail">
+            <td>{{i.soLenh}}</td>
             <td>46</td>
-            <td>DO 0,05S-II</td>
-            <td>BT15</td>
+            <td>{{i.maHangHoa}}</td>
+            <td>{{i.beXuat}}</td>
             <td>002</td>
-            <td>2,560</td>
+            <td style="text-align: right;">{{i.tongDuXuat | number}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -158,9 +158,9 @@
         </tr>
 
         <tr>
-            <td colspan="3" style="font-weight: bold;">Tổng dung tích</td>
+            <td colspan="3" style="font-weight: bold; text-align: center;">Tổng dung tích:</td>
             <td colspan="2" style="font-weight: bold;"></td>
-            <td style="font-weight: bold;">2,560</td>
+            <td style="font-weight: bold;text-align: right;">{{ticketDetail.sum | number}}</td>
             <td colspan="4"></td>
         </tr>
     </table>

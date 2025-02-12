@@ -42,6 +42,9 @@ export class OrderService {
   CheckTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/CheckTicket?headerId=${headerId}`);
   }
+  GetTicket(headerId: string): Observable<any> {
+    return this.commonService.get(`Order/GetTicket?headerId=${headerId}`);
+  }
 
   // SignalR Methods
   public async initializeConnection(): Promise<void> {

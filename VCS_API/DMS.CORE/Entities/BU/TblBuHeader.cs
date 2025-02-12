@@ -20,7 +20,9 @@ namespace DMS.CORE.Entities.BU
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
         public string WarehouseCode { get; set; }
         [Column("IS_CHECKOUT")]
-        public bool IsCheckout { get; set; }
+        public bool? IsCheckout { get; set; }
+        [Column("IS_PRINT")]
+        public bool? IsPrint { get; set; }
         [Column("TIME_CHECKOUT")]
         public DateTime? TimeCheckout { get; set; }
 
