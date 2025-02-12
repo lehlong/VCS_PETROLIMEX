@@ -51,6 +51,9 @@
             panel5 = new Panel();
             mainPanel = new Panel();
             panel1 = new Panel();
+            panel6 = new Panel();
+            txtNoteOut = new TextBox();
+            label6 = new Label();
             button2 = new Button();
             btnCheck = new Button();
             cameraPanel.SuspendLayout();
@@ -63,6 +66,7 @@
             panel5.SuspendLayout();
             mainPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // cameraPanel
@@ -335,6 +339,8 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel6);
+            panel1.Controls.Add(label6);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(btnCheck);
             panel1.Controls.Add(label5);
@@ -344,6 +350,35 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.WhiteSmoke;
+            panel6.Controls.Add(txtNoteOut);
+            panel6.Location = new Point(18, 171);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(803, 40);
+            panel6.TabIndex = 29;
+            // 
+            // txtNoteOut
+            // 
+            txtNoteOut.BackColor = Color.WhiteSmoke;
+            txtNoteOut.BorderStyle = BorderStyle.None;
+            txtNoteOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtNoteOut.Location = new Point(13, 9);
+            txtNoteOut.Name = "txtNoteOut";
+            txtNoteOut.Size = new Size(778, 22);
+            txtNoteOut.TabIndex = 10;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(21, 144);
+            label6.Name = "label6";
+            label6.Size = new Size(66, 21);
+            label6.TabIndex = 28;
+            label6.Text = "Ghi chú:";
             // 
             // button2
             // 
@@ -407,6 +442,8 @@
             mainPanel.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -435,5 +472,8 @@
         private Button btnCheck;
         private Button btnViewAll;
         private Button button2;
+        private Panel panel6;
+        private TextBox txtNoteOut;
+        private Label label6;
     }
 }

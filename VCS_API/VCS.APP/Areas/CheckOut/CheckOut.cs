@@ -327,6 +327,7 @@ namespace VCS.APP.Areas.CheckOut
                     txtStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
                     txtStatus.ForeColor = Color.Red;
                     this.isHasInvoice = false;
+                    txtNoteOut.Text = "Chưa có hóa đơn";
                 }
                 else
                 {
@@ -574,7 +575,7 @@ namespace VCS.APP.Areas.CheckOut
             var i = _dbContext.TblBuHeader.Find(selectedValue);
             i.IsCheckout = true;
             i.TimeCheckout = DateTime.Now;
-            i.NoteOut = this.isHasInvoice ? "" : "Chưa đủ hoá đơn";
+            i.NoteOut = txtNoteOut.Text;
             _dbContext.TblBuHeader.Update(i);
             _dbContext.SaveChanges();
             ReloadForm();
