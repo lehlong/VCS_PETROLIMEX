@@ -36,6 +36,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
+        Task<List<string>> AsyncUploadFile(string uploadPath, List<IFormFile> files);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
