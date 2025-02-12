@@ -31,6 +31,8 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
         Task<bool> CheckTicket(string headerId);
+        List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
+        List<TblBuDetailTgbx> TblBuDetailTgbx(DataTable dataTable, string headerId);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -225,64 +227,96 @@ namespace DMS.BUSINESS.Services.BU
                 var i = _dbContext.TblBuHeader.Find(headerId);
                 var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
                 DataTable tableData = new DataTable();
-                switch (w.Code)
+                var queryTest = $"SELECT * FROM tblLenhXuatE5 WHERE STATUS = '3' AND SoLenh = '2061976967'";
+                var query = $"SELECT * FROM tblLenhXuatE5 WHERE STATUS = '3' AND MaPhuongTien = '{i.VehicleCode}' AND NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
+
+                using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    #region Kho Bến Thuỷ
-                    case "2810-BT":
-                        
-                        using (SqlConnection con = new SqlConnection(w.Tdh))
-                        {
-                            SqlCommand cmd = new SqlCommand($"" +
-                                $"SELECT * FROM tblLenhXuatChiTiet " +
-                                $"WHERE NgayXuat='{DateTime.Now.ToString("yyyy/MM/dd")}'" +
-                                $"AND MaPhuongTien ='{i.VehicleCode}' " +
-                                $"AND ISNULL(ThoiGianDau, '3000-01-01') >= {i.CreateDate.Value.ToString("yyyy/MM/dd")}", con);
-                            cmd.CommandType = CommandType.Text;
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            try
-                            {
-                                adapter.Fill(tableData);
-                            }
-                            catch (Exception ex)
-                            {
-                                this.Exception = ex;
-                            }
-                        }
-                        break;
-                    #endregion
-                    #region Kho Nghi Hương
-                    case "2810-NH":
-                        using (SqlConnection con = new SqlConnection(w.Tdh))
-                        {
-                            SqlCommand cmd = new SqlCommand($"SELECT 1 a FROM BX_BangMaLenh " +
-                                $"WHERE Time_tao_lenh = {DateTime.Now.ToString("yyyy/MM/dd")} " +
-                                $"AND SO_PTIEN = {i.VehicleCode} " +
-                                $"AND ISNULL(Time_bat_dau_lenh, '3000-01-01') >= {i.CreateDate.Value.ToString("yyyy/MM/dd")} " +
-                                $"UNION " +
-                                $"SELECT 1 a FROM Lenh_GH WHERE NGAY_DKY = {DateTime.Now.ToString("yyyy/MM/dd")} AND SO_PTIEN = {i.VehicleCode}", con);
-                            cmd.CommandType = CommandType.Text;
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            try
-                            {
-                                adapter.Fill(tableData);
-                            }
-                            catch (Exception ex)
-                            {
-                                this.Exception = ex;
-                            }
-                        }
-                        break;
-                    #endregion
-                    #region Các kho còn lại
-                    default:
-                        break;
-                    #endregion
+                    SqlCommand cmd = new SqlCommand(queryTest , con);
+                    cmd.CommandType = CommandType.Text;
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    try
+                    {
+                        adapter.Fill(tableData);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.Exception = ex;
+                    }
                 }
+
+
+
+
                 return tableData.Rows.Count > 0 ? true : false;
             }
             catch(Exception ex)
             {
                 return false;
+            }
+        }
+        public List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId)
+        {
+            try
+            {
+                List<TblBuHeaderTgbx> list = new List<TblBuHeaderTgbx>();
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    TblBuHeaderTgbx model = new TblBuHeaderTgbx
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = headerId,
+                        MaLenh = row["MaLenh"].ToString(),
+                        NgayXuat = Convert.ToDateTime(row["NgayXuat"]),
+                        SoLenh = row["SoLenh"].ToString(),
+                        MaDonVi = row["MaDonVi"].ToString(),
+                        MaNguon = row["MaNguon"].ToString(),
+                        MaKho = row["MaKho"].ToString(),
+                        MaVanChuyen = row["MaVanChuyen"].ToString(),
+                        MaPhuongTien = row["MaPhuongTien"].ToString(),
+                        NguoiVanChuyen = row["NguoiVanChuyen"].ToString(),
+                        MaPhuongThucBan = row["MaPhuongThucBan"].ToString(),
+                        MaPhuongThucXuat = row["MaPhuongThucXuat"].ToString(),
+                        MaKhachHang = row["MaKhachHang"].ToString(),
+                        LoaiPhieu = row["LoaiPhieu"].ToString(),
+                        Niem = row["Niem"].ToString(),
+                        LuongGiamDinh = string.IsNullOrEmpty(row["LuongGiamDinh"].ToString()) ? 0 :Convert.ToDecimal(row["LuongGiamDinh"].ToString()),
+
+                    };
+
+                    list.Add(model);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<TblBuHeaderTgbx>();
+            }
+        }
+        public List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId)
+        {
+            try
+            {
+                List<TblBuDetailTgbx> list = new List<TblBuDetailTgbx>();
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    TblBuDetailTgbx model = new TblBuDetailTgbx
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = headerId,
+                    };
+
+                    list.Add(model);
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<TblBuDetailTgbx>();
             }
         }
     }

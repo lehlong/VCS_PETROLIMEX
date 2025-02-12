@@ -47,7 +47,7 @@
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
                         <button nz-button><span nz-icon nzType="printer" nzTheme="outline" nz-popover
-                                (click)="printTicket()" nzPopoverTitle="Kiểm tra và in ticket"
+                                (click)="printTicket(i.headerId)" nzPopoverTitle="Kiểm tra và in ticket"
                                 [nzPopoverContent]="i.vehicleCode + ' - ' + i.name" nzPopoverPlacement="top">
                             </span></button>
                         <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone" nz-popover

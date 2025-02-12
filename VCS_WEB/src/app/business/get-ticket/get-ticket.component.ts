@@ -137,13 +137,21 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     });
   }
 
-  printTicket() {
-    let printContent = this.printSection.nativeElement.innerHTML;
-    let originalContent = document.body.innerHTML;
+  printTicket(headerId: string) {
+    this._service.CheckTicket(headerId).subscribe({
+      next: (data) => {
+        console.log(data)
+      },
+      error: (err) => {
+        console.error('Error fetching orders:', err);
+      }
+    });
+    // let printContent = this.printSection.nativeElement.innerHTML;
+    // let originalContent = document.body.innerHTML;
 
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalContent;
-    window.location.reload(); // To restore events like click handlers
+    // document.body.innerHTML = printContent;
+    // window.print();
+    // document.body.innerHTML = originalContent;
+    // window.location.reload();
   }
 }

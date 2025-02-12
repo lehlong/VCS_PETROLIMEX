@@ -32,7 +32,7 @@ namespace VCS.APP
             ServiceProvider = services.BuildServiceProvider();
 
             Application.Run(ServiceProvider.GetRequiredService<Areas.Login.Login>());
-            PreloadDlls();
+            //PreloadDlls();
         }
 
         private static void ConfigureServices(ServiceCollection services)

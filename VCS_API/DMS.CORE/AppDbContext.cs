@@ -127,6 +127,8 @@ namespace DMS.CORE
 
         #region Business Unit
         public DbSet<TblBuHeader> TblBuHeader { get; set; }
+        public DbSet<TblBuHeaderTgbx> TblBuHeaderTgbx { get; set; }
+        public DbSet<TblBuDetailTgbx> TblBuDetailTgbx { get; set; }
         public DbSet<TblBuDetailDO> TblBuDetailDO { get; set; }
         public DbSet<TblBuDetailMaterial> TblBuDetailMaterial { get; set; }
         public DbSet<TblBuQueue> TblBuQueue { get; set; }
