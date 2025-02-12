@@ -418,7 +418,7 @@ namespace VCS.APP.Areas.CheckOut
         {
             try
             {
-                int yPosition = 155;
+                int yPosition = 235;
                 if (_lstDOSAP.Count > 1)
                 {
                     var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
@@ -556,8 +556,8 @@ namespace VCS.APP.Areas.CheckOut
             {
                 Id = Guid.NewGuid().ToString(),
                 HeaderId = selectedValue,
-                Path = IMGPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = IMGPATH,
+                Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
+                FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
                 InOut = "out",
                 IsPlate = true,
                 IsActive = true,
@@ -567,7 +567,7 @@ namespace VCS.APP.Areas.CheckOut
                 Id = Guid.NewGuid().ToString(),
                 HeaderId = selectedValue,
                 Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = PLATEPATH,
+                FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
                 InOut = "out",
                 IsPlate = true,
                 IsActive = true,

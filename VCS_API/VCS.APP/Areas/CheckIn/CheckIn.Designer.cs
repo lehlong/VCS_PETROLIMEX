@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckIn));
             mainPanel = new Panel();
             panel5 = new Panel();
@@ -61,6 +62,7 @@
             pictureBoxLicensePlate = new PictureBox();
             btnReset = new Button();
             btnDetect = new Button();
+            toolTip = new ToolTip(components);
             mainPanel.SuspendLayout();
             panel5.SuspendLayout();
             panel2.SuspendLayout();
@@ -196,6 +198,7 @@
             button2.TextImageRelation = TextImageRelation.ImageBeforeText;
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
+            toolTip.SetToolTip(button2, "Làm mới cửa sổ");
             // 
             // label5
             // 
@@ -391,6 +394,7 @@
             btnViewAll.TabIndex = 10;
             btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
             btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
+            toolTip.SetToolTip(btnViewAll, "Xem tất cả Camera");
             btnViewAll.UseVisualStyleBackColor = false;
             btnViewAll.Click += btnViewAll_Click;
             // 
@@ -470,6 +474,7 @@
             btnReset.TabIndex = 5;
             btnReset.TextAlign = ContentAlignment.MiddleLeft;
             btnReset.TextImageRelation = TextImageRelation.ImageBeforeText;
+            toolTip.SetToolTip(btnReset, "Reset Camera");
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
@@ -492,6 +497,13 @@
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
+            // 
+            // toolTip
+            // 
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 500;
+            toolTip.ReshowDelay = 200;
+            toolTip.ShowAlways = true;
             // 
             // CheckIn
             // 
@@ -558,5 +570,6 @@
         private Panel panel6;
         private TextBox txtNoteIn;
         private Label label6;
+        private ToolTip toolTip;
     }
 }

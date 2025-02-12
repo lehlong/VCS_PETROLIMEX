@@ -368,6 +368,7 @@ namespace VCS.APP.Areas.History
             ptbIn1.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbIn1.TabIndex = 3;
             ptbIn1.TabStop = false;
+            ptbIn1.Click += ptbIn1_Click;
             // 
             // dataGridView
             // 

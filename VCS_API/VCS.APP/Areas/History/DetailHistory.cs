@@ -39,7 +39,7 @@ namespace VCS.APP.Areas.History
                 lblStt.Text = _stt != null ? _stt.ToString("D2") : "";
             }
             var imgINList = _dbContext.TblBuImage
-                                    .Where(x => x.HeaderId != _headerId && x.InOut == "in")
+                                    .Where(x => x.HeaderId == _headerId && x.InOut == "in")
                                     .Select(x => x.Path)
                                     .ToList();
             if (imgINList.Count > 0)
@@ -58,7 +58,7 @@ namespace VCS.APP.Areas.History
                 }
             }
             var imgOUTList = _dbContext.TblBuImage
-                                    .Where(x => x.HeaderId != _headerId && x.InOut == "out")
+                                    .Where(x => x.HeaderId == _headerId && x.InOut == "out")
                                     .Select(x => x.Path)
                                     .ToList();
             if (imgOUTList.Count > 0)
@@ -82,7 +82,7 @@ namespace VCS.APP.Areas.History
                 var lstMT = _dbContext.TblBuDetailMaterial.Where(x => x.HeaderId == d.Id).ToList();
                 foreach (var m in lstMT)
                 {
-                    dataGridView.Rows.Add(new object[] { d.Do1Sap, d.VehicleCode,m.MaterialCode, $"{m.Quantity}({m.UnitCode})"});
+                    dataGridView.Rows.Add(new object[] { d.Do1Sap, d.VehicleCode, m.MaterialCode, $"{m.Quantity}({m.UnitCode})" });
 
                 }
             }
@@ -99,5 +99,9 @@ namespace VCS.APP.Areas.History
             }
         }
 
+        private void ptbIn1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

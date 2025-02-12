@@ -283,7 +283,7 @@ namespace VCS.APP.Areas.CheckIn
         {
             try
             {
-                int yPosition = 155;
+                int yPosition = 235;
                 if (_lstDOSAP.Count > 1)
                 {
                     var existingGrids = panel1.Controls.OfType<DataGridView>().ToList();
@@ -423,7 +423,8 @@ namespace VCS.APP.Areas.CheckIn
                 Id = headerId,
                 VehicleCode = txtLicensePlate.Text,
                 CompanyCode = ProfileUtilities.User.OrganizeCode,
-                WarehouseCode = ProfileUtilities.User.WarehouseCode
+                WarehouseCode = ProfileUtilities.User.WarehouseCode,
+                NoteIn = txtNoteIn.Text,
             });
 
             foreach (var i in _lstDOSAP)
@@ -595,7 +596,8 @@ namespace VCS.APP.Areas.CheckIn
                     Id = headerId,
                     VehicleCode = txtLicensePlate.Text,
                     CompanyCode = ProfileUtilities.User.OrganizeCode,
-                    WarehouseCode = ProfileUtilities.User.WarehouseCode
+                    WarehouseCode = ProfileUtilities.User.WarehouseCode,
+                    NoteIn = txtNoteIn.Text,
                 });
                 foreach (var i in _lstDOSAP)
                 {
@@ -624,8 +626,8 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
-                    Path = IMGPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = IMGPATH,
+                    Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
                     InOut = "in",
                     IsPlate = true,
                     IsActive = true,
@@ -635,7 +637,7 @@ namespace VCS.APP.Areas.CheckIn
                     Id = Guid.NewGuid().ToString(),
                     HeaderId = headerId,
                     Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = PLATEPATH,
+                    FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
                     InOut = "in",
                     IsPlate = false,
                     IsActive = true
