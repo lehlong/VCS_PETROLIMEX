@@ -156,18 +156,17 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
         [HttpPost("PostFileImage")]
-        public async Task<IActionResult> PostFileImage([FromForm] List<IFormFile> files)
+        public async Task<IActionResult> PostFileImage([FromForm] List<IFormFile> files, [FromForm] List<string> filePaths)
         {
             var transferObject = new TransferObject();
-            string basePath = @"C:\AttachImageVCS";
-            DateTime now = DateTime.Now;
-            string uploadPath = Path.Combine(basePath, now.ToString("yyyy"), now.ToString("MM"), now.ToString("dd"));
-            var listpath = await _service.AsyncUploadFile(uploadPath, files);
+
+
+            var listpath = await _service.AsyncUploadFile(files, filePaths);
 
             if (_service.Status)
             {
                 transferObject.Status = true;
-                transferObject.Data = listpath;
+                //transferObject.Data = listpath;
                 transferObject.MessageObject.MessageType = MessageType.Success;
                 transferObject.GetMessage("0100", _service);
             }
@@ -179,5 +178,6 @@ namespace DMS.API.Controllers.BU
             }
             return Ok(transferObject);
         }
+
     }
 }

@@ -17,6 +17,7 @@ using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DMS.CORE.Migrations;
 using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
@@ -36,7 +37,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
-        Task<List<string>> AsyncUploadFile(string uploadPath, List<IFormFile> files);
+        Task<List<string>> AsyncUploadFile(List<IFormFile> files,List<string> filePath);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -475,31 +476,43 @@ namespace DMS.BUSINESS.Services.BU
                 return new List<TblBuDetailTgbx>();
             }
         }
-        public async Task<List<string>> AsyncUploadFile(string uploadPath, List<IFormFile> files)
+        public async Task<List<string>> AsyncUploadFile(List<IFormFile> files, List<string> filePath)
         {
             try
             {
-                // Kiểm tra thư mục lưu file, nếu chưa có thì tạo mới
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
+           
+                var SouceFileimage = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
+                
+                //Kiểm tra thư mục lưu file, nếu chưa có thì tạo mới
+              
                 List<string> savedFiles = new List<string>();
 
                 //  lưu từng file vào thư mục cố định
                 foreach (var file in files)
                 {
+                    var path = filePath.FirstOrDefault(x => Path.GetFileName(x) == file.FileName);
+                    string[] parts = path.Split(Path.DirectorySeparatorChar);
+
+                    // Lấy các phần tử từ năm, tháng, và ngày
+                    string year = parts[^4];
+                    string month = parts[^3];
+                    string day = parts[^2];
+                    var fileaddress = Path.Combine(SouceFileimage, "AttachImageVCS", year, month, day);
+                    if (!Directory.Exists(fileaddress))
+                    {
+                        Directory.CreateDirectory(fileaddress);
+                    }
                     if (file.Length > 0)
                     {
-                        string filePath = Path.Combine(uploadPath, file.FileName);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        string filePathSave = Path.Combine(fileaddress,file.FileName);
+                        using (var stream = new FileStream(filePathSave, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
                         }
-                        savedFiles.Add(filePath);
+                        savedFiles.Add(filePathSave);
                     }
                 }
-                return savedFiles;
+                return null;
             }
             catch (Exception ex)
             {
