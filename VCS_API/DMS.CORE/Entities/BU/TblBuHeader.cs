@@ -19,6 +19,18 @@ namespace DMS.CORE.Entities.BU
         public string CompanyCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
         public string WarehouseCode { get; set; }
+
+
+        //01-Xe đang trong hàng chờ, 02-Xe đã vào kho, 03- Xe đang lấy hàng, 04- Xe đã ra kho
+        [Column("STATUS_VEHICLE", TypeName = "NVARCHAR(50)")]
+        public string? StatusVehicle { get; set; }
+
+        //00-Chưa xử lý, 01- Đã mời xe vào, 02- Chưa có ticket, 03- Đã in ticket, 04 - Đã xử lý, 05 - Không xử lý
+        [Column("STATUS_PROCESS", TypeName = "NVARCHAR(50)")]
+        public string? StatusProcess { get; set; }
+
+
+
         [Column("IS_CHECKOUT")]
         public bool? IsCheckout { get; set; }
         [Column("IS_PRINT")]

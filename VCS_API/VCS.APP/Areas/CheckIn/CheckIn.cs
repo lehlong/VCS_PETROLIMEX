@@ -433,6 +433,8 @@ namespace VCS.APP.Areas.CheckIn
                 CompanyCode = ProfileUtilities.User.OrganizeCode,
                 WarehouseCode = ProfileUtilities.User.WarehouseCode,
                 NoteIn = txtNoteIn.Text,
+                StatusVehicle = "01",
+                StatusProcess = "00",
             });
 
             foreach (var i in _lstDOSAP)
@@ -617,6 +619,8 @@ namespace VCS.APP.Areas.CheckIn
                     CompanyCode = ProfileUtilities.User.OrganizeCode,
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     NoteIn = txtNoteIn.Text,
+                    StatusProcess = "00",
+                    StatusVehicle = "02",
                 });
                 foreach (var i in _lstDOSAP)
                 {
@@ -689,8 +693,6 @@ namespace VCS.APP.Areas.CheckIn
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
-
-
                 txtStatus.Text = "Cho xe vào thành công!";
                 txtStatus.ForeColor = Color.Green;
             }
@@ -698,6 +700,10 @@ namespace VCS.APP.Areas.CheckIn
             {
                 var itemDelete = _dbContext.TblBuQueue.FirstOrDefault(x => x.HeaderId == selectedHeaderId);
                 _dbContext.TblBuQueue.Remove(itemDelete);
+
+                var h = _dbContext.TblBuHeader.Find(selectedHeaderId);
+                h.StatusVehicle = "02";
+                _dbContext.TblBuHeader.Update(h);
                 _dbContext.TblBuOrders.Add(new TblBuOrder
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -712,14 +718,14 @@ namespace VCS.APP.Areas.CheckIn
                 _dbContext.SaveChanges();
             }
             // In STT
-            
-                var ticketInfo = new TicketInfo
-                {
-                    WarehouseName = GetNameWarehouse(),
-                    Vehicle = txtLicensePlate.Text,
-                   // DO_Code = i.DATA.LIST_DO.Select(doItem => doItem.DO_NUMBER).ToList(),
-                    STT = _stt.ToString("00"),
-                };
+
+            var ticketInfo = new TicketInfo
+            {
+                WarehouseName = GetNameWarehouse(),
+                Vehicle = txtLicensePlate.Text,
+                // DO_Code = i.DATA.LIST_DO.Select(doItem => doItem.DO_NUMBER).ToList(),
+                STT = _stt.ToString("00"),
+            };
 
             STT sttForm = new STT(ticketInfo, lstCheckDo);
             sttForm.ShowDialog();
