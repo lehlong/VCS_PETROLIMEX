@@ -415,7 +415,7 @@ namespace VCS.APP.Areas.CheckIn
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
-            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
+            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.StatusVehicle != "04"
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
             if (c != 0)
             {
@@ -430,6 +430,7 @@ namespace VCS.APP.Areas.CheckIn
             {
                 Id = headerId,
                 VehicleCode = txtLicensePlate.Text,
+                VehicleName = name,
                 CompanyCode = ProfileUtilities.User.OrganizeCode,
                 WarehouseCode = ProfileUtilities.User.WarehouseCode,
                 NoteIn = txtNoteIn.Text,
@@ -476,16 +477,6 @@ namespace VCS.APP.Areas.CheckIn
                 Path = IMGPATH,
                 FullPath = IMGPATH,
                 IsPlate = false,
-                IsActive = true
-            });
-            _dbContext.TblBuQueue.Add(new TblBuQueue
-            {
-                Id = Guid.NewGuid().ToString(),
-                HeaderId = headerId,
-                VehicleCode = txtLicensePlate.Text,
-                Name = name,
-                Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
-                Count = 0,
                 IsActive = true
             });
             await _dbContext.SaveChangesAsync();
@@ -564,7 +555,7 @@ namespace VCS.APP.Areas.CheckIn
                 return;
             }
 
-            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.IsCheckout == false
+            var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.StatusVehicle != "04"
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
 
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
@@ -606,8 +597,16 @@ namespace VCS.APP.Areas.CheckIn
                 }
             }
             var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
-            var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count();
-            _stt = _stt == 0 ? 1 : _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Max(x => x.STT) + 1;
+
+            var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date
+            && q.WarehouseCode == ProfileUtilities.User.WarehouseCode
+            && q.OrgCode == ProfileUtilities.User.OrganizeCode).Count();
+
+            _stt = _stt == 0 ? 1 :
+                _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date
+            && q.WarehouseCode == ProfileUtilities.User.WarehouseCode
+            && q.OrgCode == ProfileUtilities.User.OrganizeCode).Max(x => x.STT) + 1;
+
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
@@ -616,9 +615,11 @@ namespace VCS.APP.Areas.CheckIn
                 {
                     Id = headerId,
                     VehicleCode = txtLicensePlate.Text,
+                    VehicleName = name,
                     CompanyCode = ProfileUtilities.User.OrganizeCode,
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     NoteIn = txtNoteIn.Text,
+                    Stt = _stt,
                     StatusProcess = "00",
                     StatusVehicle = "02",
                 });
@@ -698,40 +699,23 @@ namespace VCS.APP.Areas.CheckIn
             }
             else
             {
-                var itemDelete = _dbContext.TblBuQueue.FirstOrDefault(x => x.HeaderId == selectedHeaderId);
-                _dbContext.TblBuQueue.Remove(itemDelete);
-
                 var h = _dbContext.TblBuHeader.Find(selectedHeaderId);
                 h.StatusVehicle = "02";
+                h.Stt = _stt;
+                h.NoteIn = txtNoteIn.Text;
+                h.CreateDate = DateTime.Now;
                 _dbContext.TblBuHeader.Update(h);
-                _dbContext.TblBuOrders.Add(new TblBuOrder
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = selectedHeaderId,
-                    VehicleCode = txtLicensePlate.Text,
-                    Name = name,
-                    Order = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
-                    Stt = _dbContext.TblBuQueue.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date).Count() + 1,
-                    Count = 0,
-                    IsActive = true
-                });
                 _dbContext.SaveChanges();
             }
-            // In STT
 
             var ticketInfo = new TicketInfo
             {
                 WarehouseName = GetNameWarehouse(),
                 Vehicle = txtLicensePlate.Text,
-                // DO_Code = i.DATA.LIST_DO.Select(doItem => doItem.DO_NUMBER).ToList(),
                 STT = _stt.ToString("00"),
             };
-
             STT sttForm = new STT(ticketInfo, lstCheckDo);
             sttForm.ShowDialog();
-
-
-
             ReloadForm(_dbContext);
         }
         private string? GetNameWarehouse()
@@ -769,14 +753,14 @@ namespace VCS.APP.Areas.CheckIn
 
         private void GetListQueue()
         {
-            var lstQueue = _dbContext.TblBuQueue.Where(x => x.CreateDate.Value.Year == DateTime.Now.Year
-            && x.CreateDate.Value.Month == DateTime.Now.Month && x.CreateDate.Value.Day == DateTime.Now.Day).ToList();
-            //var lstQueue = _dbContext.TblBuQueue.ToList();
+            var lstQueue = _dbContext.TblBuHeader.Where(x => x.StatusVehicle == "01" && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
+            && x.CompanyCode == ProfileUtilities.User.OrganizeCode);
+
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem(" -", ""));
             foreach (var item in lstQueue)
             {
-                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.Name}", item.HeaderId));
+                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.VehicleName}", item.Id));
             }
             comboBox1.DataSource = items;
             comboBox1.DisplayMember = "Text";
@@ -790,10 +774,13 @@ namespace VCS.APP.Areas.CheckIn
                 ComboBoxItem selectedItem = (ComboBoxItem)comboBox1.SelectedItem;
                 string selectedValue = selectedItem.Value;
 
-                if (string.IsNullOrEmpty(selectedValue)) {
+                if (string.IsNullOrEmpty(selectedValue))
+                {
                     button3.Visible = false;
+                    btnDeleteQueue.Visible = false;
                     return;
                 }
+                btnDeleteQueue.Visible = true;
                 button3.Visible = true;
 
                 var detail = GetCheckInDetail(selectedValue);
@@ -1152,6 +1139,27 @@ namespace VCS.APP.Areas.CheckIn
         private void button2_Click(object sender, EventArgs e)
         {
             ReloadForm(_dbContext);
+        }
+
+        private void btnDeleteQueue_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Bạn có chắc chắn muốn xoá phương tiện này ra khỏi hàng chờ?",
+                                                 "Xác nhận",
+                                                 MessageBoxButtons.YesNo,
+                                                 MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+            else
+            {
+                _dbContext.TblBuHeader.RemoveRange(_dbContext.TblBuHeader.Where(x => x.Id == ((ComboBoxItem)comboBox1.SelectedItem).Value));
+                _dbContext.TblBuDetailDO.RemoveRange(_dbContext.TblBuDetailDO.Where(x => x.HeaderId == ((ComboBoxItem)comboBox1.SelectedItem).Value));
+                _dbContext.TblBuImage.RemoveRange(_dbContext.TblBuImage.Where(x => x.HeaderId == ((ComboBoxItem)comboBox1.SelectedItem).Value));
+                _dbContext.SaveChanges();
+                ReloadForm(_dbContext);
+            }
         }
     }
 }

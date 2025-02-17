@@ -36,6 +36,7 @@
             panel2 = new Panel();
             txtStatus = new Label();
             panel1 = new Panel();
+            btnDeleteQueue = new Button();
             panel6 = new Panel();
             txtNoteIn = new TextBox();
             label6 = new Label();
@@ -136,6 +137,7 @@
             // 
             panel1.AutoScroll = true;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnDeleteQueue);
             panel1.Controls.Add(panel6);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(button2);
@@ -150,6 +152,28 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(846, 822);
             panel1.TabIndex = 2;
+            // 
+            // btnDeleteQueue
+            // 
+            btnDeleteQueue.BackColor = Color.FromArgb(220, 53, 69);
+            btnDeleteQueue.Cursor = Cursors.Hand;
+            btnDeleteQueue.FlatStyle = FlatStyle.Flat;
+            btnDeleteQueue.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDeleteQueue.ForeColor = Color.White;
+            btnDeleteQueue.Image = (Image)resources.GetObject("btnDeleteQueue.Image");
+            btnDeleteQueue.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDeleteQueue.Location = new Point(96, 14);
+            btnDeleteQueue.Name = "btnDeleteQueue";
+            btnDeleteQueue.Padding = new Padding(6, 0, 6, 0);
+            btnDeleteQueue.Size = new Size(182, 40);
+            btnDeleteQueue.TabIndex = 27;
+            btnDeleteQueue.Text = "Xoá khỏi hàng chờ";
+            btnDeleteQueue.TextAlign = ContentAlignment.MiddleLeft;
+            btnDeleteQueue.TextImageRelation = TextImageRelation.ImageBeforeText;
+            toolTip.SetToolTip(btnDeleteQueue, "Làm mới cửa sổ");
+            btnDeleteQueue.UseVisualStyleBackColor = false;
+            btnDeleteQueue.Visible = false;
+            btnDeleteQueue.Click += btnDeleteQueue_Click;
             // 
             // panel6
             // 
@@ -206,9 +230,9 @@
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(431, 74);
             label5.Name = "label5";
-            label5.Size = new Size(164, 21);
+            label5.Size = new Size(209, 21);
             label5.TabIndex = 16;
-            label5.Text = "Cập nhật phương tiện:";
+            label5.Text = "Phương tiện trong hàng chờ:";
             // 
             // panel4
             // 
@@ -571,5 +595,6 @@
         private TextBox txtNoteIn;
         private Label label6;
         private ToolTip toolTip;
+        private Button btnDeleteQueue;
     }
 }

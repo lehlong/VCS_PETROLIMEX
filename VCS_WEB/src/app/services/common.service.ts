@@ -69,6 +69,38 @@ export class CommonService {
       )
   }
 
+  getWithoutLoading<T>(
+    endpoint: string,
+    params?: { [key: string]: any },
+  ): Observable<T> {
+    let httpParams = new HttpParams()
+    if (params) {
+      Object.keys(params).forEach((key) => {
+        if (params[key] !== null && params[key] !== undefined) {
+          if (Array.isArray(params[key])) {
+            params[key].forEach((value: any) => {
+              httpParams = httpParams.append(key, value)
+            })
+          } else {
+            httpParams = httpParams.append(key, params[key])
+          }
+        }
+      })
+    }
+    return this.http
+      .get<any>(`${this.baseUrl}/${endpoint}`, { params: httpParams })
+      .pipe(
+        map(this.handleApiResponse),
+        tap(),
+        catchError((error) =>
+          this.handleError(error, () =>
+            this.get<T>(endpoint, params, false),
+          ),
+        ),
+        finalize(() => this.globalService.decrementApiCallCount()), // Giảm bộ đếm khi hoàn thành
+      )
+  }
+
   post<T>(
     endpoint: string,
     data: any,

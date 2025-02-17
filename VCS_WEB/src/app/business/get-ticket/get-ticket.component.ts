@@ -57,8 +57,8 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getOrder();
-    this.setupSignalRConnection();
+    this.getList();
+    //this.setupSignalRConnection();
   }
 
   async setupSignalRConnection() {
@@ -82,13 +82,33 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this.globalService.setBreadcrumb([]);
   }
 
-  getOrder() {
-    this._service.GetOrder(this.filter).subscribe({
+  getList() {
+    this._service.GetList(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data;
+        console.log(data)
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
+      }
+    });
+  }
+
+
+  updateStatus(header: any, status: string){
+    header.statusProcess = status;
+    this._service.UpdateStatus(header).subscribe({
+      next: (data) => {
+        this.ngOnInit();
+      }
+    });
+  }
+
+  updateOrder(header: any) {
+    header.statusVehicle = "03";
+    this._service.UpdateStatus(header).subscribe({
+      next: (data) => {
+        this.ngOnInit();
       }
     });
   }
@@ -146,6 +166,10 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     });
   }
 
+  UpdateNote(i: any){
+    console.log(i)
+  }
+
   printTicket(headerId: string) {
     this._service.CheckTicket(headerId).subscribe({
       next: (data) => {
@@ -175,12 +199,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
             }
           });
         }else{
-          this.lstOrder.forEach((item) => {
-            if (item.headerId === headerId) {
-              item.note = "Chưa có ticket";
-            }
-          });
-          this.lstOrder = [...this.lstOrder];
+          this.ngOnInit();
         }
       },
       error: (err) => {

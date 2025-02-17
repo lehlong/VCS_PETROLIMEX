@@ -29,7 +29,8 @@ namespace DMS.BUSINESS.Services.BU
 {
     public interface IOrderService : IGenericService<TblBuOrder, OrderDto>
     {
-        Task<List<TblBuOrder>> GetOrder(BaseFilter filter);
+        Task<List<TblBuHeader>> GetOrder(BaseFilter filter);
+        Task<List<TblBuHeader>> GetOrderDisplay(BaseFilter filter);
         Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto);
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
@@ -38,6 +39,7 @@ namespace DMS.BUSINESS.Services.BU
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
         Task<List<string>> AsyncUploadFile(List<IFormFile> files,List<string> filePath);
+        Task UpdateStatus(TblBuHeader header);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -47,19 +49,13 @@ namespace DMS.BUSINESS.Services.BU
         {
             _hubContext = hubContext;
         }
-        public async Task<List<TblBuOrder>> GetOrder(BaseFilter filter)
+        public async Task<List<TblBuHeader>> GetOrder(BaseFilter filter)
         {
             try
             {
-                var data = await _dbContext.TblBuOrders
-                    .Where(x => x.CreateDate.Value.Date == DateTime.Now.Date &&
-                               x.WarehouseCode == filter.WarehouseCode &&
-                               x.CompanyCode == filter.OrgCode)
-                    .OrderBy(x =>x.IsDone).ThenBy(x => x.Stt)
-                    .ToListAsync();
-
-                await _hubContext.Clients.All.SendAsync(SignalRMethod.ORDER_LIST_CHANGED.ToString(), data);
-
+                var data = await _dbContext.TblBuHeader.Where(x => x.StatusVehicle != "01" && x.StatusVehicle != "04"
+                && x.CompanyCode == filter.OrgCode && x.WarehouseCode == filter.WarehouseCode && x.CreateDate.Value.Date == DateTime.Now.Date
+                ).OrderBy(x => x.Stt).ToListAsync();
                 return data;
             }
             catch (Exception ex)
@@ -67,6 +63,36 @@ namespace DMS.BUSINESS.Services.BU
                 Status = false;
                 Exception = ex;
                 return null;
+            }
+        }
+        public async Task<List<TblBuHeader>> GetOrderDisplay(BaseFilter filter)
+        {
+            try
+            {
+                var data = await _dbContext.TblBuHeader.Where(x => x.StatusVehicle == "02"
+                && x.CompanyCode == filter.OrgCode && x.WarehouseCode == filter.WarehouseCode && x.CreateDate.Value.Date == DateTime.Now.Date
+                ).OrderBy(x => x.Stt).ToListAsync();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                Exception = ex;
+                return null;
+            }
+        }
+
+        public async Task UpdateStatus(TblBuHeader header)
+        {
+            try
+            {
+                _dbContext.TblBuHeader.Update(header);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                Exception = ex;
             }
         }
         public async Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto)
@@ -277,6 +303,10 @@ namespace DMS.BUSINESS.Services.BU
                 }
                 else
                 {
+                    i.StatusProcess = "02";
+                    i.NoteIn = "Phương tiện chưa có ticket";
+                    _dbContext.TblBuHeader.Update(i);
+                    _dbContext.SaveChanges();
                     return false;
                 }
             }

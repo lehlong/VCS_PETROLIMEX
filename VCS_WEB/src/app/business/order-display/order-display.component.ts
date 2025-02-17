@@ -4,6 +4,7 @@ import { OrderService } from '../../services/business/order.service';
 import { Subscription } from 'rxjs';
 import { OrderModel } from '../../models/bussiness/order.model';
 import { GlobalService } from '../../services/global.service';
+import { BaseFilter } from '../../models/base.model';
 
 @Component({
   selector: 'app-order-display',
@@ -12,59 +13,46 @@ import { GlobalService } from '../../services/global.service';
   templateUrl: './order-display.component.html',
   styleUrl: './order-display.component.scss'
 })
-export class OrderDisplayComponent implements OnInit, OnDestroy {
+export class OrderDisplayComponent implements OnInit {
   isFullscreen: boolean = false;
-  private orderSubscription?: Subscription;
-  orders: OrderModel[] = [];
-  companyCode?: string = localStorage.getItem('companyCode')?.toString();
-  currentCallOrder?: OrderModel;
-  userName: any
-  loading: boolean = false
-  private readonly SHOULD_PLAY_VOICE = true;
-
-  constructor(private orderService: OrderService, private globalService: GlobalService) {
-    this.globalService.getLoading().subscribe((value) => {
-      this.loading = value;
-    });
-    const UserInfo = this.globalService.getUserInfo()
-    this.userName = UserInfo?.userName
+  lstOrder: any[] = []
+  companyCode?: string = localStorage.getItem('companyCode')?.toString()
+  warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
+  filter: BaseFilter = {
+    orgCode: localStorage.getItem('companyCode')?.toString(),
+    warehouseCode: localStorage.getItem('warehouseCode')?.toString(),
+    currentPage: 0,
+    pageSize: 0,
+    keyWord: ''
   }
 
-  async ngOnInit() {
-    if (!this.orderService.isConnected()) {
-      await this.orderService.initializeConnection();
-      await this.orderService.joinGroup(this.userName || '');
-    }
-    this.orderSubscription = this.orderService.getOrderList().subscribe(orders => {
-      if (orders) {
-        this.orders = orders;
-        if (this.SHOULD_PLAY_VOICE) {
-          const calledOrder = orders.find(o => o.isCall);
-          if (calledOrder && calledOrder !== this.currentCallOrder) {
-            this.currentCallOrder = calledOrder;
-            this.speechNotify(calledOrder.vehicleCode || '');
-          }
-        }
+  constructor(private _service: OrderService) {
+  }
+
+  ngOnInit() {
+    setInterval(() => { this.getList(); }, 5000);
+  }
+
+  getList() {
+    this._service.GetListWithoutLoading(this.filter).subscribe({
+      next: (data) => {
+        this.lstOrder = data;
+      },
+      error: (err) => {
+        console.error('Lỗi:', err);
       }
     });
   }
 
-  async ngOnDestroy() {
-    if (this.orderSubscription) {
-      this.orderSubscription.unsubscribe();
-    }
-    this.globalService.setBreadcrumb([]);
-  }
-
-  speechNotify(vehicleCode: string): void {
-    const space = vehicleCode.split('').join(' ');
-    const utterance = new SpeechSynthesisUtterance(
-      `Xin mời xe có biển số, ${space}, vào lấy Tích kê`
-    );
-    utterance.lang = 'vi-VN';
-    utterance.rate = 0.65;
-    window.speechSynthesis.speak(utterance);
-  }
+  // speechNotify(vehicleCode: string): void {
+  //   const space = vehicleCode.split('').join(' ');
+  //   const utterance = new SpeechSynthesisUtterance(
+  //     `Xin mời xe có biển số, ${space}, vào lấy Tích kê`
+  //   );
+  //   utterance.lang = 'vi-VN';
+  //   utterance.rate = 0.65;
+  //   window.speechSynthesis.speak(utterance);
+  // }
 
   toggleFullscreen(check: boolean) {
     this.isFullscreen = check;

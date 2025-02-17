@@ -21,18 +21,18 @@
     <table>
       <thead>
         <tr>
-          <th>Số thứ tự</th>
-          <th>Tài xế</th>
-          <th>Biển số xe</th>
+          <th style="width: 10%;">STT</th>
+          <th style="width: 25%;">Tài xế</th>
+          <th style="width: 20%;">Biển số xe</th>
           <th>Ghi chú</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders">
+        <tr *ngFor="let order of lstOrder">
           <td>{{order.stt}}</td>
-          <td>{{order.name}}</td>
+          <td>{{order.vehicleName}}</td>
           <td>{{order.vehicleCode}}</td>
-          <td>{{order.count}}</td>
+          <td>{{order.noteIn}}</td>
         </tr>
       </tbody>
     </table>

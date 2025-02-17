@@ -6,6 +6,8 @@ using DMS.BUSINESS.Services.BU;
 using DMS.BUSINESS.Dtos.BU;
 using Microsoft.AspNetCore.Authorization;
 using DMS.API.AppCode.Attribute;
+using DMS.CORE.Entities.MD;
+using DMS.CORE.Entities.BU;
 
 namespace DMS.API.Controllers.BU
 {
@@ -32,6 +34,51 @@ namespace DMS.API.Controllers.BU
             }
             return Ok(transferObject);
         }
+
+        [HttpGet("GetOrderDisplay")]
+        public async Task<IActionResult> GetOrderDisplay([FromQuery] BaseFilter filter)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.GetOrderDisplay(filter);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0001", _service);
+            }
+            return Ok(transferObject);
+        }
+
+        [HttpPut("UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus([FromBody] TblBuHeader header)
+        {
+            var transferObject = new TransferObject();
+            await _service.UpdateStatus(header);
+            if (_service.Status)
+            {
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0103", _service);
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0104", _service);
+            }
+            return Ok(transferObject);
+        }
+
+
+
+
+
+
+
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] OrderDto orderDto)

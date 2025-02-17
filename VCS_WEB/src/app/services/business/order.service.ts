@@ -18,13 +18,20 @@ export class OrderService {
 
   constructor(private commonService: CommonService) { }
 
-  // API Methods
-  GetOrder(filter: BaseFilter): Observable<any> {
-    return this.commonService.get('Order/GetOrder', filter).pipe(
-      tap((data: any) => {
-        this.orderListSubject.next(data);
-      })
-    );
+  // // API Methods
+  // GetOrder(filter: BaseFilter): Observable<any> {
+  //   return this.commonService.get('Order/GetOrder', filter).pipe(
+  //     tap((data: any) => {
+  //       this.orderListSubject.next(data);
+  //     })
+  //   );
+  // }
+
+  GetList(filter: BaseFilter): Observable<any> {
+    return this.commonService.get(`Order/GetOrder`, filter);
+  }
+  GetListWithoutLoading(filter: BaseFilter): Observable<any> {
+    return this.commonService.getWithoutLoading(`Order/GetOrderDisplay`, filter);
   }
 
   Add(order: OrderModel): Observable<any> {
@@ -33,6 +40,10 @@ export class OrderService {
 
   UpdateOrderCall(params: any): Observable<any> {
     return this.commonService.put('Order/UpdateOrderCall', params);
+  }
+
+  UpdateStatus(params: any): Observable<any> {
+    return this.commonService.put('Order/UpdateStatus', params);
   }
 
   UpdateOrderCome(params: any): Observable<any> {

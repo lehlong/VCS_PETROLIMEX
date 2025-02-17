@@ -2,6 +2,16 @@ td>button {
     margin-left: 6px;
 }
 
+td>textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+}
+td>textarea:focus {
+    outline: none;
+    border: none;
+}
+
 .div-print {
     width: 680px;
     height: 480px;

@@ -134,7 +134,7 @@ namespace VCS.APP.Areas.CheckOut
             var lstQueue = _dbContext.TblBuHeader.Where(x =>
             x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
             x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-            x.IsCheckout == false).ToList();
+            x.StatusVehicle != "04" && x.StatusVehicle != "01").ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem(" -", ""));
             foreach (var item in lstQueue)

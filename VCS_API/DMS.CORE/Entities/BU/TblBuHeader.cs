@@ -14,12 +14,13 @@ namespace DMS.CORE.Entities.BU
 
         [Column("VEHICLE_CODE", TypeName = "NVARCHAR(50)")]
         public string VehicleCode { get; set; }
+        [Column("VEHICLE_NAME", TypeName = "NVARCHAR(500)")]
+        public string VehicleName { get; set; }
 
         [Column("COMPANY_CODE", TypeName = "NVARCHAR(50)")]
         public string CompanyCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
         public string WarehouseCode { get; set; }
-
 
         //01-Xe đang trong hàng chờ, 02-Xe đã vào kho, 03- Xe đang lấy hàng, 04- Xe đã ra kho
         [Column("STATUS_VEHICLE", TypeName = "NVARCHAR(50)")]
@@ -29,6 +30,8 @@ namespace DMS.CORE.Entities.BU
         [Column("STATUS_PROCESS", TypeName = "NVARCHAR(50)")]
         public string? StatusProcess { get; set; }
 
+        [Column("STT")]
+        public int Stt { get; set; }
 
 
         [Column("IS_CHECKOUT")]

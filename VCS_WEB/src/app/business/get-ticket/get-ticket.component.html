@@ -12,54 +12,82 @@
         <nz-table [nzData]="lstOrder" #headerTable>
             <thead>
                 <tr>
-                    <th nzWidth="40px">STT</th>
+                    <th nzWidth="40px" nzAlign="center">STT</th>
                     <th>Tài xế</th>
-                    <th>Biển số</th>
-                    <th>Thời gian vào</th>
+                    <th nzAlign="center">Biển số</th>
+                    <th nzAlign="center">Thời gian vào</th>
                     <th>Ghi chú</th>
-                    <th>Trạng thái</th>
+                    <th nzAlign="center">Trạng thái xe</th>
+                    <th nzAlign="center">Trạng thái</th>
                     <th nzAlign="center" nzWidth="500">Thực hiện</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let i of headerTable.data">
-                    <td>{{i.stt}}</td>
-                    <td>{{i.name}}</td>
-                    <td>{{i.vehicleCode}}</td>
-                    <td>{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-                    <td>{{i.count}}</td>
-                    <td *ngIf="i.isDone">
-                        <nz-tag nzColor="success">
-                            <span nz-icon nzType="check-circle"></span>
-                            <span>Đã xử lý</span>
-                        </nz-tag>
+                    <td nzAlign="center">{{i.stt}}</td>
+                    <td>{{i.vehicleName}}</td>
+                    <td nzAlign="center">{{i.vehicleCode}}</td>
+                    <td nzAlign="center">{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+                    <td>
+                        <textarea [(ngModel)]="i.noteIn" (change)="updateStatus(i,i.statusProcess)"></textarea>
                     </td>
-                    <td *ngIf="!i.isDone">
-                        <nz-tag nzColor="error">
-                            <span nz-icon nzType="close-circle"></span>
-                            <span>Chưa xử lý</span>
+                    <td nzAlign="center">
+                        <nz-tag nzColor="default" *ngIf="i.statusVehicle == '02'">
+                            <span nz-icon nzType="clock-circle"></span>
+                            <span>Xe đã vào kho</span>
+                        </nz-tag>
+                        <nz-tag nzColor="processing" *ngIf="i.statusVehicle == '03'">
+                            <span nz-icon nzType="sync" nzSpin></span>
+                            <span>Xe đang lấy hàng</span>
                         </nz-tag>
                     </td>
                     <td nzAlign="center">
-                        <button nz-button (click)="updateOrderCall(i)" [disabled]="i.isDone" nz-popover
-                            nzPopoverTitle="Mời xe vào" [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='00'">
+                            <span nz-icon nzType="close-circle"></span>
+                            <span>Chưa xử lý</span>
+                        </nz-tag>
+                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='01'">
+                            <span nz-icon nzType="right" nzTheme="outline"></span>
+                            <span>Đã mời xe vào</span>
+                        </nz-tag>
+                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='02'">
+                            <span nz-icon nzType="close-circle"></span>
+                            <span>Chưa có ticket</span>
+                        </nz-tag>
+                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='03'">
+                            <span nz-icon nzType="printer" nzTheme="outline"></span>
+                            <span>Đã in ticket</span>
+                        </nz-tag>
+                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='04'">
+                            <span nz-icon nzType="check" nzTheme="outline"></span>
+                            <span>Đã xử lý</span>
+                        </nz-tag>
+                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='05'">
+                            <span nz-icon nzType="close-circle"></span>
+                            <span>Không xử lý</span>
+                        </nz-tag>
+                    </td>
+
+                    <td nzAlign="center">
+                        <button nz-button (click)="updateStatus(i,'01')" [disabled]="i.isDone" nz-popover
+                            nzPopoverTitle="Mời xe vào" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
                         <button nz-button><span nz-icon nzType="printer" nzTheme="outline" nz-popover
-                                (click)="printTicket(i.headerId)" nzPopoverTitle="Kiểm tra và in ticket"
-                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.name" nzPopoverPlacement="top">
+                                (click)="printTicket(i.id)" nzPopoverTitle="Kiểm tra và in ticket"
+                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             </span></button>
-                        <button nz-button (click)="updateOrderCome(i)" [disabled]="i.isDone" nz-popover
-                            nzPopoverTitle="Xếp xe vào họng" [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                        <button nz-button (click)="updateOrder(i)" [disabled]="i.isDone" nz-popover
+                            nzPopoverTitle="Xếp xe vào họng" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
-                        <button nz-button (click)="updateOrderDone(i)" [disabled]="i.isDone"><span nz-icon
+                        <button nz-button (click)="updateStatus(i,'04')" [disabled]="i.isDone"><span nz-icon
                                 nzType="check" nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
-                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.name"
+                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                                 nzPopoverPlacement="top"></span></button>
-                        <button nz-button [disabled]="i.isDone" nz-popover nzPopoverTitle="Không xử lý"
-                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.name" nzPopoverPlacement="top"><span nz-icon
+                        <button nz-button (click)="updateStatus(i,'05')" [disabled]="i.isDone" nz-popover nzPopoverTitle="Không xử lý"
+                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top"><span nz-icon
                                 nzType="close" nzTheme="outline"></span></button>
                     </td>
                 </tr>
