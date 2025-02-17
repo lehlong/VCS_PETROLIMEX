@@ -11,6 +11,7 @@ using System.Net.Http;
 using DMS.BUSINESS.Dtos.SMO;
 using System.Text.Json;
 using DMS.CORE;
+using Microsoft.Extensions.Configuration;
 
 namespace VCS.APP.Services
 {
@@ -189,7 +190,7 @@ namespace VCS.APP.Services
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Accept.Clear(); 
+                    client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}PO/GetDO?doNumber={number}");
@@ -208,7 +209,7 @@ namespace VCS.APP.Services
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var resEx = new DOSAPDataDto();
                 resEx.STATUS = false;
@@ -253,31 +254,16 @@ namespace VCS.APP.Services
         {
             try
             {
-                var config = dbContext.TblAdConfigApp.FirstOrDefault(x => 
-                    x.OrgCode == ProfileUtilities.User.OrganizeCode && 
-                    x.WarehouseCode == ProfileUtilities.User.WarehouseCode);
-
-                if (config != null)
-                {
-                    Global.SmoApiUsername = config.SmoApiUsername;
-                    Global.SmoApiPassword = config.SmoApiPassword;
-                    Global.SmoApiUrl = config.SmoApiUrl;
-                    Global.PathSaveFile = config.PathSaveFile;
-                    Global.DetectApiUrl = config.DetectApiUrl;
-                    Global.Connection = config.ConnectionDb;
-                    Global.DetectFilePath = config.DetectFilePath;
-                }
-                else
-                {
-                    // Reset tất cả các giá trị về null
-                    Global.SmoApiUsername = null;
-                    Global.SmoApiPassword = null;
-                    Global.SmoApiUrl = null;
-                    Global.PathSaveFile = null;
-                    Global.DetectApiUrl = null;
-                    Global.Connection = null;
-                    Global.DetectFilePath = null; 
-                }
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .Build();
+                Global.SmoApiUsername = config["Setting:SmoApiUsername"];
+                Global.SmoApiPassword = config["Setting:SmoApiPassword"];
+                Global.SmoApiUrl = config["Setting:SmoApiUrl"];
+                Global.PathSaveFile = config["Setting:PathSaveFile"];
+                Global.DetectApiUrl = config["Setting:DetectApiUrl"];
+                Global.DetectFilePath = config["Setting:DetectFilePath"];
             }
             catch (Exception ex)
             {

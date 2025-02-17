@@ -8,6 +8,7 @@ namespace VCS.APP.Utilities
 {
     public static class Global
     {
+        public static string? DeviceId { get; set; }
         public static string? SmoApiUsername { get; set; }
         public static string? SmoApiPassword { get; set; }
         public static string? SmoApiUrl { get; set; }

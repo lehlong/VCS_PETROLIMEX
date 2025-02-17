@@ -96,7 +96,15 @@ namespace VCS.APP.Areas.Home
                     _mediaPlayers[camera.Code] = player;
 
                     cameraContainer.Controls.Add(videoView);
-                    cameraPanel.Controls.Add(cameraContainer);
+
+                    if (camera.IsIn)
+                    {
+                        cameraPanelIn.Controls.Add(cameraContainer);
+                    }
+                    else
+                    {
+                        cameraPanelOut.Controls.Add(cameraContainer);
+                    }
 
                     player.Play();
                 }
@@ -118,7 +126,7 @@ namespace VCS.APP.Areas.Home
                     player.Dispose();
                 }
                 _mediaPlayers.Clear();
-                cameraPanel.Controls.Clear();
+                cameraPanelIn.Controls.Clear();
                 _libVLC?.Dispose();
             }
             catch (Exception ex)

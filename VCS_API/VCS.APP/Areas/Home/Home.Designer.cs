@@ -29,25 +29,26 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
-            cameraPanel = new FlowLayoutPanel();
+            cameraPanelIn = new FlowLayoutPanel();
             panel1 = new Panel();
             button1 = new Button();
             panel2 = new Panel();
+            cameraPanelOut = new FlowLayoutPanel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // cameraPanel
+            // cameraPanelIn
             // 
-            cameraPanel.AutoScroll = true;
-            cameraPanel.BackColor = Color.Transparent;
-            cameraPanel.ForeColor = SystemColors.ControlText;
-            cameraPanel.Location = new Point(2, 61);
-            cameraPanel.Margin = new Padding(4);
-            cameraPanel.Name = "cameraPanel";
-            cameraPanel.Padding = new Padding(10, 14, 13, 14);
-            cameraPanel.Size = new Size(1374, 745);
-            cameraPanel.TabIndex = 0;
+            cameraPanelIn.AutoScroll = true;
+            cameraPanelIn.BackColor = Color.Transparent;
+            cameraPanelIn.ForeColor = SystemColors.ControlText;
+            cameraPanelIn.Location = new Point(2, 61);
+            cameraPanelIn.Margin = new Padding(4);
+            cameraPanelIn.Name = "cameraPanelIn";
+            cameraPanelIn.Padding = new Padding(10, 14, 13, 14);
+            cameraPanelIn.Size = new Size(687, 745);
+            cameraPanelIn.TabIndex = 0;
             // 
             // panel1
             // 
@@ -85,13 +86,26 @@
             // 
             panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
+            panel2.Controls.Add(cameraPanelOut);
             panel2.Controls.Add(panel1);
-            panel2.Controls.Add(cameraPanel);
+            panel2.Controls.Add(cameraPanelIn);
             panel2.Location = new Point(10, 9);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
             panel2.Size = new Size(1382, 824);
             panel2.TabIndex = 2;
+            // 
+            // cameraPanelOut
+            // 
+            cameraPanelOut.AutoScroll = true;
+            cameraPanelOut.BackColor = Color.Transparent;
+            cameraPanelOut.ForeColor = SystemColors.ControlText;
+            cameraPanelOut.Location = new Point(691, 61);
+            cameraPanelOut.Margin = new Padding(4);
+            cameraPanelOut.Name = "cameraPanelOut";
+            cameraPanelOut.Padding = new Padding(10, 14, 13, 14);
+            cameraPanelOut.Size = new Size(687, 745);
+            cameraPanelOut.TabIndex = 1;
             // 
             // Home
             // 
@@ -111,9 +125,10 @@
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel cameraPanel;
+        private System.Windows.Forms.FlowLayoutPanel cameraPanelIn;
         private Panel panel1;
         private Button button1;
         private Panel panel2;
+        private FlowLayoutPanel cameraPanelOut;
     }
 }

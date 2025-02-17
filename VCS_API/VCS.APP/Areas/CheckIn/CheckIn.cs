@@ -112,6 +112,8 @@ namespace VCS.APP.Areas.CheckIn
             }
             catch (Exception ex)
             {
+                txtLicensePlate.Text = "";
+                pictureBoxLicensePlate.Image = null;
                 txtStatus.Text = "Lỗi không nhận diện được biển số!";
                 txtStatus.ForeColor = Color.Red;
                 txtLicensePlate.Text = "";

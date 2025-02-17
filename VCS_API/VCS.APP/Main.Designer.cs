@@ -32,6 +32,7 @@ namespace VCS.APP
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelMenu = new Panel();
+            linkLabel1 = new LinkLabel();
             label3 = new Label();
             pictureBox8 = new PictureBox();
             pictureBox12 = new PictureBox();
@@ -82,6 +83,7 @@ namespace VCS.APP
             panelMenu.AllowDrop = true;
             panelMenu.BackColor = Color.White;
             panelMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            panelMenu.Controls.Add(linkLabel1);
             panelMenu.Controls.Add(label3);
             panelMenu.Controls.Add(pictureBox8);
             panelMenu.Controls.Add(pictureBox12);
@@ -106,12 +108,25 @@ namespace VCS.APP
             panelMenu.Size = new Size(200, 840);
             panelMenu.TabIndex = 0;
             // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel1.LinkColor = Color.Gray;
+            linkLabel1.Location = new Point(117, 818);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(64, 13);
+            linkLabel1.TabIndex = 18;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "d2s.com.vn";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.Gray;
-            label3.Location = new Point(56, 781);
+            label3.Location = new Point(23, 818);
             label3.Name = "label3";
             label3.Size = new Size(98, 13);
             label3.TabIndex = 17;
@@ -120,9 +135,9 @@ namespace VCS.APP
             // pictureBox8
             // 
             pictureBox8.Image = (Image)resources.GetObject("pictureBox8.Image");
-            pictureBox8.Location = new Point(42, 797);
+            pictureBox8.Location = new Point(40, 781);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(120, 25);
+            pictureBox8.Size = new Size(120, 32);
             pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox8.TabIndex = 16;
             pictureBox8.TabStop = false;
@@ -562,5 +577,6 @@ namespace VCS.APP
         private Label txtWarehouse;
         private Label label3;
         private PictureBox pictureBox8;
+        private LinkLabel linkLabel1;
     }
 }

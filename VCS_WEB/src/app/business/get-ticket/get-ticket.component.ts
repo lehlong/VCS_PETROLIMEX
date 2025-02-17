@@ -174,6 +174,13 @@ export class GetTicketComponent implements OnInit, OnDestroy {
               console.error('Error fetching orders:', err);
             }
           });
+        }else{
+          this.lstOrder.forEach((item) => {
+            if (item.headerId === headerId) {
+              item.note = "Chưa có ticket";
+            }
+          });
+          this.lstOrder = [...this.lstOrder];
         }
       },
       error: (err) => {

@@ -1,5 +1,6 @@
 ﻿using DMS.CORE;
 using DMS.CORE.Entities.AD;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Utilities;
@@ -32,46 +35,71 @@ namespace VCS.APP.Areas.ConfigApp
 
         private void GetConfig()
         {
-            _dbContext.ChangeTracker.Clear();
-            var config = _dbContext.TblAdConfigApp.FirstOrDefault(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
-            && x.WarehouseCode == ProfileUtilities.User.WarehouseCode);
-            if (config != null)
-            {
-                _config = config;
-                txtSmoApiUrl.Text = config.SmoApiUrl;
-                txtSmoApiUsername.Text = config.SmoApiUsername;
-                txtSmoApiPassword.Text = config.SmoApiPassword;
-                txtPathSaveFile.Text = config.PathSaveFile;
-                txtUrlDetect.Text = config.DetectApiUrl;
-                txtDetectFilePath.Text = config.DetectFilePath;
-            }
+            var config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .Build();
+            txtSmoApiUsername.Text = config["Setting:SmoApiUsername"];
+            txtSmoApiPassword.Text = config["Setting:SmoApiPassword"];
+            txtSmoApiUrl.Text = config["Setting:SmoApiUrl"];
+            txtPathSaveFile.Text = config["Setting:PathSaveFile"];
+            txtUrlDetect.Text = config["Setting:DetectApiUrl"];
+            txtDetectFilePath.Text = config["Setting:DetectFilePath"];
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                _config.SmoApiUrl = txtSmoApiUrl.Text;
-                _config.SmoApiUsername = txtSmoApiUsername.Text;
-                _config.SmoApiPassword = txtSmoApiPassword.Text;
-                _config.PathSaveFile = txtPathSaveFile.Text;
-                _config.DetectApiUrl = txtUrlDetect.Text;
-                _config.DetectFilePath = txtDetectFilePath.Text;
-                _dbContext.TblAdConfigApp.Update(_config);
-                _dbContext.SaveChanges();
+                string filePath = "appsettings.json";
+                string json = File.ReadAllText(filePath);
+                var jsonObj = JsonNode.Parse(json);
 
-                MessageBox.Show("Cập nhật thông tin thành công!");
-                Global.SmoApiUrl = _config.SmoApiUrl;
-                Global.SmoApiUsername= _config.SmoApiUsername;
-                Global.SmoApiPassword= _config.SmoApiPassword;
-                Global.PathSaveFile= _config.PathSaveFile;
-                Global.DetectApiUrl= _config.DetectApiUrl;
-                Global.DetectFilePath = _config.DetectFilePath;
+                if (jsonObj != null)
+                {
+                    jsonObj["Setting"]["SmoApiUrl"] = txtSmoApiUrl.Text;
+                    jsonObj["Setting"]["SmoApiUsername"] = txtSmoApiUsername.Text;
+                    jsonObj["Setting"]["SmoApiPassword"] = txtSmoApiPassword.Text;
+                    jsonObj["Setting"]["PathSaveFile"] = txtPathSaveFile.Text;
+                    jsonObj["Setting"]["DetectApiUrl"] = txtUrlDetect.Text;
+                    jsonObj["Setting"]["DetectFilePath"] = txtDetectFilePath.Text;
+
+                    File.WriteAllText(filePath, jsonObj.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
+                }
+
+                Global.SmoApiUrl = txtSmoApiUrl.Text;
+                Global.SmoApiUsername = txtSmoApiUsername.Text;
+                Global.SmoApiPassword = txtSmoApiPassword.Text;
+                Global.PathSaveFile = txtPathSaveFile.Text;
+                Global.DetectApiUrl = txtUrlDetect.Text;
+                Global.DetectFilePath = txtDetectFilePath.Text;
+
+                var result = MessageBox.Show("Vui lòng khởi động lại hệ thống để áp dụng cài đặt!",
+                                             "Xác nhận",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    RestartApplication();
+                }
+                else
+                {
+                    return;
+                }
+
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi hệ thống! Vui lòng liên hệ với quản trị viên!");
             }
+        }
+
+        private void RestartApplication()
+        {
+            Application.Restart();
+            Application.Exit();
         }
     }
 }

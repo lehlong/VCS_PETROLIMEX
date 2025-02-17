@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -121,6 +122,23 @@ namespace VCS.APP
                 this.Hide();
                 var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
                 loginForm.Show();
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "http://d2s.com.vn/",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
     }

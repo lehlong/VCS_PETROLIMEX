@@ -13,7 +13,7 @@ namespace DMS.CORE.Entities.AD
         public string Id { get; set; }
 
         [Column("ORG_CODE", TypeName = "NVARCHAR(50)")]
-        public string OrgCode { get; set; }
+        public string? OrgCode { get; set; }
         [Column("WAREHOUSE_CODE", TypeName = "NVARCHAR(50)")]
         public string? WarehouseCode { get; set; }
         [Column("SMO_API_USERNAME", TypeName = "NVARCHAR(50)")]
