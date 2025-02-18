@@ -320,6 +320,16 @@ namespace VCS.APP.Areas.CheckOut
                     txtStatus.ForeColor = Color.Red;
                     return;
                 }
+                // Kiểm tra trạng thái xe
+                var vehicle = _dbContext.TblBuHeader.Find(selectedValue);
+                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05")
+                {
+                    txtStatus.Text = "Phương tiện không xử lý";
+                    txtStatus.ForeColor = Color.Green;
+                    this.isHasInvoice = true; // Bỏ qua kiểm tra hóa đơn
+                    txtNoteOut.Text = "Phương tiện không xử lý";
+                    return;
+                }
 
                 var dataDetail = _s.CheckInvoice(number, token);
                 if (!dataDetail.STATUS)
@@ -523,6 +533,7 @@ namespace VCS.APP.Areas.CheckOut
                 txtStatus.ForeColor = Color.Red;
                 return;
             }
+            
             if (!this.isHasInvoice)
             {
                 var result = MessageBox.Show("Hoá đơn chưa đầy đủ! Bạn có chắc chắn muốn cho xe ra!",
