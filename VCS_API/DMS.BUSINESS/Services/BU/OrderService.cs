@@ -86,6 +86,24 @@ namespace DMS.BUSINESS.Services.BU
         {
             try
             {
+                if (header.StatusProcess == "01")
+                {
+                    header.IsVoice = true;
+                    var lst = await _dbContext.TblBuHeader.Where(x => x.Id != header.Id
+                                && x.CompanyCode == header.CompanyCode && x.WarehouseCode == header.WarehouseCode
+                                && x.CreateDate.Value.Date == DateTime.Now.Date).OrderBy(x => x.Stt).ToListAsync();
+                    foreach (var i in lst)
+                    {
+                        i.IsVoice = false;
+                        _dbContext.TblBuHeader.Update(i);
+                    }
+                }
+                else
+                {
+                    header.IsVoice = false;
+                }
+
+
                 _dbContext.TblBuHeader.Update(header);
                 await _dbContext.SaveChangesAsync();
             }
@@ -256,7 +274,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlCommand cmd = new SqlCommand(queryTest, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try
@@ -294,11 +312,13 @@ namespace DMS.BUSINESS.Services.BU
                             }
                         }
                         i.IsPrint = true;
-                        _dbContext.TblBuHeader.Update(i);
                         _dbContext.TblBuHeaderTgbx.AddRange(h);
                         _dbContext.TblBuDetailTgbx.AddRange(lstDetail);
                         _dbContext.SaveChanges();
                     }
+                    i.StatusProcess = "03";
+                    _dbContext.TblBuHeader.Update(i);
+                    _dbContext.SaveChanges();
                     return true;
                 }
                 else

@@ -69,26 +69,36 @@
                     </td>
 
                     <td nzAlign="center">
-                        <button nz-button (click)="updateStatus(i,'01')" [disabled]="i.isDone" nz-popover
+                        <button nz-button (click)="updateStatus(i,'01')"
+                            *ngIf="i.statusProcess == '00' || i.statusProcess == '01'" nz-popover
                             nzPopoverTitle="Mời xe vào" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
-                        <button nz-button><span nz-icon nzType="printer" nzTheme="outline" nz-popover
-                                (click)="printTicket(i.id)" nzPopoverTitle="Kiểm tra và in ticket"
-                                [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
-                            </span></button>
-                        <button nz-button (click)="updateOrder(i)" [disabled]="i.isDone" nz-popover
-                            nzPopoverTitle="Xếp xe vào họng" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+                        <button nz-button nz-popover *ngIf="i.statusProcess != '05'" (click)="printTicket(i.id)"
+                            nzPopoverTitle="Kiểm tra và in ticket" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top">
+                            <span nz-icon nzType="printer" nzTheme="outline">
+                            </span></button>
+
+
+                        <button nz-button (click)="updateOrder(i)" nz-popover
+                            *ngIf="i.statusProcess != '04' && i.statusProcess != '05'" nzPopoverTitle="Xếp xe vào họng"
+                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
-                        <button nz-button (click)="updateStatus(i,'04')" [disabled]="i.isDone"><span nz-icon
-                                nzType="check" nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
+
+
+                        <button nz-button (click)="updateStatus(i,'04')"
+                            *ngIf="i.statusProcess != '04' && i.statusProcess != '05'"><span nz-icon nzType="check"
+                                nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
                                 [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                                 nzPopoverPlacement="top"></span></button>
-                        <button nz-button (click)="updateStatus(i,'05')" [disabled]="i.isDone" nz-popover nzPopoverTitle="Không xử lý"
-                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top"><span nz-icon
-                                nzType="close" nzTheme="outline"></span></button>
+
+
+                        <button nz-button (click)="updateStatus(i,'05')"
+                            *ngIf="i.statusProcess != '04' && i.statusProcess != '05'" nz-popover
+                            nzPopoverTitle="Không xử lý" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+                            nzPopoverPlacement="top"><span nz-icon nzType="close" nzTheme="outline"></span></button>
                     </td>
                 </tr>
             </tbody>
@@ -105,7 +115,8 @@
         </div>
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span style="font-weight: normal;">{{ticketDetail.ticketNumber}}</span></span>
+                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span
+                        style="font-weight: normal;">{{ticketDetail.ticketNumber}}</span></span>
             </div>
         </div>
     </div>

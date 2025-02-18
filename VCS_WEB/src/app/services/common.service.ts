@@ -126,6 +126,20 @@ export class CommonService {
     )
   }
 
+  putWithoutLoading<T>(
+    endpoint: string,
+    data: any,
+  ): Observable<T> {
+    return this.http.put<any>(`${this.baseUrl}/${endpoint}`, data).pipe(
+      map(this.handleApiResponse),
+      tap(() => this.showSuccess('Thành công')),
+      catchError((error) =>
+        this.handleError(error, () => this.put<T>(endpoint, data, false)),
+      ),
+      finalize(() => this.globalService.decrementApiCallCount()), // Giảm bộ đếm khi hoàn thành
+    )
+  }
+
   put<T>(
     endpoint: string,
     data: any,

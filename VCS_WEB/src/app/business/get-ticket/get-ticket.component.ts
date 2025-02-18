@@ -58,6 +58,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getList();
+    setInterval(() => { this.getList(); }, 5000)
     //this.setupSignalRConnection();
   }
 
@@ -86,7 +87,6 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     this._service.GetList(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data;
-        console.log(data)
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
@@ -99,7 +99,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     header.statusProcess = status;
     this._service.UpdateStatus(header).subscribe({
       next: (data) => {
-        this.ngOnInit();
+        this.getList();
       }
     });
   }
@@ -108,7 +108,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     header.statusVehicle = "03";
     this._service.UpdateStatus(header).subscribe({
       next: (data) => {
-        this.ngOnInit();
+        this.getList();
       }
     });
   }
@@ -116,7 +116,6 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   checkTicket(headerId: string) {
     this._service.CheckTicket(headerId).subscribe({
       next: (data) => {
-        console.log(data)
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
@@ -199,7 +198,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
             }
           });
         }else{
-          this.ngOnInit();
+          this.getList();
         }
       },
       error: (err) => {

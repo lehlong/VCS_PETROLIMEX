@@ -29,13 +29,13 @@ namespace DMS.CORE.Entities.BU
         //00-Chưa xử lý, 01- Đã mời xe vào, 02- Chưa có ticket, 03- Đã in ticket, 04 - Đã xử lý, 05 - Không xử lý
         [Column("STATUS_PROCESS", TypeName = "NVARCHAR(50)")]
         public string? StatusProcess { get; set; }
-
         [Column("STT")]
         public int Stt { get; set; }
 
-
         [Column("IS_CHECKOUT")]
         public bool? IsCheckout { get; set; }
+        [Column("IS_VOICE")]
+        public bool? IsVoice { get; set; }
         [Column("IS_PRINT")]
         public bool? IsPrint { get; set; }
         [Column("TIME_CHECKOUT")]

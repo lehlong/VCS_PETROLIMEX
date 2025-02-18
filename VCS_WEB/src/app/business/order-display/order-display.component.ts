@@ -30,6 +30,7 @@ export class OrderDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getList();
     setInterval(() => { this.getList(); }, 5000);
   }
 
@@ -37,6 +38,8 @@ export class OrderDisplayComponent implements OnInit {
     this._service.GetListWithoutLoading(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data;
+        var i = this.lstOrder.find(x => x.isVoice === true);
+        if (i) this.speechNotify(i.vehicleCode);
       },
       error: (err) => {
         console.error('Lỗi:', err);
@@ -44,15 +47,15 @@ export class OrderDisplayComponent implements OnInit {
     });
   }
 
-  // speechNotify(vehicleCode: string): void {
-  //   const space = vehicleCode.split('').join(' ');
-  //   const utterance = new SpeechSynthesisUtterance(
-  //     `Xin mời xe có biển số, ${space}, vào lấy Tích kê`
-  //   );
-  //   utterance.lang = 'vi-VN';
-  //   utterance.rate = 0.65;
-  //   window.speechSynthesis.speak(utterance);
-  // }
+  speechNotify(vehicleCode: string): void {
+    const space = vehicleCode.split('').join(' ');
+    const utterance = new SpeechSynthesisUtterance(
+      `Xin mời xe có biển số, ${space}, vào lấy Tích kê`
+    );
+    utterance.lang = 'vi-VN';
+    utterance.rate = 0.65;
+    window.speechSynthesis.speak(utterance);
+  }
 
   toggleFullscreen(check: boolean) {
     this.isFullscreen = check;

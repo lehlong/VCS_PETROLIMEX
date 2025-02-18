@@ -28,7 +28,7 @@ export class OrderService {
   // }
 
   GetList(filter: BaseFilter): Observable<any> {
-    return this.commonService.get(`Order/GetOrder`, filter);
+    return this.commonService.getWithoutLoading(`Order/GetOrder`, filter);
   }
   GetListWithoutLoading(filter: BaseFilter): Observable<any> {
     return this.commonService.getWithoutLoading(`Order/GetOrderDisplay`, filter);
@@ -43,7 +43,7 @@ export class OrderService {
   }
 
   UpdateStatus(params: any): Observable<any> {
-    return this.commonService.put('Order/UpdateStatus', params);
+    return this.commonService.putWithoutLoading('Order/UpdateStatus', params);
   }
 
   UpdateOrderCome(params: any): Observable<any> {
