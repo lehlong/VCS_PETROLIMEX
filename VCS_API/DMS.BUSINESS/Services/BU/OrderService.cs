@@ -11,6 +11,7 @@ using DMS.BUSINESS.Common;
 using DMS.BUSINESS.Dtos.BU;
 using DMS.BUSINESS.Services.HUB;
 using DMS.BUSINESS.Services.MD;
+using DMS.COMMON.Common.Class;
 using DMS.CORE;
 using DMS.CORE.Common;
 using DMS.CORE.Entities.BU;
@@ -18,6 +19,7 @@ using DMS.CORE.Entities.MD;
 using DMS.CORE.Migrations;
 using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Wordprocessing;
+using MathNet.Numerics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
@@ -30,6 +32,7 @@ namespace DMS.BUSINESS.Services.BU
     public interface IOrderService : IGenericService<TblBuOrder, OrderDto>
     {
         Task<List<TblBuHeader>> GetOrder(BaseFilter filter);
+        Task<List<ArrangePumpNozzleModel>> ArrangePumpNozzle(BaseFilter filter);
         Task<List<TblBuHeader>> GetOrderDisplay(BaseFilter filter);
         Task<List<TblBuOrder>> UpdateOrderCall(OrderUpdateDto orderDto);
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
@@ -63,6 +66,79 @@ namespace DMS.BUSINESS.Services.BU
                 Status = false;
                 Exception = ex;
                 return null;
+            }
+        }
+
+        public async Task<List<ArrangePumpNozzleModel>> ArrangePumpNozzle(BaseFilter filter)
+        {
+            try
+            {
+                var data = new List<ArrangePumpNozzleModel>();
+
+                // Fetch throat data
+                var _pt = await _dbContext.TblMdPumpThroat
+                    .Where(x => x.WarehouseCode == filter.WarehouseCode && x.OrgCode == filter.OrgCode)
+                    .OrderBy(x => x.PumpRigCode).ThenBy(x => x.Code)
+                    .ToListAsync();
+
+                var pumpRigCodes = _pt.Select(pt => pt.PumpRigCode).Distinct().ToList();
+                var goodsCodes = _pt.Select(pt => pt.GoodsCode).Distinct().ToList();
+
+                var pumpRigs = await _dbContext.TblMdPumpRig.Where(pr => pumpRigCodes.Contains(pr.Code)).ToListAsync();
+                var goods = await _dbContext.TblMdGoods.Where(g => goodsCodes.Contains(g.Code)).ToListAsync();
+
+                var pumpRigLookup = pumpRigs.ToDictionary(pr => pr.Code, pr => pr.Name);
+                var goodsLookup = goods.ToDictionary(g => g.Code, g => g.Name);
+
+                foreach (var pt in _pt)
+                {
+                    data.Add(new ArrangePumpNozzleModel
+                    {
+                        CompanyCode = filter.OrgCode,
+                        WarehouseCode = filter.WarehouseCode,
+                        PumpRigCode = pt.PumpRigCode,
+                        PumpRigName = pumpRigLookup.GetValueOrDefault(pt.PumpRigCode),
+                        PumpThroatCode = pt.Code,
+                        PumpThroatName = pt.Name,
+                        MaterialCode = pt.GoodsCode,
+                        MaterialName = goodsLookup.GetValueOrDefault(pt.GoodsCode),
+                        Order = new List<string>(),
+                    });
+                }
+
+                // Fetch header process data
+                var _headerProcess = await _dbContext.TblBuHeader
+                    .Where(x => x.StatusVehicle == "03" && x.WarehouseCode == filter.WarehouseCode
+                        && x.CompanyCode == filter.OrgCode && x.CreateDate.Value.Date == DateTime.Now.Date)
+                    .ToListAsync();
+
+                if (_headerProcess.Any())
+                {
+                    foreach (var h in _headerProcess)
+                    {
+                        var _details = await _dbContext.TblBuDetailTgbx
+                            .Where(x => x.HeaderId == h.Id)
+                            .ToListAsync();
+
+                        var minOrderDetail = _details
+                            .Where(d => data.Any(pn => pn.MaterialCode == "000000000000" + d.MaHangHoa))
+                            .FirstOrDefault();
+
+                        if (minOrderDetail != null)
+                        {
+                            var matchedData = data.OrderBy(x => x.Order.Count()).FirstOrDefault(pn => pn.MaterialCode == "000000000000" + minOrderDetail.MaHangHoa);
+                            matchedData?.Order.Add(h.VehicleCode); 
+                        }
+                    }
+                }
+
+                return data.OrderBy(x => x.PumpRigCode).ThenBy(x => x.PumpThroatCode).ToList();
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                Exception = ex;
+                return new List<ArrangePumpNozzleModel>();
             }
         }
         public async Task<List<TblBuHeader>> GetOrderDisplay(BaseFilter filter)
@@ -274,7 +350,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(queryTest, con);
+                    SqlCommand cmd = new SqlCommand(query, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try

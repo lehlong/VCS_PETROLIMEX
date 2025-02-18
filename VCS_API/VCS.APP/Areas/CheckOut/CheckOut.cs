@@ -591,6 +591,7 @@ namespace VCS.APP.Areas.CheckOut
             var i = _dbContext.TblBuHeader.Find(selectedValue);
             i.IsCheckout = true;
             i.TimeCheckout = DateTime.Now;
+            i.StatusVehicle = "04";
             i.NoteOut = txtNoteOut.Text;
             _dbContext.TblBuHeader.Update(i);
             _dbContext.SaveChanges();

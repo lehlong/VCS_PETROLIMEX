@@ -34,6 +34,10 @@ export class OrderService {
     return this.commonService.getWithoutLoading(`Order/GetOrderDisplay`, filter);
   }
 
+  ArrangePumpNozzle(filter: BaseFilter): Observable<any> {
+    return this.commonService.getWithoutLoading(`Order/ArrangePumpNozzle`, filter);
+  }
+
   Add(order: OrderModel): Observable<any> {
     return this.commonService.post('Order/Add', order);
   }
@@ -51,7 +55,7 @@ export class OrderService {
   }
 
   CheckTicket(headerId: string): Observable<any> {
-    return this.commonService.get(`Order/CheckTicket?headerId=${headerId}`);
+    return this.commonService.getWithoutLoading(`Order/CheckTicket?headerId=${headerId}`);
   }
   GetTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/GetTicket?headerId=${headerId}`);

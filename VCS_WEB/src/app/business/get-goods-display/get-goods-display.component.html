@@ -5,7 +5,7 @@
                 <img src="assets/img/plx-order.png" class="logo-plx">
             </div>
             <div class="header-trigger flex items-center gap-[24px]">
-                <div class="text-notif">Xin mời xe có biển số 29H123456 vào họng bơm số 2</div>
+                <div class="text-notif">{{title}}</div>
             </div>
             <div class="header-trigger flex items-center gap-[24px]">
                 <span nz-icon nzType="fullscreen" nzTheme="outline" class="is-fullscreen" (click)="toggleFullscreen(true)" *ngIf="!isFullscreen"></span>
@@ -25,31 +25,18 @@
               <tr>
                 <th>Giàn</th>
                 <th>Họng</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
+                <th style="width: 224px !important;">1</th>
+                <th style="width: 224px !important;">2</th>
+                <th style="width: 224px !important;">3</th>
+                <th style="width: 224px !important;">4</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Giàn 1</td>
-                <td>Họng 1</td>
-                <td>Xăng RON95-II</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
-              </tr>
-
-              <tr>
-                <td>Giàn 1</td>
-                <td>Họng 2</td>
-                <td>Xăng E5 RON 92</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
-                <td>29H12312</td>
+              <tr *ngFor="let i of lstArrangePumpNozzle">
+                <td>{{i.pumpRigName}}</td>
+                <td>{{i.pumpThroatName}}</td>
+                <td>{{i.materialName}}</td>
+                <td *ngFor="let value of i.order">{{ value }}</td>
               </tr>
             </tbody>
           </table>

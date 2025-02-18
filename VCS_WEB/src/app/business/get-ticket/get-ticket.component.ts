@@ -4,6 +4,7 @@ import { BaseFilter } from '../../models/base.model'
 import { OrderService } from '../../services/business/order.service'
 import { GlobalService } from '../../services/global.service'
 import { Subscription } from 'rxjs'
+import { NzMessageService } from 'ng-zorro-antd/message'
 declare var $: any
 
 @Component({
@@ -42,6 +43,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   constructor(
     private _service: OrderService,
     private globalService: GlobalService,
+    private message: NzMessageService,
   ) {
     this.globalService.setBreadcrumb([
       {
@@ -198,6 +200,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
             }
           });
         }else{
+          this.message.create('error', `Phương tiện chưa có tiket`);
           this.getList();
         }
       },

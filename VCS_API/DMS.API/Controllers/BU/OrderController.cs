@@ -35,6 +35,24 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
+        [HttpGet("ArrangePumpNozzle")]
+        public async Task<IActionResult> ArrangePumpNozzle([FromQuery] BaseFilter filter)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.ArrangePumpNozzle(filter);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0001", _service);
+            }
+            return Ok(transferObject);
+        }
+
         [HttpGet("GetOrderDisplay")]
         public async Task<IActionResult> GetOrderDisplay([FromQuery] BaseFilter filter)
         {
@@ -227,6 +245,10 @@ namespace DMS.API.Controllers.BU
             }
             return Ok(transferObject);
         }
+
+
+
+
 
     }
 }
