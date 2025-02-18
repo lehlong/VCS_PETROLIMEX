@@ -43,13 +43,13 @@ export class OrderDisplayComponent implements OnInit {
         this.lstOrder = data;
         var i = this.lstOrder.find(x => x.isVoice === true);
         if (i){
-          this.title = "Xin mời xe có biển số " + i.vehicleCode + " vào lấy Tích kê";
-          this.vehicleCode = i.vehicleCode;
-          this.count++;
-          if(i.vehicleCode === this.vehicleCode && this.count >= 2){
-            this.count = 0;
-          }else{
+          
+          if(i.vehicleCode != this.vehicleCode && this.count < 2){
+            this.vehicleCode = i.vehicleCode;
+            this.count++;
             this.speechNotify(i.vehicleCode);
+          }else{
+            this.count = 0;
           }
           
         } 
