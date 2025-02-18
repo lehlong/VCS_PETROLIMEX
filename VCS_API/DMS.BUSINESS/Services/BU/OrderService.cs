@@ -74,8 +74,6 @@ namespace DMS.BUSINESS.Services.BU
             try
             {
                 var data = new List<ArrangePumpNozzleModel>();
-
-                // Fetch throat data
                 var _pt = await _dbContext.TblMdPumpThroat
                     .Where(x => x.WarehouseCode == filter.WarehouseCode && x.OrgCode == filter.OrgCode)
                     .OrderBy(x => x.PumpRigCode).ThenBy(x => x.Code)
@@ -106,7 +104,6 @@ namespace DMS.BUSINESS.Services.BU
                     });
                 }
 
-                // Fetch header process data
                 var _headerProcess = await _dbContext.TblBuHeader
                     .Where(x => x.StatusVehicle == "03" && x.WarehouseCode == filter.WarehouseCode
                         && x.CompanyCode == filter.OrgCode && x.CreateDate.Value.Date == DateTime.Now.Date)
@@ -350,7 +347,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlCommand cmd = new SqlCommand(queryTest, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try
@@ -608,18 +605,12 @@ namespace DMS.BUSINESS.Services.BU
             {
            
                 var SouceFileimage = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
-                
-                //Kiểm tra thư mục lưu file, nếu chưa có thì tạo mới
               
                 List<string> savedFiles = new List<string>();
-
-                //  lưu từng file vào thư mục cố định
                 foreach (var file in files)
                 {
                     var path = filePath.FirstOrDefault(x => Path.GetFileName(x) == file.FileName);
                     string[] parts = path.Split(Path.DirectorySeparatorChar);
-
-                    // Lấy các phần tử từ năm, tháng, và ngày
                     string year = parts[^4];
                     string month = parts[^3];
                     string day = parts[^2];

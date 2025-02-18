@@ -83,7 +83,7 @@
 
 
                         <button nz-button (click)="updateOrder(i)" nz-popover
-                            *ngIf="i.statusProcess != '04' && i.statusProcess != '05'" nzPopoverTitle="Xếp xe vào họng"
+                            *ngIf="i.statusProcess == '03'" nzPopoverTitle="Xếp xe vào họng"
                             [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
 

@@ -39,7 +39,7 @@ import { COMPANY_CODE_TAP_DOAN } from '../../shared/constants'
   styleUrls: ['./main-layout.component.scss'],
 })
 export class MainLayoutComponent {
-  isCollapsed = true
+  isCollapsed = false
   userName: string = 'User'
   dataSidebarMenu: any[] = []
   openIndex: number | null = null
