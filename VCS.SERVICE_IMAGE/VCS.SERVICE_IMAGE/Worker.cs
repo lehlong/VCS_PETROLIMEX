@@ -7,10 +7,15 @@
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using System.IO;
+    using System.IO.Compression;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Net.WebSockets;
+    using Newtonsoft.Json.Linq;
 
     public class Worker : BackgroundService
     {
@@ -38,24 +43,62 @@
             {
                 try
                 {
-                    List<string> filePaths = await GetFilePathsFromDatabase();
+                   
+                    var Soucefile=Directory.GetParent(AppContext.BaseDirectory).FullName;
+                    var Disk = Path.GetPathRoot(Soucefile);
+
+                    DriveInfo driveInfo = new DriveInfo($"{Disk[0]}");
+                    var FreeMemory = driveInfo.AvailableFreeSpace /1024/1024/1024;
+                    // doc json
+                    string folderPathjson = @$"{Disk[0]}:\AppVCS\appsettings.json";
+
+                    string jsonContent = File.ReadAllText(folderPathjson);
+
+
+                    JObject jsonObject = JObject.Parse(jsonContent);
+                    string pathSaveFile = (string)jsonObject["Setting"]["PathSaveFile"];
+                    var (filePaths, status) = await GetFilePathsFromDatabase();
                     var chunk =filePaths.Chunk(10);
                     if (filePaths.Count > 0)
                     {
-                        //await UploadFilesToApi(filePaths);
-                        
+                      
+
                         foreach (var item in chunk)
                         {
                             await UploadFilesToApi(item);
-                            //var a= item.ToArray();
-                        
+                 
+
                         }
+
 
                     }
                     else
                     {
                         _logger.LogInformation("Không có file hợp lệ để upload.");
                     }
+                    //nén file
+                    DateTime now = DateTime.Now;
+                    string sourceDirectory = @$"{pathSaveFile}";
+                    var fileCompress = @$"{Disk[0]}:\CompressedfileImageVCS";
+                    string zipFilePath = @$"{Disk[0]}:\CompressedfileImageVCS\{now.Year}-{now.Month.ToString("00")}-{now.Day.ToString("00")}-{now.Hour}-{now.Minute}.zip";
+                  
+                   
+                    if (FreeMemory < 10 && filePaths.Count == 0 && status== true)
+                    {
+                        if (!Directory.Exists(fileCompress))
+                        {
+                            Directory.CreateDirectory(fileCompress);
+                        }
+                      
+                        if (Directory.Exists(sourceDirectory))
+                        {
+                            ZipFile.CreateFromDirectory(sourceDirectory, zipFilePath, CompressionLevel.Optimal, true);
+                            Directory.Delete(sourceDirectory, true);
+                        }
+                       
+                    }
+
+
                 }
                 catch (Exception ex)
                 {
@@ -67,11 +110,11 @@
             }
         }
 
-        private async Task<List<string>> GetFilePathsFromDatabase()
+        private async Task<(List<string>,bool)> GetFilePathsFromDatabase()
         {
             List<string> filePaths = new List<string>();
             string query = "SELECT PATH FROM T_BU_IMAGE WHERE IS_SYNC=0";
-
+            bool status = true;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -91,10 +134,13 @@
                 }
                 catch (Exception ex)
                 {
+                    
                     _logger.LogError(ex, "Lỗi khi lấy dữ liệu từ SQL Server.");
+                    status = false;
+                  
                 }
             }
-            return filePaths;
+            return (filePaths,status);
         }
         private async Task UpdateIsSyncStatus(string ConditionSql)
         {
@@ -116,6 +162,7 @@
             }
         }
 
+        
         private async Task UploadFilesToApi(string[] filePaths)
         {
             using (MultipartFormDataContent formData = new MultipartFormDataContent())
@@ -176,3 +223,21 @@ public class ConnectionStrings
 {
     public string DefaultConnection { get; set; }
 }
+public class StatusSQL
+{
+    public bool Status { get; set; }
+}
+
+//{
+//    "Setting": {
+//        "SmoApiUsername": "smoapi",
+//    "SmoApiPassword": "smoapi123",
+//    "SmoApiUrl": "https://smoapiuat.petrolimex.com.vn/api/",
+//    "PathSaveFile": "D://AttachImageVCS",
+//    "DetectApiUrl": "http://localhost:5000/api/detect",
+//    "DetectFilePath": "D:\\license_detec.exe"
+//    },
+//  "ConnectionStrings": {
+//        "Connection": "Server=sso.d2s.com.vn,1608;Database=VCS_PETROLIMEX;User ID=sa;Password=sa@d2s.com.vn; TrustServerCertificate=true; MultipleActiveResultSets=true"
+//  }
+//}
