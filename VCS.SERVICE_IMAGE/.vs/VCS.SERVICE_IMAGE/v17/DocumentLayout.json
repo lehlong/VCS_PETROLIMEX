@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|solutionrelative:vcs.service_image\\worker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\vcs.service_image\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|solutionrelative:vcs.service_image\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\vcs.service_image\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|solutionrelative:vcs.service_image\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\vcs.service_image\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0DB8F812-D5D3-4EA9-B3ED-1F6405906686}|VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE.csproj|solutionrelative:vcs.service_image\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\Program.cs",
               "RelativeDocumentMoniker": "VCS.SERVICE_IMAGE\\Program.cs",
@@ -35,7 +35,8 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T02:04:57.319Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -45,7 +46,7 @@
               "RelativeDocumentMoniker": "VCS.SERVICE_IMAGE\\Worker.cs",
               "ToolTip": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\Worker.cs",
               "RelativeToolTip": "VCS.SERVICE_IMAGE\\Worker.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAAAjwHEAAAA4AAAA",
+              "ViewState": "AQIAAEkAAAAAAAAAAAArwGIAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T02:05:17.886Z",
               "IsPinned": true,
@@ -61,15 +62,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\appsettings.json",
               "RelativeDocumentMoniker": "VCS.SERVICE_IMAGE\\appsettings.json",
               "ToolTip": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\appsettings.json",
               "RelativeToolTip": "VCS.SERVICE_IMAGE\\appsettings.json",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACQAAACrAAAA",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAYAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-13T02:02:56.553Z"
+              "WhenOpened": "2025-02-13T02:02:56.553Z",
+              "EditorCaption": ""
             }
           ]
         },
