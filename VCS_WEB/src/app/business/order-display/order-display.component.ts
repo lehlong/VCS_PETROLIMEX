@@ -18,6 +18,9 @@ export class OrderDisplayComponent implements OnInit {
   lstOrder: any[] = []
   companyCode?: string = localStorage.getItem('companyCode')?.toString()
   warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
+  title: string = '';
+  count: number = 0; 
+  vehicleCode: string = ''; 
   filter: BaseFilter = {
     orgCode: localStorage.getItem('companyCode')?.toString(),
     warehouseCode: localStorage.getItem('warehouseCode')?.toString(),
@@ -39,7 +42,17 @@ export class OrderDisplayComponent implements OnInit {
       next: (data) => {
         this.lstOrder = data;
         var i = this.lstOrder.find(x => x.isVoice === true);
-        if (i) this.speechNotify(i.vehicleCode);
+        if (i){
+          this.title = "Xin mời xe có biển số " + i.vehicleCode + " vào lấy Tích kê";
+          this.vehicleCode = i.vehicleCode;
+          this.count++;
+          if(i.vehicleCode === this.vehicleCode && this.count >= 2){
+            this.count = 0;
+          }else{
+            this.speechNotify(i.vehicleCode);
+          }
+          
+        } 
       },
       error: (err) => {
         console.error('Lỗi:', err);
