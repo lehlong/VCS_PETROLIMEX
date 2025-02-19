@@ -116,7 +116,32 @@ namespace DMS.BUSINESS.Services.BU
                         var _details = await _dbContext.TblBuDetailTgbx
                             .Where(x => x.HeaderId == h.Id)
                             .ToListAsync();
+                        #region
+                        var i = _dbContext.TblBuHeader.Find(h.Id);
+                        var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
+                        DataTable tableData = new DataTable();
+                        var query = $"SELECT MaPhuongTien FROM [Petro_Tdh].[dbo].[tblLenhXuatChiTiet]  where MaPhuongTien='{h.VehicleCode}' and  TrangThai= 'KT' and NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
+                        using (SqlConnection con = new SqlConnection(w.Tdh))
+                        {
+                            SqlCommand cmd = new SqlCommand(query, con);
+                            cmd.CommandType = CommandType.Text;
+                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            try
+                            {
+                                adapter.Fill(tableData);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.Exception = ex;
+                            }
+                        }
 
+                        if (tableData.Rows.Count > 0)
+                        {
+                            _details = _details.Where(x => x.HeaderId != h.Id).ToList();
+                        }
+
+                        #endregion
                         var minOrderDetail = _details
                             .Where(d => data.Any(pn => pn.MaterialCode == "000000000000" + d.MaHangHoa))
                             .FirstOrDefault();
