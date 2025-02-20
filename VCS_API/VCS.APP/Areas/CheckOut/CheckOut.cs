@@ -324,10 +324,10 @@ namespace VCS.APP.Areas.CheckOut
                 var vehicle = _dbContext.TblBuHeader.Find(selectedValue);
                 if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05")
                 {
-                    txtStatus.Text = "Phương tiện không xử lý";
-                    txtStatus.ForeColor = Color.Green;
+                    txtStatus.Text = "Phương tiện không có tiket hoặc không xử lý!";
+                    txtStatus.ForeColor = Color.Red;
                     this.isHasInvoice = true; // Bỏ qua kiểm tra hóa đơn
-                    txtNoteOut.Text = "Phương tiện không xử lý";
+                    txtNoteOut.Text = "Phương tiện không có ticket hoặc không xử lý";
                     return;
                 }
 
