@@ -16,5 +16,6 @@ namespace VCS.APP.Utilities
         public static string? Connection { get; set; }
         public static string? DetectApiUrl { get; set; }
         public static string? DetectFilePath { get; set; }
+        public static string? TimeService { get; set; }
     }
 }

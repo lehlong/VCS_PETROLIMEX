@@ -3,9 +3,15 @@ using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VCS.SERVICE_IMAGE;
-
+using Serilog;
+string logFilePath = Path.Combine(AppContext.BaseDirectory, "logs", "log.txt");
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
+    .CreateLogger();
 IHost host = Host.CreateDefaultBuilder(args)
-    .UseWindowsService() // Đảm bảo không bị lỗi
+    .UseWindowsService()
+    .UseSerilog()
     .ConfigureAppConfiguration((hostingContext, config) =>
     {
         config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);

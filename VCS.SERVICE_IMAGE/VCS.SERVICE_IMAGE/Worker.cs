@@ -16,6 +16,7 @@
     using System.Collections.Generic;
     using System.Net.WebSockets;
     using Newtonsoft.Json.Linq;
+    using System.Net.Http.Json;
 
     public class Worker : BackgroundService
     {
@@ -37,27 +38,31 @@
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("<-------------------------------------------------->");
             _logger.LogInformation("Worker started at: {time}", DateTimeOffset.Now);
 
+            var Soucefile = Directory.GetParent(AppContext.BaseDirectory).FullName;
+            var a = AppContext.BaseDirectory;
+            var Disk = Path.GetPathRoot(Soucefile);
+
+            DriveInfo driveInfo = new DriveInfo($"{Disk[0]}");
+            var FreeMemory = driveInfo.AvailableFreeSpace / 1024 / 1024 / 1024;
+            string Pathbaseapp = Soucefile.Replace("VCS.SERVICE.IMAGE", "VCS.APP");
+            string folderPathjson = @$"{Pathbaseapp}\appsettings.json";
+           
+           
             while (!stoppingToken.IsCancellationRequested)
             {
+                string jsonContent = File.ReadAllText(folderPathjson);
+                JObject jsonObject = JObject.Parse(jsonContent);
+                string pathSaveFile = (string)jsonObject["Setting"]["PathSaveFile"];
+                double TimeLoop = (double)jsonObject["Setting"]["TimeService"];
+                var (filePaths, status) = await GetFilePathsFromDatabase();
                 try
                 {
-                   
-                    var Soucefile=Directory.GetParent(AppContext.BaseDirectory).FullName;
-                    var Disk = Path.GetPathRoot(Soucefile);
 
-                    DriveInfo driveInfo = new DriveInfo($"{Disk[0]}");
-                    var FreeMemory = driveInfo.AvailableFreeSpace /1024/1024/1024;
                     // doc json
-                    string folderPathjson = @$"{Disk[0]}:\AppVCS\appsettings.json";
-
-                    string jsonContent = File.ReadAllText(folderPathjson);
-
-
-                    JObject jsonObject = JObject.Parse(jsonContent);
-                    string pathSaveFile = (string)jsonObject["Setting"]["PathSaveFile"];
-                    var (filePaths, status) = await GetFilePathsFromDatabase();
+                   
                     var chunk =filePaths.Chunk(10);
                     if (filePaths.Count > 0)
                     {
@@ -81,32 +86,33 @@
                     string sourceDirectory = @$"{pathSaveFile}";
                     var fileCompress = @$"{Disk[0]}:\CompressedfileImageVCS";
                     string zipFilePath = @$"{Disk[0]}:\CompressedfileImageVCS\{now.Year}-{now.Month.ToString("00")}-{now.Day.ToString("00")}-{now.Hour}-{now.Minute}.zip";
-                  
-                   
-                    if (FreeMemory < 10 && filePaths.Count == 0 && status== true)
+
+
+                    if (FreeMemory < 10 && filePaths.Count == 0 && status == true)
                     {
                         if (!Directory.Exists(fileCompress))
                         {
                             Directory.CreateDirectory(fileCompress);
                         }
-                      
+
                         if (Directory.Exists(sourceDirectory))
                         {
                             ZipFile.CreateFromDirectory(sourceDirectory, zipFilePath, CompressionLevel.Optimal, true);
                             Directory.Delete(sourceDirectory, true);
                         }
-                       
+
                     }
 
-
+                    _logger.LogInformation("{folderPathjson}", folderPathjson);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Lỗi trong quá trình thực thi worker.");
+                  
                 }
 
-                // Chờ thời gian được cấu hình từ appsettings.json trước khi chạy lại
-                await Task.Delay(TimeSpan.FromMinutes(60), stoppingToken);
+             
+                await Task.Delay(TimeSpan.FromMinutes(TimeLoop), stoppingToken);
             }
         }
 

@@ -12,7 +12,12 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ServiceProcess;
 using VCS.APP.Utilities;
+using System;
+
+using System.Diagnostics;
+using System.Threading;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace VCS.APP.Areas.ConfigApp
@@ -45,6 +50,7 @@ namespace VCS.APP.Areas.ConfigApp
             txtPathSaveFile.Text = config["Setting:PathSaveFile"];
             txtUrlDetect.Text = config["Setting:DetectApiUrl"];
             txtDetectFilePath.Text = config["Setting:DetectFilePath"];
+            txtTimeService.Text = config["Setting:TimeService"];
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,7 +60,10 @@ namespace VCS.APP.Areas.ConfigApp
                 string filePath = "appsettings.json";
                 string json = File.ReadAllText(filePath);
                 var jsonObj = JsonNode.Parse(json);
-
+                FileInfo fileInfo = new FileInfo(filePath);
+                string serviceName = "VCS.SERVICE.IMAGE";
+             
+              
                 if (jsonObj != null)
                 {
                     jsonObj["Setting"]["SmoApiUrl"] = txtSmoApiUrl.Text;
@@ -63,9 +72,12 @@ namespace VCS.APP.Areas.ConfigApp
                     jsonObj["Setting"]["PathSaveFile"] = txtPathSaveFile.Text;
                     jsonObj["Setting"]["DetectApiUrl"] = txtUrlDetect.Text;
                     jsonObj["Setting"]["DetectFilePath"] = txtDetectFilePath.Text;
+                    jsonObj["Setting"]["TimeService"] = txtTimeService.Text;
 
                     File.WriteAllText(filePath, jsonObj.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
                 }
+              
+           
 
                 Global.SmoApiUrl = txtSmoApiUrl.Text;
                 Global.SmoApiUsername = txtSmoApiUsername.Text;
@@ -73,6 +85,7 @@ namespace VCS.APP.Areas.ConfigApp
                 Global.PathSaveFile = txtPathSaveFile.Text;
                 Global.DetectApiUrl = txtUrlDetect.Text;
                 Global.DetectFilePath = txtDetectFilePath.Text;
+                Global.TimeService = txtTimeService.Text;
 
                 var result = MessageBox.Show("Vui lòng khởi động lại hệ thống để áp dụng cài đặt!",
                                              "Xác nhận",
@@ -81,7 +94,9 @@ namespace VCS.APP.Areas.ConfigApp
 
                 if (result == DialogResult.Yes)
                 {
+                  
                     RestartApplication();
+                   
                 }
                 else
                 {
@@ -101,5 +116,7 @@ namespace VCS.APP.Areas.ConfigApp
             Application.Restart();
             Application.Exit();
         }
+
+       
     }
 }

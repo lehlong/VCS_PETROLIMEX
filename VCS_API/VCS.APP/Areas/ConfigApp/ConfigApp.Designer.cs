@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigApp));
             panel1 = new Panel();
+            panel8 = new Panel();
+            txtTimeService = new TextBox();
+            Lable7 = new Label();
             panel7 = new Panel();
             txtDetectFilePath = new TextBox();
             label6 = new Label();
@@ -50,6 +53,7 @@
             label1 = new Label();
             button1 = new Button();
             panel1.SuspendLayout();
+            panel8.SuspendLayout();
             panel7.SuspendLayout();
             panel6.SuspendLayout();
             panel5.SuspendLayout();
@@ -61,6 +65,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel8);
+            panel1.Controls.Add(Lable7);
             panel1.Controls.Add(panel7);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(panel6);
@@ -78,6 +84,35 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1382, 1048);
             panel1.TabIndex = 0;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.WhiteSmoke;
+            panel8.Controls.Add(txtTimeService);
+            panel8.Location = new Point(193, 404);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(1166, 40);
+            panel8.TabIndex = 46;
+            // 
+            // txtTimeService
+            // 
+            txtTimeService.BackColor = Color.WhiteSmoke;
+            txtTimeService.BorderStyle = BorderStyle.None;
+            txtTimeService.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtTimeService.Location = new Point(13, 9);
+            txtTimeService.Name = "txtTimeService";
+            txtTimeService.Size = new Size(1140, 22);
+            txtTimeService.TabIndex = 10;
+            // 
+            // Lable7
+            // 
+            Lable7.AutoSize = true;
+            Lable7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Lable7.Location = new Point(65, 412);
+            Lable7.Name = "Lable7";
+            Lable7.Size = new Size(123, 21);
+            Lable7.TabIndex = 45;
+            Lable7.Text = "Đồng bộ  (phút):";
             // 
             // panel7
             // 
@@ -287,6 +322,8 @@
             Load += ConfigApp_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
             panel6.ResumeLayout(false);
@@ -324,5 +361,8 @@
         private Panel panel7;
         private TextBox txtDetectFilePath;
         private Label label6;
+        private Panel panel8;
+        private TextBox txtTimeService;
+        private Label Lable7;
     }
 }
