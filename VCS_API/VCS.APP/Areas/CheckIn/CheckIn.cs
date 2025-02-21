@@ -465,17 +465,19 @@ namespace VCS.APP.Areas.CheckIn
             {
                 Id = Guid.NewGuid().ToString(),
                 HeaderId = headerId,
-                Path = PLATEPATH,
-                FullPath = PLATEPATH,
+                Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
+                FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
+                InOut = "in",
                 IsPlate = true,
                 IsActive = true,
-            });
+            }); ;
             _dbContext.TblBuImage.Add(new TblBuImage
             {
                 Id = Guid.NewGuid().ToString(),
                 HeaderId = headerId,
-                Path = IMGPATH,
-                FullPath = IMGPATH,
+                InOut = "in",
+                Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
+                FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
                 IsPlate = false,
                 IsActive = true
             });

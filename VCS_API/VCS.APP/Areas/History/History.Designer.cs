@@ -32,7 +32,9 @@ namespace VCS.APP.Areas.History
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             panel1 = new Panel();
             panel7 = new Panel();
@@ -46,6 +48,8 @@ namespace VCS.APP.Areas.History
             NoteOut = new DataGridViewTextBoxColumn();
             SttPrint = new DataGridViewTextBoxColumn();
             Id = new DataGridViewTextBoxColumn();
+            details = new DataGridViewButtonColumn();
+            rePrintColumn = new DataGridViewButtonColumn();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -89,7 +93,7 @@ namespace VCS.APP.Areas.History
             panel1.Controls.Add(btnSearch);
             panel1.Location = new Point(9, 9);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1382, 824);
+            panel1.Size = new Size(1456, 952);
             panel1.TabIndex = 0;
             // 
             // panel7
@@ -119,16 +123,16 @@ namespace VCS.APP.Areas.History
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Stt, Driver, Plate, TimeIn, TimeOut, Note, NoteOut, SttPrint, Id });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.White;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.Padding = new Padding(8);
-            dataGridViewCellStyle2.SelectionBackColor = Color.WhiteSmoke;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Stt, Driver, Plate, TimeIn, TimeOut, Note, NoteOut, SttPrint, Id, details, rePrintColumn });
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.Padding = new Padding(8);
+            dataGridViewCellStyle4.SelectionBackColor = Color.WhiteSmoke;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = Color.LightGray;
@@ -144,9 +148,12 @@ namespace VCS.APP.Areas.History
             dataGridView.Size = new Size(1357, 697);
             dataGridView.TabIndex = 0;
             dataGridView.CellDoubleClick += dataGridView_CellDoubleClick;
+            dataGridView.CellPainting += dataGridView_CellPainting;
             // 
             // Stt
             // 
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stt.DefaultCellStyle = dataGridViewCellStyle2;
             Stt.HeaderText = "STT";
             Stt.Name = "Stt";
             Stt.ReadOnly = true;
@@ -159,7 +166,7 @@ namespace VCS.APP.Areas.History
             Driver.Name = "Driver";
             Driver.ReadOnly = true;
             Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Driver.Width = 190;
+            Driver.Width = 260;
             // 
             // Plate
             // 
@@ -167,7 +174,7 @@ namespace VCS.APP.Areas.History
             Plate.Name = "Plate";
             Plate.ReadOnly = true;
             Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Plate.Width = 180;
+            Plate.Width = 200;
             // 
             // TimeIn
             // 
@@ -175,7 +182,7 @@ namespace VCS.APP.Areas.History
             TimeIn.Name = "TimeIn";
             TimeIn.ReadOnly = true;
             TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeIn.Width = 180;
+            TimeIn.Width = 220;
             // 
             // TimeOut
             // 
@@ -183,7 +190,7 @@ namespace VCS.APP.Areas.History
             TimeOut.Name = "TimeOut";
             TimeOut.ReadOnly = true;
             TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeOut.Width = 180;
+            TimeOut.Width = 220;
             // 
             // Note
             // 
@@ -191,6 +198,7 @@ namespace VCS.APP.Areas.History
             Note.Name = "Note";
             Note.ReadOnly = true;
             Note.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Note.Visible = false;
             Note.Width = 220;
             // 
             // NoteOut
@@ -198,33 +206,43 @@ namespace VCS.APP.Areas.History
             NoteOut.HeaderText = "GHI CHÚ CỔNG RA";
             NoteOut.Name = "NoteOut";
             NoteOut.ReadOnly = true;
+            NoteOut.Visible = false;
             NoteOut.Width = 220;
             // 
             // SttPrint
             // 
-            SttPrint.HeaderText = "IN STT";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            SttPrint.DefaultCellStyle = dataGridViewCellStyle3;
+            SttPrint.HeaderText = "STT VÀO KHO";
             SttPrint.Name = "SttPrint";
             SttPrint.ReadOnly = true;
             SttPrint.SortMode = DataGridViewColumnSortMode.NotSortable;
+            SttPrint.Width = 140;
             // 
-            // Tạo cột button "In Lại STT"
-            DataGridViewButtonColumn rePrintColumn = new DataGridViewButtonColumn();
-            rePrintColumn.HeaderText = "IN Lại STT";
-            rePrintColumn.Name = "RePrint";
-            rePrintColumn.UseColumnTextForButtonValue = true;
-            rePrintColumn.FlatStyle = FlatStyle.Flat;
-            rePrintColumn.Width = 140;
-
-            dataGridView.Columns.Add(rePrintColumn);
-
-            dataGridView.CellPainting += dataGridView_CellPainting;
-
-
             // Id
             // 
             Id.HeaderText = "ID";
             Id.Name = "Id";
             Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // details
+            // 
+            details.FlatStyle = FlatStyle.Flat;
+            details.HeaderText = "CHI TIẾT";
+            details.Name = "details";
+            details.ReadOnly = true;
+            details.UseColumnTextForButtonValue = true;
+            details.Width = 120;
+            // 
+            // rePrintColumn
+            // 
+            rePrintColumn.FlatStyle = FlatStyle.Flat;
+            rePrintColumn.HeaderText = "IN LẠI";
+            rePrintColumn.Name = "rePrintColumn";
+            rePrintColumn.ReadOnly = true;
+            rePrintColumn.UseColumnTextForButtonValue = true;
+            rePrintColumn.Width = 90;
             // 
             // label5
             // 
@@ -402,7 +420,7 @@ namespace VCS.APP.Areas.History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1427, 1061);
+            ClientSize = new Size(1477, 973);
             Controls.Add(panel1);
             Name = "History";
             Text = "History";
@@ -453,5 +471,7 @@ namespace VCS.APP.Areas.History
         private DataGridViewTextBoxColumn SttPrint;
         private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn RePrint;
+        private DataGridViewButtonColumn details;
+        private DataGridViewButtonColumn rePrintColumn;
     }
 }

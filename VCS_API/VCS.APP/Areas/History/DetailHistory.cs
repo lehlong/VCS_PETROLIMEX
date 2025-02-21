@@ -40,7 +40,7 @@ namespace VCS.APP.Areas.History
             }
             var imgINList = _dbContext.TblBuImage
                                     .Where(x => x.HeaderId == _headerId && x.InOut == "in")
-                                    .Select(x => x.Path)
+                                    .Select(x => x.FullPath)
                                     .ToList();
             if (imgINList.Count > 0)
             {
@@ -102,6 +102,26 @@ namespace VCS.APP.Areas.History
         private void ptbIn1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnIn_Click(object sender, EventArgs e)
+        {
+            var imgINList = _dbContext.TblBuImage
+                                  .Where(x => x.HeaderId == _headerId && x.InOut == "in")
+                                  .Select(x => x.FullPath)
+                                  .ToList();
+            VAImage view = new VAImage(imgINList);
+            view.ShowDialog();
+        }
+
+        private void btnOut_Click(object sender, EventArgs e)
+        {
+            var imgOUTList = _dbContext.TblBuImage
+                               .Where(x => x.HeaderId == _headerId && x.InOut == "out")
+                               .Select(x => x.Path)
+                               .ToList();
+            VAImage view = new VAImage(imgOUTList);
+            view.ShowDialog();
         }
     }
 }

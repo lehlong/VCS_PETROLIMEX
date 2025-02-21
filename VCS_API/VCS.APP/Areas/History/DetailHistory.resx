@@ -117,6 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnOut.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DgAACw4BQL7hQQAAAShJREFUOE+t0r1KA1EQhuElkUAiFmIKo9gpWAYkYJVKbLWzsZAt9AYECysbOwu1
+        iOlVQopcgI11gr8Q9XLW95uMmmA2B5Z88CxnZs8ZdrOJppokScrYyKj8MyTGG9oZ6eyBBr1izqZmiM7i
+        RYsv72ldwTkusObtYGyGXQbFLPSY+9hFHxXbGQj7RgZt4cruENbHiL2cGJthl0Gxjkfkvb7DttahsO9v
+        kML6FJ94R8Pbv6FXQg16eqliAaODFGp9hXkvVRdxhC6e0ELT3aOHh3+DhsO9TegDnGHF2+OTNoh+HXrF
+        VW+lhj2FsYPoLUK/1ZK3JoZ9z2mD9MV2vAzGZnD5QM57qpfR9TIYndUMLa7RwKG7RWeoDrnBpQbNYA8n
+        Gems/YmnkCj6BgmeCi9KuTKGAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnIn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DwAACw8BkvkDpQAAAShJREFUOE+t0r1KA1EQhuElkUAiFmIKo9gpWAYkYJVKbLWzsZAt9AYECysbOwu1
+        iOlVQopcgI11gr8Q9XLW95uMmmA2B5Z88CxnZs8ZdrOJppokScrYyKj8MyTGG9oZ6eyBBr1izqZmiM7i
+        RYsv72ldwTkusObtYGyGXQbFLPSY+9hFHxXbGQj7RgZt4cruENbHiL2cGJthl0Gxjkfkvb7DttahsO9v
+        kML6FJ94R8Pbv6FXQg16eqliAaODFGp9hXkvVRdxhC6e0ELT3aOHh3+DhsO9TegDnGHF2+OTNoh+HXrF
+        VW+lhj2FsYPoLUK/1ZK3JoZ9z2mD9MV2vAzGZnD5QM57qpfR9TIYndUMLa7RwKG7RWeoDrnBpQbNYA8n
+        Gems/YmnkCj6BgmeCi9KuTKGAAAAAElFTkSuQmCC
+</value>
+  </data>
   <metadata name="Driver.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

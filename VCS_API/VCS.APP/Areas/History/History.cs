@@ -67,19 +67,29 @@ namespace VCS.APP.Areas.History
         }
         private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView.Rows[e.RowIndex];
-                object cellValue = row.Cells[8].Value;
-                DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
-                detail.ShowDialog();
-            }
+            //if (e.RowIndex >= 0)
+            //{
+            //    DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+            //    object cellValue = row.Cells[8].Value;
+            //    DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
+            //    detail.ShowDialog();
+            //}
         }
         private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex == dataGridView.Columns["RePrint"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView.Columns["details"].Index && e.RowIndex >= 0)
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.Background); 
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                Image icon = Properties.Resources.icons8_details_18;
+                int iconSize = 18;
+                int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
+                int iconY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
+                e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
+                e.Handled = true;
+            }
+            if (e.ColumnIndex == dataGridView.Columns["rePrintColumn"].Index && e.RowIndex >= 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All); 
                 Image icon = Properties.Resources.icons8_print_18__1_;
                 int iconSize = 18; 
                 int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
@@ -87,12 +97,13 @@ namespace VCS.APP.Areas.History
                 e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
                 e.Handled = true; 
             }
+            
         }
 
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if (e.ColumnIndex == dataGridView.Columns["RePrint"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView.Columns["rePrintColumn"].Index && e.RowIndex >= 0)
             {
                 var headerId = dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
                 if (headerId != null)
@@ -109,6 +120,14 @@ namespace VCS.APP.Areas.History
                     STT sttForm = new STT(ticketInfo, lstDO);
                     sttForm.ShowDialog();
                 }
+            }
+
+            if (e.ColumnIndex == dataGridView.Columns["details"].Index && e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView.Rows[e.RowIndex];
+                object cellValue = row.Cells[8].Value;
+                DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
+                detail.ShowDialog();
             }
         }
         private string? GetNameWarehouse()

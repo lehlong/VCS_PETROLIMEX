@@ -30,11 +30,23 @@ namespace VCS.APP.Areas.History
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetailHistory));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
+            btnOut = new Button();
+            btnIn = new Button();
+            label13 = new Label();
+            panel16 = new Panel();
+            pictureBox3 = new PictureBox();
+            panel14 = new Panel();
+            pictureBox1 = new PictureBox();
+            panel17 = new Panel();
+            pictureBox4 = new PictureBox();
             panel13 = new Panel();
             lblStt = new Label();
+            panel15 = new Panel();
+            pictureBox2 = new PictureBox();
             panel12 = new Panel();
             lblNoteout = new Label();
             panel11 = new Panel();
@@ -75,7 +87,15 @@ namespace VCS.APP.Areas.History
             label3 = new Label();
             label1 = new Label();
             panel1.SuspendLayout();
+            panel16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel13.SuspendLayout();
+            panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
             panel10.SuspendLayout();
@@ -97,7 +117,14 @@ namespace VCS.APP.Areas.History
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnOut);
+            panel1.Controls.Add(btnIn);
+            panel1.Controls.Add(label13);
+            panel1.Controls.Add(panel16);
+            panel1.Controls.Add(panel14);
+            panel1.Controls.Add(panel17);
             panel1.Controls.Add(panel13);
+            panel1.Controls.Add(panel15);
             panel1.Controls.Add(panel12);
             panel1.Controls.Add(panel11);
             panel1.Controls.Add(panel10);
@@ -126,14 +153,123 @@ namespace VCS.APP.Areas.History
             panel1.Location = new Point(8, 8);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(20);
-            panel1.Size = new Size(893, 639);
+            panel1.Size = new Size(1746, 726);
             panel1.TabIndex = 0;
+            // 
+            // btnOut
+            // 
+            btnOut.BackColor = Color.FromArgb(0, 123, 255);
+            btnOut.Cursor = Cursors.Hand;
+            btnOut.FlatStyle = FlatStyle.Flat;
+            btnOut.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnOut.ForeColor = Color.White;
+            btnOut.Image = (Image)resources.GetObject("btnOut.Image");
+            btnOut.ImageAlign = ContentAlignment.MiddleLeft;
+            btnOut.Location = new Point(695, 478);
+            btnOut.Name = "btnOut";
+            btnOut.Padding = new Padding(6, 0, 0, 0);
+            btnOut.Size = new Size(127, 40);
+            btnOut.TabIndex = 43;
+            btnOut.Text = "   Xem tất cả";
+            btnOut.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnOut.UseVisualStyleBackColor = false;
+            btnOut.Click += btnOut_Click;
+            // 
+            // btnIn
+            // 
+            btnIn.BackColor = Color.FromArgb(0, 123, 255);
+            btnIn.Cursor = Cursors.Hand;
+            btnIn.FlatStyle = FlatStyle.Flat;
+            btnIn.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnIn.ForeColor = Color.White;
+            btnIn.Image = (Image)resources.GetObject("btnIn.Image");
+            btnIn.ImageAlign = ContentAlignment.MiddleLeft;
+            btnIn.Location = new Point(695, 263);
+            btnIn.Name = "btnIn";
+            btnIn.Padding = new Padding(6, 0, 0, 0);
+            btnIn.Size = new Size(127, 40);
+            btnIn.TabIndex = 42;
+            btnIn.Text = "   Xem tất cả";
+            btnIn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnIn.UseVisualStyleBackColor = false;
+            btnIn.Click += btnIn_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
+            label13.Location = new Point(899, 381);
+            label13.Name = "label13";
+            label13.Size = new Size(174, 21);
+            label13.TabIndex = 41;
+            label13.Text = "THÔNG TIN HÓA ĐƠN";
+            // 
+            // panel16
+            // 
+            panel16.BackColor = Color.WhiteSmoke;
+            panel16.Controls.Add(pictureBox3);
+            panel16.Location = new Point(641, 544);
+            panel16.Name = "panel16";
+            panel16.Padding = new Padding(8);
+            panel16.Size = new Size(179, 117);
+            panel16.TabIndex = 32;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Dock = DockStyle.Fill;
+            pictureBox3.Location = new Point(8, 8);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(163, 101);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 3;
+            pictureBox3.TabStop = false;
+            // 
+            // panel14
+            // 
+            panel14.BackColor = Color.WhiteSmoke;
+            panel14.Controls.Add(pictureBox1);
+            panel14.Location = new Point(642, 324);
+            panel14.Name = "panel14";
+            panel14.Padding = new Padding(8);
+            panel14.Size = new Size(179, 117);
+            panel14.TabIndex = 30;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Location = new Point(8, 8);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(163, 101);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
+            // 
+            // panel17
+            // 
+            panel17.BackColor = Color.WhiteSmoke;
+            panel17.Controls.Add(pictureBox4);
+            panel17.Location = new Point(444, 544);
+            panel17.Name = "panel17";
+            panel17.Padding = new Padding(8);
+            panel17.Size = new Size(179, 117);
+            panel17.TabIndex = 31;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Dock = DockStyle.Fill;
+            pictureBox4.Location = new Point(8, 8);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(163, 101);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 3;
+            pictureBox4.TabStop = false;
             // 
             // panel13
             // 
             panel13.BackColor = Color.WhiteSmoke;
             panel13.Controls.Add(lblStt);
-            panel13.Location = new Point(180, 291);
+            panel13.Location = new Point(562, 170);
             panel13.Name = "panel13";
             panel13.Padding = new Padding(4);
             panel13.Size = new Size(260, 30);
@@ -149,11 +285,31 @@ namespace VCS.APP.Areas.History
             lblStt.Size = new Size(0, 21);
             lblStt.TabIndex = 19;
             // 
+            // panel15
+            // 
+            panel15.BackColor = Color.WhiteSmoke;
+            panel15.Controls.Add(pictureBox2);
+            panel15.Location = new Point(445, 324);
+            panel15.Name = "panel15";
+            panel15.Padding = new Padding(8);
+            panel15.Size = new Size(179, 117);
+            panel15.TabIndex = 29;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Dock = DockStyle.Fill;
+            pictureBox2.Location = new Point(8, 8);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(163, 101);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 3;
+            pictureBox2.TabStop = false;
+            // 
             // panel12
             // 
             panel12.BackColor = Color.WhiteSmoke;
             panel12.Controls.Add(lblNoteout);
-            panel12.Location = new Point(180, 255);
+            panel12.Location = new Point(562, 134);
             panel12.Name = "panel12";
             panel12.Padding = new Padding(4);
             panel12.Size = new Size(260, 30);
@@ -173,7 +329,7 @@ namespace VCS.APP.Areas.History
             // 
             panel11.BackColor = Color.WhiteSmoke;
             panel11.Controls.Add(lblNotein);
-            panel11.Location = new Point(180, 219);
+            panel11.Location = new Point(562, 98);
             panel11.Name = "panel11";
             panel11.Padding = new Padding(4);
             panel11.Size = new Size(260, 30);
@@ -193,7 +349,7 @@ namespace VCS.APP.Areas.History
             // 
             panel10.BackColor = Color.WhiteSmoke;
             panel10.Controls.Add(lblTimeout);
-            panel10.Location = new Point(180, 183);
+            panel10.Location = new Point(562, 62);
             panel10.Name = "panel10";
             panel10.Padding = new Padding(4);
             panel10.Size = new Size(260, 30);
@@ -213,7 +369,7 @@ namespace VCS.APP.Areas.History
             // 
             panel9.BackColor = Color.WhiteSmoke;
             panel9.Controls.Add(lblTimeIn);
-            panel9.Location = new Point(180, 147);
+            panel9.Location = new Point(156, 174);
             panel9.Name = "panel9";
             panel9.Padding = new Padding(4);
             panel9.Size = new Size(260, 30);
@@ -233,7 +389,7 @@ namespace VCS.APP.Areas.History
             // 
             panel8.BackColor = Color.WhiteSmoke;
             panel8.Controls.Add(lblDriver);
-            panel8.Location = new Point(180, 111);
+            panel8.Location = new Point(156, 138);
             panel8.Name = "panel8";
             panel8.Padding = new Padding(4);
             panel8.Size = new Size(260, 30);
@@ -253,7 +409,7 @@ namespace VCS.APP.Areas.History
             // 
             panel7.BackColor = Color.WhiteSmoke;
             panel7.Controls.Add(lblVehicle);
-            panel7.Location = new Point(180, 75);
+            panel7.Location = new Point(156, 102);
             panel7.Name = "panel7";
             panel7.Padding = new Padding(4);
             panel7.Size = new Size(260, 30);
@@ -273,7 +429,7 @@ namespace VCS.APP.Areas.History
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(lblWarehouse);
-            panel6.Location = new Point(180, 39);
+            panel6.Location = new Point(156, 66);
             panel6.Name = "panel6";
             panel6.Padding = new Padding(4);
             panel6.Size = new Size(260, 30);
@@ -293,7 +449,7 @@ namespace VCS.APP.Areas.History
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(ptbOut2);
-            panel4.Location = new Point(661, 203);
+            panel4.Location = new Point(247, 544);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(8);
             panel4.Size = new Size(179, 117);
@@ -313,7 +469,7 @@ namespace VCS.APP.Areas.History
             // 
             panel5.BackColor = Color.WhiteSmoke;
             panel5.Controls.Add(ptcOut1);
-            panel5.Location = new Point(465, 203);
+            panel5.Location = new Point(50, 544);
             panel5.Name = "panel5";
             panel5.Padding = new Padding(8);
             panel5.Size = new Size(179, 117);
@@ -333,7 +489,7 @@ namespace VCS.APP.Areas.History
             // 
             panel3.BackColor = Color.WhiteSmoke;
             panel3.Controls.Add(ptbIn2);
-            panel3.Location = new Point(661, 39);
+            panel3.Location = new Point(248, 324);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(8);
             panel3.Size = new Size(179, 117);
@@ -353,7 +509,7 @@ namespace VCS.APP.Areas.History
             // 
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(ptbIn1);
-            panel2.Location = new Point(465, 39);
+            panel2.Location = new Point(51, 324);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(8);
             panel2.Size = new Size(179, 117);
@@ -401,7 +557,7 @@ namespace VCS.APP.Areas.History
             dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = Color.LightGray;
-            dataGridView.Location = new Point(26, 378);
+            dataGridView.Location = new Point(898, 55);
             dataGridView.Margin = new Padding(6);
             dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
@@ -450,18 +606,18 @@ namespace VCS.APP.Areas.History
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 12F);
             label12.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label12.Location = new Point(138, 295);
+            label12.Location = new Point(459, 174);
             label12.Name = "label12";
-            label12.Size = new Size(35, 21);
+            label12.Size = new Size(96, 21);
             label12.TabIndex = 17;
-            label12.Text = "STT";
+            label12.Text = "STT Vào Kho";
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F);
             label11.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label11.Location = new Point(43, 223);
+            label11.Location = new Point(425, 102);
             label11.Name = "label11";
             label11.Size = new Size(130, 21);
             label11.TabIndex = 16;
@@ -472,7 +628,7 @@ namespace VCS.APP.Areas.History
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F);
             label10.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label10.Location = new Point(54, 259);
+            label10.Location = new Point(436, 138);
             label10.Name = "label10";
             label10.Size = new Size(119, 21);
             label10.TabIndex = 15;
@@ -483,7 +639,7 @@ namespace VCS.APP.Areas.History
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
             label9.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label9.Location = new Point(61, 187);
+            label9.Location = new Point(443, 66);
             label9.Name = "label9";
             label9.Size = new Size(112, 21);
             label9.TabIndex = 14;
@@ -494,7 +650,7 @@ namespace VCS.APP.Areas.History
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
             label8.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label8.Location = new Point(50, 151);
+            label8.Location = new Point(26, 178);
             label8.Name = "label8";
             label8.Size = new Size(123, 21);
             label8.TabIndex = 13;
@@ -503,11 +659,11 @@ namespace VCS.APP.Areas.History
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label7.Location = new Point(119, 343);
+            label7.Location = new Point(899, 20);
             label7.Name = "label7";
-            label7.Size = new Size(190, 21);
+            label7.Size = new Size(185, 21);
             label7.TabIndex = 12;
             label7.Text = "THÔNG TIN LỆNH XUẤT";
             // 
@@ -516,7 +672,7 @@ namespace VCS.APP.Areas.History
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
             label6.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label6.Location = new Point(126, 116);
+            label6.Location = new Point(102, 143);
             label6.Name = "label6";
             label6.Size = new Size(47, 21);
             label6.TabIndex = 11;
@@ -527,7 +683,7 @@ namespace VCS.APP.Areas.History
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
             label5.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label5.Location = new Point(78, 79);
+            label5.Location = new Point(54, 106);
             label5.Name = "label5";
             label5.Size = new Size(95, 27);
             label5.TabIndex = 10;
@@ -539,7 +695,7 @@ namespace VCS.APP.Areas.History
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label2.Location = new Point(579, 171);
+            label2.Location = new Point(24, 490);
             label2.Name = "label2";
             label2.Size = new Size(138, 17);
             label2.TabIndex = 9;
@@ -550,7 +706,7 @@ namespace VCS.APP.Areas.History
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
             label4.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label4.Location = new Point(136, 43);
+            label4.Location = new Point(112, 70);
             label4.Name = "label4";
             label4.Size = new Size(37, 21);
             label4.TabIndex = 8;
@@ -559,11 +715,11 @@ namespace VCS.APP.Areas.History
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label3.Location = new Point(142, 9);
+            label3.Location = new Point(24, 20);
             label3.Name = "label3";
-            label3.Size = new Size(133, 21);
+            label3.Size = new Size(131, 21);
             label3.TabIndex = 7;
             label3.Text = "LỊCH SỬ VÀO RA";
             // 
@@ -572,7 +728,7 @@ namespace VCS.APP.Areas.History
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label1.Location = new Point(579, 12);
+            label1.Location = new Point(24, 274);
             label1.Name = "label1";
             label1.Size = new Size(147, 17);
             label1.TabIndex = 2;
@@ -582,18 +738,27 @@ namespace VCS.APP.Areas.History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(909, 655);
+            ClientSize = new Size(1762, 742);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "DetailHistory";
             Padding = new Padding(8);
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Thông tin chi tiết";
             Load += DetailHistory_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panel14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel17.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             panel13.ResumeLayout(false);
             panel13.PerformLayout();
+            panel15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
             panel11.ResumeLayout(false);
@@ -664,5 +829,16 @@ namespace VCS.APP.Areas.History
         private Label lblTimeIn;
         private Panel panel8;
         private Label lblDriver;
+        private Panel panel16;
+        private PictureBox pictureBox3;
+        private Panel panel14;
+        private PictureBox pictureBox1;
+        private Panel panel17;
+        private PictureBox pictureBox4;
+        private Panel panel15;
+        private PictureBox pictureBox2;
+        private Label label13;
+        private Button btnIn;
+        private Button btnOut;
     }
 }
