@@ -160,6 +160,7 @@
             btnDeleteQueue.FlatStyle = FlatStyle.Flat;
             btnDeleteQueue.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDeleteQueue.ForeColor = Color.White;
+            btnDeleteQueue.Image = (Image)resources.GetObject("btnDeleteQueue.Image");
             btnDeleteQueue.ImageAlign = ContentAlignment.MiddleLeft;
             btnDeleteQueue.Location = new Point(96, 14);
             btnDeleteQueue.Name = "btnDeleteQueue";

@@ -12,6 +12,8 @@ using DMS.BUSINESS.Dtos.SMO;
 using System.Text.Json;
 using DMS.CORE;
 using Microsoft.Extensions.Configuration;
+using Emgu.CV.Util;
+using Emgu.CV;
 
 namespace VCS.APP.Services
 {
@@ -111,7 +113,7 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi nhận diện biển số: {ex.Message}");
             }
         }
-        private static string SaveDetectedImage(byte[] imageBytes)
+        public static string SaveDetectedImage(byte[] imageBytes)
         {
             try
             {
@@ -133,6 +135,44 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi lưu ảnh: {ex.Message}");
             }
         }
+
+        public static byte[] CaptureFrameFromRTSP(string rtspUrl)
+        {
+            using (VideoCapture capture = new VideoCapture(rtspUrl))
+            {
+                if (!capture.IsOpened)
+                {
+                    throw new Exception("Không thể kết nối đến luồng RTSP.");
+                }
+                using (Mat frame = new Mat())
+                {
+                    capture.Read(frame);
+
+                    if (frame.IsEmpty)
+                    {
+                        throw new Exception("Không thể lấy khung hình từ luồng RTSP.");
+                    }
+
+                    return MatToByteArray(frame);
+                }
+            }
+        }
+
+        public static byte[] MatToByteArray(Mat mat)
+        {
+            using (VectorOfByte buffer = new VectorOfByte())
+            {
+                bool success = CvInvoke.Imencode(".jpg", mat, buffer); // Chuyển thành mảng byte
+
+                if (!success || buffer.Size == 0)
+                {
+                    throw new Exception("Lỗi mã hóa ảnh từ Mat.");
+                }
+
+                return buffer.ToArray(); // Chuyển về byte[]
+            }
+        }
+
         public static void CleanupCameraResources(Dictionary<string, LibVLCSharp.Shared.MediaPlayer> mediaPlayers, LibVLCSharp.Shared.LibVLC? libVLC)
         {
             try

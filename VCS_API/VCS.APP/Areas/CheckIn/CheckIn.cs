@@ -27,6 +27,9 @@ using VCS.APP.Areas.PrintStt;
 using System.Drawing.Printing;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using System.Collections.Generic;
+using Emgu.CV;
+using Emgu.CV.Util;
+using System;
 
 
 namespace VCS.APP.Areas.CheckIn
@@ -36,11 +39,12 @@ namespace VCS.APP.Areas.CheckIn
         private readonly IWOrderService _orderService;
         private AppDbContext _dbContext;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
-        private Dictionary<string, LibVLCSharp.Shared.MediaPlayer> _mediaPlayers = new Dictionary<string, LibVLCSharp.Shared.MediaPlayer>();
-        private LibVLCSharp.Shared.LibVLC? _libVLC;
+        private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string,MediaPlayer>();
+        private LibVLC? _libVLC;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private List<string> lstCheckDo = new List<string>();
-        private string IMGPATH;
+        private List<string> lstPathImageCapture = new List<string>();
+        private string IMGPATH;    
         private string PLATEPATH;
         public CheckIn(AppDbContext dbContext, IWOrderService orderService)
         {
@@ -95,6 +99,17 @@ namespace VCS.APP.Areas.CheckIn
                 btnDetect.Enabled = false;
                 var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
                 IMGPATH = filePath;
+
+                //Lưu các ảnh từ camera vào thư mục
+                var lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.OrgCode == ProfileUtilities.User.OrganizeCode && x.IsIn == true).ToList();
+                lstPathImageCapture = new List<string>();
+                foreach (var c in lstCamera)
+                {
+                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
+                    var path = CommonService.SaveDetectedImage(imageBytes);
+                    lstPathImageCapture.Add(path);
+                }
+
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     pictureBoxVehicle.Image = snapshotImage;
@@ -481,6 +496,20 @@ namespace VCS.APP.Areas.CheckIn
                 IsPlate = false,
                 IsActive = true
             });
+
+            foreach(var i in lstPathImageCapture)
+            {
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    InOut = "in",
+                    Path = string.IsNullOrEmpty(i) ? "" : i.Replace(Global.PathSaveFile, ""),
+                    FullPath = string.IsNullOrEmpty(i) ? "" : i,
+                    IsPlate = false,
+                    IsActive = true
+                });
+            }
             await _dbContext.SaveChangesAsync();
             ReloadForm(_dbContext);
         }
@@ -668,6 +697,19 @@ namespace VCS.APP.Areas.CheckIn
                     IsPlate = false,
                     IsActive = true
                 });
+                foreach (var i in lstPathImageCapture)
+                {
+                    _dbContext.TblBuImage.Add(new TblBuImage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = headerId,
+                        InOut = "in",
+                        Path = string.IsNullOrEmpty(i) ? "" : i.Replace(Global.PathSaveFile, ""),
+                        FullPath = string.IsNullOrEmpty(i) ? "" : i,
+                        IsPlate = false,
+                        IsActive = true
+                    });
+                }
                 _dbContext.tblMdSequence.Add(new TblMdSequence
                 {
                     Code = Guid.NewGuid().ToString(),
@@ -736,15 +778,18 @@ namespace VCS.APP.Areas.CheckIn
             this.Controls.Clear();
             InitializeComponent();
             _dbContext = dbContext;
+            ResetVarible();
             InitializeLibVLC();
             GetListCameras();
             GetListQueue();
-            ResetVarible();
         }
         private void ResetVarible()
         {
             _lstDOSAP = new List<DOSAPDataDto>();
             lstCheckDo = new List<string>();
+            _lstCamera = new List<TblMdCamera>();
+            _mediaPlayers = new Dictionary<string, MediaPlayer>();
+            lstPathImageCapture = new List<string>();
         }
 
 

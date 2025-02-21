@@ -28,6 +28,7 @@ namespace VCS.APP.Areas.CheckOut
         private string IMGPATH;
         private string PLATEPATH;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
+        private List<string> lstPathImageCapture = new List<string>();
         private bool isHasInvoice { get; set; } = false;
         public CheckOut(AppDbContext dbContext)
         {
@@ -215,6 +216,18 @@ namespace VCS.APP.Areas.CheckOut
                 btnDetect.Enabled = false;
                 var (filePath, snapshotImage) = await CommonService.TakeSnapshot(videoView.MediaPlayer);
                 IMGPATH = filePath;
+
+                //Lưu các ảnh từ camera vào thư mục
+                var lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.OrgCode == ProfileUtilities.User.OrganizeCode && x.IsIn == true).ToList();
+                lstPathImageCapture = new List<string>();
+                foreach (var c in lstCamera)
+                {
+                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
+                    var path = CommonService.SaveDetectedImage(imageBytes);
+                    lstPathImageCapture.Add(path);
+                }
+
+
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     pictureBoxVehicle.Image = snapshotImage;
@@ -588,6 +601,19 @@ namespace VCS.APP.Areas.CheckOut
                 IsPlate = true,
                 IsActive = true,
             });
+            foreach (var o in lstPathImageCapture)
+            {
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = selectedValue,
+                    InOut = "out",
+                    Path = string.IsNullOrEmpty(o) ? "" : o.Replace(Global.PathSaveFile, ""),
+                    FullPath = string.IsNullOrEmpty(o) ? "" : o,
+                    IsPlate = false,
+                    IsActive = true
+                });
+            }
             var i = _dbContext.TblBuHeader.Find(selectedValue);
             i.IsCheckout = true;
             i.TimeCheckout = DateTime.Now;
