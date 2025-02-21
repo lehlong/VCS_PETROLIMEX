@@ -101,7 +101,19 @@ namespace VCS.APP.Areas.History
 
         private void ptbIn1_Click(object sender, EventArgs e)
         {
+            Form fullscreenForm = new Form();
+            fullscreenForm.WindowState = FormWindowState.Maximized;
+            fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+            int newWidth = (int)(this.ClientSize.Width * 0.8);
+            int newHeight = (int)(this.ClientSize.Height * 0.8);
 
+            PictureBox fullscreenPictureBox = new PictureBox();
+            fullscreenPictureBox.Image = ptbIn1.Image;
+            fullscreenPictureBox.Size = new Size(newWidth, newHeight);
+            fullscreenPictureBox.Dock = DockStyle.Fill;
+            fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            fullscreenForm.Controls.Add(fullscreenPictureBox);
+            fullscreenForm.ShowDialog();
         }
 
         private void btnIn_Click(object sender, EventArgs e)
@@ -122,6 +134,11 @@ namespace VCS.APP.Areas.History
                                .ToList();
             VAImage view = new VAImage(imgOUTList);
             view.ShowDialog();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
