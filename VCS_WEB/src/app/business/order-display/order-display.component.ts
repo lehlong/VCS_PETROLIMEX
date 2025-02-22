@@ -28,6 +28,7 @@ export class OrderDisplayComponent implements OnInit {
     pageSize: 0,
     keyWord: ''
   }
+  
 
   constructor(private _service: OrderService) {
   }
