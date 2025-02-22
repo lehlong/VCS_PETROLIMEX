@@ -36,8 +36,7 @@ namespace VCS.APP.Areas.CheckIn
 {
     public partial class CheckIn : Form
     {
-        private readonly IWOrderService _orderService;
-        private AppDbContext _dbContext;
+        private AppDbContextForm _dbContext;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string,MediaPlayer>();
         private LibVLC? _libVLC;
@@ -46,11 +45,10 @@ namespace VCS.APP.Areas.CheckIn
         private List<string> lstPathImageCapture = new List<string>();
         private string IMGPATH;    
         private string PLATEPATH;
-        public CheckIn(AppDbContext dbContext, IWOrderService orderService)
+        public CheckIn(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            _orderService = orderService;
         }
         private void CheckIn_Load(object sender, EventArgs e)
         {
@@ -730,14 +728,12 @@ namespace VCS.APP.Areas.CheckIn
                     CompanyCode = ProfileUtilities.User.OrganizeCode
                 };
 
-                var result = await _orderService.Add(orderDto);
-
-                if (result == null)
-                {
-                    txtStatus.Text = "Cho xe vào không thành công! Vui lòng kiểm tra lại!";
-                    txtStatus.ForeColor = Color.Red;
-                    return;
-                }
+                //if (result == null)
+                //{
+                //    txtStatus.Text = "Cho xe vào không thành công! Vui lòng kiểm tra lại!";
+                //    txtStatus.ForeColor = Color.Red;
+                //    return;
+                //}
                 txtStatus.Text = "Cho xe vào thành công!";
                 txtStatus.ForeColor = Color.Green;
             }
@@ -773,7 +769,7 @@ namespace VCS.APP.Areas.CheckIn
                 return null;
             }
         }
-        private void ReloadForm(AppDbContext dbContext)
+        private void ReloadForm(AppDbContextForm dbContext)
         {
             this.Controls.Clear();
             InitializeComponent();

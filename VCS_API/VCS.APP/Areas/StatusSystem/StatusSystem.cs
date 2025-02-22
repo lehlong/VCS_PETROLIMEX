@@ -8,8 +8,8 @@ namespace VCS.APP.Areas.StatusSystem
 {
     public partial class StatusSystem : Form
     {
-        private readonly AppDbContext _dbContext;
-        public StatusSystem(AppDbContext dbContext)
+        private readonly AppDbContextForm _dbContext;
+        public StatusSystem(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;

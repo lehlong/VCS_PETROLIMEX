@@ -21,7 +21,7 @@ namespace VCS.APP.Areas.CheckOut
 {
     public partial class CheckOut : Form
     {
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContextForm _dbContext;
         private LibVLC? _libVLC;
         private List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
@@ -30,7 +30,7 @@ namespace VCS.APP.Areas.CheckOut
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private List<string> lstPathImageCapture = new List<string>();
         private bool isHasInvoice { get; set; } = false;
-        public CheckOut(AppDbContext dbContext)
+        public CheckOut(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;

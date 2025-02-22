@@ -20,7 +20,7 @@ namespace VCS.APP.Services
     public class CommonService
     {
         private static readonly HttpClient _client = new HttpClient();
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContextForm _dbContext;
         public static async Task<(string? filePath, Image? image)> TakeSnapshot(LibVLCSharp.Shared.MediaPlayer player)
         {
             try
@@ -290,7 +290,7 @@ namespace VCS.APP.Services
             }
         }
 
-        public static void LoadUserConfig(AppDbContext dbContext)
+        public static void LoadUserConfig()
         {
             try
             {

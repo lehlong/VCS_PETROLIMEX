@@ -16,8 +16,8 @@ namespace VCS.APP.Areas.History
 {
     public partial class History : Form
     {
-        private AppDbContext _dbContext;
-        public History(AppDbContext dbContext)
+        private AppDbContextForm _dbContext;
+        public History(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;

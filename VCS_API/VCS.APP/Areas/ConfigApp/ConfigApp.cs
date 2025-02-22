@@ -24,9 +24,9 @@ namespace VCS.APP.Areas.ConfigApp
 {
     public partial class ConfigApp : Form
     {
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContextForm _dbContext;
         private TblAdConfigApp _config = new TblAdConfigApp();
-        public ConfigApp(AppDbContext dbContext)
+        public ConfigApp(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;

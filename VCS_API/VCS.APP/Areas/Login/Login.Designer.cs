@@ -31,12 +31,10 @@ namespace VCS.APP.Areas.Login
             btnLogin = new Button();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
             label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -50,7 +48,6 @@ namespace VCS.APP.Areas.Login
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // username
             // 
@@ -106,19 +103,6 @@ namespace VCS.APP.Areas.Login
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
             // 
-            // pictureBox4
-            // 
-            pictureBox4.Cursor = Cursors.Hand;
-            pictureBox4.Image = Properties.Resources.close;
-            pictureBox4.Location = new Point(1000, 13);
-            pictureBox4.Margin = new Padding(4);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(16, 16);
-            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox4.TabIndex = 6;
-            pictureBox4.TabStop = false;
-            pictureBox4.Click += pictureBox4_Click;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -128,7 +112,6 @@ namespace VCS.APP.Areas.Login
             label1.Size = new Size(279, 21);
             label1.TabIndex = 7;
             label1.Text = "Design by Dynamic Software Solutions";
-            label1.Click += label1_Click;
             // 
             // Login
             // 
@@ -139,7 +122,6 @@ namespace VCS.APP.Areas.Login
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1029, 630);
             Controls.Add(label1);
-            Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(btnLogin);
@@ -148,16 +130,17 @@ namespace VCS.APP.Areas.Login
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4);
+            MaximizeBox = false;
+            MdiChildrenMinimizedAnchorBottom = false;
+            MinimizeBox = false;
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Login";
-            Load += Login_Load;
+            Text = "Hệ thống VCS";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -170,7 +153,6 @@ namespace VCS.APP.Areas.Login
         private Button btnLogin;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
         private Label label1;
         private PictureBox pictureBox5;
     }

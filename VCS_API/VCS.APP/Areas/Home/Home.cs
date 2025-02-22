@@ -9,12 +9,12 @@ namespace VCS.APP.Areas.Home
 {
     public partial class Home : Form
     {
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContextForm _dbContext;
         public List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private LibVLC _libVLC;
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
 
-        public Home(AppDbContext dbContext)
+        public Home(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;

@@ -1,23 +1,10 @@
-﻿using DMS.BUSINESS.Services.BU;
-using DMS.CORE;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using DMS.CORE;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using VCS.APP.Areas.CheckIn;
 using VCS.APP.Areas.CheckOut;
 using VCS.APP.Areas.ConfigApp;
 using VCS.APP.Areas.History;
 using VCS.APP.Areas.Home;
-using VCS.APP.Areas.Login;
 using VCS.APP.Areas.StatusSystem;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
@@ -27,13 +14,11 @@ namespace VCS.APP
     public partial class Main : Form
     {
         private Form activeForm;
-        private AppDbContext _dbContext;
-        private IWOrderService _orderService;
-        public Main(AppDbContext dbContext, IWOrderService orderService)
+        private AppDbContextForm _dbContext;
+        public Main(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            _orderService = orderService;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -75,7 +60,7 @@ namespace VCS.APP
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
             labelTitle.Text = "/ Quản lý cổng vào";
-            OpenChildForm(new CheckIn(_dbContext, _orderService));
+            OpenChildForm(new CheckIn(_dbContext));
 
         }
 
@@ -120,8 +105,8 @@ namespace VCS.APP
             if (result == DialogResult.Yes)
             {
                 this.Hide();
-                var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
-                loginForm.Show();
+                //var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
+                //loginForm.Show();
             }
         }
 
