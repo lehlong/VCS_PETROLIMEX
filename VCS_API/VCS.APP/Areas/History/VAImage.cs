@@ -37,8 +37,8 @@ namespace VCS.APP.Areas.History
                 if (System.IO.File.Exists(path))
                 {
                     PictureBox pictureBox = new PictureBox();
-                    pictureBox.Width = 100;
-                    pictureBox.Height = 100;
+                    pictureBox.Width = 200;
+                    pictureBox.Height = 200;
                     pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     pictureBox.Image = Image.FromFile(path);
                     flowLayoutPanel.Controls.Add(pictureBox);
