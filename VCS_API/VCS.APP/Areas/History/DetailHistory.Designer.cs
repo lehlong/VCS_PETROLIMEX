@@ -38,13 +38,13 @@ namespace VCS.APP.Areas.History
             btnOut = new Button();
             btnIn = new Button();
             panel16 = new Panel();
-            pictureBox3 = new PictureBox();
+            ptcOut4 = new PictureBox();
             panel14 = new Panel();
-            pictureBox1 = new PictureBox();
+            pcbIn4 = new PictureBox();
             panel17 = new Panel();
-            pictureBox4 = new PictureBox();
+            ptcOut3 = new PictureBox();
             panel15 = new Panel();
-            pictureBox2 = new PictureBox();
+            pcbIn3 = new PictureBox();
             panel4 = new Panel();
             ptbOut2 = new PictureBox();
             panel5 = new Panel();
@@ -94,13 +94,13 @@ namespace VCS.APP.Areas.History
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             label16 = new Label();
             panel16.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ptcOut4).BeginInit();
             panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pcbIn4).BeginInit();
             panel17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ptcOut3).BeginInit();
             panel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pcbIn3).BeginInit();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ptbOut2).BeginInit();
             panel5.SuspendLayout();
@@ -165,86 +165,90 @@ namespace VCS.APP.Areas.History
             // panel16
             // 
             panel16.BackColor = Color.WhiteSmoke;
-            panel16.Controls.Add(pictureBox3);
+            panel16.Controls.Add(ptcOut4);
             panel16.Location = new Point(625, 65);
             panel16.Name = "panel16";
             panel16.Padding = new Padding(8);
             panel16.Size = new Size(179, 117);
             panel16.TabIndex = 32;
             // 
-            // pictureBox3
+            // ptcOut4
             // 
-            pictureBox3.Cursor = Cursors.Hand;
-            pictureBox3.Dock = DockStyle.Fill;
-            pictureBox3.Location = new Point(8, 8);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(163, 101);
-            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox3.TabIndex = 3;
-            pictureBox3.TabStop = false;
+            ptcOut4.Cursor = Cursors.Hand;
+            ptcOut4.Dock = DockStyle.Fill;
+            ptcOut4.Location = new Point(8, 8);
+            ptcOut4.Name = "ptcOut4";
+            ptcOut4.Size = new Size(163, 101);
+            ptcOut4.SizeMode = PictureBoxSizeMode.StretchImage;
+            ptcOut4.TabIndex = 3;
+            ptcOut4.TabStop = false;
+            ptcOut4.Click += pictureBox_Click;
             // 
             // panel14
             // 
             panel14.BackColor = Color.WhiteSmoke;
-            panel14.Controls.Add(pictureBox1);
+            panel14.Controls.Add(pcbIn4);
             panel14.Location = new Point(622, 65);
             panel14.Name = "panel14";
             panel14.Padding = new Padding(8);
             panel14.Size = new Size(179, 117);
             panel14.TabIndex = 30;
             // 
-            // pictureBox1
+            // pcbIn4
             // 
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(8, 8);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(163, 101);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 3;
-            pictureBox1.TabStop = false;
+            pcbIn4.Cursor = Cursors.Hand;
+            pcbIn4.Dock = DockStyle.Fill;
+            pcbIn4.Location = new Point(8, 8);
+            pcbIn4.Name = "pcbIn4";
+            pcbIn4.Size = new Size(163, 101);
+            pcbIn4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pcbIn4.TabIndex = 3;
+            pcbIn4.TabStop = false;
+            pcbIn4.Click += pictureBox_Click;
             // 
             // panel17
             // 
             panel17.BackColor = Color.WhiteSmoke;
-            panel17.Controls.Add(pictureBox4);
+            panel17.Controls.Add(ptcOut3);
             panel17.Location = new Point(428, 65);
             panel17.Name = "panel17";
             panel17.Padding = new Padding(8);
             panel17.Size = new Size(179, 117);
             panel17.TabIndex = 31;
             // 
-            // pictureBox4
+            // ptcOut3
             // 
-            pictureBox4.Cursor = Cursors.Hand;
-            pictureBox4.Dock = DockStyle.Fill;
-            pictureBox4.Location = new Point(8, 8);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(163, 101);
-            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox4.TabIndex = 3;
-            pictureBox4.TabStop = false;
+            ptcOut3.Cursor = Cursors.Hand;
+            ptcOut3.Dock = DockStyle.Fill;
+            ptcOut3.Location = new Point(8, 8);
+            ptcOut3.Name = "ptcOut3";
+            ptcOut3.Size = new Size(163, 101);
+            ptcOut3.SizeMode = PictureBoxSizeMode.StretchImage;
+            ptcOut3.TabIndex = 3;
+            ptcOut3.TabStop = false;
+            ptcOut3.Click += pictureBox_Click;
             // 
             // panel15
             // 
             panel15.BackColor = Color.WhiteSmoke;
-            panel15.Controls.Add(pictureBox2);
+            panel15.Controls.Add(pcbIn3);
             panel15.Location = new Point(425, 65);
             panel15.Name = "panel15";
             panel15.Padding = new Padding(8);
             panel15.Size = new Size(179, 117);
             panel15.TabIndex = 29;
             // 
-            // pictureBox2
+            // pcbIn3
             // 
-            pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Dock = DockStyle.Fill;
-            pictureBox2.Location = new Point(8, 8);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(163, 101);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 3;
-            pictureBox2.TabStop = false;
+            pcbIn3.Cursor = Cursors.Hand;
+            pcbIn3.Dock = DockStyle.Fill;
+            pcbIn3.Location = new Point(8, 8);
+            pcbIn3.Name = "pcbIn3";
+            pcbIn3.Size = new Size(163, 101);
+            pcbIn3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pcbIn3.TabIndex = 3;
+            pcbIn3.TabStop = false;
+            pcbIn3.Click += pictureBox_Click;
             // 
             // panel4
             // 
@@ -266,6 +270,7 @@ namespace VCS.APP.Areas.History
             ptbOut2.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbOut2.TabIndex = 3;
             ptbOut2.TabStop = false;
+            ptbOut2.Click += pictureBox_Click;
             // 
             // panel5
             // 
@@ -287,6 +292,7 @@ namespace VCS.APP.Areas.History
             ptcOut1.SizeMode = PictureBoxSizeMode.StretchImage;
             ptcOut1.TabIndex = 3;
             ptcOut1.TabStop = false;
+            ptcOut1.Click += pictureBox_Click;
             // 
             // panel3
             // 
@@ -308,6 +314,7 @@ namespace VCS.APP.Areas.History
             ptbIn2.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbIn2.TabIndex = 3;
             ptbIn2.TabStop = false;
+            ptbIn2.Click += pictureBox_Click;
             // 
             // panel2
             // 
@@ -329,7 +336,7 @@ namespace VCS.APP.Areas.History
             ptbIn1.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbIn1.TabIndex = 3;
             ptbIn1.TabStop = false;
-            ptbIn1.Click += ptbIn1_Click;
+            ptbIn1.Click += pictureBox_Click;
             // 
             // dataGridView
             // 
@@ -844,13 +851,13 @@ namespace VCS.APP.Areas.History
             Text = "Thông tin chi tiết";
             Load += DetailHistory_Load;
             panel16.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ptcOut4).EndInit();
             panel14.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pcbIn4).EndInit();
             panel17.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ptcOut3).EndInit();
             panel15.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pcbIn3).EndInit();
             panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ptbOut2).EndInit();
             panel5.ResumeLayout(false);
@@ -921,13 +928,13 @@ namespace VCS.APP.Areas.History
         private Panel panel8;
         private Label lblDriver;
         private Panel panel16;
-        private PictureBox pictureBox3;
+        private PictureBox ptcOut4;
         private Panel panel14;
-        private PictureBox pictureBox1;
+        private PictureBox pcbIn4;
         private Panel panel17;
-        private PictureBox pictureBox4;
+        private PictureBox ptcOut3;
         private Panel panel15;
-        private PictureBox pictureBox2;
+        private PictureBox pcbIn3;
         private Button btnIn;
         private Button btnOut;
         private Panel panel18;

@@ -42,38 +42,40 @@ namespace VCS.APP.Areas.History
                                     .Where(x => x.HeaderId == _headerId && x.InOut == "in")
                                     .Select(x => x.FullPath)
                                     .ToList();
-            if (imgINList.Count > 0)
-            {
-                if (File.Exists(imgINList[0]))
-                    ptbIn1.Image = Image.FromFile(imgINList[0]);
-                else
-                    ptbIn1.Image = null;
 
-                if (imgINList.Count > 1)
+
+            var pictureBoxes = new List<PictureBox> { ptbIn1, ptbIn2, pcbIn3, pcbIn4 };
+            for (int i = 0; i < pictureBoxes.Count; i++)
+            {
+                if (imgINList.Count > i)
                 {
-                    if (File.Exists(imgINList[1]))
-                        ptbIn2.Image = Image.FromFile(imgINList[1]);
+                    if (File.Exists(imgINList[i]))
+                        pictureBoxes[i].Image = Image.FromFile(imgINList[i]);
                     else
-                        ptbIn2.Image = null;
+                        pictureBoxes[i].Image = null;
+                }
+                else
+                {
+                    pictureBoxes[i].Image = null;
                 }
             }
-            var imgOUTList = _dbContext.TblBuImage
+                var imgOUTList = _dbContext.TblBuImage
                                     .Where(x => x.HeaderId == _headerId && x.InOut == "out")
-                                    .Select(x => x.Path)
+                                    .Select(x => x.FullPath)
                                     .ToList();
-            if (imgOUTList.Count > 0)
+            var pictureBoxesOut = new List<PictureBox> { ptcOut1, ptbOut2, ptcOut3, ptcOut4 };
+            for (int i = 0; i < pictureBoxesOut.Count; i++)
             {
-                if (File.Exists(imgOUTList[0]))
-                    ptcOut1.Image = Image.FromFile(imgOUTList[0]);
-                else
-                    ptcOut1.Image = null;
-
-                if (imgOUTList.Count > 1)
+                if (imgOUTList.Count > i)
                 {
-                    if (File.Exists(imgOUTList[1]))
-                        ptbOut2.Image = Image.FromFile(imgOUTList[1]);
+                    if (File.Exists(imgOUTList[i]))
+                        pictureBoxesOut[i].Image = Image.FromFile(imgOUTList[i]);
                     else
-                        ptbOut2.Image = null;
+                        pictureBoxesOut[i].Image = null;
+                }
+                else
+                {
+                    pictureBoxesOut[i].Image = null;
                 }
             }
             var lstDO = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == _headerId).ToList();
@@ -99,24 +101,43 @@ namespace VCS.APP.Areas.History
             }
         }
 
-        private void ptbIn1_Click(object sender, EventArgs e)
+        //private void ptbIn1_Click(object sender, EventArgs e)
+        //{
+        //    Form fullscreenForm = new Form();
+        //    fullscreenForm.WindowState = FormWindowState.Maximized;
+        //    fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+        //    int newWidth = (int)(this.ClientSize.Width * 0.8);
+        //    int newHeight = (int)(this.ClientSize.Height * 0.8);
+
+        //    PictureBox fullscreenPictureBox = new PictureBox();
+        //    fullscreenPictureBox.Image = ptbIn1.Image;
+        //    fullscreenPictureBox.Size = new Size(newWidth, newHeight);
+        //    fullscreenPictureBox.Dock = DockStyle.Fill;
+        //    fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+        //    fullscreenForm.Controls.Add(fullscreenPictureBox);
+        //    fullscreenForm.ShowDialog();
+        //}
+
+        private void pictureBox_Click(object sender, EventArgs e)
         {
-            Form fullscreenForm = new Form();
-            fullscreenForm.WindowState = FormWindowState.Maximized;
-            fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-            int newWidth = (int)(this.ClientSize.Width * 0.8);
-            int newHeight = (int)(this.ClientSize.Height * 0.8);
+            PictureBox clickedPictureBox = sender as PictureBox;
 
-            PictureBox fullscreenPictureBox = new PictureBox();
-            fullscreenPictureBox.Image = ptbIn1.Image;
-            fullscreenPictureBox.Size = new Size(newWidth, newHeight);
-            fullscreenPictureBox.Dock = DockStyle.Fill;
-            fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            fullscreenForm.Controls.Add(fullscreenPictureBox);
-            fullscreenForm.ShowDialog();
+            if (clickedPictureBox != null && clickedPictureBox.Image != null)
+            {
+                Form fullscreenForm = new Form();
+                fullscreenForm.WindowState = FormWindowState.Maximized;
+                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                PictureBox fullscreenPictureBox = new PictureBox();
+                fullscreenPictureBox.Image = clickedPictureBox.Image;
+                fullscreenPictureBox.Dock = DockStyle.Fill;
+                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                fullscreenForm.Controls.Add(fullscreenPictureBox);
+                fullscreenForm.ShowDialog();
+            }
         }
-
-        private void btnIn_Click(object sender, EventArgs e)
+            private void btnIn_Click(object sender, EventArgs e)
         {
             var imgINList = _dbContext.TblBuImage
                                   .Where(x => x.HeaderId == _headerId && x.InOut == "in")
@@ -130,7 +151,7 @@ namespace VCS.APP.Areas.History
         {
             var imgOUTList = _dbContext.TblBuImage
                                .Where(x => x.HeaderId == _headerId && x.InOut == "out")
-                               .Select(x => x.Path)
+                               .Select(x => x.FullPath)
                                .ToList();
             VAImage view = new VAImage(imgOUTList);
             view.ShowDialog();
