@@ -61,7 +61,12 @@ orgCode?: string = localStorage.getItem('companyCode')?.toString()
     this.search()
   }
   openDisplay(data: any) {
-    this.router.navigate([`/business/order-display/${data.id}`])
+    if(data.display == '01'){
+      this.router.navigate([`/business/order-display/${data.id}`])
+    }else{
+      this.router.navigate([`/business/get-goods-display/${data.id}`])
+    }
+    
   }
 
   search() {

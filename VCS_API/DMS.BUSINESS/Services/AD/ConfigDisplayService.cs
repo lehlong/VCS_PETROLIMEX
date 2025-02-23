@@ -38,7 +38,7 @@ namespace DMS.BUSINESS.Services.AD
                 {
                     query = query.Where(x => x.IsActive == filter.IsActive);
                 }
-                return await Paging(query, filter);
+                return await Paging(query.OrderBy(x =>x.Display).ThenBy(x => x.Cfrom), filter);
             }
             catch (Exception ex)
             {

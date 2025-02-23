@@ -53,14 +53,12 @@ namespace DMS.CORE
                 {
                     if (entry.State == EntityState.Added)
                     {
-                        auditable.CreateBy = "System"; // Use a default user in WinForms
                         auditable.CreateDate = TimestampProvider();
                     }
                     else
                     {
                         Entry(auditable).Property(x => x.CreateBy).IsModified = false;
                         Entry(auditable).Property(x => x.CreateDate).IsModified = false;
-                        auditable.UpdateBy = "System";
                         auditable.UpdateDate = TimestampProvider();
                     }
                 }
@@ -72,7 +70,6 @@ namespace DMS.CORE
                 {
                     entry.State = EntityState.Unchanged;
                     deletedEntity.IsDeleted = true;
-                    deletedEntity.DeleteBy = "System";
                     deletedEntity.DeleteDate = TimestampProvider();
                 }
             }

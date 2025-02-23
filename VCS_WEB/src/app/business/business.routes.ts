@@ -6,7 +6,7 @@ import { OrderDisplayListComponent } from './order-display-list/order-display-li
 
 export const businessRoutes: Routes = [
   { path: 'order-display/:id', component: OrderDisplayComponent },
-  { path: 'get-goods-display', component: GetGoodsDisplayComponent },
+  { path: 'get-goods-display/:id', component: GetGoodsDisplayComponent },
   { path: 'get-ticket', component: GetTicketComponent },
   { path: 'order-display-list', component: OrderDisplayListComponent },
 ]

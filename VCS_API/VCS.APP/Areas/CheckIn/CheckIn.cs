@@ -716,17 +716,17 @@ namespace VCS.APP.Areas.CheckIn
                     OrgCode = ProfileUtilities.User.OrganizeCode
                 });
 
-                var orderDto = new OrderDto
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = headerId,
-                    VehicleCode = txtLicensePlate.Text,
-                    Name = name,
-                    Count = "0",
-                    IsActive = true,
-                    WarehouseCode = ProfileUtilities.User.WarehouseCode,
-                    CompanyCode = ProfileUtilities.User.OrganizeCode
-                };
+                //var orderDto = new OrderDto
+                //{
+                //    Id = Guid.NewGuid().ToString(),
+                //    HeaderId = headerId,
+                //    VehicleCode = txtLicensePlate.Text,
+                //    Name = name,
+                //    Count = "0",
+                //    IsActive = true,
+                //    WarehouseCode = ProfileUtilities.User.WarehouseCode,
+                //    CompanyCode = ProfileUtilities.User.OrganizeCode
+                //};
 
                 //if (result == null)
                 //{
@@ -745,8 +745,8 @@ namespace VCS.APP.Areas.CheckIn
                 h.NoteIn = txtNoteIn.Text;
                 h.CreateDate = DateTime.Now;
                 _dbContext.TblBuHeader.Update(h);
-                _dbContext.SaveChanges();
             }
+            _dbContext.SaveChanges();
 
             var ticketInfo = new TicketInfo
             {
