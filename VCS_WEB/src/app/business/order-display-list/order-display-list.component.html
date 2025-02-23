@@ -1,0 +1,23 @@
+<div class="container-list">
+    <div class="site-page-header-ghost-wrapper">
+        <nz-page-header nzBackIcon nzTitle="DANH SÁCH MÀN HÌNH" class="site-page-header">
+            <nz-page-header-extra>
+                <nz-space [nzWrap]="true" class="gap-[5px]">
+
+                </nz-space>
+            </nz-page-header-extra>
+        </nz-page-header>
+    </div>
+    <div nz-row [nzGutter]="16">
+        <div nz-col class="gutter-row" [nzSpan]="4" *ngFor="let i of lstConfigDisplay" (click)="openDisplay(i)">
+            <div class="inner-box">
+                <nz-card nzHoverable style="width: 100%;padding: 20px;" [nzCover]="coverTemplate">
+                    <nz-card-meta [nzTitle]="i.name"></nz-card-meta>
+                </nz-card>
+                <ng-template #coverTemplate>
+                    <img src="assets/img/monitor.png" />
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

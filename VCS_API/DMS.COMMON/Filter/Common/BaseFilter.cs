@@ -18,5 +18,7 @@
         public string? OrgCode { get; set; }
         public string? WarehouseCode { get; set; }
 
+        public string? DisplayId { get; set; }
+
     }
 }

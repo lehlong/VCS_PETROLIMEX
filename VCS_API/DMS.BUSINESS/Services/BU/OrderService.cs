@@ -167,10 +167,14 @@ namespace DMS.BUSINESS.Services.BU
         {
             try
             {
+                var display = _dbContext.TblAdConfigDisplay.Find(filter.DisplayId);
+
                 var data = await _dbContext.TblBuHeader.Where(x => x.StatusVehicle == "02"
                 && x.CompanyCode == filter.OrgCode && x.WarehouseCode == filter.WarehouseCode && x.CreateDate.Value.Date == DateTime.Now.Date
                 ).OrderBy(x => x.Stt).ToListAsync();
-                return data;
+
+                return data.Skip(display.Cfrom).Take(display.Cto - display.Cfrom).ToList();
+                
             }
             catch (Exception ex)
             {

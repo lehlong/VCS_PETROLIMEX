@@ -4,6 +4,7 @@ export class BaseFilter {
   keyWord: string = '';
   orgCode?: string = '';
   warehouseCode? : string = '';
+  displayId? : string = '';
 }
 
 export class PaginationResult {

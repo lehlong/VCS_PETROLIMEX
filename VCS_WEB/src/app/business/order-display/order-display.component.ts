@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { OrderModel } from '../../models/bussiness/order.model';
 import { GlobalService } from '../../services/global.service';
 import { BaseFilter } from '../../models/base.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-display',
@@ -26,11 +27,12 @@ export class OrderDisplayComponent implements OnInit {
     warehouseCode: localStorage.getItem('warehouseCode')?.toString(),
     currentPage: 0,
     pageSize: 0,
-    keyWord: ''
+    keyWord: '',
+    displayId: '',
   }
   
 
-  constructor(private _service: OrderService) {
+  constructor(private _service: OrderService, private route: ActivatedRoute,) {
   }
 
   ngOnInit() {
@@ -39,6 +41,13 @@ export class OrderDisplayComponent implements OnInit {
   }
 
   getList() {
+
+    this.route.paramMap.subscribe({
+      next: (params) => {
+        var id = params.get('id')
+        this.filter.displayId = id ?? undefined;
+      },
+    })
     this._service.GetListWithoutLoading(this.filter).subscribe({
       next: (data) => {
         this.lstOrder = data;
