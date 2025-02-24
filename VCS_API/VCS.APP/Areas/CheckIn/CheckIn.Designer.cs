@@ -246,7 +246,6 @@
             // comboBox1
             // 
             comboBox1.BackColor = Color.WhiteSmoke;
-            comboBox1.Dock = DockStyle.Fill;
             comboBox1.DrawMode = DrawMode.OwnerDrawFixed;
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FlatStyle = FlatStyle.Flat;

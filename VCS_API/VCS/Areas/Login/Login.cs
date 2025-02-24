@@ -1,24 +1,19 @@
-﻿using DMS.BUSINESS.Services.Auth;
+﻿using Common.Util;
 using DMS.CORE;
-using DMS.BUSINESS.Dtos.Auth;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using VCS.APP.Utilities;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.SignalR.Client;
 using VCS.APP.Services;
-using Common.Util;
-using System.Diagnostics;
+using VCS.APP.Utilities;
 
-namespace VCS.APP.Areas.Login
+namespace VCS.Areas.Login
 {
     public partial class Login : Form
     {
@@ -27,29 +22,28 @@ namespace VCS.APP.Areas.Login
         {
             InitializeComponent();
             _dbContext = dbContext;
-            LoadSavedCredentials();
-            username.KeyPress += TextBox_KeyPress;
-            password.KeyPress += TextBox_KeyPress;
         }
-        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            LoginProcess();
+        }
+
+        private void username_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
             {
-                e.Handled = true;
-                btnLogin.PerformClick();
+                LoginProcess();
+            }
+        }
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoginProcess();
             }
         }
 
-        private void LoadSavedCredentials()
-        {
-            var savedCredentials = CredentialManager.GetSavedCredentials();
-            if (savedCredentials != null)
-            {
-                username.Text = savedCredentials.Username;
-            }
-        }
-
-        private async void btnLogin_Click(object sender, EventArgs e)
+        private void LoginProcess()
         {
             try
             {
@@ -73,7 +67,6 @@ namespace VCS.APP.Areas.Login
                     return;
                 }
                 #endregion
-
                 ProfileUtilities.User = user;
                 CommonService.LoadUserConfig();
                 var main = new Main(_dbContext);

@@ -1,13 +1,15 @@
-﻿using DMS.CORE;
+using DMS.CORE;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using VCS.APP.Areas.Login;
+using VCS.Areas.Login;
 
-namespace VCS.APP
+namespace VCS
 {
-    static class Program
+    internal static class Program
     {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
         [STAThread]
         static void Main()
         {
