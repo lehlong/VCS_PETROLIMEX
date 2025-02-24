@@ -32,10 +32,11 @@
               "RelativeDocumentMoniker": "VCS.SERVICE_IMAGE\\Program.cs",
               "ToolTip": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\Program.cs",
               "RelativeToolTip": "VCS.SERVICE_IMAGE\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAArwBsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T02:04:57.319Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -45,7 +46,7 @@
               "RelativeDocumentMoniker": "VCS.SERVICE_IMAGE\\Worker.cs",
               "ToolTip": "D:\\D2Sprojsct\\VCS\\VCS_PETROLIMEX\\VCS.SERVICE_IMAGE\\VCS.SERVICE_IMAGE\\Worker.cs",
               "RelativeToolTip": "VCS.SERVICE_IMAGE\\Worker.cs",
-              "ViewState": "AQIAACUAAAAAAAAAAAAwwDsAAABLAAAA",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAYwFoAAABwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T02:05:17.886Z",
               "IsPinned": true,
