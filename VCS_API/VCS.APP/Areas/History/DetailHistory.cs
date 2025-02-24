@@ -25,7 +25,7 @@ namespace VCS.APP.Areas.History
 
         private void DetailHistory_Load(object sender, EventArgs e)
         {
-            var _stt = _dbContext.TblBuOrders.Where(x => x.HeaderId == _headerId).Select(x => x.Stt).FirstOrDefault();
+            var _stt = _dbContext.TblBuHeader.Where(x => x.Id == _headerId).Select(x => x.Stt).FirstOrDefault();
             var data = _dbContext.TblBuHeader.Where(x => x.Id == _headerId).ToList();
             lblWarehouse.Text = GetNameWarehouse();
             foreach (var i in data)
@@ -79,14 +79,30 @@ namespace VCS.APP.Areas.History
                 }
             }
             var lstDO = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == _headerId).ToList();
+            var lstDOOUT = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == _headerId).ToList();
             foreach (var d in lstDO)
             {
                 var lstMT = _dbContext.TblBuDetailMaterial.Where(x => x.HeaderId == d.Id).ToList();
                 foreach (var m in lstMT)
                 {
-                    dataGridView.Rows.Add(new object[] { d.Do1Sap, d.VehicleCode, m.MaterialCode, $"{m.Quantity}({m.UnitCode})" });
+                    dataGridView.Rows.Add(new object[] { d.Do1Sap, GetNameMaterial(m.MaterialCode), $"{m.Quantity}({m.UnitCode})", "" });
 
                 }
+            }
+            foreach (var x in lstDOOUT)
+            {
+                dataGridView1.Rows.Add(new object[] { x.SoLenh, GetNameMaterial("000000000000" + x.MaHangHoa), $"{x.TongXuat}({x.DonViTinh})", "" }); 
+            }
+        }
+        private string? GetNameMaterial(string materialCode)
+        {
+            try
+            {
+                return _dbContext.TblMdGoods.Find(materialCode)?.Name;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
         private string? GetNameWarehouse()
