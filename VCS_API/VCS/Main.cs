@@ -34,6 +34,8 @@ namespace VCS
         {
             txtUsername.Text = ProfileUtilities.User.FullName;
             txtWarehouse.Text = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+            OpenChildForm(new Home(_dbContext));
+            txtTitle.Text = "- Trang chủ";
         }
         private void OpenChildForm(Form childForm)
         {
@@ -212,5 +214,6 @@ namespace VCS
             }
         }
         #endregion
+
     }
 }

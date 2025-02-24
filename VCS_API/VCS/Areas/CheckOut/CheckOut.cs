@@ -391,10 +391,11 @@ namespace VCS.Areas.CheckOut
 
                 // Kiểm tra trạng thái xe
 
-                var headerTgbx = _dbContext;
-
+                var headerTgbx = _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).ToList();
+                var detailTgbx = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == selectedValue).ToList();
+                var lstDo = detailTgbx.Select(x => x.SoLenh).Distinct().ToList();
                 var vehicle = _dbContext.TblBuHeader.Find(selectedValue);
-                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05")
+                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05" || lstDo.Count() == 0)
                 {
                     lblStatus.Text = "Phương tiện không có tiket hoặc không xử lý!";
                     lblStatus.ForeColor = Color.Red;
@@ -403,32 +404,13 @@ namespace VCS.Areas.CheckOut
                     return;
                 }
 
-                foreach (var doSap in detail.ListDOSAP)
+                foreach (var doSap in lstDo)
                 {
-                    AppendPanelDetail(doSap);
+                    var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
+                    AppendPanelDetail(lstData, headerTgbx.FirstOrDefault().MaPhuongTien);
                 }
-
-
-                //var number = "";
-
-                //var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).ToList();
-                //foreach (var x in lstDo) number += x.Do1Sap + ", ";
-
-                //var dataDetail = CommonService.CheckInvoice(number);
-                //if (!dataDetail.STATUS)
-                //{
-                //    lblStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
-                //    lblStatus.ForeColor = Color.Red;
-                //    this.isHasInvoice = false;
-                //    txtNoteOut.Text = "Chưa có hóa đơn";
-                //}
-                //else
-                //{
-                //    lblStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
-                //    lblStatus.ForeColor = Color.Green;
-                //    this.isHasInvoice = true;
-                //}
-
+                lblStatus.Text = "Kiểm tra thông tin thành công!";
+                lblStatus.ForeColor = Color.Green;
             }
             catch (Exception ex)
             {
@@ -438,7 +420,7 @@ namespace VCS.Areas.CheckOut
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void AppendPanelDetail(DOSAPDataDto data)
+        private void AppendPanelDetail(List<TblBuDetailTgbx> data, string vehicleCode)
         {
             try
             {
@@ -449,24 +431,18 @@ namespace VCS.Areas.CheckOut
                     yPosition = existingGrids.Last().Bottom + 6;
                 }
 
-                var firstDo = data.DATA.LIST_DO.FirstOrDefault();
-                if (firstDo == null)
-                {
-                    MessageBox.Show("Dữ liệu không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                string doNumber = firstDo.DO_NUMBER;
+                var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
+                var text = res.STATUS ? $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} đã có hoá đơn" : $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} chưa có hoá đơn";
 
                 // CREATE LABEL
                 var titleLabel = new Label
                 {
-                    Text = $"SỐ LỆNH XUẤT: {doNumber}",
+                    Text = text,
                     Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                    ForeColor = Color.Black,
                     AutoSize = true,
                     Location = new Point(10, yPosition),
                 };
+                titleLabel.ForeColor = res.STATUS ? Color.Green : Color.Red;
 
                 // DATA GRID VIEW
                 var dataGridView1 = new DataGridView
@@ -475,14 +451,22 @@ namespace VCS.Areas.CheckOut
                     BorderStyle = BorderStyle.None,
                     ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
                     ColumnHeadersHeight = 35,
-                    Location = new Point(0, yPosition + 30),
+                    Location = new Point(0, yPosition + 35),
                     Name = $"dataGridView_{panelDODetail.Controls.Count + 1}",
                     ReadOnly = true,
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                     AllowUserToAddRows = false,
                     AllowUserToResizeRows = false,
                     RowHeadersVisible = false,
-                    SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                    SelectionMode = DataGridViewSelectionMode.RowHeaderSelect,
+                    DefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        SelectionBackColor = Color.Transparent,
+                        SelectionForeColor = Color.Black,
+                        Padding = new Padding(5),
+                        Font = new Font("Segoe UI", 12, FontStyle.Regular)
+                    },
+                    RowTemplate = { Height = 35 }
                 };
 
                 // HEADER STYLE
@@ -499,15 +483,16 @@ namespace VCS.Areas.CheckOut
 
                 // CREATE DATA TABLE
                 DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
                 dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
                 dataTable.Columns.Add("MẶT HÀNG", typeof(string));
                 dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
 
-                foreach (var item in firstDo.LIST_MATERIAL)
+                foreach (var item in data)
                 {
-                    var materials = _dbContext.TblMdGoods.Find(item.MATERIAL);
+                    var materials = _dbContext.TblMdGoods.Find("000000000000" + item.MaHangHoa);
                     string materialName = materials?.Name ?? "Unknown";
-                    dataTable.Rows.Add(data.DATA.VEHICLE, materialName, $"{item.QUANTITY} ({item.UNIT})");
+                    dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat} ({item.DonViTinh})");
                 }
 
                 dataGridView1.DataSource = dataTable;
