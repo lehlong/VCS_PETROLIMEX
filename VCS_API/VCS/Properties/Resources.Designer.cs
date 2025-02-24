@@ -133,6 +133,16 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_details_18 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-details-18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_history_18__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-history-18 (1)", resourceCulture);
@@ -156,6 +166,16 @@ namespace VCS.Properties {
         internal static System.Drawing.Bitmap icons8_home_18__2_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-home-18 (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_lock_18__1_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-lock-18 (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -206,6 +226,16 @@ namespace VCS.Properties {
         internal static System.Drawing.Bitmap icons8_male_user_60 {
             get {
                 object obj = ResourceManager.GetObject("icons8-male-user-60", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_print_18__1_ {
+            get {
+                object obj = ResourceManager.GetObject("icons8-print-18 (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

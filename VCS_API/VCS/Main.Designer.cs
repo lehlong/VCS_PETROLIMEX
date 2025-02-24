@@ -39,6 +39,9 @@
             pictureBox9 = new PictureBox();
             pictureBox8 = new PictureBox();
             panelMenu = new Panel();
+            btnLogOut = new Panel();
+            pictureBox10 = new PictureBox();
+            label9 = new Label();
             btnStatus = new Panel();
             pictureBox3 = new PictureBox();
             label2 = new Label();
@@ -67,6 +70,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             panelMenu.SuspendLayout();
+            btnLogOut.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             btnStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             btnSetting.SuspendLayout();
@@ -197,6 +202,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.White;
+            panelMenu.Controls.Add(btnLogOut);
             panelMenu.Controls.Add(btnStatus);
             panelMenu.Controls.Add(btnSetting);
             panelMenu.Controls.Add(btnHistory);
@@ -210,6 +216,41 @@
             panelMenu.Size = new Size(220, 824);
             panelMenu.TabIndex = 1;
             // 
+            // btnLogOut
+            // 
+            btnLogOut.BackColor = Color.Transparent;
+            btnLogOut.Controls.Add(pictureBox10);
+            btnLogOut.Controls.Add(label9);
+            btnLogOut.Cursor = Cursors.Hand;
+            btnLogOut.Dock = DockStyle.Top;
+            btnLogOut.Location = new Point(0, 336);
+            btnLogOut.Name = "btnLogOut";
+            btnLogOut.Size = new Size(220, 56);
+            btnLogOut.TabIndex = 3;
+            btnLogOut.Click += btnLogOut_Click;
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.Image = Properties.Resources.icons8_lock_18__1_;
+            pictureBox10.Location = new Point(16, 15);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(26, 26);
+            pictureBox10.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox10.TabIndex = 1;
+            pictureBox10.TabStop = false;
+            pictureBox10.Click += pictureBox10_Click;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label9.Location = new Point(45, 17);
+            label9.Name = "label9";
+            label9.Size = new Size(80, 21);
+            label9.TabIndex = 0;
+            label9.Text = "Đăng xuất";
+            label9.Click += label9_Click;
+            // 
             // btnStatus
             // 
             btnStatus.BackColor = Color.Transparent;
@@ -221,6 +262,7 @@
             btnStatus.Name = "btnStatus";
             btnStatus.Size = new Size(220, 56);
             btnStatus.TabIndex = 2;
+            btnStatus.Click += btnStatus_Click;
             // 
             // pictureBox3
             // 
@@ -231,6 +273,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox3.TabIndex = 1;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += pictureBox3_Click;
             // 
             // label2
             // 
@@ -241,6 +284,7 @@
             label2.Size = new Size(130, 21);
             label2.TabIndex = 0;
             label2.Text = "Trạng thái kết nối";
+            label2.Click += label2_Click;
             // 
             // btnSetting
             // 
@@ -253,6 +297,7 @@
             btnSetting.Name = "btnSetting";
             btnSetting.Size = new Size(220, 56);
             btnSetting.TabIndex = 2;
+            btnSetting.Click += btnSetting_Click;
             // 
             // pictureBox4
             // 
@@ -263,6 +308,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox4.TabIndex = 1;
             pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
             // 
             // label3
             // 
@@ -273,6 +319,7 @@
             label3.Size = new Size(119, 21);
             label3.TabIndex = 0;
             label3.Text = "Cấu hình chung";
+            label3.Click += label3_Click;
             // 
             // btnHistory
             // 
@@ -285,6 +332,7 @@
             btnHistory.Name = "btnHistory";
             btnHistory.Size = new Size(220, 56);
             btnHistory.TabIndex = 2;
+            btnHistory.Click += btnHistory_Click;
             // 
             // pictureBox5
             // 
@@ -295,6 +343,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox5.TabIndex = 1;
             pictureBox5.TabStop = false;
+            pictureBox5.Click += pictureBox5_Click;
             // 
             // label4
             // 
@@ -305,6 +354,7 @@
             label4.Size = new Size(105, 21);
             label4.TabIndex = 0;
             label4.Text = "Lịch sử vào ra";
+            label4.Click += label4_Click;
             // 
             // btnCheckOut
             // 
@@ -457,6 +507,8 @@
             Controls.Add(panelMain);
             Controls.Add(panelMenu);
             Controls.Add(panelHeader);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
@@ -470,6 +522,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             panelMenu.ResumeLayout(false);
+            btnLogOut.ResumeLayout(false);
+            btnLogOut.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             btnStatus.ResumeLayout(false);
             btnStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -529,5 +584,8 @@
         private Label txtTitle;
         private Label label8;
         private Label label7;
+        private Panel btnLogOut;
+        private PictureBox pictureBox10;
+        private Label label9;
     }
 }

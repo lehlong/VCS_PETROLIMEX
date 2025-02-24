@@ -183,7 +183,7 @@
             txtNumberDO.BorderStyle = BorderStyle.None;
             txtNumberDO.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNumberDO.Location = new Point(10, 9);
-            txtNumberDO.MaxLength = 10;
+            txtNumberDO.MaxLength = 12;
             txtNumberDO.Name = "txtNumberDO";
             txtNumberDO.Size = new Size(344, 22);
             txtNumberDO.TabIndex = 38;

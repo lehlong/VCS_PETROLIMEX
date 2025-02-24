@@ -9,10 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VCS.APP.Areas.ConfigApp;
+using VCS.APP.Areas.History;
+using VCS.APP.Areas.StatusSystem;
 using VCS.APP.Utilities;
 using VCS.Areas.CheckIn;
 using VCS.Areas.CheckOut;
 using VCS.Areas.Home;
+using VCS.Areas.Login;
 
 namespace VCS
 {
@@ -105,6 +109,107 @@ namespace VCS
         {
             OpenChildForm(new CheckOut(_dbContext));
             txtTitle.Text = "- Quản lý cổng ra";
+        }
+        #endregion
+
+        #region Trạng thái kết nối
+        private void label2_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new StatusSystem(_dbContext));
+            txtTitle.Text = "- Trạng thái kết nối";
+        }
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new StatusSystem(_dbContext));
+            txtTitle.Text = "- Trạng thái kết nối";
+        }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new StatusSystem(_dbContext));
+            txtTitle.Text = "- Trạng thái kết nối";
+        }
+        #endregion
+
+        #region Cấu hình chung
+        private void label3_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new ConfigApp(_dbContext));
+            txtTitle.Text = "- Cấu hình chung";
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new ConfigApp(_dbContext));
+            txtTitle.Text = "- Cấu hình chung";
+        }
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new ConfigApp(_dbContext));
+            txtTitle.Text = "- Cấu hình chung";
+        }
+        #endregion
+
+        #region Lịch sử vào ra
+        private void label4_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new History(_dbContext));
+            txtTitle.Text = "- Lịch sử vào ra";
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new History(_dbContext));
+            txtTitle.Text = "- Lịch sử vào ra";
+        }
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new History(_dbContext));
+            txtTitle.Text = "- Lịch sử vào ra";
+        }
+        #endregion
+
+        #region Đăng xuất
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
+               "Xác nhận đăng xuất",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+                var loginForm = new Login(_dbContext);
+                loginForm.Show();
+            }
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
+               "Xác nhận đăng xuất",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+                var loginForm = new Login(_dbContext);
+                loginForm.Show();
+            }
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?",
+               "Xác nhận đăng xuất",
+               MessageBoxButtons.YesNo,
+               MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+                var loginForm = new Login(_dbContext);
+                loginForm.Show();
+            }
         }
         #endregion
     }

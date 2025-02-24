@@ -320,6 +320,7 @@ namespace VCS.Areas.CheckIn
         }
         private void txtNumberDO_TextChanged(object sender, EventArgs e)
         {
+            txtNumberDO.Text = txtNumberDO.Text.Replace(" ", "");
             if (txtNumberDO.Text.Trim().Length == 10)
             {
                 GetDetailDO();
@@ -327,10 +328,12 @@ namespace VCS.Areas.CheckIn
         }
         private void btnCheckDetailDO_Click(object sender, EventArgs e)
         {
+            txtNumberDO.Text = txtNumberDO.Text.Replace(" ", "");
             GetDetailDO();
         }
         private void GetDetailDO()
         {
+            txtNumberDO.Text = txtNumberDO.Text.Replace(" ", "");
             if (txtNumberDO.Text.Trim().Length != 10)
             {
                 lblStatus.Text = "Số lệnh xuất không đúng định dạng!";

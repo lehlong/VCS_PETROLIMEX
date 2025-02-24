@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCheck.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAM9JREFUOE+10z9KA2EQhvFgYeWfQusQcgNJHxttvJydIIoHSKGdIAFbFez1FF7h
+        JxMMrMN+O1voCw8swzsPXzE7mfxHcIoHrAvuscz7m2AXnzjBvCA6H7GTPSGa4gnn+CqITnSn2dMVXagT
+        nVJ0iEVBdIZFed5KKcIBXvDe4GaUKM9bKUU/L3rsuZ0tl6NEne98O1uOR4mwhytcd1j09EvRTpw/zjrs
+        9/SHRXneypDoCK953greYifPN8EdnrEqiM5t3v8VzHp+icws7/1ZvgGjHDYBkthNOwAAAABJRU5ErkJg
+        gg==
+</value>
+  </data>
+  <data name="btnCheckOut.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAOFJREFUOE+t1D9KQ0EQgPFoIdpbRMQqhQfwEpIiWOg5tBS0sFILC0kZAulSRixs
+        PIPgNawsBAurn+zLBtZJCDHvfTDNzOwHO/un1VoB7OMEW7H2L3Buygfu0Ik9c2AbRyEe8IxjTPCDV5xi
+        MzoqcJkbP4v4xlPRs4crfKH715DBDUYhd1GKivx7ml3MV9QWYSMNEdcYhtpqoiwZ4A27OAgLKhF2Um+R
+        nxP18/GOcZ/jFu0gesHZMtFjU6LZ1lJh/a3lZJId1hp2Se3jn9GkqLEn0syjXcRa38gi0n1Cb9nH9gty
+        tRE55bVUwwAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>
