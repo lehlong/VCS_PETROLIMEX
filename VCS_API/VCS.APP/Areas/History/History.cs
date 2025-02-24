@@ -1,4 +1,7 @@
 ﻿using DMS.CORE;
+using DMS.CORE.Entities.BU;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Office2013.Word;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,14 +20,17 @@ namespace VCS.APP.Areas.History
     public partial class History : Form
     {
         private AppDbContextForm _dbContext;
+        private int currentPage = 1;
+        private int itemsPerPage = 10;
+        private List<TblBuHeader> data = new List<TblBuHeader>();
         public History(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
 
-        }
 
+        }
         private void fromDate_ValueChanged(object sender, EventArgs e)
         {
 
@@ -32,31 +38,22 @@ namespace VCS.APP.Areas.History
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            SearchData();
         }
-
         private void History_Load(object sender, EventArgs e)
         {
             try
             {
-                var data = _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).ToList();
-                int i = 1;
-               
-                foreach (var d in data)
-                {
-                    dataGridView.Rows.Add(new object[] { 
-                        i.ToString(),
-                        _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "",
-                        d.VehicleCode,
-                        d.CreateDate,
-                        d.TimeCheckout,
-                        d.NoteIn,
-                        d.NoteOut,
-                        _dbContext.TblBuOrders.Where(x => x.HeaderId == d.Id).Select(x => x.Stt).FirstOrDefault(),
-                        d.Id });
-                    i++;
-                }
+
+                data = _dbContext.TblBuHeader
+                     .Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode)
+                     .ToList();
+
+                btnPrevious.Click += btnPrevious_Click;
+                btnNext.Click += btnNext_Click;
+                DisplayPage(data);
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi lấy danh sách lịch sử vào ra: {ex.Message}", "Lỗi",
@@ -64,16 +61,6 @@ namespace VCS.APP.Areas.History
             }
 
 
-        }
-        private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (e.RowIndex >= 0)
-            //{
-            //    DataGridViewRow row = dataGridView.Rows[e.RowIndex];
-            //    object cellValue = row.Cells[8].Value;
-            //    DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
-            //    detail.ShowDialog();
-            //}
         }
         private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -89,17 +76,16 @@ namespace VCS.APP.Areas.History
             }
             if (e.ColumnIndex == dataGridView.Columns["rePrintColumn"].Index && e.RowIndex >= 0)
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All); 
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
                 Image icon = Properties.Resources.icons8_print_18__1_;
-                int iconSize = 18; 
+                int iconSize = 18;
                 int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
                 int iconY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
                 e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
-                e.Handled = true; 
+                e.Handled = true;
             }
-            
-        }
 
+        }
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -114,7 +100,7 @@ namespace VCS.APP.Areas.History
                     var ticketInfo = new TicketInfo
                     {
                         WarehouseName = GetNameWarehouse(),
-                        Vehicle = data.VehicleCode,                       
+                        Vehicle = data.VehicleCode,
                         STT = _dbContext.TblBuOrders.Where(x => x.HeaderId == id).Select(x => x.Stt).FirstOrDefault().ToString("00"),
                     };
                     STT sttForm = new STT(ticketInfo, lstDO);
@@ -141,6 +127,58 @@ namespace VCS.APP.Areas.History
                 return null;
             }
         }
+        private void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                DisplayPage(data);
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if ((currentPage * itemsPerPage) < data.Count)
+            {
+                currentPage++;
+                DisplayPage(data);
+            }
+        }
+
+        private void DisplayPage(List<TblBuHeader> data)
+        {
+            dataGridView.Rows.Clear();
+            var pagedData = data.Skip((currentPage - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+            int i = (currentPage - 1) * itemsPerPage + 1;
+
+            foreach (var d in pagedData)
+            {
+                dataGridView.Rows.Add(new object[] {
+            i.ToString(),
+            //_dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "",
+            d.VehicleName,
+            d.VehicleCode,
+            d.CreateDate,
+            d.TimeCheckout,
+            d.NoteIn,
+            d.NoteOut,
+            _dbContext.TblBuOrders.Where(x => x.HeaderId == d.Id).Select(x => x.Stt).FirstOrDefault(),
+            d.Id });
+                i++;
+            }
+            lblPageInfo.Text = $"Page {currentPage} of {Math.Ceiling((double)data.Count / itemsPerPage)}";
+        }
+        private void SearchData()
+        {
+            var filteredData = data.Where(x =>
+                (string.IsNullOrEmpty(txtNumber.Text) || x.VehicleCode.Contains(txtNumber.Text)) &&
+                (string.IsNullOrEmpty(textBox2.Text) || x.VehicleName.Contains(textBox2.Text)) &&
+                (x.CreateDate >= fromDate.Value && x.CreateDate <= toDate.Value)
+            ).ToList();
+
+            DisplayPage(filteredData);
+        }
+
 
 
     }

@@ -133,7 +133,7 @@ namespace VCS.APP.Areas.History
             btnOut.ForeColor = Color.White;
             btnOut.Image = (Image)resources.GetObject("btnOut.Image");
             btnOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnOut.Location = new Point(667, 12);
+            btnOut.Location = new Point(635, 15);
             btnOut.Name = "btnOut";
             btnOut.Padding = new Padding(6, 0, 0, 0);
             btnOut.Size = new Size(137, 40);
@@ -152,7 +152,7 @@ namespace VCS.APP.Areas.History
             btnIn.ForeColor = Color.White;
             btnIn.Image = (Image)resources.GetObject("btnIn.Image");
             btnIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnIn.Location = new Point(662, 12);
+            btnIn.Location = new Point(632, 14);
             btnIn.Name = "btnIn";
             btnIn.Padding = new Padding(6, 0, 0, 0);
             btnIn.Size = new Size(139, 40);
@@ -166,10 +166,10 @@ namespace VCS.APP.Areas.History
             // 
             panel16.BackColor = Color.WhiteSmoke;
             panel16.Controls.Add(ptcOut4);
-            panel16.Location = new Point(625, 65);
+            panel16.Location = new Point(603, 65);
             panel16.Name = "panel16";
             panel16.Padding = new Padding(8);
-            panel16.Size = new Size(179, 117);
+            panel16.Size = new Size(168, 109);
             panel16.TabIndex = 32;
             // 
             // ptcOut4
@@ -178,7 +178,7 @@ namespace VCS.APP.Areas.History
             ptcOut4.Dock = DockStyle.Fill;
             ptcOut4.Location = new Point(8, 8);
             ptcOut4.Name = "ptcOut4";
-            ptcOut4.Size = new Size(163, 101);
+            ptcOut4.Size = new Size(152, 93);
             ptcOut4.SizeMode = PictureBoxSizeMode.StretchImage;
             ptcOut4.TabIndex = 3;
             ptcOut4.TabStop = false;
@@ -188,10 +188,10 @@ namespace VCS.APP.Areas.History
             // 
             panel14.BackColor = Color.WhiteSmoke;
             panel14.Controls.Add(pcbIn4);
-            panel14.Location = new Point(622, 65);
+            panel14.Location = new Point(602, 65);
             panel14.Name = "panel14";
             panel14.Padding = new Padding(8);
-            panel14.Size = new Size(179, 117);
+            panel14.Size = new Size(168, 109);
             panel14.TabIndex = 30;
             // 
             // pcbIn4
@@ -200,7 +200,7 @@ namespace VCS.APP.Areas.History
             pcbIn4.Dock = DockStyle.Fill;
             pcbIn4.Location = new Point(8, 8);
             pcbIn4.Name = "pcbIn4";
-            pcbIn4.Size = new Size(163, 101);
+            pcbIn4.Size = new Size(152, 93);
             pcbIn4.SizeMode = PictureBoxSizeMode.StretchImage;
             pcbIn4.TabIndex = 3;
             pcbIn4.TabStop = false;
@@ -210,10 +210,10 @@ namespace VCS.APP.Areas.History
             // 
             panel17.BackColor = Color.WhiteSmoke;
             panel17.Controls.Add(ptcOut3);
-            panel17.Location = new Point(428, 65);
+            panel17.Location = new Point(406, 65);
             panel17.Name = "panel17";
             panel17.Padding = new Padding(8);
-            panel17.Size = new Size(179, 117);
+            panel17.Size = new Size(168, 109);
             panel17.TabIndex = 31;
             // 
             // ptcOut3
@@ -222,7 +222,7 @@ namespace VCS.APP.Areas.History
             ptcOut3.Dock = DockStyle.Fill;
             ptcOut3.Location = new Point(8, 8);
             ptcOut3.Name = "ptcOut3";
-            ptcOut3.Size = new Size(163, 101);
+            ptcOut3.Size = new Size(152, 93);
             ptcOut3.SizeMode = PictureBoxSizeMode.StretchImage;
             ptcOut3.TabIndex = 3;
             ptcOut3.TabStop = false;
@@ -232,10 +232,10 @@ namespace VCS.APP.Areas.History
             // 
             panel15.BackColor = Color.WhiteSmoke;
             panel15.Controls.Add(pcbIn3);
-            panel15.Location = new Point(425, 65);
+            panel15.Location = new Point(405, 65);
             panel15.Name = "panel15";
             panel15.Padding = new Padding(8);
-            panel15.Size = new Size(179, 117);
+            panel15.Size = new Size(168, 109);
             panel15.TabIndex = 29;
             // 
             // pcbIn3
@@ -244,7 +244,7 @@ namespace VCS.APP.Areas.History
             pcbIn3.Dock = DockStyle.Fill;
             pcbIn3.Location = new Point(8, 8);
             pcbIn3.Name = "pcbIn3";
-            pcbIn3.Size = new Size(163, 101);
+            pcbIn3.Size = new Size(152, 93);
             pcbIn3.SizeMode = PictureBoxSizeMode.StretchImage;
             pcbIn3.TabIndex = 3;
             pcbIn3.TabStop = false;
@@ -254,10 +254,10 @@ namespace VCS.APP.Areas.History
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(ptbOut2);
-            panel4.Location = new Point(231, 65);
+            panel4.Location = new Point(209, 65);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(8);
-            panel4.Size = new Size(179, 117);
+            panel4.Size = new Size(168, 109);
             panel4.TabIndex = 30;
             // 
             // ptbOut2
@@ -266,7 +266,7 @@ namespace VCS.APP.Areas.History
             ptbOut2.Dock = DockStyle.Fill;
             ptbOut2.Location = new Point(8, 8);
             ptbOut2.Name = "ptbOut2";
-            ptbOut2.Size = new Size(163, 101);
+            ptbOut2.Size = new Size(152, 93);
             ptbOut2.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbOut2.TabIndex = 3;
             ptbOut2.TabStop = false;
@@ -276,10 +276,10 @@ namespace VCS.APP.Areas.History
             // 
             panel5.BackColor = Color.WhiteSmoke;
             panel5.Controls.Add(ptcOut1);
-            panel5.Location = new Point(34, 65);
+            panel5.Location = new Point(12, 65);
             panel5.Name = "panel5";
             panel5.Padding = new Padding(8);
-            panel5.Size = new Size(179, 117);
+            panel5.Size = new Size(168, 109);
             panel5.TabIndex = 29;
             // 
             // ptcOut1
@@ -288,7 +288,7 @@ namespace VCS.APP.Areas.History
             ptcOut1.Dock = DockStyle.Fill;
             ptcOut1.Location = new Point(8, 8);
             ptcOut1.Name = "ptcOut1";
-            ptcOut1.Size = new Size(163, 101);
+            ptcOut1.Size = new Size(152, 93);
             ptcOut1.SizeMode = PictureBoxSizeMode.StretchImage;
             ptcOut1.TabIndex = 3;
             ptcOut1.TabStop = false;
@@ -298,10 +298,10 @@ namespace VCS.APP.Areas.History
             // 
             panel3.BackColor = Color.WhiteSmoke;
             panel3.Controls.Add(ptbIn2);
-            panel3.Location = new Point(228, 65);
+            panel3.Location = new Point(208, 65);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(8);
-            panel3.Size = new Size(179, 117);
+            panel3.Size = new Size(168, 109);
             panel3.TabIndex = 28;
             // 
             // ptbIn2
@@ -310,7 +310,7 @@ namespace VCS.APP.Areas.History
             ptbIn2.Dock = DockStyle.Fill;
             ptbIn2.Location = new Point(8, 8);
             ptbIn2.Name = "ptbIn2";
-            ptbIn2.Size = new Size(163, 101);
+            ptbIn2.Size = new Size(152, 93);
             ptbIn2.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbIn2.TabIndex = 3;
             ptbIn2.TabStop = false;
@@ -320,10 +320,10 @@ namespace VCS.APP.Areas.History
             // 
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(ptbIn1);
-            panel2.Location = new Point(31, 65);
+            panel2.Location = new Point(23, 65);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(8);
-            panel2.Size = new Size(179, 117);
+            panel2.Size = new Size(168, 109);
             panel2.TabIndex = 27;
             // 
             // ptbIn1
@@ -332,7 +332,7 @@ namespace VCS.APP.Areas.History
             ptbIn1.Dock = DockStyle.Fill;
             ptbIn1.Location = new Point(8, 8);
             ptbIn1.Name = "ptbIn1";
-            ptbIn1.Size = new Size(163, 101);
+            ptbIn1.Size = new Size(152, 93);
             ptbIn1.SizeMode = PictureBoxSizeMode.StretchImage;
             ptbIn1.TabIndex = 3;
             ptbIn1.TabStop = false;
@@ -369,7 +369,7 @@ namespace VCS.APP.Areas.History
             dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.GridColor = Color.LightGray;
-            dataGridView.Location = new Point(11, 200);
+            dataGridView.Location = new Point(16, 200);
             dataGridView.Margin = new Padding(6);
             dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
@@ -378,7 +378,7 @@ namespace VCS.APP.Areas.History
             dataGridView.RowTemplate.DividerHeight = 1;
             dataGridView.RowTemplate.Height = 47;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView.Size = new Size(814, 371);
+            dataGridView.Size = new Size(755, 452);
             dataGridView.TabIndex = 18;
             // 
             // Slx
@@ -387,7 +387,7 @@ namespace VCS.APP.Areas.History
             Slx.Name = "Slx";
             Slx.ReadOnly = true;
             Slx.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Slx.Width = 200;
+            Slx.Width = 180;
             // 
             // Product
             // 
@@ -395,7 +395,7 @@ namespace VCS.APP.Areas.History
             Product.Name = "Product";
             Product.ReadOnly = true;
             Product.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Product.Width = 212;
+            Product.Width = 192;
             // 
             // dvt
             // 
@@ -411,13 +411,13 @@ namespace VCS.APP.Areas.History
             Status.Name = "Status";
             Status.ReadOnly = true;
             Status.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Status.Width = 200;
+            Status.Width = 180;
             // 
             // panel13
             // 
             panel13.BackColor = Color.WhiteSmoke;
             panel13.Controls.Add(lblStt);
-            panel13.Location = new Point(31, 141);
+            panel13.Location = new Point(16, 141);
             panel13.Name = "panel13";
             panel13.Padding = new Padding(6, 8, 4, 4);
             panel13.Size = new Size(372, 40);
@@ -437,7 +437,7 @@ namespace VCS.APP.Areas.History
             // 
             panel12.BackColor = Color.WhiteSmoke;
             panel12.Controls.Add(lblNoteout);
-            panel12.Location = new Point(1279, 141);
+            panel12.Location = new Point(1189, 141);
             panel12.Name = "panel12";
             panel12.Padding = new Padding(6, 8, 4, 4);
             panel12.Size = new Size(372, 40);
@@ -457,7 +457,7 @@ namespace VCS.APP.Areas.History
             // 
             panel11.BackColor = Color.WhiteSmoke;
             panel11.Controls.Add(lblNotein);
-            panel11.Location = new Point(1279, 68);
+            panel11.Location = new Point(1189, 68);
             panel11.Name = "panel11";
             panel11.Padding = new Padding(6, 8, 4, 4);
             panel11.Size = new Size(372, 40);
@@ -477,7 +477,7 @@ namespace VCS.APP.Areas.History
             // 
             panel10.BackColor = Color.WhiteSmoke;
             panel10.Controls.Add(lblTimeout);
-            panel10.Location = new Point(865, 142);
+            panel10.Location = new Point(799, 142);
             panel10.Name = "panel10";
             panel10.Padding = new Padding(6, 8, 4, 4);
             panel10.Size = new Size(372, 40);
@@ -497,7 +497,7 @@ namespace VCS.APP.Areas.History
             // 
             panel9.BackColor = Color.WhiteSmoke;
             panel9.Controls.Add(lblTimeIn);
-            panel9.Location = new Point(865, 68);
+            panel9.Location = new Point(799, 68);
             panel9.Name = "panel9";
             panel9.Padding = new Padding(6, 8, 4, 4);
             panel9.Size = new Size(372, 40);
@@ -517,7 +517,7 @@ namespace VCS.APP.Areas.History
             // 
             panel8.BackColor = Color.WhiteSmoke;
             panel8.Controls.Add(lblDriver);
-            panel8.Location = new Point(448, 68);
+            panel8.Location = new Point(410, 68);
             panel8.Name = "panel8";
             panel8.Padding = new Padding(6, 8, 4, 4);
             panel8.Size = new Size(372, 40);
@@ -537,7 +537,7 @@ namespace VCS.APP.Areas.History
             // 
             panel7.BackColor = Color.WhiteSmoke;
             panel7.Controls.Add(lblVehicle);
-            panel7.Location = new Point(448, 141);
+            panel7.Location = new Point(410, 141);
             panel7.Name = "panel7";
             panel7.Padding = new Padding(6, 8, 4, 4);
             panel7.Size = new Size(372, 40);
@@ -557,7 +557,7 @@ namespace VCS.APP.Areas.History
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(lblWarehouse);
-            panel6.Location = new Point(31, 68);
+            panel6.Location = new Point(16, 68);
             panel6.Name = "panel6";
             panel6.Padding = new Padding(6, 8, 4, 4);
             panel6.Size = new Size(372, 40);
@@ -579,7 +579,7 @@ namespace VCS.APP.Areas.History
             label12.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label12.ForeColor = SystemColors.ControlText;
             label12.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label12.Location = new Point(34, 122);
+            label12.Location = new Point(19, 122);
             label12.Name = "label12";
             label12.Size = new Size(85, 17);
             label12.TabIndex = 17;
@@ -591,7 +591,7 @@ namespace VCS.APP.Areas.History
             label11.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label11.ForeColor = SystemColors.ControlText;
             label11.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label11.Location = new Point(1282, 49);
+            label11.Location = new Point(1192, 49);
             label11.Name = "label11";
             label11.Size = new Size(115, 17);
             label11.TabIndex = 16;
@@ -603,7 +603,7 @@ namespace VCS.APP.Areas.History
             label10.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label10.ForeColor = SystemColors.ControlText;
             label10.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label10.Location = new Point(1282, 122);
+            label10.Location = new Point(1192, 122);
             label10.Name = "label10";
             label10.Size = new Size(106, 17);
             label10.TabIndex = 15;
@@ -615,7 +615,7 @@ namespace VCS.APP.Areas.History
             label9.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label9.ForeColor = SystemColors.ControlText;
             label9.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label9.Location = new Point(868, 123);
+            label9.Location = new Point(802, 123);
             label9.Name = "label9";
             label9.Size = new Size(102, 17);
             label9.TabIndex = 14;
@@ -627,7 +627,7 @@ namespace VCS.APP.Areas.History
             label8.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label8.ForeColor = SystemColors.ControlText;
             label8.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label8.Location = new Point(868, 49);
+            label8.Location = new Point(802, 49);
             label8.Name = "label8";
             label8.Size = new Size(111, 17);
             label8.TabIndex = 13;
@@ -640,7 +640,7 @@ namespace VCS.APP.Areas.History
             label6.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label6.ForeColor = SystemColors.ControlText;
             label6.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label6.Location = new Point(451, 49);
+            label6.Location = new Point(413, 49);
             label6.Name = "label6";
             label6.Size = new Size(47, 17);
             label6.TabIndex = 11;
@@ -652,7 +652,7 @@ namespace VCS.APP.Areas.History
             label5.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label5.ForeColor = SystemColors.ControlText;
             label5.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label5.Location = new Point(451, 116);
+            label5.Location = new Point(413, 116);
             label5.Name = "label5";
             label5.Size = new Size(82, 22);
             label5.TabIndex = 10;
@@ -665,7 +665,7 @@ namespace VCS.APP.Areas.History
             label4.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold | FontStyle.Italic);
             label4.ForeColor = SystemColors.ControlText;
             label4.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label4.Location = new Point(34, 49);
+            label4.Location = new Point(19, 49);
             label4.Name = "label4";
             label4.Size = new Size(34, 17);
             label4.TabIndex = 8;
@@ -694,7 +694,7 @@ namespace VCS.APP.Areas.History
             panel18.ForeColor = SystemColors.ControlText;
             panel18.Location = new Point(8, 8);
             panel18.Name = "panel18";
-            panel18.Size = new Size(1679, 199);
+            panel18.Size = new Size(1582, 199);
             panel18.TabIndex = 1;
             // 
             // label14
@@ -720,7 +720,7 @@ namespace VCS.APP.Areas.History
             panel19.Controls.Add(panel15);
             panel19.Location = new Point(8, 216);
             panel19.Name = "panel19";
-            panel19.Size = new Size(834, 582);
+            panel19.Size = new Size(784, 673);
             panel19.TabIndex = 2;
             // 
             // label15
@@ -728,7 +728,7 @@ namespace VCS.APP.Areas.History
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label15.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label15.Location = new Point(31, 22);
+            label15.Location = new Point(26, 22);
             label15.Name = "label15";
             label15.Size = new Size(181, 21);
             label15.TabIndex = 40;
@@ -744,9 +744,9 @@ namespace VCS.APP.Areas.History
             panel20.Controls.Add(panel17);
             panel20.Controls.Add(panel5);
             panel20.Controls.Add(panel4);
-            panel20.Location = new Point(853, 216);
+            panel20.Location = new Point(806, 216);
             panel20.Name = "panel20";
-            panel20.Size = new Size(834, 582);
+            panel20.Size = new Size(784, 673);
             panel20.TabIndex = 3;
             // 
             // dataGridView1
@@ -780,7 +780,7 @@ namespace VCS.APP.Areas.History
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(11, 200);
+            dataGridView1.Location = new Point(12, 200);
             dataGridView1.Margin = new Padding(6);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
@@ -789,7 +789,7 @@ namespace VCS.APP.Areas.History
             dataGridView1.RowTemplate.DividerHeight = 1;
             dataGridView1.RowTemplate.Height = 47;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(814, 371);
+            dataGridView1.Size = new Size(760, 452);
             dataGridView1.TabIndex = 43;
             // 
             // dataGridViewTextBoxColumn1
@@ -798,7 +798,7 @@ namespace VCS.APP.Areas.History
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
             dataGridViewTextBoxColumn1.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridViewTextBoxColumn1.Width = 200;
+            dataGridViewTextBoxColumn1.Width = 180;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -806,7 +806,7 @@ namespace VCS.APP.Areas.History
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
             dataGridViewTextBoxColumn2.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridViewTextBoxColumn2.Width = 212;
+            dataGridViewTextBoxColumn2.Width = 192;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -822,14 +822,14 @@ namespace VCS.APP.Areas.History
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             dataGridViewTextBoxColumn4.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridViewTextBoxColumn4.Width = 200;
+            dataGridViewTextBoxColumn4.Width = 180;
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label16.LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Assertive;
-            label16.Location = new Point(34, 22);
+            label16.Location = new Point(15, 22);
             label16.Name = "label16";
             label16.Size = new Size(170, 21);
             label16.TabIndex = 41;
@@ -839,7 +839,7 @@ namespace VCS.APP.Areas.History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1697, 806);
+            ClientSize = new Size(1600, 900);
             Controls.Add(panel20);
             Controls.Add(panel19);
             Controls.Add(panel18);

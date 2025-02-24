@@ -1,0 +1,18 @@
+2025-02-24 11:25:12.023 +07:00 [INF] <-------------------------------------------------->
+2025-02-24 11:25:12.112 +07:00 [INF] Worker started at: "2025-02-24T11:25:12.1066831+07:00"
+2025-02-24 11:35:34.563 +07:00 [INF] <-------------------------------------------------->
+2025-02-24 11:35:34.664 +07:00 [INF] Worker started at: "2025-02-24T11:35:34.6559607+07:00"
+2025-02-24 11:35:40.062 +07:00 [ERR] Hosting failed to start
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at VCS.SERVICE_IMAGE.Worker.ExecuteAsync(CancellationToken stoppingToken) in D:\D2Sprojsct\VCS\VCS_PETROLIMEX\VCS.SERVICE_IMAGE\VCS.SERVICE_IMAGE\Worker.cs:line 58
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2025-02-24 11:36:57.193 +07:00 [INF] <-------------------------------------------------->
+2025-02-24 11:36:57.293 +07:00 [INF] Worker started at: "2025-02-24T11:36:57.2859826+07:00"
+2025-02-24 11:37:03.227 +07:00 [ERR] Hosting failed to start
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at VCS.SERVICE_IMAGE.Worker.ExecuteAsync(CancellationToken stoppingToken) in D:\D2Sprojsct\VCS\VCS_PETROLIMEX\VCS.SERVICE_IMAGE\VCS.SERVICE_IMAGE\Worker.cs:line 58
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2025-02-24 11:38:39.779 +07:00 [INF] <-------------------------------------------------->
+2025-02-24 11:38:39.862 +07:00 [INF] Worker started at: "2025-02-24T11:38:39.8576222+07:00"

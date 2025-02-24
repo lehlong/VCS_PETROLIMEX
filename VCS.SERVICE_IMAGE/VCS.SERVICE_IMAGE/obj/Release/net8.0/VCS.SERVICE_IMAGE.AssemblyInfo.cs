@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VCS.SERVICE_IMAGE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31e5b6d8998170d30a48fc80ff622880407be6c8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55392c1c77243b9e4d358f35f1b076d7fdded5fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("VCS.SERVICE_IMAGE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VCS.SERVICE_IMAGE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

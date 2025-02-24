@@ -83,9 +83,12 @@
                     }
                     //nén file
                     DateTime now = DateTime.Now;
-                    string sourceDirectory = @$"{pathSaveFile}";
+                    
                     var fileCompress = @$"{Disk[0]}:\CompressedfileImageVCS";
-                    string zipFilePath = @$"{Disk[0]}:\CompressedfileImageVCS\{now.Year}-{now.Month.ToString("00")}-{now.Day.ToString("00")}-{now.Hour}-{now.Minute}.zip";
+                    DateTime oneYear= now.AddYears(-1);
+                  
+                    string sourceDirectory = @$"{pathSaveFile}\{oneYear.Year}";
+                    string zipFilePath = @$"{Disk[0]}:\CompressedfileImageVCS\{oneYear.Year}Bakup day{now.Year}-{now.Month.ToString("00")}{now.Day.ToString("00")}-{now.Hour}-{now.Minute}.zip";
 
 
                     if (FreeMemory < 10 && filePaths.Count == 0 && status == true)
@@ -103,11 +106,11 @@
 
                     }
 
-                    _logger.LogInformation("{folderPathjson}", folderPathjson);
+                  
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Lỗi trong quá trình thực thi worker.");
+                    _logger.LogError(ex, "Lỗi trong quá trình thực thi service.");
                   
                 }
 

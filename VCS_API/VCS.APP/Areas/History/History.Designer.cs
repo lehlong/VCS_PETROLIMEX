@@ -31,12 +31,16 @@ namespace VCS.APP.Areas.History
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             panel1 = new Panel();
+            panelPage = new Panel();
+            btnPrevious = new Button();
+            lblPageInfo = new Label();
+            btnNext = new Button();
             panel7 = new Panel();
             dataGridView = new DataGridView();
             Stt = new DataGridViewTextBoxColumn();
@@ -67,6 +71,7 @@ namespace VCS.APP.Areas.History
             toDate = new BorderlessDateTimePicker();
             btnSearch = new Button();
             panel1.SuspendLayout();
+            panelPage.SuspendLayout();
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             panel5.SuspendLayout();
@@ -79,6 +84,7 @@ namespace VCS.APP.Areas.History
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panelPage);
             panel1.Controls.Add(panel7);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label4);
@@ -95,6 +101,51 @@ namespace VCS.APP.Areas.History
             panel1.Name = "panel1";
             panel1.Size = new Size(1456, 952);
             panel1.TabIndex = 0;
+            // 
+            // panelPage
+            // 
+            panelPage.Controls.Add(btnPrevious);
+            panelPage.Controls.Add(lblPageInfo);
+            panelPage.Controls.Add(btnNext);
+            panelPage.Location = new Point(1183, 80);
+            panelPage.Name = "panelPage";
+            panelPage.Size = new Size(159, 29);
+            panelPage.TabIndex = 51;
+            // 
+            // btnPrevious
+            // 
+            btnPrevious.BackgroundImage = (Image)resources.GetObject("btnPrevious.BackgroundImage");
+            btnPrevious.BackgroundImageLayout = ImageLayout.Stretch;
+            btnPrevious.FlatAppearance.BorderSize = 0;
+            btnPrevious.FlatStyle = FlatStyle.Flat;
+            btnPrevious.Location = new Point(3, 5);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new Size(18, 18);
+            btnPrevious.TabIndex = 49;
+            btnPrevious.UseVisualStyleBackColor = true;
+            // 
+            // lblPageInfo
+            // 
+            lblPageInfo.AutoSize = true;
+            lblPageInfo.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblPageInfo.Location = new Point(36, 5);
+            lblPageInfo.Name = "lblPageInfo";
+            lblPageInfo.Size = new Size(83, 20);
+            lblPageInfo.TabIndex = 50;
+           // lblPageInfo.Text = "Page 1 of 2";
+            // 
+            // btnNext
+            // 
+            btnNext.BackgroundImage = (Image)resources.GetObject("btnNext.BackgroundImage");
+            btnNext.BackgroundImageLayout = ImageLayout.Stretch;
+            btnNext.FlatAppearance.BorderSize = 0;
+            btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.ImageAlign = ContentAlignment.MiddleLeft;
+            btnNext.Location = new Point(131, 5);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(18, 18);
+            btnNext.TabIndex = 48;
+            btnNext.UseVisualStyleBackColor = true;
             // 
             // panel7
             // 
@@ -147,7 +198,7 @@ namespace VCS.APP.Areas.History
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView.Size = new Size(1357, 697);
             dataGridView.TabIndex = 0;
-            dataGridView.CellDoubleClick += dataGridView_CellDoubleClick;
+          //  dataGridView.CellDoubleClick += dataGridView_CellDoubleClick;
             dataGridView.CellPainting += dataGridView_CellPainting;
             // 
             // Stt
@@ -427,6 +478,8 @@ namespace VCS.APP.Areas.History
             Load += History_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panelPage.ResumeLayout(false);
+            panelPage.PerformLayout();
             panel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             panel5.ResumeLayout(false);
@@ -473,5 +526,9 @@ namespace VCS.APP.Areas.History
         private DataGridViewTextBoxColumn RePrint;
         private DataGridViewButtonColumn details;
         private DataGridViewButtonColumn rePrintColumn;
+        private Button btnNext;
+        private Button btnPrevious;
+        private Label lblPageInfo;
+        private Panel panelPage;
     }
 }

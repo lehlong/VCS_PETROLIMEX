@@ -143,6 +143,7 @@ namespace VCS.APP.Services
                 if (!capture.IsOpened)
                 {
                     throw new Exception("Không thể kết nối đến luồng RTSP.");
+                    
                 }
                 using (Mat frame = new Mat())
                 {
