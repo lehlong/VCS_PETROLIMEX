@@ -30,7 +30,7 @@ namespace VCS
 
             Task.Run(() =>
             {
-                _dbContext = dbContext;  
+                _dbContext = dbContext;
             });
         }
 
@@ -44,6 +44,7 @@ namespace VCS
             });
             OpenChildForm(new Home(_dbContext));
             txtTitle.Text = "- Trang chủ";
+            notifyIcon.Visible = false;
         }
         private void OpenChildForm(Form childForm)
         {
@@ -228,5 +229,22 @@ namespace VCS
         }
         #endregion
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+                notifyIcon.Visible = true;
+            }
+            base.OnFormClosing(e);
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false;
+        }
     }
 }

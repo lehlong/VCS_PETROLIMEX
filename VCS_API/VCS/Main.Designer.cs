@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             panelHeader = new Panel();
             label8 = new Label();
             label7 = new Label();
@@ -64,6 +66,7 @@
             pictureBox1 = new PictureBox();
             lblHome = new Label();
             panelMain = new Panel();
+            notifyIcon = new NotifyIcon(components);
             panelHeader.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -499,6 +502,12 @@
             panelMain.Size = new Size(1409, 824);
             panelMain.TabIndex = 2;
             // 
+            // notifyIcon
+            // 
+            notifyIcon.Icon = (Icon)resources.GetObject("notifyIcon.Icon");
+            notifyIcon.Text = "Hệ thống VCS";
+            notifyIcon.DoubleClick += notifyIcon_DoubleClick;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -587,5 +596,6 @@
         private Panel btnLogOut;
         private PictureBox pictureBox10;
         private Label label9;
+        private NotifyIcon notifyIcon;
     }
 }
