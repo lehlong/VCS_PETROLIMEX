@@ -38,9 +38,9 @@ namespace VCS.Areas.Home
         {
             Core.Initialize();
             _libVLC = new LibVLC(
-                "--network-caching=100",
-                "--live-caching=100",
-                "--file-caching=100",
+                "--network-caching=300",
+                "--live-caching=300",
+                "--file-caching=300",
                 "--clock-jitter=0",
                 "--clock-synchro=0",
                 "--no-audio",
