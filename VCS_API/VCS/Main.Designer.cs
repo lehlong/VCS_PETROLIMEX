@@ -41,6 +41,9 @@
             pictureBox9 = new PictureBox();
             pictureBox8 = new PictureBox();
             panelMenu = new Panel();
+            linkLabel1 = new LinkLabel();
+            label10 = new Label();
+            pictureBox11 = new PictureBox();
             btnLogOut = new Panel();
             pictureBox10 = new PictureBox();
             label9 = new Label();
@@ -73,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             panelMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             btnLogOut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             btnStatus.SuspendLayout();
@@ -205,6 +209,9 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.White;
+            panelMenu.Controls.Add(linkLabel1);
+            panelMenu.Controls.Add(label10);
+            panelMenu.Controls.Add(pictureBox11);
             panelMenu.Controls.Add(btnLogOut);
             panelMenu.Controls.Add(btnStatus);
             panelMenu.Controls.Add(btnSetting);
@@ -218,6 +225,39 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(220, 824);
             panelMenu.TabIndex = 1;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.ActiveLinkColor = Color.DarkGray;
+            linkLabel1.AutoSize = true;
+            linkLabel1.LinkColor = Color.DarkGray;
+            linkLabel1.Location = new Point(126, 802);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(68, 15);
+            linkLabel1.TabIndex = 6;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "d2s.com.vn";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.DarkGray;
+            label10.Location = new Point(29, 802);
+            label10.Name = "label10";
+            label10.Size = new Size(101, 15);
+            label10.TabIndex = 5;
+            label10.Text = "Copyright © 2025";
+            // 
+            // pictureBox11
+            // 
+            pictureBox11.Image = Properties.Resources.logo_d2s;
+            pictureBox11.Location = new Point(54, 769);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(120, 28);
+            pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox11.TabIndex = 4;
+            pictureBox11.TabStop = false;
             // 
             // btnLogOut
             // 
@@ -531,6 +571,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             panelMenu.ResumeLayout(false);
+            panelMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             btnLogOut.ResumeLayout(false);
             btnLogOut.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
@@ -597,5 +639,8 @@
         private PictureBox pictureBox10;
         private Label label9;
         private NotifyIcon notifyIcon;
+        private LinkLabel linkLabel1;
+        private Label label10;
+        private PictureBox pictureBox11;
     }
 }
