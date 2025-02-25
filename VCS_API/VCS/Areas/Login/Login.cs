@@ -43,22 +43,27 @@ namespace VCS.Areas.Login
             }
         }
 
-        private void LoginProcess()
+        private async void LoginProcess()
         {
             try
             {
-                #region Validate
                 if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và mật khẩu!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                #endregion
 
-                #region IsValid
-                var user = _dbContext.TblAdAccount.FirstOrDefault(x => x.UserName == username.Text.Trim()
-                && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
+                var user = await Task.Run(() => _dbContext.TblAdAccount
+                    .FirstOrDefault(x => x.UserName == username.Text.Trim()
+                    && x.Password == Utils.CryptographyMD5(password.Text.Trim())));
+
+                this.Invoke((MethodInvoker)delegate
+                {
+                    var user = _dbContext.TblAdAccount
+                    .FirstOrDefault(x => x.UserName == username.Text.Trim()
+                    && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
+                });
 
                 if (user == null)
                 {
@@ -66,9 +71,10 @@ namespace VCS.Areas.Login
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                #endregion
+
                 ProfileUtilities.User = user;
-                CommonService.LoadUserConfig();
+                await Task.Run(() => CommonService.LoadUserConfig());
+
                 var main = new Main(_dbContext);
                 main.Show();
                 this.Hide();

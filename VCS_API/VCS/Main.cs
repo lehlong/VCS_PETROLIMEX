@@ -22,18 +22,26 @@ namespace VCS
 {
     public partial class Main : Form
     {
-        private readonly AppDbContextForm _dbContext;
+        private AppDbContextForm _dbContext;
         private Form activeForm;
         public Main(AppDbContextForm dbContext)
         {
-            _dbContext = dbContext;
             InitializeComponent();
+
+            Task.Run(() =>
+            {
+                _dbContext = dbContext;  
+            });
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private async void Main_Load(object sender, EventArgs e)
         {
             txtUsername.Text = ProfileUtilities.User.FullName;
-            txtWarehouse.Text = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+
+            txtWarehouse.Text = await Task.Run(() =>
+            {
+                return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
+            });
             OpenChildForm(new Home(_dbContext));
             txtTitle.Text = "- Trang chủ";
         }
@@ -44,14 +52,19 @@ namespace VCS
                 activeForm.Close();
                 this.panelMain.Controls.Clear();
             }
+
             activeForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
-            this.panelMain.Controls.Add(childForm);
-            this.panelMain.Tag = childForm;
-            childForm.BringToFront();
-            childForm.Show();
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.panelMain.Controls.Add(childForm);
+                this.panelMain.Tag = childForm;
+                childForm.BringToFront();
+                childForm.Show();
+            });
         }
 
 

@@ -57,7 +57,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1396, 812);
             panel2.TabIndex = 3;
-            panel2.Paint += panel2_Paint;
             // 
             // cameraPanelOut
             // 

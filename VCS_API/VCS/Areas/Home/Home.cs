@@ -20,7 +20,6 @@ namespace VCS.Areas.Home
     public partial class Home : Form
     {
         private readonly AppDbContextForm _dbContext;
-        public List<TblMdCamera> _lstCamera = new List<TblMdCamera>();
         private LibVLC _libVLC;
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
 
@@ -28,11 +27,11 @@ namespace VCS.Areas.Home
         {
             InitializeComponent();
             _dbContext = dbContext;
+            InitializeLibVLC();
         }
         private void Home_Load(object sender, EventArgs e)
         {
-            InitializeLibVLC();
-            GetListCameras();
+            InitializeCameraStreams();
         }
 
         private void InitializeLibVLC()
@@ -48,128 +47,103 @@ namespace VCS.Areas.Home
                 "--rtsp-tcp"
             );
         }
-        public void GetListCameras()
+        private async void InitializeCameraStreams()
         {
             try
             {
-                _lstCamera = _dbContext.TblMdCamera
-                    .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
-                    && x.WarehouseCode == ProfileUtilities.User.WarehouseCode).ToList();
-                InitializeCameraStreams();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+                var cameras = await Task.Run(() =>
+                    _dbContext.TblMdCamera
+                        .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
+                                 && x.WarehouseCode == ProfileUtilities.User.WarehouseCode)
+                        .ToList()
+                );
 
-        private void InitializeCameraStreams()
-        {
-            foreach (var camera in _lstCamera)
-            {
-                try
+                this.Invoke((MethodInvoker)delegate
                 {
-                    var cameraContainer = new Panel
+                    foreach (var camera in cameras)
                     {
-                        Width = 640,
-                        Height = 360,
-                        Margin = new Padding(0,0,0,10), 
-                        BorderStyle = BorderStyle.FixedSingle,
-                        BackColor = Color.FromArgb(52, 58, 64)
-                    };
-                    var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
-
-                    var label = new Label
-                    {
-                        Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
-                        Dock = DockStyle.Top,
-                        Height = 30,
-                        ForeColor = Color.White,
-                        BackColor = Color.FromArgb(52, 58, 64),
-                        Font = new Font("Segoe UI", 12, FontStyle.Regular),
-                        TextAlign = ContentAlignment.MiddleCenter
-                    };
-                    cameraContainer.Controls.Add(label);
-                    var videoView = new VideoView
-                    {
-                        //Width = 620,
-                        //Height = 360,
-                        Dock = DockStyle.Fill
-                    };
-
-                    string rtspUrl = $"{camera.Rtsp}";
-                    var media = new Media(_libVLC, rtspUrl, FromType.FromLocation);
-                    var player = new MediaPlayer(media);
-
-                    videoView.MediaPlayer = player;
-                    _mediaPlayers[camera.Code] = player;
-
-                    cameraContainer.Controls.Add(videoView);
-
-                    if (camera.IsIn)
-                    {
-                        cameraPanelIn.Controls.Add(cameraContainer);
+                        AddCameraStream(camera);
                     }
-                    else
-                    {
-                        cameraPanelOut.Controls.Add(cameraContainer);
-                    }
-
-                    player.Play();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khởi tạo camera {camera.Name}: {ex.Message}", "Lỗi",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void CleanupResources()
-        {
-            try
-            {
-                foreach (var player in _mediaPlayers.Values)
-                {
-                    player.Stop();
-                    player.Dispose();
-                }
-                _mediaPlayers.Clear();
-                cameraPanelIn.Controls.Clear();
-                _libVLC?.Dispose();
+                });
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi dọn dẹp resources: {ex.Message}", "Lỗi",
+                MessageBox.Show($"Lỗi khi tải danh sách camera: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddCameraStream(TblMdCamera camera)
         {
-            try
+            if (this.InvokeRequired)
             {
-                CleanupResources();
-                InitializeLibVLC();
-                GetListCameras();
+                this.Invoke(new Action(() => AddCameraStream(camera)));
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi reset camera: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
+            var cameraContainer = new Panel
+            {
+                Width = 640,
+                Height = 360,
+                Margin = new Padding(0, 0, 0, 10),
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.FromArgb(52, 58, 64)
+            };
+
+            var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
+            var label = new Label
+            {
+                Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
+                Dock = DockStyle.Top,
+                Height = 30,
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(52, 58, 64),
+                Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            cameraContainer.Controls.Add(label);
+
+            var videoView = new VideoView
+            {
+                Dock = DockStyle.Fill
+            };
+
+            string rtspUrl = camera.Rtsp;
+            var media = new Media(_libVLC, rtspUrl, FromType.FromLocation);
+            var player = new MediaPlayer(media);
+
+            videoView.MediaPlayer = player;
+            _mediaPlayers[camera.Code] = player;
+
+            cameraContainer.Controls.Add(videoView);
+
+            if (camera.IsIn)
+            {
+                cameraPanelIn.Controls.Add(cameraContainer);
+            }
+            else
+            {
+                cameraPanelOut.Controls.Add(cameraContainer);
+            }
+
+            player.Play();
+        }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            CleanupResources();
+            foreach (var player in _mediaPlayers.Values)
+            {
+                if (player.IsPlaying)
+                    player.Stop();
+                player.Dispose();
+            }
+
+            _mediaPlayers.Clear();
+            cameraPanelIn.Controls.Clear();
+            cameraPanelOut.Controls.Clear();
+            _libVLC?.Dispose();
+
             base.OnFormClosing(e);
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
