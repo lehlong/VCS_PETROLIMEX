@@ -23,15 +23,11 @@ namespace DMS.CORE
                 if (typeof(ISoftDeleteEntity).IsAssignableFrom(type.ClrType))
                     modelBuilder.SetSoftDeleteFilter(type.ClrType);
             }
-
-            modelBuilder.HasSequence<int>("ORDER_SEQUENCE")
-                    .StartsAt(1)
-                    .IncrementsBy(1);
-
+            modelBuilder.HasSequence<int>("ORDER_SEQUENCE").StartsAt(1).IncrementsBy(1);
             base.OnModelCreating(modelBuilder);
         }
 
-        public Func<DateTime> TimestampProvider { get; set; } = () => DateTime.Now;
+        public Func<DateTime> TimestampProvider { get; set; } = () => DateTime.UtcNow;
 
         public override int SaveChanges()
         {
@@ -47,32 +43,32 @@ namespace DMS.CORE
 
         private void TrackChanges()
         {
-            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted)
+                .ToList();
+
+            foreach (var entry in entries)
             {
                 if (entry.Entity is IBaseEntity auditable)
                 {
                     if (entry.State == EntityState.Added)
-                    {
                         auditable.CreateDate = TimestampProvider();
-                    }
                     else
-                    {
-                        Entry(auditable).Property(x => x.CreateBy).IsModified = false;
-                        Entry(auditable).Property(x => x.CreateDate).IsModified = false;
                         auditable.UpdateDate = TimestampProvider();
-                    }
                 }
-            }
 
-            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))
-            {
-                if (entry.Entity is ISoftDeleteEntity deletedEntity)
+                if (entry.State == EntityState.Deleted && entry.Entity is ISoftDeleteEntity softDelete)
                 {
-                    entry.State = EntityState.Unchanged;
-                    deletedEntity.IsDeleted = true;
-                    deletedEntity.DeleteDate = TimestampProvider();
+                    entry.State = EntityState.Modified;
+                    softDelete.IsDeleted = true;
+                    softDelete.DeleteDate = TimestampProvider();
                 }
             }
+        }
+
+        public IQueryable<T> GetQuery<T>() where T : class
+        {
+            return Set<T>().AsNoTracking();
         }
 
         #region System Manage

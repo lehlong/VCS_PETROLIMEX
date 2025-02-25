@@ -1,37 +1,51 @@
-using DMS.CORE;
+﻿using System;
+using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using DMS.CORE;
 using VCS.Areas.Login;
+using Microsoft.Extensions.Configuration;
 
 namespace VCS
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var configuration = LoadConfiguration();
-            string connectionString = configuration.GetConnectionString("Connection");
 
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContextForm>();
-            optionsBuilder.UseSqlServer(connectionString);
+            var host = CreateHostBuilder().Build();
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
 
-            var dbContext = new AppDbContextForm(optionsBuilder.Options);
-            Application.Run(new Login(dbContext));
+            try
+            {
+                var dbContextFactory = services.GetRequiredService<IDbContextFactory<AppDbContextForm>>();
+                using var dbContext = dbContextFactory.CreateDbContext();
+                Application.Run(new Login(dbContext));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi chạy chương trình: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        static IConfiguration LoadConfiguration()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            return builder.Build();
-        }
+        static IHostBuilder CreateHostBuilder() =>
+            Host.CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddDebug();
+                })
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddDbContextFactory<AppDbContextForm>(options =>
+                        options.UseSqlServer(context.Configuration.GetConnectionString("Connection")));
+                });
     }
 }
