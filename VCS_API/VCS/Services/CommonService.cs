@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using VCS.Services;
 using Emgu.CV;
 using Emgu.CV.Util;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace VCS.APP.Services
 {
@@ -254,9 +257,18 @@ namespace VCS.APP.Services
                 var byteArray = File.ReadAllBytes(imagePath);
                 using (var content = new MultipartFormDataContent())
                 {
+                    // Add image file
                     var imageContent = new ByteArrayContent(byteArray);
                     imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
                     content.Add(imageContent, "file", Path.GetFileName(imagePath));
+
+                    // Add other parameters with default values
+                    content.Add(new StringContent("0.5"), "lp_det_iou_threshold");
+                    content.Add(new StringContent("0.7"), "lp_det_conf_threshold");
+                    content.Add(new StringContent("128"), "ocr_det_min_size");
+                    content.Add(new StringContent("0.7"), "ocr_det_binary_threshold");
+                    content.Add(new StringContent("0.7"), "ocr_det_polygon_threshold");
+                    content.Add(new StringContent("120"), "ocr_rec_image_width");
 
                     var response = await _client.PostAsync(Global.DetectApiUrl, content);
                     if (!response.IsSuccessStatusCode)
@@ -265,29 +277,62 @@ namespace VCS.APP.Services
                     }
 
                     var jsonString = await response.Content.ReadAsStringAsync();
-                    dynamic jsonResponse = JObject.Parse(jsonString);
+                    JObject jsonResponse = JObject.Parse(jsonString);
+                    JArray dataArray = (JArray)jsonResponse["data"];
 
-                    if (jsonResponse?.cropped_image == null || jsonResponse?.license_plate == null)
+                    if (dataArray == null || !dataArray.Any())
                     {
                         throw new Exception("Không nhận diện được biển số xe");
                     }
 
-                    string base64Image = jsonResponse.cropped_image;
-                    byte[] imageBytes = Convert.FromBase64String(base64Image);
+                    // Get the first license plate detection
+                    var detection = dataArray.First();
+                    string licensePlate = detection["text"].ToString();
 
-                    // Lưu ảnh đã cắt
-                    string savedImagePath = SaveDetectedImage(imageBytes);
+                    // Extract coordinates
+                    int xmin = (int)detection["xmin"];
+                    int ymin = (int)detection["ymin"];
+                    int xmax = (int)detection["xmax"];
+                    int ymax = (int)detection["ymax"];
 
-                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    // Load the original image and crop the license plate region
+                    using (Image originalImage = Image.FromFile(imagePath))
                     {
-                        Image croppedImage = Image.FromStream(ms);
-                        return (jsonResponse.license_plate.ToString(), croppedImage, savedImagePath);
+                        int width = xmax - xmin;
+                        int height = ymax - ymin;
+
+                        using (Bitmap croppedBitmap = new Bitmap(width, height))
+                        {
+                            using (Graphics g = Graphics.FromImage(croppedBitmap))
+                            {
+                                g.DrawImage(originalImage, 
+                                    new Rectangle(0, 0, width, height),
+                                    new Rectangle(xmin, ymin, width, height),
+                                    GraphicsUnit.Pixel);
+                            }
+
+                            // Save the cropped image
+                            string savedImagePath = SaveDetectedImage(ImageToByteArray(croppedBitmap));
+
+                            // Create a new image for return
+                            Image croppedImage = Image.FromFile(savedImagePath);
+                            return (licensePlate, croppedImage, savedImagePath);
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi nhận diện biển số: {ex.Message}");
+            }
+        }
+
+        private static byte[] ImageToByteArray(Image image)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms.ToArray();
             }
         }
         #endregion
