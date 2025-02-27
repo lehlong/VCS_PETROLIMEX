@@ -148,11 +148,15 @@ export class MainLayoutComponent {
   }
 
   getSidebarMenu(): void {
+    // this.sidebarMenuService
+    //   .getMenuOfUser({
+    //     userName: this.userName,
+    //   })
+    //   .subscribe((res) => {
+    //     this.dataSidebarMenu = this.transformMenuList(res?.children || [])
+    //   })
     this.sidebarMenuService
-      .getMenuOfUser({
-        userName: this.userName,
-      })
-      .subscribe((res) => {
+      .getMenu().subscribe((res : any) => {
         this.dataSidebarMenu = this.transformMenuList(res?.children || [])
       })
   }

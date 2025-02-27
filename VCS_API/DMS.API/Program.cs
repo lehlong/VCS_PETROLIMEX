@@ -17,6 +17,7 @@ using DMS.API.AppCode.Util;
 using DMS.CORE;
 using Common;
 using Microsoft.Extensions.FileProviders;
+using DMS.BUSINESS.Services.Hangfire;
 
 var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -29,11 +30,18 @@ var logger = LogManager.Setup()
 
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Services.AddHangfire(configuration =>
-//            configuration.UseStorage(new OracleStorage(config.GetConnectionString("Connection"), new OracleStorageOptions())));
 
-// Thêm dịch vụ Hangfire
-//builder.Services.AddHangfireServer();
+// Cấu hình Hangfire với SQL Server (hoặc bất kỳ backend nào khác bạn đang sử dụng)
+builder.Services.AddHangfire(config =>
+{
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection"));
+});
+
+// Thêm Hangfire server để chạy các công việc nền
+builder.Services.AddHangfireServer();
+builder.Services.AddSingleton<IRecurringJobManager, RecurringJobManager>();
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddDIServices(builder.Configuration);
@@ -127,24 +135,27 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
 
 var app = builder.Build();
 
-//if (!app.Environment.IsDevelopment())
+
+// Kích hoạt Hangfire Dashboard (tùy chọn: kiểm tra trạng thái các công việc nền)
+app.UseHangfireDashboard("/hangfire"); // Đây là đường dẫn mặc định (có thể thay đổi)
+
+
+
+// using var scope = app.Services.CreateScope();
+// using var server = new BackgroundJobServer();
+// await scope.ServiceProvider.GetRequiredService<ISystemTraceService>().StartService();
+// var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+// var lstMessage = dbContext.TblAdMessage.ToList();
+//foreach (var message in lstMessage)
 //{
-//    //app.UseHangfireDashboard();
-//   // using var scope = app.Services.CreateScope();
-//   // using var server = new BackgroundJobServer();
-//   // await scope.ServiceProvider.GetRequiredService<ISystemTraceService>().StartService();
-//   // var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//   // var lstMessage = dbContext.TblAdMessage.ToList();
-//    foreach (var message in lstMessage)
+//    MessageUtil.AddToCache(new MessageObject()
 //    {
-//        MessageUtil.AddToCache(new MessageObject()
-//        {
-//            Code = message.Code,
-//            Language = message.Lang,
-//            Message = message.Value
-//        });
-//    }
+//        Code = message.Code,
+//        Language = message.Lang,
+//        Message = message.Value
+//    });
 //}
+
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -174,6 +185,13 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+using var scope = app.Services.CreateScope();
+using var server = new BackgroundJobServer();
+await scope.ServiceProvider.GetRequiredService<ISystemTraceService>().StartService();
+var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var backgroundJobService = new BackgroundJobService(dbContext);
+var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+recurringJobManager.AddOrUpdate("write-line-every-10s", () => backgroundJobService.UpdateOrder(), "*/10 * * * * *");
 
 app.UseMiddleware<ActionLoggingMiddleware>();
 app.MapHub<SystemTraceServiceHub>("/SystemTrace");

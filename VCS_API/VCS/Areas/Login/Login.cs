@@ -54,16 +54,9 @@ namespace VCS.Areas.Login
                     return;
                 }
 
-                var user = await Task.Run(() => _dbContext.TblAdAccount
-                    .FirstOrDefault(x => x.UserName == username.Text.Trim()
-                    && x.Password == Utils.CryptographyMD5(password.Text.Trim())));
-
-                this.Invoke((MethodInvoker)delegate
-                {
-                    var user = _dbContext.TblAdAccount
-                    .FirstOrDefault(x => x.UserName == username.Text.Trim()
-                    && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
-                });
+                var user = _dbContext.TblAdAccount
+                .FirstOrDefault(x => x.UserName == username.Text.Trim()
+                && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
 
                 if (user == null)
                 {

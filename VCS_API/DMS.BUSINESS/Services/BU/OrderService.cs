@@ -100,58 +100,8 @@ namespace DMS.BUSINESS.Services.BU
                         PumpThroatName = pt.Name,
                         MaterialCode = pt.GoodsCode,
                         MaterialName = goodsLookup.GetValueOrDefault(pt.GoodsCode),
-                        Order = new List<string>(),
+                        Order = string.IsNullOrEmpty(pt.OrderVehicle) ? new List<string>() : pt.OrderVehicle.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                     });
-                }
-
-                var _headerProcess = await _dbContext.TblBuHeader
-                    .Where(x => x.StatusVehicle == "03" && x.WarehouseCode == filter.WarehouseCode
-                        && x.CompanyCode == filter.OrgCode && x.CreateDate.Value.Date == DateTime.Now.Date)
-                    .ToListAsync();
-
-                if (_headerProcess.Any())
-                {
-                    foreach (var h in _headerProcess)
-                    {
-                        var _details = await _dbContext.TblBuDetailTgbx
-                            .Where(x => x.HeaderId == h.Id)
-                            .ToListAsync();
-                        #region
-                        var i = _dbContext.TblBuHeader.Find(h.Id);
-                        var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
-                        DataTable tableData = new DataTable();
-                        var query = $"SELECT MaPhuongTien FROM [Petro_Tdh].[dbo].[tblLenhXuatChiTiet]  where MaPhuongTien='{h.VehicleCode}' and  TrangThai= 'KT' and NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
-                        using (SqlConnection con = new SqlConnection(w.Tdh))
-                        {
-                            SqlCommand cmd = new SqlCommand(query, con);
-                            cmd.CommandType = CommandType.Text;
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                            try
-                            {
-                                adapter.Fill(tableData);
-                            }
-                            catch (Exception ex)
-                            {
-                                this.Exception = ex;
-                            }
-                        }
-
-                        if (tableData.Rows.Count > 0)
-                        {
-                            _details = _details.Where(x => x.HeaderId != h.Id).ToList();
-                        }
-
-                        #endregion
-                        var minOrderDetail = _details
-                            .Where(d => data.Any(pn => pn.MaterialCode == "000000000000" + d.MaHangHoa))
-                            .FirstOrDefault();
-
-                        if (minOrderDetail != null)
-                        {
-                            var matchedData = data.OrderBy(x => x.Order.Count()).FirstOrDefault(pn => pn.MaterialCode == "000000000000" + minOrderDetail.MaHangHoa);
-                            matchedData?.Order.Add(h.VehicleCode); 
-                        }
-                    }
                 }
 
                 return data.OrderBy(x => x.PumpRigCode).ThenBy(x => x.PumpThroatCode).ToList();

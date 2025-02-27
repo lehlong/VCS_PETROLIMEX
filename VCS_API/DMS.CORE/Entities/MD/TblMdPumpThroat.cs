@@ -24,5 +24,7 @@ namespace DMS.CORE.Entities.MD
         public string GoodsCode { get; set; }
         [Column("CAPACITY")]
         public decimal? Capacity { get; set; }
+        [Column("ORDER_VEHICLE", TypeName = "NVARCHAR(1000)")]
+        public string? OrderVehicle { get; set; }
     }
 }
