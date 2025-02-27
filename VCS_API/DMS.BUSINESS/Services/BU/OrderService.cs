@@ -41,7 +41,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
-        Task<List<string>> AsyncUploadFile(List<IFormFile> files,List<string> filePath);
+        Task<List<string>> AsyncUploadFile(List<IFormFile> files, List<string> filePath);
         Task UpdateStatus(TblBuHeader header);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
@@ -103,8 +103,15 @@ namespace DMS.BUSINESS.Services.BU
                         Order = string.IsNullOrEmpty(pt.OrderVehicle) ? new List<string>() : pt.OrderVehicle.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                     });
                 }
-
-                return data.OrderBy(x => x.PumpRigCode).ThenBy(x => x.PumpThroatCode).ToList();
+                var d = _dbContext.TblAdConfigDisplay.Find(filter.DisplayId);
+                if (d == null)
+                {
+                    return data.OrderBy(x => x.PumpRigCode).ThenBy(x => x.PumpThroatCode).ToList();
+                }
+                else
+                {
+                    return data.Skip(d.Cfrom).Take(d.Cto - d.Cfrom).OrderBy(x => x.PumpRigCode).ThenBy(x => x.PumpThroatCode).ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -124,7 +131,7 @@ namespace DMS.BUSINESS.Services.BU
                 ).OrderBy(x => x.Stt).ToListAsync();
 
                 return data.Skip(display.Cfrom).Take(display.Cto - display.Cfrom).ToList();
-                
+
             }
             catch (Exception ex)
             {
@@ -404,7 +411,7 @@ namespace DMS.BUSINESS.Services.BU
                     ChuyenVt = tgbx?.MaTuyenDuong,
                 };
                 d.Detail = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).OrderBy(x => x.SoLenh).ThenBy(x => x.MaHangHoa).ToList();
-                foreach(var _d in d.Detail)
+                foreach (var _d in d.Detail)
                 {
                     var gCode = "000000000000" + _d.MaHangHoa;
                     _d.MaHangHoa = _dbContext.TblMdGoods.Find(gCode)?.Name;
@@ -443,7 +450,7 @@ namespace DMS.BUSINESS.Services.BU
                         MaKhachHang = row["MaKhachHang"].ToString(),
                         LoaiPhieu = row["LoaiPhieu"].ToString(),
                         Niem = row["Niem"].ToString(),
-                        LuongGiamDinh = string.IsNullOrEmpty(row["LuongGiamDinh"].ToString()) ? 0 :Convert.ToDecimal(row["LuongGiamDinh"].ToString()),
+                        LuongGiamDinh = string.IsNullOrEmpty(row["LuongGiamDinh"].ToString()) ? 0 : Convert.ToDecimal(row["LuongGiamDinh"].ToString()),
                         NhietDoTaiTau = string.IsNullOrEmpty(row["NhietDoTaiTau"].ToString()) ? 0 : Convert.ToDecimal(row["NhietDoTaiTau"].ToString()),
                         GhiChu = row["GhiChu"].ToString(),
                         NgayHieuLuc = row["NgayHieuLuc"] != DBNull.Value ? Convert.ToDateTime(row["NgayHieuLuc"]) : null,
@@ -582,9 +589,9 @@ namespace DMS.BUSINESS.Services.BU
         {
             try
             {
-           
+
                 var SouceFileimage = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
-              
+
                 List<string> savedFiles = new List<string>();
                 foreach (var file in files)
                 {
@@ -600,7 +607,7 @@ namespace DMS.BUSINESS.Services.BU
                     }
                     if (file.Length > 0)
                     {
-                        string filePathSave = Path.Combine(fileaddress,file.FileName);
+                        string filePathSave = Path.Combine(fileaddress, file.FileName);
                         using (var stream = new FileStream(filePathSave, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);

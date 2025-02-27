@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ShareModule } from '../../shared/share-module';
 import { BaseFilter } from '../../models/base.model';
 import { OrderService } from '../../services/business/order.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-get-goods-display',
@@ -19,10 +20,11 @@ export class GetGoodsDisplayComponent implements OnInit {
     warehouseCode: localStorage.getItem('warehouseCode')?.toString(),
     currentPage: 0,
     pageSize: 0,
-    keyWord: ''
+    keyWord: '',
+    displayId: '',
   }
   lstArrangePumpNozzle: any[] = [];
-  constructor(private _service: OrderService,) { }
+  constructor(private _service: OrderService, private route: ActivatedRoute) { }
   ngOnInit() {
     this.toggleFullscreen(true);
     this.ArrangePumpNozzle();
@@ -39,6 +41,12 @@ export class GetGoodsDisplayComponent implements OnInit {
     window.speechSynthesis.speak(utterance);
   }
   ArrangePumpNozzle() {
+    this.route.paramMap.subscribe({
+      next: (params) => {
+        var id = params.get('id')
+        this.filter.displayId = id ?? undefined;
+      },
+    })
     this._service.ArrangePumpNozzle(this.filter).subscribe({
       next: (data) => {
         data.forEach((item: any) => {
