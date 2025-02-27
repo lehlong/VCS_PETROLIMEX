@@ -78,12 +78,11 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
 
-  async ngOnDestroy() {
-    if (this.orderSubscription) {
-      this.orderSubscription.unsubscribe();
-    }
-    this.globalService.setBreadcrumb([]);
+  ngOnDestroy() {
+    this.globalService.setBreadcrumb([]) 
   }
+
+
 
   getList() {
     this._service.GetList(this.filter).subscribe({

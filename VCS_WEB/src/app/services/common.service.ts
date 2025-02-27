@@ -97,7 +97,6 @@ export class CommonService {
             this.get<T>(endpoint, params, false),
           ),
         ),
-        finalize(() => this.globalService.decrementApiCallCount()), // Giảm bộ đếm khi hoàn thành
       )
   }
 

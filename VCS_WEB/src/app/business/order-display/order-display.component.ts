@@ -36,6 +36,7 @@ export class OrderDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.toggleFullscreen(true);
     this.getList();
     setInterval(() => { this.getList(); }, 5000);
   }

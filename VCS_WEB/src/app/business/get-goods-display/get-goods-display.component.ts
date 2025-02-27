@@ -24,6 +24,7 @@ export class GetGoodsDisplayComponent implements OnInit {
   lstArrangePumpNozzle: any[] = [];
   constructor(private _service: OrderService,) { }
   ngOnInit() {
+    this.toggleFullscreen(true);
     this.ArrangePumpNozzle();
     setInterval(() => { this.ArrangePumpNozzle(); }, 5000);
   }

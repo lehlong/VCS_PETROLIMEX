@@ -46,7 +46,7 @@ export class AreaComponent {
   }
 
   ngOnDestroy() {
-    this.globalService.setBreadcrumb([])
+    this.globalService.setBreadcrumb([]) 
   }
 
   ngOnInit(): void {
