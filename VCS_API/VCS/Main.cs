@@ -28,11 +28,7 @@ namespace VCS
         public Main(AppDbContextForm dbContext)
         {
             InitializeComponent();
-
-            Task.Run(() =>
-            {
-                _dbContext = dbContext;
-            });
+             _dbContext = dbContext;
         }
 
         private async void Main_Load(object sender, EventArgs e)
@@ -60,13 +56,11 @@ namespace VCS
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
-            this.Invoke((MethodInvoker)delegate
-            {
-                this.panelMain.Controls.Add(childForm);
-                this.panelMain.Tag = childForm;
-                childForm.BringToFront();
-                childForm.Show();
-            });
+
+            this.panelMain.Controls.Add(childForm);
+            this.panelMain.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
         }
 
 
@@ -75,17 +69,35 @@ namespace VCS
         {
             OpenChildForm(new Home(_dbContext));
             txtTitle.Text = "- Trang chủ";
+            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
             txtTitle.Text = "- Trang chủ";
+            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
             txtTitle.Text = "- Trang chủ";
+            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         #endregion
 
@@ -94,18 +106,36 @@ namespace VCS
         {
             OpenChildForm(new CheckIn(_dbContext));
             txtTitle.Text = "- Quản lý cổng vào";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.FromArgb(66, 66, 66);
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void label6_Click(object sender, EventArgs e)
         {
             OpenChildForm(new CheckIn(_dbContext));
             txtTitle.Text = "- Quản lý cổng vào";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.FromArgb(66, 66, 66);
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void pictureBox7_Click(object sender, EventArgs e)
         {
             OpenChildForm(new CheckIn(_dbContext));
             txtTitle.Text = "- Quản lý cổng vào";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.FromArgb(66, 66, 66);
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         #endregion
 
@@ -114,18 +144,36 @@ namespace VCS
         {
             OpenChildForm(new CheckOut(_dbContext));
             txtTitle.Text = "- Quản lý cổng ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.FromArgb(66, 66, 66);
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void label5_Click(object sender, EventArgs e)
         {
             OpenChildForm(new CheckOut(_dbContext));
             txtTitle.Text = "- Quản lý cổng ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.FromArgb(66, 66, 66);
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             OpenChildForm(new CheckOut(_dbContext));
             txtTitle.Text = "- Quản lý cổng ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.FromArgb(66, 66, 66);
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         #endregion
 
@@ -134,17 +182,35 @@ namespace VCS
         {
             OpenChildForm(new StatusSystem(_dbContext));
             txtTitle.Text = "- Trạng thái kết nối";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.FromArgb(66, 66, 66);
         }
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             OpenChildForm(new StatusSystem(_dbContext));
             txtTitle.Text = "- Trạng thái kết nối";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.FromArgb(66, 66, 66);
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
             OpenChildForm(new StatusSystem(_dbContext));
             txtTitle.Text = "- Trạng thái kết nối";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.FromArgb(66, 66, 66);
         }
         #endregion
 
@@ -153,17 +219,35 @@ namespace VCS
         {
             OpenChildForm(new ConfigApp(_dbContext));
             txtTitle.Text = "- Cấu hình chung";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.FromArgb(66, 66, 66);
+            p6.BackColor = Color.Transparent;
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             OpenChildForm(new ConfigApp(_dbContext));
             txtTitle.Text = "- Cấu hình chung";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.FromArgb(66, 66, 66);
+            p6.BackColor = Color.Transparent;
         }
         private void btnSetting_Click(object sender, EventArgs e)
         {
             OpenChildForm(new ConfigApp(_dbContext));
             txtTitle.Text = "- Cấu hình chung";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.Transparent;
+            p5.BackColor = Color.FromArgb(66, 66, 66);
+            p6.BackColor = Color.Transparent;
         }
         #endregion
 
@@ -172,17 +256,35 @@ namespace VCS
         {
             OpenChildForm(new History(_dbContext));
             txtTitle.Text = "- Lịch sử vào ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.FromArgb(66, 66, 66);
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             OpenChildForm(new History(_dbContext));
             txtTitle.Text = "- Lịch sử vào ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.FromArgb(66, 66, 66);
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         private void btnHistory_Click(object sender, EventArgs e)
         {
             OpenChildForm(new History(_dbContext));
             txtTitle.Text = "- Lịch sử vào ra";
+            p1.BackColor = Color.Transparent;
+            p2.BackColor = Color.Transparent;
+            p3.BackColor = Color.Transparent;
+            p4.BackColor = Color.FromArgb(66, 66, 66);
+            p5.BackColor = Color.Transparent;
+            p6.BackColor = Color.Transparent;
         }
         #endregion
 

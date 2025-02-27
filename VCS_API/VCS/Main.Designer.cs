@@ -48,21 +48,27 @@
             pictureBox10 = new PictureBox();
             label9 = new Label();
             btnStatus = new Panel();
+            p6 = new Panel();
             pictureBox3 = new PictureBox();
             label2 = new Label();
             btnSetting = new Panel();
+            p5 = new Panel();
             pictureBox4 = new PictureBox();
             label3 = new Label();
             btnHistory = new Panel();
+            p4 = new Panel();
             pictureBox5 = new PictureBox();
             label4 = new Label();
             btnCheckOut = new Panel();
+            p3 = new Panel();
             pictureBox6 = new PictureBox();
             label5 = new Label();
             btnCheckIn = new Panel();
+            p2 = new Panel();
             pictureBox7 = new PictureBox();
             label6 = new Label();
             pHome = new Panel();
+            p1 = new Panel();
             pictureBox2 = new PictureBox();
             label1 = new Label();
             btnHome = new Panel();
@@ -268,6 +274,7 @@
             btnLogOut.Dock = DockStyle.Top;
             btnLogOut.Location = new Point(0, 336);
             btnLogOut.Name = "btnLogOut";
+            btnLogOut.Padding = new Padding(0, 12, 0, 12);
             btnLogOut.Size = new Size(220, 56);
             btnLogOut.TabIndex = 3;
             btnLogOut.Click += btnLogOut_Click;
@@ -287,7 +294,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(45, 17);
+            label9.Location = new Point(46, 18);
             label9.Name = "label9";
             label9.Size = new Size(80, 21);
             label9.TabIndex = 0;
@@ -297,15 +304,26 @@
             // btnStatus
             // 
             btnStatus.BackColor = Color.Transparent;
+            btnStatus.Controls.Add(p6);
             btnStatus.Controls.Add(pictureBox3);
             btnStatus.Controls.Add(label2);
             btnStatus.Cursor = Cursors.Hand;
             btnStatus.Dock = DockStyle.Top;
             btnStatus.Location = new Point(0, 280);
             btnStatus.Name = "btnStatus";
+            btnStatus.Padding = new Padding(0, 12, 0, 12);
             btnStatus.Size = new Size(220, 56);
             btnStatus.TabIndex = 2;
             btnStatus.Click += btnStatus_Click;
+            // 
+            // p6
+            // 
+            p6.BackColor = Color.Transparent;
+            p6.Dock = DockStyle.Left;
+            p6.Location = new Point(0, 12);
+            p6.Name = "p6";
+            p6.Size = new Size(4, 32);
+            p6.TabIndex = 3;
             // 
             // pictureBox3
             // 
@@ -322,7 +340,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(45, 17);
+            label2.Location = new Point(46, 18);
             label2.Name = "label2";
             label2.Size = new Size(130, 21);
             label2.TabIndex = 0;
@@ -332,15 +350,26 @@
             // btnSetting
             // 
             btnSetting.BackColor = Color.Transparent;
+            btnSetting.Controls.Add(p5);
             btnSetting.Controls.Add(pictureBox4);
             btnSetting.Controls.Add(label3);
             btnSetting.Cursor = Cursors.Hand;
             btnSetting.Dock = DockStyle.Top;
             btnSetting.Location = new Point(0, 224);
             btnSetting.Name = "btnSetting";
+            btnSetting.Padding = new Padding(0, 12, 0, 12);
             btnSetting.Size = new Size(220, 56);
             btnSetting.TabIndex = 2;
             btnSetting.Click += btnSetting_Click;
+            // 
+            // p5
+            // 
+            p5.BackColor = Color.Transparent;
+            p5.Dock = DockStyle.Left;
+            p5.Location = new Point(0, 12);
+            p5.Name = "p5";
+            p5.Size = new Size(4, 32);
+            p5.TabIndex = 3;
             // 
             // pictureBox4
             // 
@@ -357,7 +386,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(45, 17);
+            label3.Location = new Point(46, 18);
             label3.Name = "label3";
             label3.Size = new Size(119, 21);
             label3.TabIndex = 0;
@@ -367,15 +396,26 @@
             // btnHistory
             // 
             btnHistory.BackColor = Color.Transparent;
+            btnHistory.Controls.Add(p4);
             btnHistory.Controls.Add(pictureBox5);
             btnHistory.Controls.Add(label4);
             btnHistory.Cursor = Cursors.Hand;
             btnHistory.Dock = DockStyle.Top;
             btnHistory.Location = new Point(0, 168);
             btnHistory.Name = "btnHistory";
+            btnHistory.Padding = new Padding(0, 12, 0, 12);
             btnHistory.Size = new Size(220, 56);
             btnHistory.TabIndex = 2;
             btnHistory.Click += btnHistory_Click;
+            // 
+            // p4
+            // 
+            p4.BackColor = Color.Transparent;
+            p4.Dock = DockStyle.Left;
+            p4.Location = new Point(0, 12);
+            p4.Name = "p4";
+            p4.Size = new Size(4, 32);
+            p4.TabIndex = 3;
             // 
             // pictureBox5
             // 
@@ -392,7 +432,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(45, 17);
+            label4.Location = new Point(46, 18);
             label4.Name = "label4";
             label4.Size = new Size(105, 21);
             label4.TabIndex = 0;
@@ -402,15 +442,26 @@
             // btnCheckOut
             // 
             btnCheckOut.BackColor = Color.Transparent;
+            btnCheckOut.Controls.Add(p3);
             btnCheckOut.Controls.Add(pictureBox6);
             btnCheckOut.Controls.Add(label5);
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.Dock = DockStyle.Top;
             btnCheckOut.Location = new Point(0, 112);
             btnCheckOut.Name = "btnCheckOut";
+            btnCheckOut.Padding = new Padding(0, 12, 0, 12);
             btnCheckOut.Size = new Size(220, 56);
             btnCheckOut.TabIndex = 2;
             btnCheckOut.Click += btnCheckOut_Click;
+            // 
+            // p3
+            // 
+            p3.BackColor = Color.Transparent;
+            p3.Dock = DockStyle.Left;
+            p3.Location = new Point(0, 12);
+            p3.Name = "p3";
+            p3.Size = new Size(4, 32);
+            p3.TabIndex = 3;
             // 
             // pictureBox6
             // 
@@ -427,7 +478,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(45, 17);
+            label5.Location = new Point(46, 18);
             label5.Name = "label5";
             label5.Size = new Size(120, 21);
             label5.TabIndex = 0;
@@ -437,15 +488,26 @@
             // btnCheckIn
             // 
             btnCheckIn.BackColor = Color.Transparent;
+            btnCheckIn.Controls.Add(p2);
             btnCheckIn.Controls.Add(pictureBox7);
             btnCheckIn.Controls.Add(label6);
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.Dock = DockStyle.Top;
             btnCheckIn.Location = new Point(0, 56);
             btnCheckIn.Name = "btnCheckIn";
+            btnCheckIn.Padding = new Padding(0, 12, 0, 12);
             btnCheckIn.Size = new Size(220, 56);
             btnCheckIn.TabIndex = 2;
             btnCheckIn.Click += btnCheckIn_Click;
+            // 
+            // p2
+            // 
+            p2.BackColor = Color.Transparent;
+            p2.Dock = DockStyle.Left;
+            p2.Location = new Point(0, 12);
+            p2.Name = "p2";
+            p2.Size = new Size(4, 32);
+            p2.TabIndex = 3;
             // 
             // pictureBox7
             // 
@@ -462,7 +524,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(45, 17);
+            label6.Location = new Point(46, 18);
             label6.Name = "label6";
             label6.Size = new Size(131, 21);
             label6.TabIndex = 0;
@@ -472,15 +534,26 @@
             // pHome
             // 
             pHome.BackColor = Color.Transparent;
+            pHome.Controls.Add(p1);
             pHome.Controls.Add(pictureBox2);
             pHome.Controls.Add(label1);
             pHome.Cursor = Cursors.Hand;
             pHome.Dock = DockStyle.Top;
             pHome.Location = new Point(0, 0);
             pHome.Name = "pHome";
+            pHome.Padding = new Padding(0, 12, 0, 12);
             pHome.Size = new Size(220, 56);
             pHome.TabIndex = 2;
             pHome.Click += pHome_Click;
+            // 
+            // p1
+            // 
+            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p1.Dock = DockStyle.Left;
+            p1.Location = new Point(0, 12);
+            p1.Name = "p1";
+            p1.Size = new Size(4, 32);
+            p1.TabIndex = 2;
             // 
             // pictureBox2
             // 
@@ -497,7 +570,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(45, 17);
+            label1.Location = new Point(46, 18);
             label1.Name = "label1";
             label1.Size = new Size(78, 21);
             label1.TabIndex = 0;
@@ -642,5 +715,11 @@
         private LinkLabel linkLabel1;
         private Label label10;
         private PictureBox pictureBox11;
+        private Panel p6;
+        private Panel p5;
+        private Panel p4;
+        private Panel p3;
+        private Panel p2;
+        private Panel p1;
     }
 }
