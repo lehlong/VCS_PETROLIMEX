@@ -148,22 +148,25 @@ namespace VCS.APP.Areas.History
         private void DisplayPage(List<TblBuHeader> data)
         {
             dataGridView.Rows.Clear();
-            var pagedData = data.Skip((currentPage - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+            var sortedData = data.OrderByDescending(d => d.CreateDate).ToList();
+
+            var pagedData = sortedData.Skip((currentPage - 1) * itemsPerPage).Take(itemsPerPage).ToList();
             int i = (currentPage - 1) * itemsPerPage + 1;
 
             foreach (var d in pagedData)
             {
-                dataGridView.Rows.Add(new object[] {
-            i.ToString(),
-            //_dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == d.VehicleCode.ToString())?.OicPtrip ?? "",
-            d.VehicleName,
-            d.VehicleCode,
-            d.CreateDate,
-            d.TimeCheckout,
-            d.NoteIn,
-            d.NoteOut,
-            _dbContext.TblBuOrders.Where(x => x.HeaderId == d.Id).Select(x => x.Stt).FirstOrDefault(),
-            d.Id });
+                dataGridView.Rows.Add(new object[]
+                {
+                    i.ToString(),
+                    d.VehicleName,
+                    d.VehicleCode,
+                    d.CreateDate,
+                    d.TimeCheckout,
+                    d.NoteIn,
+                    d.NoteOut,
+                    _dbContext.TblBuHeader.Where(x => x.Id == d.Id).Select(x => x.Stt).FirstOrDefault(),
+                    d.Id
+                });
                 i++;
             }
             lblPageInfo.Text = $"Page {currentPage} of {Math.Ceiling((double)data.Count / itemsPerPage)}";
