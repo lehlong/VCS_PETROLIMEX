@@ -181,6 +181,27 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
+        [HttpGet("UpdateOrder")]
+        public async Task<IActionResult> UpdateOrder([FromQuery] string headerId)
+        {
+            var transferObject = new TransferObject();
+            var r = await _service.UpdateOrder(headerId);
+            if (_service.Status)
+            {
+                transferObject.Status = true;
+                transferObject.Data = r;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0100", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0101", _service); // Thêm mới thất bại
+            }
+            return Ok(transferObject);
+        }
+
         [HttpGet("CheckTicket")]
         public async Task<IActionResult> CheckTicket([FromQuery] string headerId)
         {

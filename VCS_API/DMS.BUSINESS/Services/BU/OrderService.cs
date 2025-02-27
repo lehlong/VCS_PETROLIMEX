@@ -38,6 +38,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
         Task<bool> CheckTicket(string headerId);
+        Task<bool> UpdateOrder(string headerId);
         Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
@@ -375,7 +376,6 @@ namespace DMS.BUSINESS.Services.BU
                         _dbContext.TblBuDetailTgbx.AddRange(lstDetail);
                         _dbContext.SaveChanges();
                     }
-                    i.StatusProcess = "03";
                     _dbContext.TblBuHeader.Update(i);
                     _dbContext.SaveChanges();
                     return true;
@@ -388,6 +388,37 @@ namespace DMS.BUSINESS.Services.BU
                     _dbContext.SaveChanges();
                     return false;
                 }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateOrder(string headerId)
+        {
+            try
+            {
+                var header = _dbContext.TblBuHeader.Find(headerId);
+                header.StatusVehicle = "03";
+                header.StatusProcess = "03";
+                _dbContext.TblBuHeader.Update(header);
+
+                var lstPumpThroat = await _dbContext.TblMdPumpThroat.Where(x => x.OrgCode == header.CompanyCode && x.WarehouseCode == header.WarehouseCode).ToListAsync();
+
+                var lstDetail = await _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).ToListAsync();
+                foreach(var i in lstDetail)
+                {
+                    var materialCode = i.MaHangHoa.Trim() == "0201004" ? "00000000000" + i.MaHangHoa : "000000000000" + i.MaHangHoa;
+                    var o = lstPumpThroat.Where(x => x.GoodsCode == materialCode).OrderBy(x => x.OrderVehicle).FirstOrDefault();
+                    o.OrderVehicle = o.OrderVehicle + "," + header.VehicleCode;
+                    _dbContext.TblMdPumpThroat.Update(o);
+
+                    i.OrderName = _dbContext.TblMdPumpRig.Find(o.PumpRigCode)?.Name + ", " + o.Name;
+                    _dbContext.TblBuDetailTgbx.Update(i);
+                }
+                _dbContext.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {

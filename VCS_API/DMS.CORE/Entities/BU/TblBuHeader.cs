@@ -26,7 +26,7 @@ namespace DMS.CORE.Entities.BU
         [Column("STATUS_VEHICLE", TypeName = "NVARCHAR(50)")]
         public string? StatusVehicle { get; set; }
 
-        //00-Chưa xử lý, 01- Đã mời xe vào, 02- Chưa có ticket, 03- Đã in ticket, 04 - Đã xử lý, 05 - Không xử lý
+        //00-Chưa xử lý, 01- Đã mời xe vào, 02- Chưa có ticket, 03- Đã xếp xe, 04 - Đã xử lý, 05 - Không xử lý
         [Column("STATUS_PROCESS", TypeName = "NVARCHAR(50)")]
         public string? StatusProcess { get; set; }
         [Column("STT")]

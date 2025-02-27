@@ -127,6 +127,15 @@ export class GlobalService {
     }
   }
 
+
+  incrementApiCallCountNoLoading(): void {
+    this.apiCallCount++;
+  }
+
+  decrementApiCallCountNoLoading(): void {
+    this.apiCallCount--;
+  }
+
   isValidSelected() {
     return this.orgCode != 'undefined' && this.warehouseCode != 'undefined' ? false : true;
   }

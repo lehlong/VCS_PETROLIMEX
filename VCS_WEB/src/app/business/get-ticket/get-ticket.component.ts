@@ -79,7 +79,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.globalService.setBreadcrumb([]) 
+    this.globalService.setBreadcrumb([])
   }
 
 
@@ -96,7 +96,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
 
-  updateStatus(header: any, status: string){
+  updateStatus(header: any, status: string) {
     header.statusProcess = status;
     this._service.UpdateStatus(header).subscribe({
       next: (data) => {
@@ -107,9 +107,22 @@ export class GetTicketComponent implements OnInit, OnDestroy {
 
   updateOrder(header: any) {
     header.statusVehicle = "03";
-    this._service.UpdateStatus(header).subscribe({
+    this._service.CheckTicket(header.id).subscribe({
       next: (data) => {
-        this.getList();
+        if (data) {
+          this._service.UpdateOrder(header.id).subscribe({
+            next: (data) => {
+              this.getList();
+            }
+          });
+
+        } else {
+          this.message.create('error', `Phương tiện chưa có tiket`);
+          this.getList();
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching orders:', err);
       }
     });
   }
@@ -166,46 +179,36 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     });
   }
 
-  UpdateNote(i: any){
+  UpdateNote(i: any) {
     console.log(i)
   }
 
   printTicket(headerId: string) {
-    this._service.CheckTicket(headerId).subscribe({
+
+    this._service.GetTicket(headerId).subscribe({
       next: (data) => {
-        if (data) {
-          this._service.GetTicket(headerId).subscribe({
-            next: (data) => {
-              this.ticketDetail = data;
-              var sum = 0;
-              for (var i = 0; i < data.detail.length; i++) {
-                sum += data.detail[i].tongDuXuat
-              }
-              this.ticketDetail.sum = sum;
-
-              setTimeout(() => {
-                let printContent = this.printSection.nativeElement.innerHTML;
-                let originalContent = document.body.innerHTML;
-          
-                document.body.innerHTML = printContent;
-                window.print();
-                document.body.innerHTML = originalContent;
-                window.location.reload();
-              }, 200)
-
-            },
-            error: (err) => {
-              console.error('Error fetching orders:', err);
-            }
-          });
-        }else{
-          this.message.create('error', `Phương tiện chưa có tiket`);
-          this.getList();
+        this.ticketDetail = data;
+        var sum = 0;
+        for (var i = 0; i < data.detail.length; i++) {
+          sum += data.detail[i].tongDuXuat
         }
+        this.ticketDetail.sum = sum;
+
+        setTimeout(() => {
+          let printContent = this.printSection.nativeElement.innerHTML;
+          let originalContent = document.body.innerHTML;
+
+          document.body.innerHTML = printContent;
+          window.print();
+          document.body.innerHTML = originalContent;
+          window.location.reload();
+        }, 200)
+
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
       }
     });
+
   }
 }

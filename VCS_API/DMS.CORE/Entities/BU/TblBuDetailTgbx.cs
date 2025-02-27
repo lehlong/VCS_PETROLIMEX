@@ -102,5 +102,10 @@ namespace DMS.CORE.Entities.BU
         [Column("ChietKhau", TypeName = "decimal(15, 4)")]
         public decimal? ChietKhau { get; set; }
 
+        [Column("IS_HAS_INVOICE")]
+        public bool? IsHasInvoice { get; set; }
+        [Column("ORDER_NAME", TypeName = "nvarchar(200)")]
+        public string? OrderName { get; set; }
+
     }
 }

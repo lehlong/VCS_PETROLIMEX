@@ -87,6 +87,7 @@ export class CommonService {
         }
       })
     }
+    this.globalService.incrementApiCallCountNoLoading() // Tăng bộ đếm
     return this.http
       .get<any>(`${this.baseUrl}/${endpoint}`, { params: httpParams })
       .pipe(
@@ -97,6 +98,7 @@ export class CommonService {
             this.get<T>(endpoint, params, false),
           ),
         ),
+        finalize(() => this.globalService.decrementApiCallCountNoLoading()), // Giảm bộ đếm khi hoàn thành
       )
   }
 

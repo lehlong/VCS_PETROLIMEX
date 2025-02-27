@@ -17,7 +17,6 @@
                     <th nzAlign="center">Biển số</th>
                     <th nzAlign="center">Thời gian vào</th>
                     <th>Ghi chú</th>
-                    <th nzAlign="center">Trạng thái xe</th>
                     <th nzAlign="center">Trạng thái</th>
                     <th nzAlign="center" nzWidth="500">Thực hiện</th>
                 </tr>
@@ -30,16 +29,6 @@
                     <td nzAlign="center">{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
                     <td>
                         <textarea [(ngModel)]="i.noteIn" (change)="updateStatus(i,i.statusProcess)"></textarea>
-                    </td>
-                    <td nzAlign="center">
-                        <nz-tag nzColor="default" *ngIf="i.statusVehicle == '02'">
-                            <span nz-icon nzType="clock-circle"></span>
-                            <span>Xe đã vào kho</span>
-                        </nz-tag>
-                        <nz-tag nzColor="processing" *ngIf="i.statusVehicle == '03'">
-                            <span nz-icon nzType="sync" nzSpin></span>
-                            <span>Xe đang lấy hàng</span>
-                        </nz-tag>
                     </td>
                     <td nzAlign="center">
                         <nz-tag nzColor="error" *ngIf="i.statusProcess=='00'">
@@ -55,8 +44,8 @@
                             <span>Chưa có ticket</span>
                         </nz-tag>
                         <nz-tag nzColor="success" *ngIf="i.statusProcess=='03'">
-                            <span nz-icon nzType="printer" nzTheme="outline"></span>
-                            <span>Đã in ticket</span>
+                            <span nz-icon nzType="check" nzTheme="outline"></span>
+                            <span>Đã xếp xe</span>
                         </nz-tag>
                         <nz-tag nzColor="success" *ngIf="i.statusProcess=='04'">
                             <span nz-icon nzType="check" nzTheme="outline"></span>
@@ -75,17 +64,19 @@
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
+                        <button nz-button (click)="updateOrder(i)" nz-popover *ngIf="i.statusProcess != '03'"
+                            nzPopoverTitle="Kiểm tra ticket và Xếp xe"
+                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
+                            <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
+
+
                         <button nz-button nz-popover *ngIf="i.statusProcess != '05'" (click)="printTicket(i.id)"
-                            nzPopoverTitle="Kiểm tra và in ticket" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+                            nzPopoverTitle="In ticket" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="printer" nzTheme="outline">
                             </span></button>
 
 
-                        <button nz-button (click)="updateOrder(i)" nz-popover
-                            *ngIf="i.statusProcess == '03'" nzPopoverTitle="Xếp xe vào họng"
-                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
-                            <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
 
 
                         <button nz-button (click)="updateStatus(i,'04')"
@@ -182,6 +173,7 @@
             <th>Lượng xuất thực tế</th>
             <th>Nhiệt độ thực tế (oC)</th>
             <th>Khoảng cách so với tấm mức (mm)</th>
+            <th>Giàn<br>Họng</th>
         </tr>
         <tr *ngFor="let i of ticketDetail.detail">
             <td>{{i.soLenh}}</td>
@@ -194,13 +186,14 @@
             <td></td>
             <td></td>
             <td></td>
+            <td>{{i.orderName}}</td>
         </tr>
 
         <tr>
             <td colspan="3" style="font-weight: bold; text-align: center;">Tổng dung tích:</td>
             <td colspan="2" style="font-weight: bold;"></td>
             <td style="font-weight: bold;text-align: right;">{{ticketDetail.sum | number}}</td>
-            <td colspan="4"></td>
+            <td colspan="5"></td>
         </tr>
     </table>
 

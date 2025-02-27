@@ -49,6 +49,9 @@ export class OrderService {
   UpdateStatus(params: any): Observable<any> {
     return this.commonService.putWithoutLoading('Order/UpdateStatus', params);
   }
+  UpdateOrder(headerId: any): Observable<any> {
+    return this.commonService.getWithoutLoading('Order/UpdateOrder?headerId=' + headerId);
+  }
 
   UpdateOrderCome(params: any): Observable<any> {
     return this.commonService.put('Order/UpdateOrderCome', params);
@@ -58,7 +61,7 @@ export class OrderService {
     return this.commonService.getWithoutLoading(`Order/CheckTicket?headerId=${headerId}`);
   }
   GetTicket(headerId: string): Observable<any> {
-    return this.commonService.get(`Order/GetTicket?headerId=${headerId}`);
+    return this.commonService.getWithoutLoading(`Order/GetTicket?headerId=${headerId}`);
   }
 
   // SignalR Methods

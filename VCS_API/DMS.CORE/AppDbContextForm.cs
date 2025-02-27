@@ -27,7 +27,7 @@ namespace DMS.CORE
             base.OnModelCreating(modelBuilder);
         }
 
-        public Func<DateTime> TimestampProvider { get; set; } = () => DateTime.UtcNow;
+        public Func<DateTime> TimestampProvider { get; set; } = () => DateTime.Now;
 
         public override int SaveChanges()
         {
