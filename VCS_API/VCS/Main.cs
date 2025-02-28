@@ -105,81 +105,128 @@ namespace VCS
         #region Quản lý cổng vào
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckIn(_dbContext));
-            txtTitle.Text = "- Quản lý cổng vào";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.FromArgb(66, 66, 66);
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R410"))
+            {
+                OpenChildForm(new CheckIn(_dbContext));
+                txtTitle.Text = "- Quản lý cổng vào";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
 
         private void label6_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckIn(_dbContext));
-            txtTitle.Text = "- Quản lý cổng vào";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.FromArgb(66, 66, 66);
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+
+            if (CommonService.HasPermission("R410"))
+            {
+                OpenChildForm(new CheckIn(_dbContext));
+                txtTitle.Text = "- Quản lý cổng vào";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
 
         private void pictureBox7_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckIn(_dbContext));
-            txtTitle.Text = "- Quản lý cổng vào";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.FromArgb(66, 66, 66);
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+
+            if (CommonService.HasPermission("R410"))
+            {
+                OpenChildForm(new CheckIn(_dbContext));
+                txtTitle.Text = "- Quản lý cổng vào";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
         #endregion
 
         #region Quản lý cổng ra
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckOut(_dbContext));
-            txtTitle.Text = "- Quản lý cổng ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.FromArgb(66, 66, 66);
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R411"))
+            {
+                OpenChildForm(new CheckOut(_dbContext));
+                txtTitle.Text = "- Quản lý cổng ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+            
         }
 
         private void label5_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckOut(_dbContext));
-            txtTitle.Text = "- Quản lý cổng ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.FromArgb(66, 66, 66);
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R411"))
+            {
+                OpenChildForm(new CheckOut(_dbContext));
+                txtTitle.Text = "- Quản lý cổng ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+
         }
 
         private void pictureBox6_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new CheckOut(_dbContext));
-            txtTitle.Text = "- Quản lý cổng ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.FromArgb(66, 66, 66);
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R411"))
+            {
+                OpenChildForm(new CheckOut(_dbContext));
+                txtTitle.Text = "- Quản lý cổng ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+
         }
         #endregion
 
         #region Trạng thái kết nối
-        
+
         private void label2_Click(object sender, EventArgs e)
         {
             if (CommonService.HasPermission("R414"))
@@ -242,74 +289,119 @@ namespace VCS
         #region Cấu hình chung
         private void label3_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ConfigApp(_dbContext));
-            txtTitle.Text = "- Cấu hình chung";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.FromArgb(66, 66, 66);
-            p6.BackColor = Color.Transparent;
+
+            if (CommonService.HasPermission("R413"))
+            {
+                OpenChildForm(new ConfigApp(_dbContext));
+                txtTitle.Text = "- Cấu hình chung";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+           
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ConfigApp(_dbContext));
-            txtTitle.Text = "- Cấu hình chung";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.FromArgb(66, 66, 66);
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R413"))
+            {
+                OpenChildForm(new ConfigApp(_dbContext));
+                txtTitle.Text = "- Cấu hình chung";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
         private void btnSetting_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ConfigApp(_dbContext));
-            txtTitle.Text = "- Cấu hình chung";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.FromArgb(66, 66, 66);
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R413"))
+            {
+                OpenChildForm(new ConfigApp(_dbContext));
+                txtTitle.Text = "- Cấu hình chung";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
         #endregion
 
         #region Lịch sử vào ra
         private void label4_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new History(_dbContext));
-            txtTitle.Text = "- Lịch sử vào ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.FromArgb(66, 66, 66);
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R412"))
+            {
+                OpenChildForm(new History(_dbContext));
+                txtTitle.Text = "- Lịch sử vào ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+           
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new History(_dbContext));
-            txtTitle.Text = "- Lịch sử vào ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.FromArgb(66, 66, 66);
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R412"))
+            {
+                OpenChildForm(new History(_dbContext));
+                txtTitle.Text = "- Lịch sử vào ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
         private void btnHistory_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new History(_dbContext));
-            txtTitle.Text = "- Lịch sử vào ra";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.FromArgb(66, 66, 66);
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.Transparent;
+            if (CommonService.HasPermission("R412"))
+            {
+                OpenChildForm(new History(_dbContext));
+                txtTitle.Text = "- Lịch sử vào ra";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.Transparent;
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
         }
         #endregion
 

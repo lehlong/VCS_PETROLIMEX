@@ -73,7 +73,12 @@ namespace VCS.Areas.Login
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                if(user.AccountType != "III")
+                {
+                    MessageBox.Show("Hệ thống chỉ dành cho nhân viên bảo vệ!", "Lỗi đăng nhập",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 ProfileUtilities.User = user;
                 await Task.Run(() => CommonService.LoadUserConfig());
                 await Task.Run(() => CommonService.LoadUserPermissions(user));
