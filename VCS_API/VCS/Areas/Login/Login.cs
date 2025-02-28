@@ -1,5 +1,6 @@
 ﻿using Common.Util;
 using DMS.CORE;
+using IWshRuntimeLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace VCS.Areas.Login
         {
             InitializeComponent();
             _dbContext = dbContext;
+            CreateDesktopShortcut();
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -76,6 +78,31 @@ namespace VCS.Areas.Login
             {
                 MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CreateDesktopShortcut()
+        {
+            string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "VCS.lnk");
+
+            if (!System.IO.File.Exists(shortcutPath))
+            {
+                try
+                {
+                    WshShell shell = new WshShell();
+                    string exePath = Application.ExecutablePath;
+
+                    IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+                    shortcut.TargetPath = exePath;
+                    shortcut.WorkingDirectory = Path.GetDirectoryName(exePath);
+                    shortcut.Description = "Hệ thống VCS";
+                    shortcut.IconLocation = exePath;
+                    shortcut.Save();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Không thể tạo shorcut phần mềm: " + ex.Message);
+                }
             }
         }
     }
