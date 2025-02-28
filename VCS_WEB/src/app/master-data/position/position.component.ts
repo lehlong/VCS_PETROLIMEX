@@ -6,7 +6,7 @@ import { GlobalService } from '../../services/global.service'
 import { PositionService } from '../../services/master-data/position.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { LOCAL_RIGHTS } from '../../shared/constants'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 @Component({
   selector: 'app-position',
@@ -28,7 +28,7 @@ export class PositionComponent {
   filter = new LocalFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  LOCAL_RIGHTS = LOCAL_RIGHTS
+  MASTER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _service: PositionService,
     private fb: NonNullableFormBuilder,

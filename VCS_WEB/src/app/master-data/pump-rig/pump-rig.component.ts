@@ -4,6 +4,7 @@ import { GlobalService } from '../../services/global.service'
 import { BaseFilter } from '../../models/base.model'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { PumpRigService } from '../../services/master-data/pump-rig.service'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 @Component({
   selector: 'app-pump-rig',
   standalone: true,
@@ -30,6 +31,7 @@ export class PumpRigComponent {
   filter = new BaseFilter()
   
   loading: boolean = false
+  MASTER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _s : PumpRigService,
     private globalService: GlobalService,

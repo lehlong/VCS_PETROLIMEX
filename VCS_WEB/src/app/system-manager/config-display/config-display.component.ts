@@ -4,6 +4,7 @@ import { BaseFilter } from '../../models/base.model';
 import { ConfigDisplayService } from '../../services/system-manager/config-display.service';
 import { GlobalService } from '../../services/global.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ADMIN_RIGHTS } from '../../shared/constants';
 
 @Component({
   selector: 'app-config-display',
@@ -34,6 +35,7 @@ orgCode?: string = localStorage.getItem('companyCode')?.toString()
   filter = new BaseFilter()
   
   loading: boolean = false
+  ADMIN_RIGHTS = ADMIN_RIGHTS
   constructor(
     private _s : ConfigDisplayService,
     private globalService: GlobalService,

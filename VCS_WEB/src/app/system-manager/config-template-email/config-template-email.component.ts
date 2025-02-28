@@ -39,6 +39,7 @@ import {
 } from 'ckeditor5'
 import { ConfigTemplateService } from '../../services/system-manager/config-template.service'
 import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms'
+import { ADMIN_RIGHTS } from '../../shared/constants'
 
 @Component({
   selector: 'config-template-email',
@@ -60,10 +61,10 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
   public Editor = ClassicEditor
   public isLayoutReady = false
   public config: EditorConfig = {}
-
+  ADMIN_RIGHTS = ADMIN_RIGHTS
   constructor(
     private fb: NonNullableFormBuilder,
-    private _service : ConfigTemplateService,
+    private _service: ConfigTemplateService,
     private globalService: GlobalService,
     private changeDetector: ChangeDetectorRef,
   ) {
@@ -83,7 +84,7 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
   name: any = 'new'
   indexTab: any = 0
   data: any = {
-    htmlSource : ''
+    htmlSource: ''
   }
 
   ngOnInit(): void {
@@ -97,26 +98,26 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
     this.edit = false
   }
 
-  closeTab({ index }: { index: number }): void  {
+  closeTab({ index }: { index: number }): void {
     this.tabs.splice(index, 1);
   }
 
-  handleCancelOk(){
+  handleCancelOk() {
     this.tabs.push(this.name);
     console.log(this.tabs);
     this.isCancelModalVisible = false
     this.edit = false
   }
-  handleCancelModal(){
+  handleCancelModal() {
     this.isCancelModalVisible = false
     this.name = ''
     this.edit = true
   }
-  save(){
+  save() {
     console.log(this.indexTab);
   }
 
-  trackByItemId(index: number, item: any){
+  trackByItemId(index: number, item: any) {
     console.log(item.code);
   }
 
@@ -161,7 +162,7 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
   getAll() {
     this.isSubmit = false
     this._service.getall().subscribe({
-    next: (data) => {
+      next: (data) => {
         this.data = data.filter((item: any) => item.type === "EMAIL")
         console.log(this.data);
 
@@ -178,7 +179,7 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
       name: data.name,
       htmlSource: data.htmlSource,
       title: data.title,
-      type:  data.type,
+      type: data.type,
       isActive: data.isActive,
     })
     setTimeout(() => {
@@ -186,7 +187,7 @@ export class ConfixTemplateEmailComponent implements AfterViewInit, OnInit {
     }, 2000)
   }
 
-  addPram(event: Event, pram: string){
+  addPram(event: Event, pram: string) {
     event.preventDefault();
     var html = this.validateForm.get('htmlSource')?.value
     var htmlSource = html + ' ' + pram

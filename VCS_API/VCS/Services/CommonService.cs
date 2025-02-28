@@ -10,11 +10,54 @@ using Emgu.CV.Util;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using DMS.CORE.Entities.AD;
 
 namespace VCS.APP.Services
 {
     public class CommonService
     {
+        public static TblAdAccount CurrentUser { get; private set; }
+        public static Dictionary<string, bool> UserPermissions { get; private set; } = new Dictionary<string, bool>();
+
+        public static void SetCurrentUser(TblAdAccount user)
+        {
+            CurrentUser = user;
+        }
+
+        public static void LoadUserPermissions(TblAdAccount user)
+        {
+            UserPermissions.Clear();
+
+            if (user == null) return;
+
+            var groupRights = user.Account_AccountGroups?
+                .Where(ag => ag.AccountGroup != null)
+                .SelectMany(ag => ag.AccountGroup.ListAccountGroupRight ?? new List<TblAdAccountGroupRight>())
+                .Select(r => r.RightId)
+                .Distinct()
+                .ToList() ?? new List<string>();
+
+            foreach (var rightId in groupRights)
+            {
+                UserPermissions[rightId] = true;
+            }
+
+            var accountRights = user.AccountRights ?? new List<TblAdAccountRight>();
+
+            foreach (var right in accountRights.Where(r => r.IsAdded == true))
+            {
+                UserPermissions[right.RightId] = true;
+            }
+
+            foreach (var right in accountRights.Where(r => r.IsRemoved == true))
+            {
+                UserPermissions[right.RightId] = false;
+            }
+        }
+        public static bool HasPermission(string rightId)
+        {
+            return UserPermissions.ContainsKey(rightId) && UserPermissions[rightId];
+        }
         public static void LoadUserConfig()
         {
             try

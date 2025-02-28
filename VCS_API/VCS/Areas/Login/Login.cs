@@ -1,6 +1,7 @@
 ﻿using Common.Util;
 using DMS.CORE;
 using IWshRuntimeLibrary;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,6 +58,12 @@ namespace VCS.Areas.Login
                 }
 
                 var user = _dbContext.TblAdAccount
+                .Include(x => x.Account_AccountGroups)
+                    .ThenInclude(x => x.AccountGroup)
+                    .ThenInclude(x => x.ListAccountGroupRight)
+                    .ThenInclude(x => x.Right)
+                .Include(x => x.AccountRights)
+                    .ThenInclude(x => x.Right)
                 .FirstOrDefault(x => x.UserName == username.Text.Trim()
                 && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
 
@@ -69,6 +76,7 @@ namespace VCS.Areas.Login
 
                 ProfileUtilities.User = user;
                 await Task.Run(() => CommonService.LoadUserConfig());
+                await Task.Run(() => CommonService.LoadUserPermissions(user));
 
                 var main = new Main(_dbContext);
                 main.Show();

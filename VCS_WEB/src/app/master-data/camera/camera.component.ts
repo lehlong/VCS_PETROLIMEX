@@ -4,6 +4,7 @@ import { GlobalService } from '../../services/global.service'
 import { BaseFilter } from '../../models/base.model'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { CameraService } from '../../services/master-data/camera.service'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 @Component({
   selector: 'app-camera',
   standalone: true,
@@ -36,7 +37,7 @@ export class CameraComponent {
   edit: boolean = false
   
   filter = new BaseFilter()
-  
+  MASTER_DATA_RIGHTS =  MASTER_DATA_RIGHTS
   loading: boolean = false
   constructor(
     private _s : CameraService,

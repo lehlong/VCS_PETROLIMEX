@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using VCS.APP.Areas.ConfigApp;
 using VCS.APP.Areas.History;
 using VCS.APP.Areas.StatusSystem;
+using VCS.APP.Services;
 using VCS.APP.Utilities;
 using VCS.Areas.CheckIn;
 using VCS.Areas.CheckOut;
@@ -28,7 +29,7 @@ namespace VCS
         public Main(AppDbContextForm dbContext)
         {
             InitializeComponent();
-             _dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         private async void Main_Load(object sender, EventArgs e)
@@ -178,39 +179,63 @@ namespace VCS
         #endregion
 
         #region Trạng thái kết nối
+        
         private void label2_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new StatusSystem(_dbContext));
-            txtTitle.Text = "- Trạng thái kết nối";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.FromArgb(66, 66, 66);
+            if (CommonService.HasPermission("R414"))
+            {
+                OpenChildForm(new StatusSystem(_dbContext));
+                txtTitle.Text = "- Trạng thái kết nối";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.FromArgb(66, 66, 66);
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+            
         }
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new StatusSystem(_dbContext));
-            txtTitle.Text = "- Trạng thái kết nối";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.FromArgb(66, 66, 66);
+            if (CommonService.HasPermission("R414"))
+            {
+                OpenChildForm(new StatusSystem(_dbContext));
+                txtTitle.Text = "- Trạng thái kết nối";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.FromArgb(66, 66, 66);
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }
+            
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new StatusSystem(_dbContext));
-            txtTitle.Text = "- Trạng thái kết nối";
-            p1.BackColor = Color.Transparent;
-            p2.BackColor = Color.Transparent;
-            p3.BackColor = Color.Transparent;
-            p4.BackColor = Color.Transparent;
-            p5.BackColor = Color.Transparent;
-            p6.BackColor = Color.FromArgb(66, 66, 66);
+            if (CommonService.HasPermission("R414"))
+            {
+                OpenChildForm(new StatusSystem(_dbContext));
+                txtTitle.Text = "- Trạng thái kết nối";
+                p1.BackColor = Color.Transparent;
+                p2.BackColor = Color.Transparent;
+                p3.BackColor = Color.Transparent;
+                p4.BackColor = Color.Transparent;
+                p5.BackColor = Color.Transparent;
+                p6.BackColor = Color.FromArgb(66, 66, 66);
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
+            }    
         }
         #endregion
 

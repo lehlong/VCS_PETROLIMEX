@@ -1,4 +1,4 @@
-<div class="container-list" [appPermission]="UNIT_RIGHTS.LIST">
+<div class="container-list" [appPermission]="MASTER_DATA_RIGHTS.UNIT">
   <div class="site-page-header-ghost-wrapper">
     <nz-page-header nzBackIcon nzTitle="Đơn vị tính" nzSubtitle="Danh sách đơn vị tính" class="site-page-header">
       <nz-page-header-extra>
@@ -16,7 +16,7 @@
             </button>
           </nz-space>
           <button (click)="openCreate()" class="!flex !items-center" nzType="primary" nz-button
-            [appPermission]="UNIT_RIGHTS.ADD">
+           >
             <span nz-icon nzType="plus-circle"></span> Thêm mới
           </button>
         </nz-space>
@@ -110,13 +110,13 @@
 <ng-template #extra>
   <nz-space>
     <ng-container *ngIf="edit">
-      <button [appPermission]="UNIT_RIGHTS.EDIT" [nzLoading]="loading" *nzSpaceItem nz-button nzType="primary"
+      <button  [nzLoading]="loading" *nzSpaceItem nz-button nzType="primary"
         class="!flex !items-center" (click)="submitForm()">
         <span nz-icon nzType="save" nzTheme="outline"></span>Lưu
       </button>
     </ng-container>
     <ng-container *ngIf="!edit">
-      <button [appPermission]="UNIT_RIGHTS.ADD" [nzLoading]="loading" *nzSpaceItem nz-button nzType="primary"
+      <button [nzLoading]="loading" *nzSpaceItem nz-button nzType="primary"
         class="!flex !items-center" (click)="submitForm()">
         <span nz-icon nzType="save" nzTheme="outline"></span>Lưu
       </button>

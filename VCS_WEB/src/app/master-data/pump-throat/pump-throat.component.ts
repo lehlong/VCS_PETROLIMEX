@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 import { PumpThroatService } from '../../services/master-data/pump-throat.service'
 import { PumpRigService } from '../../services/master-data/pump-rig.service'
 import { GoodsService } from '../../services/master-data/goods.service'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 @Component({
   selector: 'app-pump-rig',
   standalone: true,
@@ -39,6 +40,7 @@ export class PumpThroatComponent {
   filter = new BaseFilter()
   
   loading: boolean = false
+  MASTER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _s : PumpThroatService,
     private _sRig : PumpRigService,

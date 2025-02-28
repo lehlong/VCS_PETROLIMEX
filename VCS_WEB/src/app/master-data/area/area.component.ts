@@ -5,7 +5,7 @@ import { GlobalService } from '../../services/global.service'
 import { AreaService } from '../../services/master-data/area.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { AREA_RIGHTS } from '../../shared/constants'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 @Component({
   selector: 'app-area',
@@ -27,7 +27,7 @@ export class AreaComponent {
   filter = new AreaFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  AREA_RIGHTS = AREA_RIGHTS
+ MASTER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _service: AreaService,
     private fb: NonNullableFormBuilder,

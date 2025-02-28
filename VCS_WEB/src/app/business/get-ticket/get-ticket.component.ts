@@ -5,6 +5,7 @@ import { OrderService } from '../../services/business/order.service'
 import { GlobalService } from '../../services/global.service'
 import { Subscription } from 'rxjs'
 import { NzMessageService } from 'ng-zorro-antd/message'
+import { TICKET_RIGHTS } from '../../shared/constants'
 declare var $: any
 
 @Component({
@@ -38,7 +39,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     chuyenVt: '',
     detail: []
   }
-
+  TICKET_RIGHTS = TICKET_RIGHTS
   @ViewChild('printSection') printSection!: ElementRef;
   constructor(
     private _service: OrderService,

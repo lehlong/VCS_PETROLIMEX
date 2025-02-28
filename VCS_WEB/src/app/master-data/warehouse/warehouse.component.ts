@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 import { NzTreeComponent, NzFormatEmitEvent, NzTreeNodeOptions } from 'ng-zorro-antd/tree'
 import { OrganizeService } from '../../services/system-manager/organize.service'
 import { WarehouseService } from '../../services/master-data/warehouse.service'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 @Component({
   selector: 'app-warehouse',
   standalone: true,
@@ -32,6 +33,7 @@ export class WarehouseComponent implements OnInit {
     isActive: true
   }
   lstWarehouse: any[] = [];
+  MASTER_DATA_RIGHTS =  MASTER_DATA_RIGHTS
   constructor(
     private _service: OrganizeService,
     private _w : WarehouseService,

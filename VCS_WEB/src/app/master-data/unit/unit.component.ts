@@ -5,7 +5,7 @@ import { GlobalService } from '../../services/global.service'
 import { UnitService } from '../../services/master-data/unit.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { UNIT_RIGHTS } from '../../shared/constants'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 @Component({
   selector: 'app-unit',
@@ -27,7 +27,7 @@ export class UnitComponent {
   filter = new UnitFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  UNIT_RIGHTS = UNIT_RIGHTS
+  MASTER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _service: UnitService,
     private fb: NonNullableFormBuilder,

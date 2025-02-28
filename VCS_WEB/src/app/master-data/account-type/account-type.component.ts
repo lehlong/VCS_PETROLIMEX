@@ -3,7 +3,7 @@ import { ShareModule } from '../../shared/share-module'
 import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms'
 import { AccountTypeFilter } from '../../models/master-data/account-type.model'
 import { PaginationResult } from '../../models/base.model'
-import { ACCOUNTTYPE_RIGHTS } from '../../shared/constants'
+import { MASTER_DATA_RIGHTS } from '../../shared/constants'
 import { AccountTypeService } from '../../services/master-data/account-type.service'
 import { GlobalService } from '../../services/global.service'
 import { NzMessageService } from 'ng-zorro-antd/message'
@@ -27,7 +27,7 @@ export class AccountTypeComponent {
   filter = new AccountTypeFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  ACCOUNTTYPE_RIGHTS = ACCOUNTTYPE_RIGHTS
+  MATER_DATA_RIGHTS = MASTER_DATA_RIGHTS
   constructor(
     private _service: AccountTypeService,
     private fb: NonNullableFormBuilder,
