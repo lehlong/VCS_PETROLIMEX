@@ -3,7 +3,6 @@ import { ShareModule } from '../../shared/share-module'
 import { GlobalService } from '../../services/global.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { DELIVERY_POINT_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { DeliveryPointFilter } from '../../models/master-data/delivery-point.model'
 import { DeliveryPointService } from '../../services/master-data/delivery-point.service'
@@ -30,7 +29,6 @@ export class DeliveryPointComponent {
   paginationResult = new PaginationResult()
   loading: boolean = false
   customerResult: any[] = []
-  DELIVERY_POINT_RIGHTS = DELIVERY_POINT_RIGHTS
 
 
   constructor(

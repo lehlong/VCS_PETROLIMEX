@@ -3,7 +3,6 @@ import { ShareModule } from '../../shared/share-module'
 import { GlobalService } from '../../services/global.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { HE_SO_MAT_HANG_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { HeSoMatHangFilter } from '../../models/input/he-so-mat-hang.model'
 import { HeSoMatHangService } from '../../services/input/he-so-mat-hang.service'
@@ -36,7 +35,6 @@ export class HeSoMatHangComponent {
   paginationResult = new PaginationResult()
   goodsResult: any[] = []
   loading: boolean = false
-  HE_SO_MAT_HANG_RIGHTS = HE_SO_MAT_HANG_RIGHTS
   constructor(
     private _service: HeSoMatHangService,
     private _goodsService: GoodsService,

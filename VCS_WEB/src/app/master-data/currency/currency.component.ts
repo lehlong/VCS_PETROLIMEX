@@ -5,7 +5,6 @@ import { GlobalService } from '../../services/global.service'
 import { CurrencyService } from '../../services/master-data/currency.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { CURRENCY_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 @Component({
   selector: 'app-currency',
@@ -28,7 +27,6 @@ export class CurrencyComponent {
   filter = new CurrencyFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  CURRENCY_RIGHTS = CURRENCY_RIGHTS
   constructor(
     private _service: CurrencyService,
     private fb: NonNullableFormBuilder,

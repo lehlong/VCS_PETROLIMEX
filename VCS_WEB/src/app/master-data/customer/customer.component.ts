@@ -5,7 +5,6 @@ import { GlobalService } from '../../services/global.service'
 import { LocalService } from '../../services/master-data/local.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { LOCAL_RIGHTS, CUSTOMER_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { CustomerFilter } from '../../models/master-data/customer.model'
 import { CustomerService } from '../../services/master-data/customer.service'
@@ -54,7 +53,6 @@ export class CustomerComponent {
   salesMethodResult: any[] = []
   customerTypeList: any[] = []
   loading: boolean = false
-  CUSTOMER_RIGHTS = CUSTOMER_RIGHTS
 
   constructor(
     private _service: CustomerService,

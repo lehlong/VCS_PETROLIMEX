@@ -5,7 +5,6 @@ import { GlobalService } from '../../services/global.service'
 import { LocalService } from '../../services/master-data/local.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { VINH_CUA_LO_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { VinhCuaLoFilter } from '../../models/input/vinh-cua-lo.model'
 import { VinhCuaLoService } from '../../services/input/vinh-cua-lo.service'
@@ -38,7 +37,6 @@ export class VinhCuaLoComponent {
   paginationResult = new PaginationResult()
   goodsResult: any[] = []
   loading: boolean = false
-  VINH_CUA_LO_RIGHTS = VINH_CUA_LO_RIGHTS
   constructor(
     private _service: VinhCuaLoService,
     private _goodsService: GoodsService,

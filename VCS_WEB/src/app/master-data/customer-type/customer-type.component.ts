@@ -5,7 +5,6 @@ import { GlobalService } from '../../services/global.service'
 import { LocalService } from '../../services/master-data/local.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { CUSTOMER_TYPE_RIGHTS } from '../../shared/constants'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { CustomerTypeFilter } from '../../models/master-data/customer-type.model'
 import { CustomerTypeService } from '../../services/master-data/customer-type.service'
@@ -29,7 +28,6 @@ export class CustomerTypeComponent {
   filter = new CustomerTypeFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  CUSTOMER_TYPE_RIGHTS = CUSTOMER_TYPE_RIGHTS
   lstType: any[] = []
 
   constructor(

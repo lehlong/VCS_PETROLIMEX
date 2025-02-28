@@ -7,7 +7,6 @@ import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/tree'
 import { RightService } from '../../../services/system-manager/right.service'
 import { AuthService } from '../../../services/auth.service'
 import { GlobalService } from '../../../services/global.service'
-import { ACCOUNT_GROUP_RIGHTS } from '../../../shared/constants/index'
 @Component({
   selector: 'app-account-group-edit',
   standalone: true,
@@ -28,7 +27,6 @@ export class AccountGroupEditComponent implements OnInit {
   nodesConstant: any[] = []
   initialCheckedNodes: any[] = []
   validateForm: FormGroup
-  ACCOUNT_GROUP_RIGHTS = ACCOUNT_GROUP_RIGHTS
   constructor(
     private accountGroupService: AccountGroupService,
     private rightService: RightService,

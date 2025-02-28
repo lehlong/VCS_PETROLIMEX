@@ -1,4 +1,4 @@
-<div class="container-list" [appPermission]="CURRENCY_RIGHTS.LIST">
+<div class="container-list" >
   <div class="site-page-header-ghost-wrapper">
     <nz-page-header nzBackIcon nzTitle="Loại tiền tệ" nzSubtitle="Danh sách loại tiền tệ" class="site-page-header">
       <nz-page-header-extra>
@@ -16,7 +16,7 @@
             </button>
           </nz-space>
           <button (click)="openCreate()" class="!flex !items-center" nzType="primary" nz-button
-            [appPermission]="CURRENCY_RIGHTS.ADD">
+            >
             <span nz-icon nzType="plus-circle"></span> Thêm mới
           </button>
           <!-- <button

@@ -5,7 +5,7 @@ import { GlobalService } from '../../services/global.service'
 import { PeriodTimeService } from '../../services/master-data/period-time.service'
 import { PaginationResult } from '../../models/base.model'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
-import { PERIODTIME_RIGHTS } from '../../shared/constants'
+
 @Component({
   selector: 'app-period-time',
   standalone: true,
@@ -25,7 +25,6 @@ export class PeriodTimeComponent {
   filter = new PeriodTimeFilter()
   paginationResult = new PaginationResult()
   loading: boolean = false
-  PERIODTIME_RIGHTS = PERIODTIME_RIGHTS
   constructor(
     private _service: PeriodTimeService,
     private fb: NonNullableFormBuilder,

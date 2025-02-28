@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 import { ShareModule } from '../../../shared/share-module'
 import { FormGroup, Validators, NonNullableFormBuilder } from '@angular/forms'
 import { AccountGroupService } from '../../../services/system-manager/account-group.service'
-import { ACCOUNT_GROUP_RIGHTS } from '../../../shared/constants/index'
+
 @Component({
   selector: 'app-account-group-create',
   standalone: true,
@@ -15,7 +15,6 @@ export class AccountGroupCreateComponent {
   @Input() visible: boolean = false
   @Input() loading: boolean = false
   @Input() close: () => void = () => { }
-  ACCOUNT_GROUP_RIGHTS = ACCOUNT_GROUP_RIGHTS
   validateForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     notes: [''],
