@@ -317,6 +317,8 @@ namespace VCS.Areas.CheckOut
             i.NoteOut = txtNoteOut.Text;
             _dbContext.TblBuHeader.Update(i);
             _dbContext.SaveChanges();
+
+            MessageBox.Show("Cho xe khỏi kho thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ResetForm();
         }
 

@@ -52,3 +52,13 @@ th, td {
   z-index: 100;
   padding: 5px 20px;
 }
+
+.blink {
+    animation: blink-animation 1s infinite;
+  }
+
+  @keyframes blink-animation {
+    0% { background-color: rgb(255, 154, 99); }
+    50% { background-color: #4791E8;}
+    100% { background-color: rgb(255, 154, 99); }
+  }

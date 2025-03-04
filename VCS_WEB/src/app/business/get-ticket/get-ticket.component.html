@@ -3,7 +3,9 @@
         <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket" class="site-page-header">
             <nz-page-header-extra>
                 <nz-space [nzWrap]="true" class="gap-[5px]">
-
+                    <button (click)="getList()" class="!flex !items-center" nzType="primary" nz-button>
+                        <span nz-icon nzType="sync"></span> Làm mới
+                    </button>
                 </nz-space>
             </nz-page-header-extra>
         </nz-page-header>
@@ -64,26 +66,24 @@
                             nzPopoverPlacement="top">
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
-                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button (click)="updateOrder(i)" nz-popover *ngIf="i.statusProcess != '03'"
-                            nzPopoverTitle="Kiểm tra ticket và Xếp xe"
+                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button (click)="updateOrder(i)"
+                            nz-popover *ngIf="i.statusProcess != '03'" nzPopoverTitle="Kiểm tra ticket và Xếp xe"
                             [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
 
 
-                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button nz-popover *ngIf="i.statusProcess != '05'" (click)="printTicket(i.id)"
-                            nzPopoverTitle="In ticket" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
-                            nzPopoverPlacement="top">
+                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button nz-popover
+                            *ngIf="i.statusProcess != '05'" (click)="printTicket(i.id)" nzPopoverTitle="In ticket"
+                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="printer" nzTheme="outline">
                             </span></button>
 
 
-
-
-                        <button  [appPermission]="TICKET_RIGHTS.PROCESSED" nz-button (click)="updateStatus(i,'04')"
+                        <!-- <button  [appPermission]="TICKET_RIGHTS.PROCESSED" nz-button (click)="updateStatus(i,'04')"
                             *ngIf="i.statusProcess != '04' && i.statusProcess != '05'"><span nz-icon nzType="check"
                                 nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
                                 [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
-                                nzPopoverPlacement="top"></span></button>
+                                nzPopoverPlacement="top"></span></button> -->
 
 
                         <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nz-button (click)="updateStatus(i,'05')"

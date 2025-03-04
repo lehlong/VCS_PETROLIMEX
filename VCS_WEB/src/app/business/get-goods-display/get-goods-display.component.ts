@@ -23,15 +23,20 @@ export class GetGoodsDisplayComponent implements OnInit {
     keyWord: '',
     displayId: '',
   }
+  interval: any
   lstArrangePumpNozzle: any[] = [];
   constructor(private _service: OrderService, private route: ActivatedRoute) { }
   ngOnInit() {
     this.toggleFullscreen(true);
     this.ArrangePumpNozzle();
-    setInterval(() => { this.ArrangePumpNozzle(); }, 5000);
+    this.interval = setInterval(() => { this.ArrangePumpNozzle(); }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
   title: string = '';
-  speechNotify(vehicleCode: string, pump : string): void {
+  speechNotify(vehicleCode: string, pump: string): void {
     const space = vehicleCode.split('').join(' ');
     const utterance = new SpeechSynthesisUtterance(
       `Xin mời xe có biển số, ${space}, vào ${pump}.`

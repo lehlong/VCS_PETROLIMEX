@@ -20,8 +20,8 @@ export class OrderDisplayComponent implements OnInit {
   companyCode?: string = localStorage.getItem('companyCode')?.toString()
   warehouseCode?: string = localStorage.getItem('warehouseCode')?.toString()
   title: string = '';
-  count: number = 0; 
-  vehicleCode: string = ''; 
+  count: number = 0;
+  vehicleCode: string = '';
   filter: BaseFilter = {
     orgCode: localStorage.getItem('companyCode')?.toString(),
     warehouseCode: localStorage.getItem('warehouseCode')?.toString(),
@@ -30,7 +30,9 @@ export class OrderDisplayComponent implements OnInit {
     keyWord: '',
     displayId: '',
   }
-  
+
+  interval: any;
+
 
   constructor(private _service: OrderService, private route: ActivatedRoute,) {
   }
@@ -38,11 +40,13 @@ export class OrderDisplayComponent implements OnInit {
   ngOnInit() {
     this.toggleFullscreen(true);
     this.getList();
-    setInterval(() => { this.getList(); }, 5000);
+    this.interval = setInterval(() => { this.getList(); }, 5000);
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 
   getList() {
-
     this.route.paramMap.subscribe({
       next: (params) => {
         var id = params.get('id')
@@ -53,17 +57,18 @@ export class OrderDisplayComponent implements OnInit {
       next: (data) => {
         this.lstOrder = data;
         var i = this.lstOrder.find(x => x.isVoice === true);
-        if (i){
+        if (i) {
           this.title = `Xin mời xe có biển số ${i.vehicleCode} vào lấy Ticket`;
-          if(i.vehicleCode != this.vehicleCode && this.count < 2){
+          if (i.vehicleCode != this.vehicleCode && this.count < 2) {
             this.vehicleCode = i.vehicleCode;
             this.count++;
             this.speechNotify(i.vehicleCode);
-          }else{
+          } else {
             this.count = 0;
           }
-          
-        } 
+        }else{
+          this.title = '';
+        }
       },
       error: (err) => {
         console.error('Lỗi:', err);

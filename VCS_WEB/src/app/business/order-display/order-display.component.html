@@ -29,10 +29,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let order of lstOrder">
-          <td>{{order.stt}}</td>
-          <td>{{order.vehicleName}}</td>
-          <td>{{order.vehicleCode}}</td>
-          <td>{{order.noteIn}}</td>
+          <td *ngIf="!order.isVoice">{{order.stt}}</td>
+          <td *ngIf="!order.isVoice">{{order.vehicleName}}</td>
+          <td *ngIf="!order.isVoice">{{order.vehicleCode}}</td>
+          <td *ngIf="!order.isVoice">{{order.noteIn}}</td>
+
+          <td *ngIf="order.isVoice" class="blink">{{order.stt}}</td>
+          <td *ngIf="order.isVoice" class="blink">{{order.vehicleName}}</td>
+          <td *ngIf="order.isVoice" class="blink">{{order.vehicleCode}}</td>
+          <td *ngIf="order.isVoice" class="blink">{{order.noteIn}}</td>
+
         </tr>
       </tbody>
     </table>

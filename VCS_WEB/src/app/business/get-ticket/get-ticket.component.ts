@@ -61,7 +61,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getList();
-    setInterval(() => { this.getList(); }, 5000)
+    //setInterval(() => { this.getList(); }, 5000)
     //this.setupSignalRConnection();
   }
 
