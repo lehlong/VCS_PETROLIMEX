@@ -357,7 +357,7 @@ namespace VCS.APP.Areas.History
             dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Slx, Product, dvt, Status });
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { Slx, Product, dvt });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -387,7 +387,7 @@ namespace VCS.APP.Areas.History
             Slx.Name = "Slx";
             Slx.ReadOnly = true;
             Slx.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Slx.Width = 180;
+            Slx.Width = 230;
             // 
             // Product
             // 
@@ -395,7 +395,7 @@ namespace VCS.APP.Areas.History
             Product.Name = "Product";
             Product.ReadOnly = true;
             Product.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Product.Width = 192;
+            Product.Width = 252;
             // 
             // dvt
             // 
@@ -403,15 +403,11 @@ namespace VCS.APP.Areas.History
             dvt.Name = "dvt";
             dvt.ReadOnly = true;
             dvt.SortMode = DataGridViewColumnSortMode.NotSortable;
-            dvt.Width = 200;
+            dvt.Width = 260;
             // 
             // Status
             // 
-            Status.HeaderText = "TRẠNG THÁI";
             Status.Name = "Status";
-            Status.ReadOnly = true;
-            Status.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Status.Width = 180;
             // 
             // panel13
             // 

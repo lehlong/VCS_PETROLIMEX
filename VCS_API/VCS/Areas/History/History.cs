@@ -101,7 +101,7 @@ namespace VCS.APP.Areas.History
                     {
                         WarehouseName = GetNameWarehouse(),
                         Vehicle = data.VehicleCode,
-                        STT = _dbContext.TblBuOrders.Where(x => x.HeaderId == id).Select(x => x.Stt).FirstOrDefault().ToString("00"),
+                        STT = _dbContext.TblBuHeader.Where(x => x.Id == id).Select(x => x.Stt).FirstOrDefault().ToString("00"),
                     };
                     STT sttForm = new STT(ticketInfo, lstDO);
                     sttForm.ShowDialog();
@@ -181,8 +181,23 @@ namespace VCS.APP.Areas.History
 
             DisplayPage(filteredData);
         }
-
-
+        private void ResetForm()
+        {
+            txtNumber.Text = string.Empty;   
+            textBox2.Text = string.Empty;  
+            fromDate.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            toDate.Value = DateTime.Now;
+            data = _dbContext.TblBuHeader
+                .Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
+                            x.CompanyCode == ProfileUtilities.User.OrganizeCode)
+                .ToList();
+            currentPage = 1;
+            DisplayPage(data);
+        }
+        private void btnResetForm_Click(object sender, EventArgs e)
+        {
+            ResetForm();
+        }
 
     }
 }
