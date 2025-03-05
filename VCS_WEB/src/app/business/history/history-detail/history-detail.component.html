@@ -2,42 +2,186 @@
     <div class="site-page-header-ghost-wrapper">
       <nz-page-header nzTitle="CHI TIẾT LỊCH SỬ" class="site-page-header">
       </nz-page-header>
-
     </div>
     <div nz-row [nzGutter]="16">
       <nz-divider nzText="Thông tin chung" nzOrientation="left"></nz-divider>
       <div nz-col class="gutter-row" nzSpan="6">
         <div class="text-change" style="padding: 4px 0px;">Kho: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.warehouseName" [disabled]="true"></app-input-clear>
         <div class="text-change" style="padding: 4px 0px;">STT vào kho: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.stt" [disabled]="true"></app-input-clear>    
       </div>
       <div nz-col class="gutter-row" nzSpan="6">
         <div class="text-change" style="padding: 4px 0px;">Tài xế: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <app-input-clear style="padding: 20px 0px;"  [placeholder]="lstHistory.vehicleName"  [disabled]="true"></app-input-clear>
         <div class="text-change" style="padding: 4px 0px;">Phương tiện: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.vehicleCode"  [disabled]="true"></app-input-clear>    
       </div>
       <div nz-col class="gutter-row" nzSpan="6">
         <div class="text-change" style="padding: 4px 0px;">Thời gian xe vào: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.createDate " [disabled]="true"></app-input-clear>
         <div class="text-change" style="padding: 4px 0px;">Thời gian xe ra: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.timeCheckOut "[disabled]="true"></app-input-clear>    
       </div>
       <div nz-col class="gutter-row" nzSpan="6">
         <div class="text-change" style="padding: 4px 0px;">Ghi chú cổng vào: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.noteIn"  [disabled]="true"></app-input-clear>
         <div class="text-change" style="padding: 4px 0px;">Ghi chú cổng ra: </div>
-        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+        <app-input-clear style="padding: 20px 0px;" [placeholder]="lstHistory.noteOut" [disabled]="true"></app-input-clear>    
       </div>
-      
     </div>
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <nz-divider nzText="Thông tin cổng vào" nzOrientation="left"></nz-divider>
+    <div nz-row [nzGutter]="40">
+      <div nz-col class="gutter-row" nzSpan="12" style="margin-top: 24px;">
+        <nz-page-header nzTitle="Thông tin cổng vào" class="site-page-header">
+          <nz-page-header-extra>
+            <nz-space [nzWrap]="true" class="gap-[5px]">
+              <nz-space>
+                <button class="!flex !items-center" nzType="primary" nz-button
+                >
+                 <span nz-icon nzType="camera"></span> Xem tất cả
+               </button>
+              </nz-space>
+            </nz-space>
+          </nz-page-header-extra>
+        </nz-page-header>
+          <div nz-row [nzGutter]="6" class="items-center">
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+          </div>
+          <div  nz-row style="padding: 24px 0px; ">
+            <div nz-col nzSpan="24">
+              <nz-table #basicTable [nzData]="dataIn" [nzBordered]="true">
+                <thead>
+                  <tr>
+                    <th nzAlign="center">SỐ LỆNH XUẤT</th>
+                    <th nzAlign="center">MẶT HÀNG</th>
+                    <th nzAlign="center">SỐ LƯỢNG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let item of dataIn">
+                    <tr *ngFor="let material of item.materials">
+                      <td nzAlign="center">{{item.do1Sap}}</td>
+                      <td nzAlign="center">
+                        {{material.materialName}}
+                      </td>
+                      <td nzAlign="center">
+                        {{material.quantity}} {{material.unitCode}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
       </div>
-      <div nz-col nzSpan="12">
-        <nz-divider nzText="Thông tin cổng ra" nzOrientation="left"></nz-divider>
+      <div nz-col class="gutter-row" nzSpan="12" style="margin-top: 24px;">
+         <nz-page-header nzTitle="Thông tin cổng vào" class="site-page-header">
+        <nz-page-header-extra>
+          <nz-space [nzWrap]="true" class="gap-[5px]">
+            <nz-space>
+              <button class="!flex !items-center" nzType="primary" nz-button
+              >
+               <span nz-icon nzType="camera"></span> Xem tất cả
+             </button>
+            </nz-space>
+          </nz-space>
+        </nz-page-header-extra>
+      </nz-page-header>
+        <div nz-row [nzGutter]="6" class="items-center">
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+        </div>
+        <div  nz-row style="padding: 24px 0px; ">
+          <div nz-col nzSpan="24">
+            <nz-table  #basicTable [nzData]="this.dataOut" [nzBordered] = "true" >
+              <thead>
+                <tr>
+                  <th nzAlign="center">SỐ LỆNH XUẤT</th>
+                  <th nzAlign="center">MẶT HÀNG</th>
+                  <th nzAlign="center">SỐ LƯỢNG</th>
+                  <th nzAlign="center">TRẠNG THÁI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of dataOut">
+                  <td nzAlign="center">{{data.soLenh}}</td>
+                  <td nzAlign="center">{{data.materialName}}</td>
+                  <td nzAlign="center">{{data.tongXuat}}{{data.donViTinh}}</td> 
+                  <td nzAlign="center">{{data.address}}</td> 
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
       </div>
     </div>
 </div>

@@ -9,7 +9,10 @@ namespace DMS.BUSINESS.Dtos.BU
     public class HistoryDto
     {
         public string? VehicleCode { get; set; }
+        public string? VehicleName { get; set; }
+        public string? WarehouseName { get; set; }
         public DateTime? CreateDate { get; set; }
+        public DateTime? TimeCheckOut { get; set; }
         public string? StatusVehicle { get; set; }
         public string? StatusProcess { get; set; }
         public string? NoteIn { get; set; }

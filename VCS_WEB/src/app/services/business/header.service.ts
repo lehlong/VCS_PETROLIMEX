@@ -11,4 +11,7 @@ export class HeaderService {
   searchHeader(params: any): Observable<any> {
     return this.commonService.get('Header/Search', params)
   }
+  GetHistoryDetail(headerId: string): Observable<any> {
+    return this.commonService.get(`Header/GetHistoryDetail?headerId=${headerId}`)
+  }
 }

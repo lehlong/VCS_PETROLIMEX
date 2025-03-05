@@ -46,19 +46,23 @@ namespace DMS.BUSINESS.Services.BU
         {
             try
             {
-                var header = await _dbContext.TblBuHeader
-                    .Where(x => x.Id == headerId)
-                    .Select(x => new HistoryDto
-                    {
-                        VehicleCode = x.VehicleCode,
-                        CreateDate = x.CreateDate,
-                        StatusVehicle = x.StatusVehicle,
-                        StatusProcess = x.StatusProcess,
-                        NoteIn = x.NoteIn,
-                        NoteOut = x.NoteOut,
-                        Stt = x.Stt.ToString()
-                    })
-                    .FirstOrDefaultAsync();
+                var header = await (from h in _dbContext.TblBuHeader
+                                    join w in _dbContext.TblMdWarehouse on h.WarehouseCode equals w.Code into warehouseGroup
+                                    from warehouse in warehouseGroup.DefaultIfEmpty()
+                                    where h.Id == headerId
+                                    select new HistoryDto
+                                    {
+                                        VehicleCode = h.VehicleCode,
+                                        VehicleName = h.VehicleName,
+                                        TimeCheckOut = h.TimeCheckout,
+                                        WarehouseName = warehouse.Name,
+                                        CreateDate = h.CreateDate,
+                                        StatusVehicle = h.StatusVehicle,
+                                        StatusProcess = h.StatusProcess,
+                                        NoteIn = h.NoteIn,
+                                        NoteOut = h.NoteOut,
+                                        Stt = h.Stt.ToString()
+                                    }).FirstOrDefaultAsync();
 
                 if (header == null)
                 {
@@ -66,49 +70,75 @@ namespace DMS.BUSINESS.Services.BU
                     MessageObject.MessageDetail = "Không tìm thấy thông tin phiếu";
                     return null;
                 }
+
                 header.ImagesIn = await _dbContext.TblBuImage
                     .Where(x => x.HeaderId == headerId && x.InOut == "in")
                     .Select(x => x.FullPath)
                     .ToListAsync();
+
                 header.ImagesOut = await _dbContext.TblBuImage
                     .Where(x => x.HeaderId == headerId && x.InOut == "out")
                     .Select(x => x.FullPath)
                     .ToListAsync();
-                var lstDO = await _dbContext.TblBuDetailDO
-                    .Where(x => x.HeaderId == headerId)
-                    .Select(d => new DetailDto
-                    {
-                        Do1Sap = d.Do1Sap,
-                        Materials = _dbContext.TblBuDetailMaterial
-                            .Where(m => m.HeaderId == d.Id)
-                            .Select(m => new MaterialDto
-                            {
-                                MaterialCode = m.MaterialCode,
-                                Quantity = m.Quantity,
-                                UnitCode = m.UnitCode,
-                                // MaterialName = _dbContext.TblMdGoods.FirstOrDefaultAsync(m.MaterialCode) != null ? _dbContext.TblMdGoods.FirstOrDefaultAsync(m.MaterialCode).Name : null 
-                            }).ToList()
-                    }).ToListAsync();
 
-                header.DetailDOs = lstDO;
-                var lstDOOUT = await _dbContext.TblBuDetailTgbx
-                    .Where(x => x.HeaderId == headerId)
-                    .Select(x => new DetailTgbxDto
-                    {
-                        SoLenh = x.SoLenh,
-                        // MaterialName = _dbContext.TblMdGoods.Find("000000000000" + x.MaHangHoa) != null ? _dbContext.TblMdGoods.Find("000000000000" + x.MaHangHoa).Name : null,
-                        TongXuat = x.TongXuat,
-                        DonViTinh = x.DonViTinh
-                    }).ToListAsync();
+                header.DetailDOs = await (from d in _dbContext.TblBuDetailDO
+                                          join m in _dbContext.TblBuDetailMaterial on d.Id equals m.HeaderId
+                                          join g in _dbContext.TblMdGoods on m.MaterialCode equals g.Code into goodsGroup
+                                          from goods in goodsGroup.DefaultIfEmpty()
+                                          where d.HeaderId == headerId
+                                          group new { d, m, goods } by d.Do1Sap into g
+                                          select new DetailDto
+                                          {
+                                              Do1Sap = g.Key,
+                                              Materials = g.Select(x => new MaterialDto
+                                              {
+                                                  MaterialCode = x.m.MaterialCode,
+                                                  Quantity = x.m.Quantity,
+                                                  UnitCode = x.m.UnitCode,
+                                                  MaterialName = x.goods != null ? x.goods.Name : null
+                                              }).ToList()
+                                          }).ToListAsync();
 
-                header.DetailTgbx = lstDOOUT;
-                var totalCount = 1;
+                header.DetailTgbx = await (from t in _dbContext.TblBuDetailTgbx
+                                           join g in _dbContext.TblMdGoods on ("000000000000" + t.MaHangHoa) equals g.Code into goodsGroup
+                                           from goods in goodsGroup.DefaultIfEmpty()
+                                           where t.HeaderId == headerId
+                                           select new DetailTgbxDto
+                                           {
+                                               SoLenh = t.SoLenh,
+                                               MaterialName = goods.Name,
+                                               TongXuat = t.TongXuat,
+                                               DonViTinh = t.DonViTinh
+                                           }).ToListAsync();
+
                 return header;
             }
             catch (Exception ex)
             {
                 Status = false;
                 Exception = ex;
+                return null;
+            }
+        }
+        private string? GetNameWarehouse(string code)
+        {
+            try
+            {
+                return _dbContext.TblMdWarehouse.Find(code)?.Name;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private string? GetNameMaterial(string materialCode)
+        {
+            try
+            {
+                return _dbContext.TblMdGoods.Find(materialCode)?.Name;
+            }
+            catch (Exception ex)
+            {
                 return null;
             }
         }

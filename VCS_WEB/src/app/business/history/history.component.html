@@ -55,14 +55,14 @@
               1
               }}
             </td>
-            <td>
+            <td nzAlign="center">
               <a 
               (click)="navigate(data.id)">{{ data.vehicleName }}</a>
             </td>
-            <td>{{ data.vehicleCode }}</td>
+            <td nzAlign="center">{{ data.vehicleCode }}</td>
            
-            <td>{{ data.CreateDate }}</td>
-            <td>{{ data.TimeCheckOut }}</td>
+            <td nzAlign="center">{{ data.createDate  | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+            <td nzAlign="center">{{ data.timeCheckout  | date:'dd/MM/yyyy HH:mm:ss' }}</td>
             <td nzAlign="center">{{ data.stt }}</td>
           </tr>
         </tbody>
