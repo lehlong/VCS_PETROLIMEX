@@ -63,7 +63,7 @@ export class OrderService {
   GetTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/GetTicket?headerId=${headerId}`)
   }
-
+  
   // SignalR Methods
   public async initializeConnection(): Promise<void> {
     try {

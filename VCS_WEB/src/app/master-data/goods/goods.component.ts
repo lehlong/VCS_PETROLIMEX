@@ -77,6 +77,7 @@ export class GoodsComponent {
     this.isSubmit = false
     this._service.searchGoods(this.filter).subscribe({
       next: (data) => {
+        console.log( this.filter)
         this.paginationResult = data
         console.log(this.paginationResult);
 

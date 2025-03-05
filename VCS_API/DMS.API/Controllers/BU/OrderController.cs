@@ -91,13 +91,7 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
-
-
-
-
-
-
-
+        
         [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] OrderDto orderDto)
         {

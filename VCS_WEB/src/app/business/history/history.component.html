@@ -1,0 +1,77 @@
+<div class="container-list" >
+    <div class="site-page-header-ghost-wrapper">
+      <nz-page-header nzTitle="LỊCH SỬ VÀO RA" class="site-page-header">
+        <nz-page-header-extra>
+          <nz-space [nzWrap]="true" class="gap-[5px]">
+            <nz-space>
+              <app-input-clear placeholder="Tìm kiếm" (enterEvent)="search()"
+                [(value)]="filter.keyWord"></app-input-clear>
+              <button (click)="search()" class="flex !items-center !border-l-0 gray-btn" nzType="default" nz-button
+                nzType="default">
+                <span nz-icon nzType="search"></span>
+              </button>
+              <button (click)="reset()" class="flex !items-center !border-l-0 gray-btn" nzType="default" nz-button
+                nzType="default">
+                <span nz-icon nzType="redo"></span>
+              </button>
+            </nz-space>
+            <button (click)="openCreate()" class="!flex !items-center" nzType="primary" nz-button
+             >
+              <span nz-icon nzType="plus-circle"></span> Thêm mới
+            </button>
+          </nz-space>
+        </nz-page-header-extra>
+      </nz-page-header>
+    </div>
+    <div class="overflow-auto flex-grow">
+      <nz-table [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed" [nzShowPagination]="false"
+        [nzFrontPagination]="false" #headerTable [nzData]="paginationResult.data">
+        <thead>
+          <tr>
+            <th nzWidth="30px">STT</th>
+            <th nzAlign="center" nzWidth="20%">
+              Tài xế
+            </th>
+            <th nzAlign="center" nzWidth="300px">
+              Biển số
+            </th>
+            <th nzAlign="center" nzWidth="300px">
+              Thời gian vào
+            </th>
+            <th nzAlign="center" nzWidth="300px">
+              Thời gian ra
+            </th>
+            <th nzAlign="center" nzWidth="150px">
+              Số TT vào kho
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of headerTable.data; let i = index" >
+            <td>
+              {{
+              (paginationResult.currentPage - 1) * paginationResult.pageSize +
+              i +
+              1
+              }}
+            </td>
+            <td>
+              <a 
+              (click)="navigate(data.id)">{{ data.vehicleName }}</a>
+            </td>
+            <td>{{ data.vehicleCode }}</td>
+           
+            <td>{{ data.CreateDate }}</td>
+            <td>{{ data.TimeCheckOut }}</td>
+            <td nzAlign="center">{{ data.stt }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div *ngIf="paginationResult?.data" class="flex justify-end p-[10px] border-t border-custom-gray border-solid">
+      <nz-pagination nzShowSizeChanger [nzPageIndex]="filter.currentPage" [nzTotal]="paginationResult.totalRecord"
+        [nzPageSize]="filter.pageSize" (nzPageIndexChange)="pageIndexChange($event)"
+        (nzPageSizeChange)="pageSizeChange($event)"></nz-pagination>
+    </div>
+  </div>
+  

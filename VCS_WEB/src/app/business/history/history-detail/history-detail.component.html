@@ -1,0 +1,43 @@
+<div class="container-list" >
+    <div class="site-page-header-ghost-wrapper">
+      <nz-page-header nzTitle="CHI TIẾT LỊCH SỬ" class="site-page-header">
+      </nz-page-header>
+
+    </div>
+    <div nz-row [nzGutter]="16">
+      <nz-divider nzText="Thông tin chung" nzOrientation="left"></nz-divider>
+      <div nz-col class="gutter-row" nzSpan="6">
+        <div class="text-change" style="padding: 4px 0px;">Kho: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <div class="text-change" style="padding: 4px 0px;">STT vào kho: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+      </div>
+      <div nz-col class="gutter-row" nzSpan="6">
+        <div class="text-change" style="padding: 4px 0px;">Tài xế: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <div class="text-change" style="padding: 4px 0px;">Phương tiện: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+      </div>
+      <div nz-col class="gutter-row" nzSpan="6">
+        <div class="text-change" style="padding: 4px 0px;">Thời gian xe vào: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <div class="text-change" style="padding: 4px 0px;">Thời gian xe ra: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+      </div>
+      <div nz-col class="gutter-row" nzSpan="6">
+        <div class="text-change" style="padding: 4px 0px;">Ghi chú cổng vào: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>
+        <div class="text-change" style="padding: 4px 0px;">Ghi chú cổng ra: </div>
+        <app-input-clear style="padding: 20px 0px;" [disabled]="true"></app-input-clear>    
+      </div>
+      
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-divider nzText="Thông tin cổng vào" nzOrientation="left"></nz-divider>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-divider nzText="Thông tin cổng ra" nzOrientation="left"></nz-divider>
+      </div>
+    </div>
+</div>
