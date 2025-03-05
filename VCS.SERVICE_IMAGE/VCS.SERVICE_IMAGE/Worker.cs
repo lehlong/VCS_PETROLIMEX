@@ -57,10 +57,6 @@
                 JObject jsonObject = JObject.Parse(jsonContent);
                 string pathSaveFile = (string)jsonObject["Setting"]["PathSaveFile"];
                 double TimeLoop = (double)jsonObject["Setting"]["TimeService"];
-                if (TimeLoop == 0)
-                {
-                    TimeLoop = 60;
-                }
                 var (filePaths, status) = await GetFilePathsFromDatabase();
                 try
                 {
