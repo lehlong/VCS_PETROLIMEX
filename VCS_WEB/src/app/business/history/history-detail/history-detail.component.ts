@@ -20,6 +20,8 @@ export class HistoryDetailComponent implements OnInit {
   lstHistory: any = [];
   dataIn: any = [];
   dataOut: any = [];
+  imagesIn: any = [];
+  imagesOut: any = [];
   constructor(
     private _service: HeaderService,
     private globalService: GlobalService,
@@ -47,13 +49,11 @@ export class HistoryDetailComponent implements OnInit {
       if (id) {
         this._service.GetHistoryDetail(id).subscribe({
           next: (data) => {
-            console.log(data);
             this.lstHistory = data
             this.dataIn = data.detailDOs
             this.dataOut = data.detailTgbx
-            console.log(this.dataIn);
-            console.log(this.dataOut);
-
+            this.imagesIn = data.imagesIn
+            this.imagesOut = data.imagesOut
           },
           error: (response) => {
             console.log(response)

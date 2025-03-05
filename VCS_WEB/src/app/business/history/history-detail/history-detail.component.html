@@ -44,44 +44,55 @@
             </nz-space>
           </nz-page-header-extra>
         </nz-page-header>
-          <div nz-row [nzGutter]="6" class="items-center">
-            <div nz-col class="gutter-row" nzSpan="6">
-              <img
+        <div nz-row [nzGutter]="6" class="items-center">
+          <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesIn">
+            <img
               nz-image
               width="160px"
               height="160px"
-              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              [nzSrc]="imageUrl"
               alt=""
             />
-            </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <img
-              nz-image
-              width="160px"
-              height="160px"
-              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              alt=""
-            />
-            </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <img
-              nz-image
-              width="160px"
-              height="160px"
-              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              alt=""
-            />
-            </div>
-            <div nz-col class="gutter-row" nzSpan="6">
-              <img
-              nz-image
-              width="160px"
-              height="160px"
-              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-              alt=""
-            />
-            </div>
           </div>
+        </div>
+          <!-- <div nz-row [nzGutter]="6" class="items-center">
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+            <div nz-col class="gutter-row" nzSpan="6">
+              <img
+              nz-image
+              width="160px"
+              height="160px"
+              nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              alt=""
+            />
+            </div>
+          </div> -->
           <div  nz-row style="padding: 24px 0px; ">
             <div nz-col nzSpan="24">
               <nz-table #basicTable [nzData]="dataIn" [nzBordered]="true">
@@ -122,44 +133,55 @@
           </nz-space>
         </nz-page-header-extra>
       </nz-page-header>
-        <div nz-row [nzGutter]="6" class="items-center">
-          <div nz-col class="gutter-row" nzSpan="6">
-            <img
+      <div nz-row [nzGutter]="6" class="items-center">
+        <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesOut">
+          <img
             nz-image
             width="160px"
             height="160px"
-            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            [nzSrc]="imageUrl"
             alt=""
           />
-          </div>
-          <div nz-col class="gutter-row" nzSpan="6">
-            <img
-            nz-image
-            width="160px"
-            height="160px"
-            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            alt=""
-          />
-          </div>
-          <div nz-col class="gutter-row" nzSpan="6">
-            <img
-            nz-image
-            width="160px"
-            height="160px"
-            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            alt=""
-          />
-          </div>
-          <div nz-col class="gutter-row" nzSpan="6">
-            <img
-            nz-image
-            width="160px"
-            height="160px"
-            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-            alt=""
-          />
-          </div>
         </div>
+      </div>
+        <!-- <div nz-row [nzGutter]="6" class="items-center">
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <img
+            nz-image
+            width="160px"
+            height="160px"
+            nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            alt=""
+          />
+          </div>
+        </div> -->
         <div  nz-row style="padding: 24px 0px; ">
           <div nz-col nzSpan="24">
             <nz-table  #basicTable [nzData]="this.dataOut" [nzBordered] = "true" >
