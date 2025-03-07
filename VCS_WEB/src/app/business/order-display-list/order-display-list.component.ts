@@ -28,6 +28,8 @@ orgCode?: string = localStorage.getItem('companyCode')?.toString()
     isActive: true
   }
 
+  interval: any;
+
   lstConfigDisplay : any[] = []
   visible: boolean = false
   edit: boolean = false
