@@ -921,11 +921,13 @@ namespace VCS.Areas.CheckIn
                 lblStatus.Text = "Đang nhận diện...";
                 lblStatus.ForeColor = Color.DarkGoldenrod;
                 btnDetect.Enabled = false;
-                var (filePath, snapshotImage) = await CommonService.TakeSnapshot(viewStream.MediaPlayer);
+
+                //Chụp và lưu ảnh nhận diện
+                var (filePath, snapshotImage) =  CommonService.TakeSnapshot(viewStream.MediaPlayer);
                 IMGPATH = filePath;
 
                 //Lưu các ảnh từ camera vào thư mục
-                var lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.OrgCode == ProfileUtilities.User.OrganizeCode && x.IsIn == true).ToList();
+                var lstCamera = Global.lstCamera.Where(x => x.IsIn == true).ToList();
                 lstPathImageCapture = new List<string>();
                 foreach (var c in lstCamera)
                 {
@@ -933,6 +935,9 @@ namespace VCS.Areas.CheckIn
                     var path = CommonService.SaveDetectedImage(imageBytes);
                     lstPathImageCapture.Add(path);
                 }
+
+
+
 
                 if (!string.IsNullOrEmpty(filePath))
                 {

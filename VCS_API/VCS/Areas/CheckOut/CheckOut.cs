@@ -78,7 +78,7 @@ namespace VCS.Areas.CheckOut
             try
             {
                 btnDetect.Enabled = false;
-                var (filePath, snapshotImage) = await CommonService.TakeSnapshot(viewStream.MediaPlayer);
+                var (filePath, snapshotImage) = CommonService.TakeSnapshot(viewStream.MediaPlayer);
                 IMGPATH = filePath;
 
                 //Lưu các ảnh từ camera vào thư mục
