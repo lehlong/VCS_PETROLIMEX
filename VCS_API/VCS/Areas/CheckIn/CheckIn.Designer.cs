@@ -52,11 +52,11 @@
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
-            panel9 = new Panel();
+            panel6 = new Panel();
             pictureBoxLicensePlate = new PictureBox();
+            label2 = new Label();
             panel8 = new Panel();
             pictureBoxVehicle = new PictureBox();
-            label5 = new Label();
             label3 = new Label();
             panel7 = new Panel();
             txtLicensePlate = new TextBox();
@@ -73,7 +73,7 @@
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStream).BeginInit();
             panel5.SuspendLayout();
-            panel9.SuspendLayout();
+            panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
@@ -96,17 +96,17 @@
             panel2.Controls.Add(btnUpdateQueue);
             panel2.Controls.Add(btnCheckIn);
             panel2.Controls.Add(btnQueue);
-            panel2.Location = new Point(588, 6);
+            panel2.Location = new Point(524, 6);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(814, 812);
+            panel2.Size = new Size(814, 769);
             panel2.TabIndex = 4;
             // 
             // panelDODetail
             // 
             panelDODetail.Location = new Point(6, 210);
             panelDODetail.Name = "panelDODetail";
-            panelDODetail.Size = new Size(801, 596);
+            panelDODetail.Size = new Size(801, 553);
             panelDODetail.TabIndex = 38;
             // 
             // panel12
@@ -183,7 +183,7 @@
             txtNumberDO.BorderStyle = BorderStyle.None;
             txtNumberDO.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNumberDO.Location = new Point(10, 9);
-            txtNumberDO.MaxLength = 12;
+            txtNumberDO.MaxLength = 1000;
             txtNumberDO.Name = "txtNumberDO";
             txtNumberDO.Size = new Size(344, 22);
             txtNumberDO.TabIndex = 38;
@@ -328,7 +328,7 @@
             panel1.Controls.Add(label1);
             panel1.Location = new Point(6, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(576, 78);
+            panel1.Size = new Size(514, 78);
             panel1.TabIndex = 5;
             // 
             // panel3
@@ -337,7 +337,7 @@
             panel3.Controls.Add(lblStatus);
             panel3.Location = new Point(6, 30);
             panel3.Name = "panel3";
-            panel3.Size = new Size(564, 40);
+            panel3.Size = new Size(503, 40);
             panel3.TabIndex = 1;
             // 
             // lblStatus
@@ -365,7 +365,7 @@
             panel4.Controls.Add(viewStream);
             panel4.Location = new Point(6, 90);
             panel4.Name = "panel4";
-            panel4.Size = new Size(576, 348);
+            panel4.Size = new Size(514, 319);
             panel4.TabIndex = 6;
             // 
             // viewStream
@@ -374,43 +374,53 @@
             viewStream.Location = new Point(6, 6);
             viewStream.MediaPlayer = null;
             viewStream.Name = "viewStream";
-            viewStream.Size = new Size(564, 336);
+            viewStream.Size = new Size(503, 307);
             viewStream.TabIndex = 0;
             viewStream.Text = "videoView1";
             // 
             // panel5
             // 
             panel5.BackColor = Color.White;
-            panel5.Controls.Add(panel9);
+            panel5.Controls.Add(panel6);
+            panel5.Controls.Add(label2);
             panel5.Controls.Add(panel8);
-            panel5.Controls.Add(label5);
             panel5.Controls.Add(label3);
             panel5.Controls.Add(panel7);
             panel5.Controls.Add(label4);
             panel5.Controls.Add(btnViewAll);
             panel5.Controls.Add(btnDetect);
-            panel5.Location = new Point(7, 444);
+            panel5.Location = new Point(6, 415);
             panel5.Name = "panel5";
-            panel5.Size = new Size(576, 374);
+            panel5.Size = new Size(514, 360);
             panel5.TabIndex = 7;
             // 
-            // panel9
+            // panel6
             // 
-            panel9.BackColor = Color.WhiteSmoke;
-            panel9.Controls.Add(pictureBoxLicensePlate);
-            panel9.Location = new Point(286, 176);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(283, 192);
-            panel9.TabIndex = 19;
+            panel6.BackColor = Color.WhiteSmoke;
+            panel6.Controls.Add(pictureBoxLicensePlate);
+            panel6.Location = new Point(265, 176);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(244, 178);
+            panel6.TabIndex = 20;
             // 
             // pictureBoxLicensePlate
             // 
-            pictureBoxLicensePlate.Location = new Point(3, 3);
+            pictureBoxLicensePlate.Location = new Point(5, 4);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
-            pictureBoxLicensePlate.Size = new Size(277, 186);
+            pictureBoxLicensePlate.Size = new Size(235, 170);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBoxLicensePlate.TabIndex = 1;
+            pictureBoxLicensePlate.TabIndex = 0;
             pictureBoxLicensePlate.TabStop = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(268, 153);
+            label2.Name = "label2";
+            label2.Size = new Size(114, 21);
+            label2.TabIndex = 19;
+            label2.Text = "Ảnh nhận diện:";
             // 
             // panel8
             // 
@@ -418,27 +428,17 @@
             panel8.Controls.Add(pictureBoxVehicle);
             panel8.Location = new Point(6, 176);
             panel8.Name = "panel8";
-            panel8.Size = new Size(274, 192);
+            panel8.Size = new Size(244, 178);
             panel8.TabIndex = 18;
             // 
             // pictureBoxVehicle
             // 
-            pictureBoxVehicle.Location = new Point(5, 3);
+            pictureBoxVehicle.Location = new Point(5, 4);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
-            pictureBoxVehicle.Size = new Size(265, 186);
+            pictureBoxVehicle.Size = new Size(235, 170);
             pictureBoxVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxVehicle.TabIndex = 0;
             pictureBoxVehicle.TabStop = false;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(289, 153);
-            label5.Name = "label5";
-            label5.Size = new Size(114, 21);
-            label5.TabIndex = 17;
-            label5.Text = "Ảnh nhận diện:";
             // 
             // label3
             // 
@@ -456,7 +456,7 @@
             panel7.Controls.Add(txtLicensePlate);
             panel7.Location = new Point(5, 79);
             panel7.Name = "panel7";
-            panel7.Size = new Size(564, 60);
+            panel7.Size = new Size(504, 60);
             panel7.TabIndex = 15;
             // 
             // txtLicensePlate
@@ -467,7 +467,7 @@
             txtLicensePlate.Location = new Point(7, 5);
             txtLicensePlate.MaxLength = 8;
             txtLicensePlate.Name = "txtLicensePlate";
-            txtLicensePlate.Size = new Size(542, 47);
+            txtLicensePlate.Size = new Size(487, 47);
             txtLicensePlate.TabIndex = 0;
             // 
             // label4
@@ -489,7 +489,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = Properties.Resources.icons8_application_18;
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(527, 7);
+            btnViewAll.Location = new Point(468, 5);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -508,7 +508,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(385, 7);
+            btnDetect.Location = new Point(326, 5);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(136, 40);
@@ -523,11 +523,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1407, 830);
+            ClientSize = new Size(1344, 781);
             Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel1);
             Controls.Add(panel2);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "CheckIn";
             Text = "Quản lý cổng vào";
             Load += CheckIn_Load;
@@ -547,7 +548,7 @@
             ((System.ComponentModel.ISupportInitialize)viewStream).EndInit();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
-            panel9.ResumeLayout(false);
+            panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
             panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
@@ -570,9 +571,7 @@
         private Panel panel7;
         private TextBox txtLicensePlate;
         private Label label4;
-        private Panel panel9;
         private Panel panel8;
-        private Label label5;
         private Label label3;
         private Button btnDeleteQueue;
         private Button btnResetForm;
@@ -591,7 +590,9 @@
         private LibVLCSharp.WinForms.VideoView viewStream;
         private ComboBox selectVehicle;
         private Panel panelDODetail;
-        private PictureBox pictureBoxLicensePlate;
         private PictureBox pictureBoxVehicle;
+        private Panel panel6;
+        private PictureBox pictureBoxLicensePlate;
+        private Label label2;
     }
 }

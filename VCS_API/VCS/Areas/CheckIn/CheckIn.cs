@@ -27,7 +27,6 @@ namespace VCS.Areas.CheckIn
 {
     public partial class CheckIn : Form
     {
-        private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
         private AppDbContextForm _dbContext;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
@@ -35,11 +34,16 @@ namespace VCS.Areas.CheckIn
         private List<string> lstPathImageCapture = new List<string>();
         private string IMGPATH;
         private string PLATEPATH;
+
+        private System.Windows.Forms.Timer resetTimer;
         public CheckIn(AppDbContextForm dbContext)
         {
             _dbContext = dbContext;
             InitializeComponent();
-            InitializeLibVLC();
+            resetTimer = new System.Windows.Forms.Timer();
+            resetTimer.Interval = 500;
+            resetTimer.Tick += ResetTimer_Tick;
+            txtNumberDO.Focus();
         }
 
         private void CheckIn_Load(object sender, EventArgs e)
@@ -49,28 +53,14 @@ namespace VCS.Areas.CheckIn
         }
 
         #region Khởi tạo và stream camera
-        private void InitializeLibVLC()
-        {
-            Core.Initialize();
-            _libVLC = new LibVLC(
-                "--network-caching=300",
-                "--live-caching=300",
-                "--file-caching=300",
-                "--clock-jitter=0",
-                "--clock-synchro=0",
-                "--no-audio",
-                "--rtsp-tcp"
-            );
-        }
         private void StreamCamera()
         {
             try
             {
-                var camera = _dbContext.TblMdCamera.FirstOrDefault(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
-                           && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.IsIn && x.IsRecognition);
+                var camera = Global.lstCamera.FirstOrDefault(x => x.IsIn && x.IsRecognition);
                 if (camera != null)
                 {
-                    var media = new Media(_libVLC, camera.Rtsp, FromType.FromLocation);
+                    var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
                     var mediaPlayer = new MediaPlayer(media);
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
@@ -89,7 +79,6 @@ namespace VCS.Areas.CheckIn
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
-            _libVLC?.Dispose();
             base.OnFormClosing(e);
         }
 
@@ -103,7 +92,6 @@ namespace VCS.Areas.CheckIn
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
-            _libVLC?.Dispose();
             _lstDOSAP = new List<DOSAPDataDto>();
             lstCheckDo = new List<string>();
             lstPathImageCapture = new List<string>();
@@ -112,7 +100,6 @@ namespace VCS.Areas.CheckIn
 
             this.Controls.Clear();
             InitializeComponent();
-            InitializeLibVLC();
             StreamCamera();
             GetListQueue();
         }
@@ -320,11 +307,22 @@ namespace VCS.Areas.CheckIn
         }
         private void txtNumberDO_TextChanged(object sender, EventArgs e)
         {
-            txtNumberDO.Text = txtNumberDO.Text.Replace(" ", "");
-            if (txtNumberDO.Text.Trim().Length == 10)
+            if (txtNumberDO.Text.Length >= 10)
             {
+                this.ActiveControl = null;
+                txtNumberDO.Text = txtNumberDO.Text.Substring(0, 10);
+
                 GetDetailDO();
+
+                resetTimer.Start();
             }
+           
+        }
+
+        private void ResetTimer_Tick(object sender, EventArgs e)
+        {
+            resetTimer.Stop();
+            txtNumberDO.Focus();
         }
         private void btnCheckDetailDO_Click(object sender, EventArgs e)
         {
@@ -963,6 +961,7 @@ namespace VCS.Areas.CheckIn
             {
                 btnDetect.Enabled = true;
             }
+            txtNumberDO.Focus();
         }
         #endregion
 

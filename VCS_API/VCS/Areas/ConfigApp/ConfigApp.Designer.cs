@@ -82,7 +82,7 @@
             panel1.Controls.Add(button1);
             panel1.Location = new Point(6, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1396, 812);
+            panel1.Size = new Size(1334, 770);
             panel1.TabIndex = 0;
             // 
             // panel8
@@ -315,8 +315,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1521, 1016);
+            ClientSize = new Size(1344, 781);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "ConfigApp";
             Text = "ConfigApp";
             Load += ConfigApp_Load;

@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
-
+using System.Security.Cryptography;
+using LibVLCSharp.Shared;
 namespace VCS.Areas.Login
 {
     public partial class Login : Form
@@ -25,6 +26,8 @@ namespace VCS.Areas.Login
             InitializeComponent();
             _dbContext = dbContext;
             CreateDesktopShortcut();
+            username.Text = Properties.Settings.Default.UserName;
+            password.Text = Properties.Settings.Default.Password;
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -73,7 +76,7 @@ namespace VCS.Areas.Login
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if(user.AccountType != "III")
+                if (user.AccountType != "III")
                 {
                     MessageBox.Show("Hệ thống chỉ dành cho nhân viên bảo vệ!", "Lỗi đăng nhập",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -82,6 +85,11 @@ namespace VCS.Areas.Login
                 ProfileUtilities.User = user;
                 await Task.Run(() => CommonService.LoadUserConfig());
                 await Task.Run(() => CommonService.LoadUserPermissions(user));
+                Properties.Settings.Default.UserName = username.Text;
+                Properties.Settings.Default.Password = password.Text;
+                Properties.Settings.Default.Save();
+                Global.lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode).ToList();
+                InitializeLibVLC();
 
                 var main = new Main(_dbContext);
                 main.Show();
@@ -117,6 +125,26 @@ namespace VCS.Areas.Login
                     MessageBox.Show("Không thể tạo shorcut phần mềm: " + ex.Message);
                 }
             }
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Global._libVLC?.Dispose();
+            Application.Exit();
+        }
+
+        private void InitializeLibVLC()
+        {
+            Core.Initialize();
+            Global._libVLC = new LibVLC(
+   "--network-caching=30",
+   "--live-caching=30",
+   "--file-caching=30",
+   "--clock-jitter=0",
+   "--clock-synchro=0",
+   "--no-audio",
+   "--rtsp-tcp"
+);
+
         }
     }
 }

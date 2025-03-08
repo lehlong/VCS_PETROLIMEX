@@ -23,7 +23,6 @@ namespace VCS.Areas.CheckOut
     public partial class CheckOut : Form
     {
         private AppDbContextForm _dbContext;
-        private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
         private string IMGPATH;
         private string PLATEPATH;
@@ -34,7 +33,6 @@ namespace VCS.Areas.CheckOut
         {
             _dbContext = dbContext;
             InitializeComponent();
-            InitializeLibVLC();
         }
 
         private void CheckOut_Load(object sender, EventArgs e)
@@ -44,28 +42,15 @@ namespace VCS.Areas.CheckOut
         }
 
         #region Khởi tạo và stream camera
-        private void InitializeLibVLC()
-        {
-            Core.Initialize();
-            _libVLC = new LibVLC(
-                "--network-caching=300",
-                "--live-caching=300",
-                "--file-caching=300",
-                "--clock-jitter=0",
-                "--clock-synchro=0",
-                "--no-audio",
-                "--rtsp-tcp"
-            );
-        }
+       
         private void StreamCamera()
         {
             try
             {
-                var camera = _dbContext.TblMdCamera.FirstOrDefault(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
-                           && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.IsOut && x.IsRecognition);
+                var camera = Global.lstCamera.FirstOrDefault(x => x.IsOut && x.IsRecognition);
                 if (camera != null)
                 {
-                    var media = new Media(_libVLC, camera.Rtsp, FromType.FromLocation);
+                    var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
                     var mediaPlayer = new MediaPlayer(media);
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
@@ -83,7 +68,6 @@ namespace VCS.Areas.CheckOut
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
-            _libVLC?.Dispose();
             base.OnFormClosing(e);
         }
         #endregion
@@ -326,7 +310,6 @@ namespace VCS.Areas.CheckOut
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
-            _libVLC?.Dispose();
             _lstDOSAP = new List<DOSAPDataDto>();
             lstPathImageCapture = new List<string>();
             IMGPATH = "";
@@ -334,7 +317,6 @@ namespace VCS.Areas.CheckOut
 
             this.Controls.Clear();
             InitializeComponent();
-            InitializeLibVLC();
             StreamCamera();
             GetListQueue();
         }

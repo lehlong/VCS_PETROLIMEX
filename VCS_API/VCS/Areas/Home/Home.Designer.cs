@@ -39,11 +39,11 @@
             cameraPanelIn.AutoScroll = true;
             cameraPanelIn.BackColor = Color.Transparent;
             cameraPanelIn.ForeColor = SystemColors.ControlText;
-            cameraPanelIn.Location = new Point(7, 7);
+            cameraPanelIn.Location = new Point(5, 6);
             cameraPanelIn.Margin = new Padding(4);
             cameraPanelIn.Name = "cameraPanelIn";
             cameraPanelIn.Padding = new Padding(10, 14, 13, 14);
-            cameraPanelIn.Size = new Size(687, 798);
+            cameraPanelIn.Size = new Size(660, 756);
             cameraPanelIn.TabIndex = 0;
             // 
             // panel2
@@ -55,7 +55,7 @@
             panel2.Location = new Point(6, 6);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1396, 812);
+            panel2.Size = new Size(1332, 770);
             panel2.TabIndex = 3;
             // 
             // cameraPanelOut
@@ -63,19 +63,20 @@
             cameraPanelOut.AutoScroll = true;
             cameraPanelOut.BackColor = Color.Transparent;
             cameraPanelOut.ForeColor = SystemColors.ControlText;
-            cameraPanelOut.Location = new Point(701, 7);
+            cameraPanelOut.Location = new Point(668, 6);
             cameraPanelOut.Margin = new Padding(4);
             cameraPanelOut.Name = "cameraPanelOut";
             cameraPanelOut.Padding = new Padding(10, 14, 13, 14);
-            cameraPanelOut.Size = new Size(687, 798);
+            cameraPanelOut.Size = new Size(660, 756);
             cameraPanelOut.TabIndex = 1;
             // 
             // Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1408, 825);
+            ClientSize = new Size(1344, 781);
             Controls.Add(panel2);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "Home";
             Text = "Home";
             Load += Home_Load;

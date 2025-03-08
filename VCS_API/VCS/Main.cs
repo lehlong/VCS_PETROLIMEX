@@ -1,4 +1,5 @@
 ﻿using DMS.CORE;
+using LibVLCSharp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -451,13 +452,8 @@ namespace VCS
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                this.Hide();
-                notifyIcon.Visible = true;
-            }
-            base.OnFormClosing(e);
+            Global._libVLC?.Dispose();
+            Application.Exit();
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)

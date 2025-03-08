@@ -114,7 +114,7 @@
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1629, 60);
+            panelHeader.Size = new Size(1564, 60);
             panelHeader.TabIndex = 0;
             // 
             // label8
@@ -153,7 +153,7 @@
             // panel3
             // 
             panel3.Controls.Add(txtWarehouse);
-            panel3.Location = new Point(1325, 30);
+            panel3.Location = new Point(1253, 30);
             panel3.Name = "panel3";
             panel3.Size = new Size(256, 24);
             panel3.TabIndex = 3;
@@ -174,7 +174,7 @@
             // panel2
             // 
             panel2.Controls.Add(txtUsername);
-            panel2.Location = new Point(1325, 9);
+            panel2.Location = new Point(1253, 9);
             panel2.Name = "panel2";
             panel2.Size = new Size(256, 27);
             panel2.TabIndex = 2;
@@ -195,7 +195,7 @@
             // pictureBox9
             // 
             pictureBox9.Image = Properties.Resources.icons8_user_60__1_;
-            pictureBox9.Location = new Point(1587, 13);
+            pictureBox9.Location = new Point(1515, 13);
             pictureBox9.Name = "pictureBox9";
             pictureBox9.Size = new Size(32, 32);
             pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -229,7 +229,7 @@
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 60);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(220, 824);
+            panelMenu.Size = new Size(220, 781);
             panelMenu.TabIndex = 1;
             // 
             // linkLabel1
@@ -237,7 +237,7 @@
             linkLabel1.ActiveLinkColor = Color.DarkGray;
             linkLabel1.AutoSize = true;
             linkLabel1.LinkColor = Color.DarkGray;
-            linkLabel1.Location = new Point(126, 802);
+            linkLabel1.Location = new Point(126, 754);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(68, 15);
             linkLabel1.TabIndex = 6;
@@ -249,7 +249,7 @@
             // 
             label10.AutoSize = true;
             label10.ForeColor = Color.DarkGray;
-            label10.Location = new Point(29, 802);
+            label10.Location = new Point(29, 754);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 5;
@@ -258,7 +258,7 @@
             // pictureBox11
             // 
             pictureBox11.Image = Properties.Resources.logo_d2s;
-            pictureBox11.Location = new Point(54, 769);
+            pictureBox11.Location = new Point(54, 721);
             pictureBox11.Name = "pictureBox11";
             pictureBox11.Size = new Size(120, 28);
             pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -610,9 +610,10 @@
             // panelMain
             // 
             panelMain.BackColor = Color.Transparent;
+            panelMain.Dock = DockStyle.Fill;
             panelMain.Location = new Point(220, 60);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1409, 824);
+            panelMain.Size = new Size(1344, 781);
             panelMain.TabIndex = 2;
             // 
             // notifyIcon
@@ -625,14 +626,15 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1629, 884);
+            ClientSize = new Size(1564, 841);
             Controls.Add(panelMain);
             Controls.Add(panelMenu);
             Controls.Add(panelHeader);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Main";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelHeader.ResumeLayout(false);

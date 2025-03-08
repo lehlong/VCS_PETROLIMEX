@@ -20,51 +20,28 @@ namespace VCS.Areas.Home
     public partial class Home : Form
     {
         private readonly AppDbContextForm _dbContext;
-        private LibVLC _libVLC;
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
 
         public Home(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            InitializeLibVLC();
         }
         private void Home_Load(object sender, EventArgs e)
         {
             InitializeCameraStreams();
         }
 
-        private void InitializeLibVLC()
-        {
-            Core.Initialize();
-            _libVLC = new LibVLC(
-                "--network-caching=300",
-                "--live-caching=300",
-                "--file-caching=300",
-                "--clock-jitter=0",
-                "--clock-synchro=0",
-                "--no-audio",
-                "--rtsp-tcp"
-            );
-        }
+        
         private async void InitializeCameraStreams()
         {
             try
             {
-                var cameras = await Task.Run(() =>
-                    _dbContext.TblMdCamera
-                        .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
-                                 && x.WarehouseCode == ProfileUtilities.User.WarehouseCode)
-                        .ToList()
-                );
 
-                this.Invoke((MethodInvoker)delegate
+                foreach (var camera in Global.lstCamera)
                 {
-                    foreach (var camera in cameras)
-                    {
-                        AddCameraStream(camera);
-                    }
-                });
+                    AddCameraStream(camera);
+                }
             }
             catch (Exception ex)
             {
@@ -75,16 +52,10 @@ namespace VCS.Areas.Home
 
         private void AddCameraStream(TblMdCamera camera)
         {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(new Action(() => AddCameraStream(camera)));
-                return;
-            }
-
             var cameraContainer = new Panel
             {
-                Width = 640,
-                Height = 360,
+                Width = 615,
+                Height = 335,
                 Margin = new Padding(0, 0, 0, 10),
                 BorderStyle = BorderStyle.FixedSingle,
                 BackColor = Color.FromArgb(52, 58, 64)
@@ -110,7 +81,7 @@ namespace VCS.Areas.Home
             };
 
             string rtspUrl = camera.Rtsp;
-            var media = new Media(_libVLC, rtspUrl, FromType.FromLocation);
+            var media = new Media(Global._libVLC, rtspUrl, FromType.FromLocation);
             var player = new MediaPlayer(media);
 
             videoView.MediaPlayer = player;
@@ -141,7 +112,6 @@ namespace VCS.Areas.Home
             _mediaPlayers.Clear();
             cameraPanelIn.Controls.Clear();
             cameraPanelOut.Controls.Clear();
-            _libVLC?.Dispose();
 
             base.OnFormClosing(e);
         }
