@@ -55,7 +55,7 @@ namespace VCS.Areas.Home
             var cameraContainer = new Panel
             {
                 Width = 615,
-                Height = 335,
+                Height = 365,
                 Margin = new Padding(0, 0, 0, 10),
                 BorderStyle = BorderStyle.FixedSingle,
                 BackColor = Color.FromArgb(52, 58, 64)

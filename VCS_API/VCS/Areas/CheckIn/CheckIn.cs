@@ -319,7 +319,7 @@ namespace VCS.Areas.CheckIn
 
                 resetTimer.Start();
             }
-           
+
         }
 
         private void ResetTimer_Tick(object sender, EventArgs e)
@@ -346,14 +346,10 @@ namespace VCS.Areas.CheckIn
                 return;
             }
 
-            lblStatus.Text = "Đang kiểm tra...";
-            lblStatus.ForeColor = Color.Goldenrod;
-
             var dataDetail = CommonService.GetDetailDO(txtNumberDO.Text.Trim());
             if (!dataDetail.STATUS)
             {
-                lblStatus.Text = "Số lệnh xuất không tồn tại hoặc đã hết hạn! Vui lòng kiểm tra lại!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Số lệnh xuất không tồn tại hoặc đã hết hạn!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -361,8 +357,7 @@ namespace VCS.Areas.CheckIn
             lstCheckDo.Add(txtNumberDO.Text.Trim());
             AppendPanelDetail(dataDetail);
 
-            lblStatus.Text = "Kiểm tra lệnh xuất thành công!";
-            lblStatus.ForeColor = Color.Green;
+            CommonService.Alert("Kiểm tra lệnh xuất thành công!", Alert.Alert.enumType.Success);
             txtNumberDO.Text = "";
 
         }
@@ -527,8 +522,7 @@ namespace VCS.Areas.CheckIn
         {
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
-                lblStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Không có thông tin phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -540,8 +534,7 @@ namespace VCS.Areas.CheckIn
 
             if (c != 0 && string.IsNullOrEmpty(selectedHeaderId))
             {
-                lblStatus.Text = "Phương tiện đã có trong hàng chờ hoặc trong kho!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Phương tiện đã có trong hàng chờ hoặc trong kho!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -664,8 +657,7 @@ namespace VCS.Areas.CheckIn
                     OrgCode = ProfileUtilities.User.OrganizeCode
                 });
 
-                lblStatus.Text = "Cho xe vào thành công!";
-                lblStatus.ForeColor = Color.Green;
+                CommonService.Alert("Cho xe vào thành công!", Alert.Alert.enumType.Success);
             }
             else
             {
@@ -695,8 +687,7 @@ namespace VCS.Areas.CheckIn
         {
             if (string.IsNullOrEmpty(txtLicensePlate.Text))
             {
-                lblStatus.Text = "Không có thông tin phương tiện! Vui lòng kiểm tra lại!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Không có thông tin phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -704,8 +695,7 @@ namespace VCS.Areas.CheckIn
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
             if (c != 0)
             {
-                lblStatus.Text = "Phương tiện đã có trong hàng chờ hoặc trong kho!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Phương tiện đã có trong hàng chờ hoặc trong kho!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -795,14 +785,12 @@ namespace VCS.Areas.CheckIn
 
                 if (string.IsNullOrEmpty(selectedHeaderId))
                 {
-                    lblStatus.Text = "Vui lòng chọn một phương tiện để cập nhật";
-                    lblStatus.ForeColor = Color.Red;
+                    CommonService.Alert("Vui lòng chọn một phương tiện!", Alert.Alert.enumType.Error);
                     return;
                 }
                 if (txtLicensePlate.Text.Length > 8)
                 {
-                    lblStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự";
-                    lblStatus.ForeColor = Color.Red;
+                    CommonService.Alert("Biển số sai định dạng!", Alert.Alert.enumType.Error);
                     return;
                 }
                 _dbContext.ChangeTracker.Clear();
@@ -865,8 +853,7 @@ namespace VCS.Areas.CheckIn
                 }
 
                 _dbContext.SaveChanges();
-                lblStatus.Text = "Cập nhật thông tin thành công";
-                lblStatus.ForeColor = Color.Green;
+                CommonService.Alert("Cập nhật thông tin thành công!", Alert.Alert.enumType.Success);
 
                 string currentSelectedText = selectedItem.Text;
 
@@ -883,8 +870,6 @@ namespace VCS.Areas.CheckIn
             }
             catch (Exception ex)
             {
-                lblStatus.Text = $"Lỗi khi cập nhật thông tin: {ex.Message}";
-                lblStatus.ForeColor = Color.Red;
                 MessageBox.Show($"Lỗi khi cập nhật thông tin: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -909,6 +894,7 @@ namespace VCS.Areas.CheckIn
                 _dbContext.TblBuDetailDO.RemoveRange(_dbContext.TblBuDetailDO.Where(x => x.HeaderId == ((ComboBoxItem)selectVehicle.SelectedItem).Value));
                 _dbContext.TblBuImage.RemoveRange(_dbContext.TblBuImage.Where(x => x.HeaderId == ((ComboBoxItem)selectVehicle.SelectedItem).Value));
                 _dbContext.SaveChanges();
+                CommonService.Alert("Xoá phương tiện thành công!", Alert.Alert.enumType.Success);
                 ResetForm();
             }
         }
@@ -919,12 +905,10 @@ namespace VCS.Areas.CheckIn
         {
             try
             {
-                lblStatus.Text = "Đang nhận diện...";
-                lblStatus.ForeColor = Color.DarkGoldenrod;
                 btnDetect.Enabled = false;
 
                 //Chụp và lưu ảnh nhận diện
-                var (filePath, snapshotImage) =  CommonService.TakeSnapshot(viewStream.MediaPlayer);
+                var (filePath, snapshotImage) = CommonService.TakeSnapshot(viewStream.MediaPlayer);
                 IMGPATH = filePath;
 
                 if (!string.IsNullOrEmpty(filePath))
@@ -939,24 +923,23 @@ namespace VCS.Areas.CheckIn
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
-                lblStatus.Text = "Nhận diện thành công!";
-                lblStatus.ForeColor = Color.Green;
+                CommonService.Alert("Nhận diện thành công!", Alert.Alert.enumType.Success);
+
                 //Lưu các ảnh từ camera vào thư mục
-                //var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
-                //lstPathImageCapture = new List<string>();
-                //foreach (var c in lstCamera)
-                //{
-                //    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
-                //    var path = CommonService.SaveDetectedImage(imageBytes);
-                //    lstPathImageCapture.Add(path);
-                //}
+                var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
+                lstPathImageCapture = new List<string>();
+                foreach (var c in lstCamera)
+                {
+                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
+                    var path = CommonService.SaveDetectedImage(imageBytes);
+                    lstPathImageCapture.Add(path);
+                }
             }
             catch (Exception ex)
             {
                 txtLicensePlate.Text = "";
                 pictureBoxLicensePlate.Image = null;
-                lblStatus.Text = "Lỗi không nhận diện được biển số!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
                 txtLicensePlate.Text = "";
             }
             finally
@@ -996,5 +979,45 @@ namespace VCS.Areas.CheckIn
             }
         }
         #endregion
+
+        private void pictureBoxVehicle_Click(object sender, EventArgs e)
+        {
+            PictureBox clickedPictureBox = sender as PictureBox;
+
+            if (clickedPictureBox != null && clickedPictureBox.Image != null)
+            {
+                Form fullscreenForm = new Form();
+                fullscreenForm.WindowState = FormWindowState.Maximized;
+                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                PictureBox fullscreenPictureBox = new PictureBox();
+                fullscreenPictureBox.Image = clickedPictureBox.Image;
+                fullscreenPictureBox.Dock = DockStyle.Fill;
+                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                fullscreenForm.Controls.Add(fullscreenPictureBox);
+                fullscreenForm.ShowDialog();
+            }
+        }
+
+        private void pictureBoxLicensePlate_Click(object sender, EventArgs e)
+        {
+            PictureBox clickedPictureBox = sender as PictureBox;
+
+            if (clickedPictureBox != null && clickedPictureBox.Image != null)
+            {
+                Form fullscreenForm = new Form();
+                fullscreenForm.WindowState = FormWindowState.Maximized;
+                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                PictureBox fullscreenPictureBox = new PictureBox();
+                fullscreenPictureBox.Image = clickedPictureBox.Image;
+                fullscreenPictureBox.Dock = DockStyle.Fill;
+                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                fullscreenForm.Controls.Add(fullscreenPictureBox);
+                fullscreenForm.ShowDialog();
+            }
+        }
     }
 }

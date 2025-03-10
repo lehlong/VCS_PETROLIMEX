@@ -52,8 +52,8 @@ namespace VCS.Areas.Login
 
         private async void LoginProcess()
         {
-            var loading = new VCS.Areas.Loading.Loading(this);
-            loading.Show();
+            //var loading = new VCS.Areas.Loading.Loading(this);
+            //loading.Show();
             try
             {
                 if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
@@ -103,7 +103,7 @@ namespace VCS.Areas.Login
             }
             finally
             {
-                loading.Close();
+                //loading.Close();
             }
         }
 
@@ -150,7 +150,5 @@ namespace VCS.Areas.Login
 );
 
         }
-
-     
     }
 }

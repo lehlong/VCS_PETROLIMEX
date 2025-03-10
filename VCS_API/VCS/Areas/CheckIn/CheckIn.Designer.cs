@@ -45,13 +45,12 @@
             btnUpdateQueue = new Button();
             btnCheckIn = new Button();
             btnQueue = new Button();
-            panel1 = new Panel();
-            panel3 = new Panel();
-            lblStatus = new Label();
-            label1 = new Label();
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
+            panel1 = new Panel();
+            textBox1 = new TextBox();
+            label1 = new Label();
             panel6 = new Panel();
             pictureBoxLicensePlate = new PictureBox();
             label2 = new Label();
@@ -68,11 +67,10 @@
             panel11.SuspendLayout();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnCheckDetailDO).BeginInit();
-            panel1.SuspendLayout();
-            panel3.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStream).BeginInit();
             panel5.SuspendLayout();
+            panel1.SuspendLayout();
             panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
             panel8.SuspendLayout();
@@ -283,7 +281,7 @@
             // 
             // btnCheckIn
             // 
-            btnCheckIn.BackColor = Color.FromArgb(0, 123, 255);
+            btnCheckIn.BackColor = Color.FromArgb(13, 92, 171);
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
             btnCheckIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -321,49 +319,11 @@
             btnQueue.UseVisualStyleBackColor = false;
             btnQueue.Click += btnQueue_Click;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(6, 6);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(514, 78);
-            panel1.TabIndex = 5;
-            // 
-            // panel3
-            // 
-            panel3.BackColor = Color.WhiteSmoke;
-            panel3.Controls.Add(lblStatus);
-            panel3.Location = new Point(6, 30);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(503, 40);
-            panel3.TabIndex = 1;
-            // 
-            // lblStatus
-            // 
-            lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblStatus.Location = new Point(5, 9);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(0, 21);
-            lblStatus.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(9, 7);
-            label1.Name = "label1";
-            label1.Size = new Size(153, 21);
-            label1.TabIndex = 0;
-            label1.Text = "Thông báo hệ thống:";
-            // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.Controls.Add(viewStream);
-            panel4.Location = new Point(6, 90);
+            panel4.Location = new Point(6, 6);
             panel4.Name = "panel4";
             panel4.Size = new Size(514, 319);
             panel4.TabIndex = 6;
@@ -381,6 +341,8 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(panel1);
+            panel5.Controls.Add(label1);
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(label2);
             panel5.Controls.Add(panel8);
@@ -389,34 +351,66 @@
             panel5.Controls.Add(label4);
             panel5.Controls.Add(btnViewAll);
             panel5.Controls.Add(btnDetect);
-            panel5.Location = new Point(6, 415);
+            panel5.Location = new Point(6, 331);
             panel5.Name = "panel5";
-            panel5.Size = new Size(514, 360);
+            panel5.Size = new Size(514, 444);
             panel5.TabIndex = 7;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.Controls.Add(textBox1);
+            panel1.Location = new Point(5, 172);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(504, 44);
+            panel1.TabIndex = 17;
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.WhiteSmoke;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            textBox1.Location = new Point(7, 6);
+            textBox1.MaxLength = 200;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(487, 32);
+            textBox1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(8, 149);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 21);
+            label1.TabIndex = 16;
+            label1.Text = "Tài xế:";
             // 
             // panel6
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(pictureBoxLicensePlate);
-            panel6.Location = new Point(265, 176);
+            panel6.Location = new Point(265, 253);
             panel6.Name = "panel6";
             panel6.Size = new Size(244, 178);
             panel6.TabIndex = 20;
             // 
             // pictureBoxLicensePlate
             // 
+            pictureBoxLicensePlate.Cursor = Cursors.Hand;
             pictureBoxLicensePlate.Location = new Point(5, 4);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
             pictureBoxLicensePlate.Size = new Size(235, 170);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxLicensePlate.TabIndex = 0;
             pictureBoxLicensePlate.TabStop = false;
+            pictureBoxLicensePlate.Click += pictureBoxLicensePlate_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(268, 153);
+            label2.Location = new Point(268, 230);
             label2.Name = "label2";
             label2.Size = new Size(114, 21);
             label2.TabIndex = 19;
@@ -426,25 +420,27 @@
             // 
             panel8.BackColor = Color.WhiteSmoke;
             panel8.Controls.Add(pictureBoxVehicle);
-            panel8.Location = new Point(6, 176);
+            panel8.Location = new Point(6, 253);
             panel8.Name = "panel8";
             panel8.Size = new Size(244, 178);
             panel8.TabIndex = 18;
             // 
             // pictureBoxVehicle
             // 
+            pictureBoxVehicle.Cursor = Cursors.Hand;
             pictureBoxVehicle.Location = new Point(5, 4);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
             pictureBoxVehicle.Size = new Size(235, 170);
             pictureBoxVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxVehicle.TabIndex = 0;
             pictureBoxVehicle.TabStop = false;
+            pictureBoxVehicle.Click += pictureBoxVehicle_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(9, 153);
+            label3.Location = new Point(9, 230);
             label3.Name = "label3";
             label3.Size = new Size(79, 21);
             label3.TabIndex = 16;
@@ -454,7 +450,7 @@
             // 
             panel7.BackColor = Color.WhiteSmoke;
             panel7.Controls.Add(txtLicensePlate);
-            panel7.Location = new Point(5, 79);
+            panel7.Location = new Point(5, 83);
             panel7.Name = "panel7";
             panel7.Size = new Size(504, 60);
             panel7.TabIndex = 15;
@@ -464,7 +460,7 @@
             txtLicensePlate.BackColor = Color.WhiteSmoke;
             txtLicensePlate.BorderStyle = BorderStyle.None;
             txtLicensePlate.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtLicensePlate.Location = new Point(7, 5);
+            txtLicensePlate.Location = new Point(7, 7);
             txtLicensePlate.MaxLength = 8;
             txtLicensePlate.Name = "txtLicensePlate";
             txtLicensePlate.Size = new Size(487, 47);
@@ -474,7 +470,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(8, 56);
+            label4.Location = new Point(8, 60);
             label4.Name = "label4";
             label4.Size = new Size(152, 21);
             label4.TabIndex = 14;
@@ -489,7 +485,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = Properties.Resources.icons8_application_18;
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(468, 5);
+            btnViewAll.Location = new Point(466, 7);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -501,14 +497,14 @@
             // 
             // btnDetect
             // 
-            btnDetect.BackColor = Color.FromArgb(0, 123, 255);
+            btnDetect.BackColor = Color.FromArgb(13, 92, 171);
             btnDetect.Cursor = Cursors.Hand;
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(326, 5);
+            btnDetect.Location = new Point(324, 7);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(136, 40);
@@ -526,7 +522,6 @@
             ClientSize = new Size(1344, 781);
             Controls.Add(panel5);
             Controls.Add(panel4);
-            Controls.Add(panel1);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.None;
             Name = "CheckIn";
@@ -540,14 +535,12 @@
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnCheckDetailDO).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)viewStream).EndInit();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
             panel8.ResumeLayout(false);
@@ -560,14 +553,10 @@
         #endregion
 
         private Panel panel2;
-        private Panel panel1;
-        private Label label1;
-        private Panel panel3;
         private Panel panel4;
         private Panel panel5;
         private Button btnViewAll;
         private Button btnDetect;
-        private Label lblStatus;
         private Panel panel7;
         private TextBox txtLicensePlate;
         private Label label4;
@@ -594,5 +583,8 @@
         private Panel panel6;
         private PictureBox pictureBoxLicensePlate;
         private Label label2;
+        private Panel panel1;
+        private TextBox textBox1;
+        private Label label1;
     }
 }

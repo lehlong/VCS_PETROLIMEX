@@ -106,8 +106,7 @@ namespace VCS.Areas.CheckOut
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
-                lblStatus.Text = "Nhận diện thành công";
-                lblStatus.ForeColor = Color.Green;
+                CommonService.Alert("Nhận diện biển số thành công!",Alert.Alert.enumType.Success);
 
                 //Lưu các ảnh từ camera vào thư mục
                 var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
@@ -121,8 +120,7 @@ namespace VCS.Areas.CheckOut
             }
             catch (Exception ex)
             {
-                lblStatus.Text = "Lỗi không nhận diện được biển số";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert($"Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
                 txtLicensePlate.Text = "";
             }
             finally
@@ -194,15 +192,13 @@ namespace VCS.Areas.CheckOut
             string selectedValue = selectedItem.Value;
             if (string.IsNullOrEmpty(selectedValue))
             {
-                lblStatus.Text = "Vui lòng chọn phương tiện!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert($"Vui lòng chọn phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
             ;
             if (txtLicensePlate.Text.Length > 8)
             {
-                lblStatus.Text = "Thông tin biển số không được vượt quá 8 ký tự!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert($"Biển số sai định dạng!", Alert.Alert.enumType.Error);
                 return;
             }
 
@@ -234,8 +230,7 @@ namespace VCS.Areas.CheckOut
             string selectedValue = selectedItem.Value;
             if (string.IsNullOrEmpty(selectedValue))
             {
-                lblStatus.Text = "Vui lòng chọn phương tiện!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert($"Vui lòng chọn phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
             ;
@@ -245,18 +240,18 @@ namespace VCS.Areas.CheckOut
 
 
             var dataDetail = CommonService.CheckInvoice(number);
-            if (!dataDetail.STATUS)
-            {
-                lblStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
-                lblStatus.ForeColor = Color.Red;
-                this.isHasInvoice = false;
-            }
-            else
-            {
-                lblStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
-                lblStatus.ForeColor = Color.Green;
-                this.isHasInvoice = true;
-            }
+            //if (!dataDetail.STATUS)
+            //{
+            //    lblStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
+            //    lblStatus.ForeColor = Color.Red;
+            //    this.isHasInvoice = false;
+            //}
+            //else
+            //{
+            //    lblStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
+            //    lblStatus.ForeColor = Color.Green;
+            //    this.isHasInvoice = true;
+            //}
         }
 
         private void CheckOutProcess()
@@ -304,7 +299,7 @@ namespace VCS.Areas.CheckOut
             _dbContext.TblBuHeader.Update(i);
             _dbContext.SaveChanges();
 
-            MessageBox.Show("Cho xe khỏi kho thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
             ResetForm();
         }
 
@@ -359,9 +354,6 @@ namespace VCS.Areas.CheckOut
                 string selectedValue = selectedItem.Value;
                 if (string.IsNullOrEmpty(selectedValue)) return;
 
-                lblStatus.Text = "Đang kiểm tra thông tin! Vui lòng chờ...";
-                lblStatus.ForeColor = Color.DarkGoldenrod;
-
                 var detail = GetCheckInDetail(selectedValue);
                 if (detail == null) return;
                 txtLicensePlate.Text = detail.LicensePlate;
@@ -383,8 +375,7 @@ namespace VCS.Areas.CheckOut
                 var vehicle = _dbContext.TblBuHeader.Find(selectedValue);
                 if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05" || lstDo.Count() == 0)
                 {
-                    lblStatus.Text = "Phương tiện không có tiket hoặc không xử lý!";
-                    lblStatus.ForeColor = Color.Red;
+                    CommonService.Alert($"Phương tiện không có ticket hoặc không xử lý!", Alert.Alert.enumType.Error);
                     this.isHasInvoice = true; // Bỏ qua kiểm tra hóa đơn
                     txtNoteOut.Text = "Phương tiện không có ticket hoặc không xử lý";
                     return;
@@ -395,13 +386,10 @@ namespace VCS.Areas.CheckOut
                     var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
                     AppendPanelDetail(lstData, headerTgbx.FirstOrDefault().MaPhuongTien);
                 }
-                lblStatus.Text = "Kiểm tra thông tin thành công!";
-                lblStatus.ForeColor = Color.Green;
+                CommonService.Alert($"Kiểm tra thông tin thành công!", Alert.Alert.enumType.Success);
             }
             catch (Exception ex)
             {
-                lblStatus.Text = $"Lỗi khi tải thông tin: {ex.Message}";
-                lblStatus.ForeColor = Color.Red;
                 MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

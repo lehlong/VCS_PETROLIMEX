@@ -205,7 +205,7 @@ namespace VCS.APP.Services
                 // Tạo thư mục nếu chưa có
                 Directory.CreateDirectory(dayPath);
 
-                string fileName = $"{Guid.NewGuid()}.png";
+                string fileName = $"{Guid.NewGuid()}.jpeg";
                 string filePath = Path.Combine(dayPath, fileName);
 
                 // Chụp ảnh snapshot đồng bộ
@@ -396,10 +396,10 @@ namespace VCS.APP.Services
         // Phương thức lưu ảnh đã cắt
         private static string SaveDetectedImage(Image croppedImage)
         {
-            string savedImagePath = Path.Combine(Global.PathSaveFile, $"{Guid.NewGuid()}.png");
+            string savedImagePath = Path.Combine(Global.PathSaveFile, $"{Guid.NewGuid()}.jpeg");
 
             // Lưu ảnh vào thư mục được chỉ định
-            croppedImage.Save(savedImagePath, System.Drawing.Imaging.ImageFormat.Png);
+            croppedImage.Save(savedImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             return savedImagePath;
         }

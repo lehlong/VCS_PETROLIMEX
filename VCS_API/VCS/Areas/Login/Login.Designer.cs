@@ -51,7 +51,7 @@
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = Color.FromArgb(24, 144, 255);
+            btnLogin.BackColor = Color.FromArgb(13, 92, 171);
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;

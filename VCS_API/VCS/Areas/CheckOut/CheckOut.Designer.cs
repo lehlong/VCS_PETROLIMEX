@@ -234,7 +234,7 @@
             // 
             // btnDetect
             // 
-            btnDetect.BackColor = Color.FromArgb(0, 123, 255);
+            btnDetect.BackColor = Color.FromArgb(13, 92, 171);
             btnDetect.Cursor = Cursors.Hand;
             btnDetect.FlatStyle = FlatStyle.Flat;
             btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -311,7 +311,7 @@
             // 
             // btnCheckOut
             // 
-            btnCheckOut.BackColor = Color.FromArgb(0, 123, 255);
+            btnCheckOut.BackColor = Color.FromArgb(13, 92, 171);
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
             btnCheckOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
