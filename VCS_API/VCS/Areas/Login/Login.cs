@@ -52,6 +52,8 @@ namespace VCS.Areas.Login
 
         private async void LoginProcess()
         {
+            var loading = new VCS.Areas.Loading.Loading(this);
+            loading.Show();
             try
             {
                 if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
@@ -98,6 +100,10 @@ namespace VCS.Areas.Login
             {
                 MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                loading.Close();
             }
         }
 
