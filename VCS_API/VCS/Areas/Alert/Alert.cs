@@ -22,9 +22,16 @@ namespace VCS.Areas.Alert
             start,
             close
         }
+        public enum enumType
+        {
+            Success,
+            Warning,
+            Error,
+            Info
+        }
         private Alert.enumAction action;
         private int x, y;
-        public void ShowAlert(string msg)
+        public void ShowAlert(string msg, enumType type)
         {
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
@@ -44,7 +51,21 @@ namespace VCS.Areas.Alert
 
             }
             this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
+
+            switch (type)
+            {
+                case enumType.Success:
+                    this.pictureBox2.Image = Properties.Resources.done;
+                    this.BackColor = Color.FromArgb(40, 167, 69);
+                    break;
+                case enumType.Error:
+                    this.pictureBox2.Image = Properties.Resources.error;
+                    this.BackColor = Color.FromArgb(220, 53, 69);
+                    break;
+            }
+            
             this.label1.Text = msg;
+            this.TopMost = true;
             this.Show();
             this.action = enumAction.start;
             this.timer1.Interval = 1;

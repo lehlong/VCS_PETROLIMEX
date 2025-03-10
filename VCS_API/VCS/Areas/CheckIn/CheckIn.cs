@@ -337,14 +337,12 @@ namespace VCS.Areas.CheckIn
             txtNumberDO.Text = txtNumberDO.Text.Replace(" ", "");
             if (txtNumberDO.Text.Trim().Length != 10)
             {
-                lblStatus.Text = "Số lệnh xuất không đúng định dạng!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Số lệnh xuất không đúng định dạng!", Alert.Alert.enumType.Error);
                 return;
             }
             if (lstCheckDo.Any(x => x == txtNumberDO.Text.Trim()))
             {
-                lblStatus.Text = "Đã có thông tin! Vui lòng thử lệnh xuất khác!";
-                lblStatus.ForeColor = Color.Red;
+                CommonService.Alert("Đã có thông tin! Vui lòng thử lệnh xuất khác!", Alert.Alert.enumType.Error);
                 return;
             }
 

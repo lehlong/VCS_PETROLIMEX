@@ -56,8 +56,7 @@ namespace VCS.Areas.Login
             {
                 if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ Tên đăng nhập và mật khẩu!", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CommonService.Alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!", Alert.Alert.enumType.Error);
                     return;
                 }
 
@@ -73,14 +72,12 @@ namespace VCS.Areas.Login
 
                 if (user == null)
                 {
-                    MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Lỗi đăng nhập",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CommonService.Alert("Tài khoản hoặc mật khẩu không đúng!", Alert.Alert.enumType.Error);
                     return;
                 }
                 if (user.AccountType != "III")
                 {
-                    MessageBox.Show("Hệ thống chỉ dành cho nhân viên bảo vệ!", "Lỗi đăng nhập",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CommonService.Alert("Hệ thống chỉ dành cho nhân viên bảo vệ!", Alert.Alert.enumType.Error);
                     return;
                 }
                 ProfileUtilities.User = user;
@@ -91,7 +88,7 @@ namespace VCS.Areas.Login
                 Properties.Settings.Default.Save();
                 Global.lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode).ToList();
                 InitializeLibVLC();
-                CommonService.Alert("Đăng nhập thành công!");
+                CommonService.Alert("Đăng nhập thành công!", Alert.Alert.enumType.Success);
 
                 var main = new Main(_dbContext);
                 main.Show();

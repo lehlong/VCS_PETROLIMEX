@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using DMS.CORE.Entities.AD;
+using VCS.Areas.Alert;
 
 namespace VCS.APP.Services
 {
@@ -414,10 +415,10 @@ namespace VCS.APP.Services
         }
         #endregion
 
-        public static void Alert(string msg)
+        public static void Alert(string msg, Alert.enumType type)
         {
             VCS.Areas.Alert.Alert alert = new VCS.Areas.Alert.Alert();
-            alert.ShowAlert(msg);
+            alert.ShowAlert(msg, type);
         }
     }
 }
