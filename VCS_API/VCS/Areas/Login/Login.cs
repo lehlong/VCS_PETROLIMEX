@@ -128,7 +128,6 @@ namespace VCS.Areas.Login
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Global._libVLC?.Dispose();
             Application.Exit();
         }
 

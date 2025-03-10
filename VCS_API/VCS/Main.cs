@@ -452,7 +452,6 @@ namespace VCS
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            Global._libVLC?.Dispose();
             Application.Exit();
         }
 

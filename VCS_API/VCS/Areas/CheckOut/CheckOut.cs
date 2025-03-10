@@ -1,5 +1,6 @@
 ﻿using DMS.CORE;
 using DMS.CORE.Entities.BU;
+using DMS.CORE.Entities.MD;
 using DocumentFormat.OpenXml;
 using ICSharpCode.SharpZipLib.Zip;
 using LibVLCSharp.Shared;
@@ -28,6 +29,7 @@ namespace VCS.Areas.CheckOut
         private string PLATEPATH;
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private List<string> lstPathImageCapture = new List<string>();
+        private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
         private bool isHasInvoice { get; set; } = false;
         public CheckOut(AppDbContextForm dbContext)
         {
@@ -48,6 +50,7 @@ namespace VCS.Areas.CheckOut
             try
             {
                 var camera = Global.lstCamera.FirstOrDefault(x => x.IsOut && x.IsRecognition);
+                CameraDetect = camera;
                 if (camera != null)
                 {
                     var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
@@ -81,17 +84,6 @@ namespace VCS.Areas.CheckOut
                 var (filePath, snapshotImage) = CommonService.TakeSnapshot(viewStream.MediaPlayer);
                 IMGPATH = filePath;
 
-                //Lưu các ảnh từ camera vào thư mục
-                var lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.OrgCode == ProfileUtilities.User.OrganizeCode && x.IsIn == true).ToList();
-                lstPathImageCapture = new List<string>();
-                foreach (var c in lstCamera)
-                {
-                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
-                    var path = CommonService.SaveDetectedImage(imageBytes);
-                    lstPathImageCapture.Add(path);
-                }
-
-
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     pictureBoxVehicle.Image = snapshotImage;
@@ -116,6 +108,16 @@ namespace VCS.Areas.CheckOut
                 }
                 lblStatus.Text = "Nhận diện thành công";
                 lblStatus.ForeColor = Color.Green;
+
+                //Lưu các ảnh từ camera vào thư mục
+                var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
+                lstPathImageCapture = new List<string>();
+                foreach (var c in lstCamera)
+                {
+                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
+                    var path = CommonService.SaveDetectedImage(imageBytes);
+                    lstPathImageCapture.Add(path);
+                }
             }
             catch (Exception ex)
             {

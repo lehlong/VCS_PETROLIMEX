@@ -334,7 +334,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(queryTest, con);
+                    SqlCommand cmd = new SqlCommand(query, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try
