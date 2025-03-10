@@ -41,9 +41,8 @@ namespace VCS
             {
                 return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
             });
-            OpenChildForm(new Home(_dbContext));
-            txtTitle.Text = "- Trang chủ";
             notifyIcon.Visible = false;
+            OpenChildForm(new Home(_dbContext));
         }
         private void OpenChildForm(Form childForm)
         {
@@ -70,8 +69,7 @@ namespace VCS
         private void pHome_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            txtTitle.Text = "- Trang chủ";
-            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p1.BackColor = Color.FromArgb(17, 146, 214);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -82,8 +80,7 @@ namespace VCS
         private void label1_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            txtTitle.Text = "- Trang chủ";
-            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p1.BackColor = Color.FromArgb(17, 146, 214);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -93,8 +90,7 @@ namespace VCS
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            txtTitle.Text = "- Trang chủ";
-            p1.BackColor = Color.FromArgb(66, 66, 66);
+            p1.BackColor = Color.FromArgb(17, 146, 214);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -109,9 +105,8 @@ namespace VCS
             if (CommonService.HasPermission("R410"))
             {
                 OpenChildForm(new CheckIn(_dbContext));
-                txtTitle.Text = "- Quản lý cổng vào";
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p2.BackColor = Color.FromArgb(17, 146, 214);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -129,9 +124,8 @@ namespace VCS
             if (CommonService.HasPermission("R410"))
             {
                 OpenChildForm(new CheckIn(_dbContext));
-                txtTitle.Text = "- Quản lý cổng vào";
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p2.BackColor = Color.FromArgb(17, 146, 214);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -149,9 +143,8 @@ namespace VCS
             if (CommonService.HasPermission("R410"))
             {
                 OpenChildForm(new CheckIn(_dbContext));
-                txtTitle.Text = "- Quản lý cổng vào";
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(66, 66, 66);
+                p2.BackColor = Color.FromArgb(17, 146, 214);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -170,10 +163,9 @@ namespace VCS
             if (CommonService.HasPermission("R411"))
             {
                 OpenChildForm(new CheckOut(_dbContext));
-                txtTitle.Text = "- Quản lý cổng ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.FromArgb(17, 146, 214);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -182,7 +174,7 @@ namespace VCS
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
             }
-            
+
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -190,10 +182,9 @@ namespace VCS
             if (CommonService.HasPermission("R411"))
             {
                 OpenChildForm(new CheckOut(_dbContext));
-                txtTitle.Text = "- Quản lý cổng ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.FromArgb(17, 146, 214);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -210,10 +201,9 @@ namespace VCS
             if (CommonService.HasPermission("R411"))
             {
                 OpenChildForm(new CheckOut(_dbContext));
-                txtTitle.Text = "- Quản lý cổng ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(66, 66, 66);
+                p3.BackColor = Color.FromArgb(17, 146, 214);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -233,38 +223,36 @@ namespace VCS
             if (CommonService.HasPermission("R414"))
             {
                 OpenChildForm(new StatusSystem(_dbContext));
-                txtTitle.Text = "- Trạng thái kết nối";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.FromArgb(17, 146, 214);
             }
             else
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
             }
-            
+
         }
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             if (CommonService.HasPermission("R414"))
             {
                 OpenChildForm(new StatusSystem(_dbContext));
-                txtTitle.Text = "- Trạng thái kết nối";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.FromArgb(17, 146, 214);
             }
             else
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
             }
-            
+
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
@@ -272,18 +260,17 @@ namespace VCS
             if (CommonService.HasPermission("R414"))
             {
                 OpenChildForm(new StatusSystem(_dbContext));
-                txtTitle.Text = "- Trạng thái kết nối";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(66, 66, 66);
+                p6.BackColor = Color.FromArgb(17, 146, 214);
             }
             else
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
-            }    
+            }
         }
         #endregion
 
@@ -294,19 +281,18 @@ namespace VCS
             if (CommonService.HasPermission("R413"))
             {
                 OpenChildForm(new ConfigApp(_dbContext));
-                txtTitle.Text = "- Cấu hình chung";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.FromArgb(17, 146, 214);
                 p6.BackColor = Color.Transparent;
             }
             else
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
             }
-           
+
         }
 
         private void pictureBox4_Click(object sender, EventArgs e)
@@ -314,12 +300,11 @@ namespace VCS
             if (CommonService.HasPermission("R413"))
             {
                 OpenChildForm(new ConfigApp(_dbContext));
-                txtTitle.Text = "- Cấu hình chung";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.FromArgb(17, 146, 214);
                 p6.BackColor = Color.Transparent;
             }
             else
@@ -332,12 +317,11 @@ namespace VCS
             if (CommonService.HasPermission("R413"))
             {
                 OpenChildForm(new ConfigApp(_dbContext));
-                txtTitle.Text = "- Cấu hình chung";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(66, 66, 66);
+                p5.BackColor = Color.FromArgb(17, 146, 214);
                 p6.BackColor = Color.Transparent;
             }
             else
@@ -353,11 +337,10 @@ namespace VCS
             if (CommonService.HasPermission("R412"))
             {
                 OpenChildForm(new History(_dbContext));
-                txtTitle.Text = "- Lịch sử vào ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.FromArgb(17, 146, 214);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }
@@ -365,7 +348,7 @@ namespace VCS
             {
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
             }
-           
+
         }
 
         private void pictureBox5_Click(object sender, EventArgs e)
@@ -373,11 +356,10 @@ namespace VCS
             if (CommonService.HasPermission("R412"))
             {
                 OpenChildForm(new History(_dbContext));
-                txtTitle.Text = "- Lịch sử vào ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.FromArgb(17, 146, 214);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }
@@ -391,11 +373,10 @@ namespace VCS
             if (CommonService.HasPermission("R412"))
             {
                 OpenChildForm(new History(_dbContext));
-                txtTitle.Text = "- Lịch sử vào ra";
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(66, 66, 66);
+                p4.BackColor = Color.FromArgb(17, 146, 214);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }
@@ -476,6 +457,11 @@ namespace VCS
             {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
+        }
+
+        private void txtWarehouse_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

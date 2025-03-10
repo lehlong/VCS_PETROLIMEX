@@ -30,16 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            panelHeader = new Panel();
-            label8 = new Label();
-            label7 = new Label();
-            txtTitle = new Label();
-            panel3 = new Panel();
             txtWarehouse = new Label();
-            panel2 = new Panel();
             txtUsername = new Label();
-            pictureBox9 = new PictureBox();
-            pictureBox8 = new PictureBox();
             panelMenu = new Panel();
             linkLabel1 = new LinkLabel();
             label10 = new Label();
@@ -71,16 +63,10 @@
             p1 = new Panel();
             pictureBox2 = new PictureBox();
             label1 = new Label();
-            btnHome = new Panel();
-            pictureBox1 = new PictureBox();
-            lblHome = new Label();
             panelMain = new Panel();
             notifyIcon = new NotifyIcon(components);
-            panelHeader.SuspendLayout();
-            panel3.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            pictureBox1 = new PictureBox();
+            panel1 = new Panel();
             panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             btnLogOut.SuspendLayout();
@@ -97,120 +83,40 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             pHome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            btnHome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // panelHeader
-            // 
-            panelHeader.BackColor = Color.FromArgb(66, 66, 66);
-            panelHeader.Controls.Add(label8);
-            panelHeader.Controls.Add(label7);
-            panelHeader.Controls.Add(txtTitle);
-            panelHeader.Controls.Add(panel3);
-            panelHeader.Controls.Add(panel2);
-            panelHeader.Controls.Add(pictureBox9);
-            panelHeader.Controls.Add(pictureBox8);
-            panelHeader.Dock = DockStyle.Top;
-            panelHeader.Location = new Point(0, 0);
-            panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1564, 60);
-            panelHeader.TabIndex = 0;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.ForeColor = Color.White;
-            label8.Location = new Point(114, 20);
-            label8.Name = "label8";
-            label8.Size = new Size(231, 21);
-            label8.TabIndex = 6;
-            label8.Text = "HỆ THỐNG XẾP TÀI TỰ ĐỘNG";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.ForeColor = Color.White;
-            label7.Location = new Point(57, 14);
-            label7.Name = "label7";
-            label7.Size = new Size(58, 32);
-            label7.TabIndex = 5;
-            label7.Text = "VCS";
-            // 
-            // txtTitle
-            // 
-            txtTitle.AutoSize = true;
-            txtTitle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtTitle.ForeColor = Color.White;
-            txtTitle.Location = new Point(341, 20);
-            txtTitle.Name = "txtTitle";
-            txtTitle.Size = new Size(88, 21);
-            txtTitle.TabIndex = 4;
-            txtTitle.Text = "- Trang chủ";
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(txtWarehouse);
-            panel3.Location = new Point(1253, 30);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(256, 24);
-            panel3.TabIndex = 3;
             // 
             // txtWarehouse
             // 
+            txtWarehouse.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtWarehouse.AutoSize = true;
-            txtWarehouse.Dock = DockStyle.Right;
+            txtWarehouse.BackColor = Color.Transparent;
             txtWarehouse.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtWarehouse.ForeColor = Color.White;
             txtWarehouse.ImageAlign = ContentAlignment.MiddleRight;
-            txtWarehouse.Location = new Point(225, 0);
+            txtWarehouse.Location = new Point(16, 97);
             txtWarehouse.Name = "txtWarehouse";
             txtWarehouse.Size = new Size(31, 17);
             txtWarehouse.TabIndex = 1;
             txtWarehouse.Text = "Kho";
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(txtUsername);
-            panel2.Location = new Point(1253, 9);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(256, 27);
-            panel2.TabIndex = 2;
+            txtWarehouse.TextAlign = ContentAlignment.MiddleCenter;
+            txtWarehouse.Click += txtWarehouse_Click;
             // 
             // txtUsername
             // 
+            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtUsername.AutoSize = true;
-            txtUsername.Dock = DockStyle.Right;
+            txtUsername.BackColor = Color.Transparent;
             txtUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.White;
             txtUsername.ImageAlign = ContentAlignment.MiddleRight;
-            txtUsername.Location = new Point(182, 0);
+            txtUsername.Location = new Point(14, 76);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(74, 21);
             txtUsername.TabIndex = 0;
             txtUsername.Text = "Hệ thống";
-            // 
-            // pictureBox9
-            // 
-            pictureBox9.Image = Properties.Resources.icons8_user_60__1_;
-            pictureBox9.Location = new Point(1515, 13);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(32, 32);
-            pictureBox9.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox9.TabIndex = 1;
-            pictureBox9.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            pictureBox8.Image = Properties.Resources.logo2;
-            pictureBox8.Location = new Point(20, 10);
-            pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(40, 40);
-            pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox8.TabIndex = 0;
-            pictureBox8.TabStop = false;
+            txtUsername.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelMenu
             // 
@@ -225,11 +131,9 @@
             panelMenu.Controls.Add(btnCheckOut);
             panelMenu.Controls.Add(btnCheckIn);
             panelMenu.Controls.Add(pHome);
-            panelMenu.Controls.Add(btnHome);
-            panelMenu.Dock = DockStyle.Left;
-            panelMenu.Location = new Point(0, 60);
+            panelMenu.Location = new Point(0, 136);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(220, 781);
+            panelMenu.Size = new Size(228, 646);
             panelMenu.TabIndex = 1;
             // 
             // linkLabel1
@@ -237,7 +141,7 @@
             linkLabel1.ActiveLinkColor = Color.DarkGray;
             linkLabel1.AutoSize = true;
             linkLabel1.LinkColor = Color.DarkGray;
-            linkLabel1.Location = new Point(126, 754);
+            linkLabel1.Location = new Point(128, 622);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(68, 15);
             linkLabel1.TabIndex = 6;
@@ -249,7 +153,7 @@
             // 
             label10.AutoSize = true;
             label10.ForeColor = Color.DarkGray;
-            label10.Location = new Point(29, 754);
+            label10.Location = new Point(31, 622);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 5;
@@ -258,9 +162,9 @@
             // pictureBox11
             // 
             pictureBox11.Image = Properties.Resources.logo_d2s;
-            pictureBox11.Location = new Point(54, 721);
+            pictureBox11.Location = new Point(46, 580);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(120, 28);
+            pictureBox11.Size = new Size(131, 31);
             pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox11.TabIndex = 4;
             pictureBox11.TabStop = false;
@@ -275,7 +179,7 @@
             btnLogOut.Location = new Point(0, 336);
             btnLogOut.Name = "btnLogOut";
             btnLogOut.Padding = new Padding(0, 12, 0, 12);
-            btnLogOut.Size = new Size(220, 56);
+            btnLogOut.Size = new Size(228, 56);
             btnLogOut.TabIndex = 3;
             btnLogOut.Click += btnLogOut_Click;
             // 
@@ -312,15 +216,15 @@
             btnStatus.Location = new Point(0, 280);
             btnStatus.Name = "btnStatus";
             btnStatus.Padding = new Padding(0, 12, 0, 12);
-            btnStatus.Size = new Size(220, 56);
+            btnStatus.Size = new Size(228, 56);
             btnStatus.TabIndex = 2;
             btnStatus.Click += btnStatus_Click;
             // 
             // p6
             // 
             p6.BackColor = Color.Transparent;
-            p6.Dock = DockStyle.Left;
-            p6.Location = new Point(0, 12);
+            p6.Dock = DockStyle.Right;
+            p6.Location = new Point(224, 12);
             p6.Name = "p6";
             p6.Size = new Size(4, 32);
             p6.TabIndex = 3;
@@ -358,15 +262,15 @@
             btnSetting.Location = new Point(0, 224);
             btnSetting.Name = "btnSetting";
             btnSetting.Padding = new Padding(0, 12, 0, 12);
-            btnSetting.Size = new Size(220, 56);
+            btnSetting.Size = new Size(228, 56);
             btnSetting.TabIndex = 2;
             btnSetting.Click += btnSetting_Click;
             // 
             // p5
             // 
             p5.BackColor = Color.Transparent;
-            p5.Dock = DockStyle.Left;
-            p5.Location = new Point(0, 12);
+            p5.Dock = DockStyle.Right;
+            p5.Location = new Point(224, 12);
             p5.Name = "p5";
             p5.Size = new Size(4, 32);
             p5.TabIndex = 3;
@@ -404,15 +308,15 @@
             btnHistory.Location = new Point(0, 168);
             btnHistory.Name = "btnHistory";
             btnHistory.Padding = new Padding(0, 12, 0, 12);
-            btnHistory.Size = new Size(220, 56);
+            btnHistory.Size = new Size(228, 56);
             btnHistory.TabIndex = 2;
             btnHistory.Click += btnHistory_Click;
             // 
             // p4
             // 
             p4.BackColor = Color.Transparent;
-            p4.Dock = DockStyle.Left;
-            p4.Location = new Point(0, 12);
+            p4.Dock = DockStyle.Right;
+            p4.Location = new Point(224, 12);
             p4.Name = "p4";
             p4.Size = new Size(4, 32);
             p4.TabIndex = 3;
@@ -450,15 +354,15 @@
             btnCheckOut.Location = new Point(0, 112);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.Padding = new Padding(0, 12, 0, 12);
-            btnCheckOut.Size = new Size(220, 56);
+            btnCheckOut.Size = new Size(228, 56);
             btnCheckOut.TabIndex = 2;
             btnCheckOut.Click += btnCheckOut_Click;
             // 
             // p3
             // 
             p3.BackColor = Color.Transparent;
-            p3.Dock = DockStyle.Left;
-            p3.Location = new Point(0, 12);
+            p3.Dock = DockStyle.Right;
+            p3.Location = new Point(224, 12);
             p3.Name = "p3";
             p3.Size = new Size(4, 32);
             p3.TabIndex = 3;
@@ -496,15 +400,15 @@
             btnCheckIn.Location = new Point(0, 56);
             btnCheckIn.Name = "btnCheckIn";
             btnCheckIn.Padding = new Padding(0, 12, 0, 12);
-            btnCheckIn.Size = new Size(220, 56);
+            btnCheckIn.Size = new Size(228, 56);
             btnCheckIn.TabIndex = 2;
             btnCheckIn.Click += btnCheckIn_Click;
             // 
             // p2
             // 
             p2.BackColor = Color.Transparent;
-            p2.Dock = DockStyle.Left;
-            p2.Location = new Point(0, 12);
+            p2.Dock = DockStyle.Right;
+            p2.Location = new Point(224, 12);
             p2.Name = "p2";
             p2.Size = new Size(4, 32);
             p2.TabIndex = 3;
@@ -542,15 +446,15 @@
             pHome.Location = new Point(0, 0);
             pHome.Name = "pHome";
             pHome.Padding = new Padding(0, 12, 0, 12);
-            pHome.Size = new Size(220, 56);
+            pHome.Size = new Size(228, 56);
             pHome.TabIndex = 2;
             pHome.Click += pHome_Click;
             // 
             // p1
             // 
-            p1.BackColor = Color.FromArgb(66, 66, 66);
-            p1.Dock = DockStyle.Left;
-            p1.Location = new Point(0, 12);
+            p1.BackColor = Color.FromArgb(17, 146, 214);
+            p1.Dock = DockStyle.Right;
+            p1.Location = new Point(224, 12);
             p1.Name = "p1";
             p1.Size = new Size(4, 32);
             p1.TabIndex = 2;
@@ -577,43 +481,13 @@
             label1.Text = "Trang chủ";
             label1.Click += label1_Click;
             // 
-            // btnHome
-            // 
-            btnHome.BackColor = Color.Transparent;
-            btnHome.Controls.Add(pictureBox1);
-            btnHome.Controls.Add(lblHome);
-            btnHome.Location = new Point(0, 0);
-            btnHome.Name = "btnHome";
-            btnHome.Size = new Size(220, 56);
-            btnHome.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.icons8_home_18__1_;
-            pictureBox1.Location = new Point(16, 17);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(26, 23);
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
-            // lblHome
-            // 
-            lblHome.AutoSize = true;
-            lblHome.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblHome.Location = new Point(45, 17);
-            lblHome.Name = "lblHome";
-            lblHome.Size = new Size(78, 21);
-            lblHome.TabIndex = 0;
-            lblHome.Text = "Trang chủ";
-            // 
             // panelMain
             // 
             panelMain.BackColor = Color.Transparent;
-            panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(220, 60);
+            panelMain.Dock = DockStyle.Right;
+            panelMain.Location = new Point(230, 0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(1344, 781);
+            panelMain.Size = new Size(1344, 783);
             panelMain.TabIndex = 2;
             // 
             // notifyIcon
@@ -622,29 +496,45 @@
             notifyIcon.Text = "Hệ thống VCS";
             notifyIcon.DoubleClick += notifyIcon_DoubleClick;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Image = Properties.Resources.user__1_;
+            pictureBox1.Location = new Point(18, 24);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(44, 44);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackgroundImage = Properties.Resources.user_img_background;
+            panel1.BackgroundImageLayout = ImageLayout.Stretch;
+            panel1.Controls.Add(txtWarehouse);
+            panel1.Controls.Add(txtUsername);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Location = new Point(0, -1);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(228, 138);
+            panel1.TabIndex = 3;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1564, 841);
+            ClientSize = new Size(1574, 783);
+            Controls.Add(panel1);
             Controls.Add(panelMain);
             Controls.Add(panelMenu);
-            Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Main";
             StartPosition = FormStartPosition.Manual;
             Text = "Hệ thống VCS";
             Load += Main_Load;
-            panelHeader.ResumeLayout(false);
-            panelHeader.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             panelMenu.ResumeLayout(false);
             panelMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
@@ -669,19 +559,14 @@
             pHome.ResumeLayout(false);
             pHome.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            btnHome.ResumeLayout(false);
-            btnHome.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel panelHeader;
         private Panel panelMenu;
-        private Panel btnHome;
-        private PictureBox pictureBox1;
-        private Label lblHome;
         private Panel btnStatus;
         private PictureBox pictureBox3;
         private Label label2;
@@ -697,19 +582,12 @@
         private Panel btnCheckIn;
         private PictureBox pictureBox7;
         private Label label6;
-        private PictureBox pictureBox8;
-        private PictureBox pictureBox9;
-        private Panel panel2;
         private Label txtWarehouse;
         private Label txtUsername;
-        private Panel panel3;
         private Panel panelMain;
         private Panel pHome;
         private PictureBox pictureBox2;
         private Label label1;
-        private Label txtTitle;
-        private Label label8;
-        private Label label7;
         private Panel btnLogOut;
         private PictureBox pictureBox10;
         private Label label9;
@@ -723,5 +601,7 @@
         private Panel p3;
         private Panel p2;
         private Panel p1;
+        private PictureBox pictureBox1;
+        private Panel panel1;
     }
 }

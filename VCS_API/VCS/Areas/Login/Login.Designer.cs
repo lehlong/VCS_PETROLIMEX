@@ -28,25 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             btnLogin = new Button();
             password = new TextBox();
             username = new TextBox();
             pictureBox1 = new PictureBox();
-            label2 = new Label();
-            label3 = new Label();
+            pictureBox2 = new PictureBox();
+            label10 = new Label();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            panel1 = new Panel();
+            panel2 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(323, 531);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(279, 21);
-            label1.TabIndex = 14;
-            label1.Text = "Design by Dynamic Software Solutions";
             // 
             // btnLogin
             // 
@@ -54,10 +53,10 @@
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(285, 374);
+            btnLogin.Location = new Point(780, 296);
             btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(353, 40);
+            btnLogin.Size = new Size(237, 40);
             btnLogin.TabIndex = 11;
             btnLogin.Text = "Đăng nhập";
             btnLogin.UseVisualStyleBackColor = false;
@@ -65,20 +64,24 @@
             // 
             // password
             // 
-            password.Location = new Point(285, 320);
+            password.BackColor = Color.WhiteSmoke;
+            password.BorderStyle = BorderStyle.None;
+            password.Location = new Point(36, 7);
             password.Margin = new Padding(4);
             password.Name = "password";
-            password.Size = new Size(353, 29);
+            password.Size = new Size(196, 22);
             password.TabIndex = 10;
             password.UseSystemPasswordChar = true;
             password.KeyDown += password_KeyDown;
             // 
             // username
             // 
-            username.Location = new Point(285, 259);
+            username.BackColor = Color.WhiteSmoke;
+            username.BorderStyle = BorderStyle.None;
+            username.Location = new Point(36, 7);
             username.Margin = new Padding(4);
             username.Name = "username";
-            username.Size = new Size(353, 29);
+            username.Size = new Size(196, 22);
             username.TabIndex = 9;
             username.KeyDown += username_KeyDown;
             // 
@@ -86,50 +89,92 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.logo_login;
-            pictureBox1.Location = new Point(350, 69);
+            pictureBox1.Location = new Point(815, 47);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(220, 148);
+            pictureBox1.Size = new Size(159, 117);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 8;
             pictureBox1.TabStop = false;
             // 
-            // label2
+            // pictureBox2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(285, 234);
-            label2.Name = "label2";
-            label2.Size = new Size(114, 21);
-            label2.TabIndex = 15;
-            label2.Text = "Tên đăng nhập:";
+            pictureBox2.Image = Properties.Resources.PRINTAD_2;
+            pictureBox2.Location = new Point(0, 0);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(728, 494);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 17;
+            pictureBox2.TabStop = false;
             // 
-            // label3
+            // label10
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(285, 295);
-            label3.Name = "label3";
-            label3.Size = new Size(78, 21);
-            label3.TabIndex = 16;
-            label3.Text = "Mật khẩu:";
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.ForeColor = Color.DarkGray;
+            label10.Location = new Point(773, 470);
+            label10.Name = "label10";
+            label10.Size = new Size(252, 15);
+            label10.TabIndex = 18;
+            label10.Text = "Copyright © 2025 Dynamic Software Solutions";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.icons8_user_18;
+            pictureBox3.Location = new Point(9, 10);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(18, 18);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 19;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Image = Properties.Resources.icons8_key_18;
+            pictureBox4.Location = new Point(9, 9);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(18, 18);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox4.TabIndex = 20;
+            pictureBox4.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.Controls.Add(pictureBox3);
+            panel1.Controls.Add(username);
+            panel1.Location = new Point(780, 192);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(237, 36);
+            panel1.TabIndex = 21;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.WhiteSmoke;
+            panel2.Controls.Add(pictureBox4);
+            panel2.Controls.Add(password);
+            panel2.Location = new Point(780, 240);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(237, 36);
+            panel2.TabIndex = 22;
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            BackgroundImage = Properties.Resources.bg_auth;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(884, 561);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            ClientSize = new Size(1059, 494);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
+            Controls.Add(label10);
+            Controls.Add(pictureBox2);
             Controls.Add(btnLogin);
-            Controls.Add(password);
-            Controls.Add(username);
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
@@ -137,18 +182,27 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
         private Button btnLogin;
         private TextBox password;
         private TextBox username;
         private PictureBox pictureBox1;
-        private Label label2;
-        private Label label3;
+        private PictureBox pictureBox2;
+        private Label label10;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private Panel panel1;
+        private Panel panel2;
     }
 }
