@@ -33,7 +33,6 @@
             txtWarehouse = new Label();
             txtUsername = new Label();
             panelMenu = new Panel();
-            pictureBox11 = new PictureBox();
             btnLogOut = new Panel();
             pictureBox10 = new PictureBox();
             label9 = new Label();
@@ -61,6 +60,7 @@
             p1 = new Panel();
             pictureBox2 = new PictureBox();
             label1 = new Label();
+            pictureBox8 = new PictureBox();
             linkLabel1 = new LinkLabel();
             label10 = new Label();
             panelMain = new Panel();
@@ -68,8 +68,8 @@
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
             panel2 = new Panel();
+            panel3 = new Panel();
             panelMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             btnLogOut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             btnStatus.SuspendLayout();
@@ -84,9 +84,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             pHome.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // txtWarehouse
@@ -97,7 +99,7 @@
             txtWarehouse.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtWarehouse.ForeColor = Color.FromArgb(13, 92, 171);
             txtWarehouse.ImageAlign = ContentAlignment.MiddleRight;
-            txtWarehouse.Location = new Point(21, 90);
+            txtWarehouse.Location = new Point(50, 42);
             txtWarehouse.Name = "txtWarehouse";
             txtWarehouse.Size = new Size(31, 17);
             txtWarehouse.TabIndex = 1;
@@ -113,7 +115,7 @@
             txtUsername.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(13, 92, 171);
             txtUsername.ImageAlign = ContentAlignment.MiddleRight;
-            txtUsername.Location = new Point(19, 68);
+            txtUsername.Location = new Point(48, 20);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(79, 21);
             txtUsername.TabIndex = 0;
@@ -123,7 +125,6 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.White;
-            panelMenu.Controls.Add(pictureBox11);
             panelMenu.Controls.Add(btnLogOut);
             panelMenu.Controls.Add(btnStatus);
             panelMenu.Controls.Add(btnSetting);
@@ -131,20 +132,10 @@
             panelMenu.Controls.Add(btnCheckOut);
             panelMenu.Controls.Add(btnCheckIn);
             panelMenu.Controls.Add(pHome);
-            panelMenu.Location = new Point(0, 131);
+            panelMenu.Location = new Point(0, 83);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(228, 652);
+            panelMenu.Size = new Size(228, 641);
             panelMenu.TabIndex = 1;
-            // 
-            // pictureBox11
-            // 
-            pictureBox11.Image = Properties.Resources.logo_d2s;
-            pictureBox11.Location = new Point(46, 619);
-            pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(131, 31);
-            pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox11.TabIndex = 4;
-            pictureBox11.TabStop = false;
             // 
             // btnLogOut
             // 
@@ -458,12 +449,22 @@
             label1.Text = "Trang chủ";
             label1.Click += label1_Click;
             // 
+            // pictureBox8
+            // 
+            pictureBox8.Image = Properties.Resources.user__2_;
+            pictureBox8.Location = new Point(16, 26);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(26, 26);
+            pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox8.TabIndex = 5;
+            pictureBox8.TabStop = false;
+            // 
             // linkLabel1
             // 
             linkLabel1.ActiveLinkColor = Color.DarkGray;
             linkLabel1.AutoSize = true;
             linkLabel1.LinkColor = Color.DarkGray;
-            linkLabel1.Location = new Point(129, 4);
+            linkLabel1.Location = new Point(1500, 4);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(68, 15);
             linkLabel1.TabIndex = 6;
@@ -475,7 +476,7 @@
             // 
             label10.AutoSize = true;
             label10.ForeColor = Color.DarkGray;
-            label10.Location = new Point(32, 4);
+            label10.Location = new Point(1403, 4);
             label10.Name = "label10";
             label10.Size = new Size(101, 15);
             label10.TabIndex = 5;
@@ -498,8 +499,8 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Image = Properties.Resources.petrolimex;
-            pictureBox1.Location = new Point(24, 26);
+            pictureBox1.Image = Properties.Resources.logo_menu2;
+            pictureBox1.Location = new Point(24, 22);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(180, 38);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -509,14 +510,11 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
-            panel1.BackgroundImage = Properties.Resources.bg_auth;
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
-            panel1.Controls.Add(txtWarehouse);
             panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(txtUsername);
             panel1.Location = new Point(0, -1);
             panel1.Name = "panel1";
-            panel1.Size = new Size(228, 130);
+            panel1.Size = new Size(228, 83);
             panel1.TabIndex = 3;
             // 
             // panel2
@@ -529,11 +527,23 @@
             panel2.Size = new Size(1579, 26);
             panel2.TabIndex = 4;
             // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(txtWarehouse);
+            panel3.Controls.Add(pictureBox8);
+            panel3.Controls.Add(txtUsername);
+            panel3.Location = new Point(0, 725);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(228, 83);
+            panel3.TabIndex = 5;
+            // 
             // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1574, 808);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(panelMain);
@@ -547,7 +557,6 @@
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             btnLogOut.ResumeLayout(false);
             btnLogOut.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
@@ -569,11 +578,13 @@
             pHome.ResumeLayout(false);
             pHome.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -606,7 +617,6 @@
         private NotifyIcon notifyIcon;
         private LinkLabel linkLabel1;
         private Label label10;
-        private PictureBox pictureBox11;
         private Panel p6;
         private Panel p5;
         private Panel p4;
@@ -616,5 +626,7 @@
         private PictureBox pictureBox1;
         private Panel panel1;
         private Panel panel2;
+        private PictureBox pictureBox8;
+        private Panel panel3;
     }
 }

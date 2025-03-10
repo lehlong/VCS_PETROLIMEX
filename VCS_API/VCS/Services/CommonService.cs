@@ -413,5 +413,11 @@ namespace VCS.APP.Services
             }
         }
         #endregion
+
+        public static void Alert(string msg)
+        {
+            VCS.Areas.Alert.Alert alert = new VCS.Areas.Alert.Alert();
+            alert.ShowAlert(msg);
+        }
     }
 }

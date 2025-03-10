@@ -16,6 +16,7 @@ using VCS.APP.Services;
 using VCS.APP.Utilities;
 using System.Security.Cryptography;
 using LibVLCSharp.Shared;
+using VCS.Areas.Alert;
 namespace VCS.Areas.Login
 {
     public partial class Login : Form
@@ -90,6 +91,7 @@ namespace VCS.Areas.Login
                 Properties.Settings.Default.Save();
                 Global.lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode).ToList();
                 InitializeLibVLC();
+                CommonService.Alert("Đăng nhập thành công!");
 
                 var main = new Main(_dbContext);
                 main.Show();
