@@ -69,7 +69,7 @@ namespace VCS
         private void pHome_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            p1.BackColor = Color.FromArgb(17, 146, 214);
+            p1.BackColor = Color.FromArgb(13, 92, 171);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -80,7 +80,7 @@ namespace VCS
         private void label1_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            p1.BackColor = Color.FromArgb(17, 146, 214);
+            p1.BackColor = Color.FromArgb(13, 92, 171);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -90,7 +90,7 @@ namespace VCS
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Home(_dbContext));
-            p1.BackColor = Color.FromArgb(17, 146, 214);
+            p1.BackColor = Color.FromArgb(13, 92, 171);
             p2.BackColor = Color.Transparent;
             p3.BackColor = Color.Transparent;
             p4.BackColor = Color.Transparent;
@@ -106,7 +106,7 @@ namespace VCS
             {
                 OpenChildForm(new CheckIn(_dbContext));
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(17, 146, 214);
+                p2.BackColor = Color.FromArgb(13, 92, 171);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -125,7 +125,7 @@ namespace VCS
             {
                 OpenChildForm(new CheckIn(_dbContext));
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(17, 146, 214);
+                p2.BackColor = Color.FromArgb(13, 92, 171);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -144,7 +144,7 @@ namespace VCS
             {
                 OpenChildForm(new CheckIn(_dbContext));
                 p1.BackColor = Color.Transparent;
-                p2.BackColor = Color.FromArgb(17, 146, 214);
+                p2.BackColor = Color.FromArgb(13, 92, 171);
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
@@ -165,7 +165,7 @@ namespace VCS
                 OpenChildForm(new CheckOut(_dbContext));
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(17, 146, 214);
+                p3.BackColor = Color.FromArgb(13, 92, 171);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -184,7 +184,7 @@ namespace VCS
                 OpenChildForm(new CheckOut(_dbContext));
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(17, 146, 214);
+                p3.BackColor = Color.FromArgb(13, 92, 171);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -203,7 +203,7 @@ namespace VCS
                 OpenChildForm(new CheckOut(_dbContext));
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
-                p3.BackColor = Color.FromArgb(17, 146, 214);
+                p3.BackColor = Color.FromArgb(13, 92, 171);
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
@@ -228,7 +228,7 @@ namespace VCS
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(17, 146, 214);
+                p6.BackColor = Color.FromArgb(13, 92, 171);
             }
             else
             {
@@ -246,7 +246,7 @@ namespace VCS
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(17, 146, 214);
+                p6.BackColor = Color.FromArgb(13, 92, 171);
             }
             else
             {
@@ -265,7 +265,7 @@ namespace VCS
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
-                p6.BackColor = Color.FromArgb(17, 146, 214);
+                p6.BackColor = Color.FromArgb(13, 92, 171);
             }
             else
             {
@@ -285,7 +285,7 @@ namespace VCS
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(17, 146, 214);
+                p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
             }
             else
@@ -304,7 +304,7 @@ namespace VCS
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(17, 146, 214);
+                p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
             }
             else
@@ -321,7 +321,7 @@ namespace VCS
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
                 p4.BackColor = Color.Transparent;
-                p5.BackColor = Color.FromArgb(17, 146, 214);
+                p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
             }
             else
@@ -340,7 +340,7 @@ namespace VCS
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(17, 146, 214);
+                p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }
@@ -359,7 +359,7 @@ namespace VCS
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(17, 146, 214);
+                p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }
@@ -376,7 +376,7 @@ namespace VCS
                 p1.BackColor = Color.Transparent;
                 p2.BackColor = Color.Transparent;
                 p3.BackColor = Color.Transparent;
-                p4.BackColor = Color.FromArgb(17, 146, 214);
+                p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
             }

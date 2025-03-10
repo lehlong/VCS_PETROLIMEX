@@ -67,6 +67,7 @@ namespace VCS.Areas.CheckIn
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
                     mediaPlayer.Play();
+
                 }
             }
             catch (Exception ex)

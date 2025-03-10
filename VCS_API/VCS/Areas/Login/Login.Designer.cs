@@ -39,12 +39,14 @@
             pictureBox4 = new PictureBox();
             panel1 = new Panel();
             panel2 = new Panel();
+            panel3 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // btnLogin
@@ -53,7 +55,7 @@
             btnLogin.Cursor = Cursors.Hand;
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(780, 296);
+            btnLogin.Location = new Point(391, 277);
             btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(237, 40);
@@ -89,7 +91,7 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.logo_login;
-            pictureBox1.Location = new Point(815, 47);
+            pictureBox1.Location = new Point(430, 28);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(159, 117);
@@ -99,10 +101,11 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.PRINTAD_2;
-            pictureBox2.Location = new Point(0, 0);
+            pictureBox2.BackColor = Color.Transparent;
+            pictureBox2.Image = Properties.Resources.Logo_Petrolimex_PLX;
+            pictureBox2.Location = new Point(109, 162);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(728, 494);
+            pictureBox2.Size = new Size(127, 113);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 17;
             pictureBox2.TabStop = false;
@@ -112,7 +115,7 @@
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.DarkGray;
-            label10.Location = new Point(773, 470);
+            label10.Location = new Point(388, 429);
             label10.Name = "label10";
             label10.Size = new Size(252, 15);
             label10.TabIndex = 18;
@@ -143,7 +146,7 @@
             panel1.BackColor = Color.WhiteSmoke;
             panel1.Controls.Add(pictureBox3);
             panel1.Controls.Add(username);
-            panel1.Location = new Point(780, 192);
+            panel1.Location = new Point(391, 173);
             panel1.Name = "panel1";
             panel1.Size = new Size(237, 36);
             panel1.TabIndex = 21;
@@ -153,10 +156,21 @@
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(pictureBox4);
             panel2.Controls.Add(password);
-            panel2.Location = new Point(780, 240);
+            panel2.Location = new Point(391, 221);
             panel2.Name = "panel2";
             panel2.Size = new Size(237, 36);
             panel2.TabIndex = 22;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.AliceBlue;
+            panel3.BackgroundImage = Properties.Resources.bg_auth;
+            panel3.BackgroundImageLayout = ImageLayout.Stretch;
+            panel3.Controls.Add(pictureBox2);
+            panel3.Location = new Point(-1, -1);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(340, 465);
+            panel3.TabIndex = 23;
             // 
             // Login
             // 
@@ -164,11 +178,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1059, 494);
+            ClientSize = new Size(675, 461);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(label10);
-            Controls.Add(pictureBox2);
             Controls.Add(btnLogin);
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
@@ -189,6 +203,7 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -204,5 +219,6 @@
         private PictureBox pictureBox4;
         private Panel panel1;
         private Panel panel2;
+        private Panel panel3;
     }
 }

@@ -73,6 +73,16 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap chien_luoc_nhuong_quyen_cua_petrolimex_3_muc_tieu_day_tham_vong {
+            get {
+                object obj = ResourceManager.GetObject("chien-luoc-nhuong-quyen-cua-petrolimex-3-muc-tieu-day-tham-vong", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
@@ -403,9 +413,39 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Logo_Petrolimex_PLX {
+            get {
+                object obj = ResourceManager.GetObject("Logo-Petrolimex-PLX", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_Petrolimex_PLX1 {
+            get {
+                object obj = ResourceManager.GetObject("Logo-Petrolimex-PLX1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo2 {
             get {
                 object obj = ResourceManager.GetObject("logo2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap petrolimex {
+            get {
+                object obj = ResourceManager.GetObject("petrolimex", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
