@@ -411,181 +411,160 @@ namespace VCS.Areas.CheckIn
         {
             try
             {
+                if (data?.DATA?.LIST_DO?.Any() != true || data.DATA.LIST_DO.FirstOrDefault() == null)
+                    return;
 
-                int yPosition = 6;
-                var existingGrids = panelDODetail.Controls.OfType<DataGridView>().ToList();
-                if (existingGrids.Any())
+                var firstDo = data.DATA.LIST_DO.FirstOrDefault();
+                string doNumber = firstDo.DO_NUMBER;
+
+                if (panelDODetail.Controls.OfType<Panel>().Any(p => p.Name == $"panel_{doNumber}"))
                 {
-                    var lastGrid = existingGrids.Last();
-                    yPosition = lastGrid.Bottom + 6;
+                    MessageBox.Show("Lệnh xuất này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                // CREATE DELETE BUTTON
+                int yPosition = panelDODetail.Controls.OfType<Panel>().Any()
+                    ? panelDODetail.Controls.OfType<Panel>().Max(p => p.Bottom) + 6
+                    : 6;
+
+                var containerPanel = new Panel
+                {
+                    Name = $"panel_{doNumber}",
+                    BackColor = Color.WhiteSmoke,
+                    Location = new Point(0, yPosition),
+                    Size = new Size(860, 10),
+                    Padding = new Padding(12),
+                    BorderStyle = BorderStyle.None
+                };
+
+                int innerY = 6;
+
                 var deleteButton = new Button
                 {
                     Size = new Size(30, 30),
-                    Location = new Point(772, yPosition),
+                    Location = new Point(760, 6),
                     FlatStyle = FlatStyle.Flat,
                     BackColor = Color.WhiteSmoke,
                     ForeColor = Color.Black,
                     Cursor = Cursors.Hand,
-                    Image = Properties.Resources.delete,
-                    ImageAlign = ContentAlignment.MiddleCenter
+                    Image = Properties.Resources.delete != null ? new Bitmap(Properties.Resources.delete, new Size(16, 16)) : null,
+                    ImageAlign = ContentAlignment.MiddleCenter,
+                    Tag = doNumber
                 };
                 deleteButton.FlatAppearance.BorderSize = 0;
-
-                if (deleteButton.Image != null)
+                deleteButton.Click += (sender, e) =>
                 {
-                    deleteButton.Image = new Bitmap(deleteButton.Image, new Size(16, 16));
-                }
-                //CREATE TEXT
-                var customer = $"{data.DATA.LIST_DO.FirstOrDefault().CUSTOMER_NAME}";
-                var nguon = $"{GetText(data.DATA.LIST_DO.FirstOrDefault().MODUL_TYPE)} - {data.DATA.LIST_DO.FirstOrDefault().NGUON_HANG}";
+                    string doNum = deleteButton.Tag.ToString();
+                    _lstDOSAP.RemoveAll(x => x.DATA.LIST_DO.Any(d => d.DO_NUMBER == doNum));
+                    lstCheckDo.Remove(doNum);
+                    panelDODetail.Controls.Remove(containerPanel);
 
-                // CREATE LABEL          
+                    int newYPosition = 6;
+                    foreach (var panel in panelDODetail.Controls.OfType<Panel>().OrderBy(p => p.Top))
+                    {
+                        panel.Location = new Point(panel.Left, newYPosition);
+                        newYPosition = panel.Bottom + 6;
+                    }
+                    panelDODetail.PerformLayout();
+                };
+                containerPanel.Controls.Add(deleteButton);
+
                 var customerLabel = new Label
                 {
-                    Text = customer,
-                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    Text = firstDo.CUSTOMER_NAME ?? "Không xác định",
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
                     AutoSize = true,
-                    Location = new Point(10, yPosition),
-                    ForeColor = Color.Black,
-                    TextAlign = ContentAlignment.MiddleRight
-
+                    Location = new Point(6, innerY),
+                    ForeColor = Color.Black
                 };
-                yPosition += customerLabel.Height + 5;
+                innerY += customerLabel.Height + 6;
+                containerPanel.Controls.Add(customerLabel);
+
                 var nguonLabel = new Label
                 {
-                    Text = nguon,
-                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    Text = $"{GetText(firstDo.MODUL_TYPE)} - {firstDo.NGUON_HANG ?? "Không xác định"}",
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
                     AutoSize = true,
-                    Location = new Point(10, yPosition),
-                    ForeColor = Color.Black,
-                    TextAlign = ContentAlignment.MiddleRight
-
+                    Location = new Point(6, innerY),
+                    ForeColor = Color.Black
                 };
-                // CREATE DATA GRID VIEW
-                var dataGridView1 = new DataGridView
+                innerY += nguonLabel.Height + 6;
+                containerPanel.Controls.Add(nguonLabel);
+
+                var dataGridView = new DataGridView
                 {
-                    BackgroundColor = Color.White,
+                    BackgroundColor = Color.WhiteSmoke,
                     BorderStyle = BorderStyle.None,
                     ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
-                    ColumnHeadersHeight = 35,
-                    Location = new Point(0, yPosition + 35),
-                    Name = $"dataGridView_{panelDODetail.Controls.Count + 1}",
+                    ColumnHeadersHeight = 40,
                     ReadOnly = true,
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
                     AllowUserToAddRows = false,
                     AllowUserToResizeRows = false,
                     RowHeadersVisible = false,
-                    SelectionMode = DataGridViewSelectionMode.RowHeaderSelect,
-                    DefaultCellStyle = new DataGridViewCellStyle
-                    {
-                        SelectionBackColor = Color.Transparent,
-                        SelectionForeColor = Color.Black,
-                        Padding = new Padding(5),
-                        Font = new Font("Segoe UI", 12, FontStyle.Regular)
-                    },
-                    RowTemplate = { Height = 35 }
+                    SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                    Location = new Point(6, innerY),
+                    Margin = new Padding(6),
+                    Width = 750,
+                    RowTemplate = { Height = 40 }
                 };
 
-                // HEADER STYLING
-                dataGridView1.EnableHeadersVisualStyles = false;
-                dataGridView1.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                dataGridView.CellClick += (sender, e) => { };
+                dataGridView.EnableHeadersVisualStyles = false;
+                dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+                dataGridView.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
                 {
                     BackColor = Color.FromArgb(52, 58, 64),
                     ForeColor = Color.White,
                     Font = new Font("Segoe UI", 12, FontStyle.Regular),
-                    Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    Padding = new Padding(6)
                 };
-                dataGridView1.AdvancedColumnHeadersBorderStyle.All = DataGridViewAdvancedCellBorderStyle.Single;
-                dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-                dataGridView1.GridColor = Color.Gray;
+                dataGridView.GridColor = Color.Gray;
+                dataGridView.DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    SelectionBackColor = Color.WhiteSmoke,
+                    SelectionForeColor = Color.Black,
+                    Padding = new Padding(6)
+                };
 
-                // CREATE DATA TABLE
-                DataTable dataTable = new DataTable();
+                dataGridView.CellMouseEnter += (sender, e) => { };
+                dataGridView.SelectionChanged += (sender, e) => dataGridView.ClearSelection();
+
+                var dataTable = new DataTable();
                 dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
                 dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
                 dataTable.Columns.Add("MẶT HÀNG", typeof(string));
                 dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
 
-
-                // ADD DATA TO TABLE
-                var firstDo = data.DATA.LIST_DO.FirstOrDefault();
-                if (firstDo != null)
+                foreach (var item in firstDo.LIST_MATERIAL)
                 {
-                    foreach (var i in firstDo.LIST_MATERIAL)
-                    {
-                        var materials = _dbContext.TblMdGoods.Find(i.MATERIAL);
+                    var materials = _dbContext.TblMdGoods.Find(item.MATERIAL);
+                    string materialName = materials?.Name ?? "Không xác định";
 
-                        // Handle null material names properly
-                        string materialName = materials?.Name ?? "Unknown";
-
-                        dataTable.Rows.Add(
-                            firstDo.DO_NUMBER,
-                            data.DATA.VEHICLE,
-                            materialName,
-                            $"{i.QUANTITY} ({i.UNIT})"
-
-                        );
-                    }
+                    dataTable.Rows.Add(
+                        doNumber,
+                        data.DATA.VEHICLE ?? "Không xác định",
+                        materialName,
+                        $"{item.QUANTITY.ToString("#,#")} ({item.UNIT ?? "N/A"})"
+                    );
                 }
 
-                dataGridView1.DataSource = dataTable;
+                dataGridView.DataSource = dataTable;
 
-                // Align cell content to center
-                foreach (DataGridViewColumn col in dataGridView1.Columns)
-                {
-                    col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                }
+                int totalGridViewHeight = dataGridView.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView.RowTemplate.Height) + 6;
+                dataGridView.Size = new Size(790, totalGridViewHeight);
 
-                // Calculate total table height
-                int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
-                dataGridView1.Size = new Size(809, totalHeight);
+                containerPanel.Size = new Size(802, totalGridViewHeight + innerY + 6);
+                containerPanel.Controls.Add(dataGridView);
 
-                // DELETE BUTTON CLICK EVENT
-                deleteButton.Click += (sender, e) =>
-                {
-                    var itemToRemove = _lstDOSAP.FirstOrDefault(x =>
-                    x.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER == data.DATA.LIST_DO.FirstOrDefault().DO_NUMBER);
-                    if (itemToRemove != null)
-                    {
-                        _lstDOSAP.Remove(itemToRemove);
-                    }
-                    lstCheckDo.Remove(data.DATA.LIST_DO.FirstOrDefault().DO_NUMBER);
-                    panelDODetail.Controls.Remove(deleteButton);
-                    panelDODetail.Controls.Remove(dataGridView1);
-
-                    // Find all remaining DataGridViews and Delete Buttons in the panel
-                    var remainingGrids = panelDODetail.Controls.OfType<DataGridView>().ToList();
-                    var remainingButtons = panelDODetail.Controls.OfType<Button>().ToList();
-
-                    // Rearrange remaining grids and buttons
-                    int yPosition = 6; // Initial Y position
-                    for (int i = 0; i < remainingGrids.Count; i++)
-                    {
-                        var grid = remainingGrids[i];
-                        var btn = remainingButtons[i];
-
-                        grid.Location = new Point(0, yPosition + 35);
-                        btn.Location = new Point(772, yPosition); // Reposition delete button
-                        yPosition = grid.Bottom + 6; // Adjust spacing
-                    }
-
-                    // Refresh the panel to reflect changes
-                    panelDODetail.Refresh();
-                };
-
-                // ADD CONTROLS TO PANEL
-                panelDODetail.Controls.Add(deleteButton);
-                panelDODetail.Controls.Add(customerLabel);
-                panelDODetail.Controls.Add(nguonLabel);
-                panelDODetail.Controls.Add(dataGridView1);
+                panelDODetail.Controls.Add(containerPanel);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Vui lòng liên hệ đến quản trị viên hệ thống: {ex.Message}",
-                        "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
