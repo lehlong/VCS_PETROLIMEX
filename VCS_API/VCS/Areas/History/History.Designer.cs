@@ -95,7 +95,7 @@ namespace VCS.APP.Areas.History
             panel1.Controls.Add(btnSearch);
             panel1.Location = new Point(6, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1396, 812);
+            panel1.Size = new Size(1331, 812);
             panel1.TabIndex = 0;
             // 
             // btnResetForm
@@ -108,7 +108,7 @@ namespace VCS.APP.Areas.History
             btnResetForm.ForeColor = Color.White;
             btnResetForm.Image = Properties.Resources.icons8_sync_181;
             btnResetForm.ImageAlign = ContentAlignment.MiddleLeft;
-            btnResetForm.Location = new Point(1345, 41);
+            btnResetForm.Location = new Point(1267, 41);
             btnResetForm.Name = "btnResetForm";
             btnResetForm.Padding = new Padding(6, 0, 6, 0);
             btnResetForm.Size = new Size(40, 40);
@@ -123,7 +123,7 @@ namespace VCS.APP.Areas.History
             panelPage.Controls.Add(btnPrevious);
             panelPage.Controls.Add(lblPageInfo);
             panelPage.Controls.Add(btnNext);
-            panelPage.Location = new Point(1229, 777);
+            panelPage.Location = new Point(1133, 777);
             panelPage.Name = "panelPage";
             panelPage.Size = new Size(159, 29);
             panelPage.TabIndex = 51;
@@ -231,7 +231,7 @@ namespace VCS.APP.Areas.History
             Driver.Name = "Driver";
             Driver.ReadOnly = true;
             Driver.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Driver.Width = 280;
+            Driver.Width = 220;
             // 
             // Plate
             // 
@@ -239,7 +239,7 @@ namespace VCS.APP.Areas.History
             Plate.Name = "Plate";
             Plate.ReadOnly = true;
             Plate.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Plate.Width = 188;
+            Plate.Width = 190;
             // 
             // TimeIn
             // 
@@ -247,7 +247,7 @@ namespace VCS.APP.Areas.History
             TimeIn.Name = "TimeIn";
             TimeIn.ReadOnly = true;
             TimeIn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeIn.Width = 240;
+            TimeIn.Width = 230;
             // 
             // TimeOut
             // 
@@ -255,7 +255,7 @@ namespace VCS.APP.Areas.History
             TimeOut.Name = "TimeOut";
             TimeOut.ReadOnly = true;
             TimeOut.SortMode = DataGridViewColumnSortMode.NotSortable;
-            TimeOut.Width = 240;
+            TimeOut.Width = 230;
             // 
             // Note
             // 
@@ -313,7 +313,7 @@ namespace VCS.APP.Areas.History
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(759, 17);
+            label5.Location = new Point(681, 17);
             label5.Name = "label5";
             label5.Size = new Size(63, 21);
             label5.TabIndex = 46;
@@ -323,7 +323,7 @@ namespace VCS.APP.Areas.History
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(565, 17);
+            label4.Location = new Point(487, 17);
             label4.Name = "label4";
             label4.Size = new Size(50, 21);
             label4.TabIndex = 45;
@@ -333,7 +333,7 @@ namespace VCS.APP.Areas.History
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(textBox2);
-            panel6.Location = new Point(564, 41);
+            panel6.Location = new Point(486, 41);
             panel6.Name = "panel6";
             panel6.Size = new Size(186, 40);
             panel6.TabIndex = 43;
@@ -352,7 +352,7 @@ namespace VCS.APP.Areas.History
             // 
             panel4.BackColor = Color.WhiteSmoke;
             panel4.Controls.Add(txtNumber);
-            panel4.Location = new Point(756, 41);
+            panel4.Location = new Point(678, 41);
             panel4.Name = "panel4";
             panel4.Size = new Size(186, 40);
             panel4.TabIndex = 42;
@@ -371,7 +371,7 @@ namespace VCS.APP.Areas.History
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(1091, 17);
+            label2.Location = new Point(1013, 17);
             label2.Name = "label2";
             label2.Size = new Size(79, 21);
             label2.TabIndex = 41;
@@ -381,7 +381,7 @@ namespace VCS.APP.Areas.History
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(951, 17);
+            label1.Location = new Point(873, 17);
             label1.Name = "label1";
             label1.Size = new Size(68, 21);
             label1.TabIndex = 40;
@@ -391,7 +391,7 @@ namespace VCS.APP.Areas.History
             // 
             panel3.BackColor = Color.WhiteSmoke;
             panel3.Controls.Add(fromDate);
-            panel3.Location = new Point(948, 41);
+            panel3.Location = new Point(870, 41);
             panel3.Name = "panel3";
             panel3.Size = new Size(134, 40);
             panel3.TabIndex = 39;
@@ -413,7 +413,7 @@ namespace VCS.APP.Areas.History
             // 
             panel2.BackColor = Color.WhiteSmoke;
             panel2.Controls.Add(toDate);
-            panel2.Location = new Point(1088, 41);
+            panel2.Location = new Point(1010, 41);
             panel2.Name = "panel2";
             panel2.Size = new Size(134, 40);
             panel2.TabIndex = 38;
@@ -440,7 +440,7 @@ namespace VCS.APP.Areas.History
             btnSearch.ForeColor = Color.White;
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
             btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSearch.Location = new Point(1230, 41);
+            btnSearch.Location = new Point(1152, 41);
             btnSearch.Margin = new Padding(4);
             btnSearch.Name = "btnSearch";
             btnSearch.Padding = new Padding(6, 0, 0, 0);
@@ -456,7 +456,7 @@ namespace VCS.APP.Areas.History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1477, 973);
+            ClientSize = new Size(1349, 973);
             Controls.Add(panel1);
             Name = "History";
             Text = "History";

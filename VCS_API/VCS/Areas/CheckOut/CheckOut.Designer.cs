@@ -30,11 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckOut));
             btnViewAll = new Button();
-            lblStatus = new Label();
-            label1 = new Label();
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
+            panel1 = new Panel();
+            txtVehicleName = new TextBox();
+            label1 = new Label();
             viewCameraFullscreen = new Button();
             panel6 = new Panel();
             pictureBoxLicensePlate = new PictureBox();
@@ -46,8 +47,6 @@
             txtLicensePlate = new TextBox();
             label4 = new Label();
             btnDetect = new Button();
-            panel3 = new Panel();
-            panel1 = new Panel();
             panel2 = new Panel();
             btnCheck = new Button();
             btnCheckOut = new Button();
@@ -62,13 +61,12 @@
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStream).BeginInit();
             panel5.SuspendLayout();
+            panel1.SuspendLayout();
             panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).BeginInit();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).BeginInit();
             panel7.SuspendLayout();
-            panel3.SuspendLayout();
-            panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
@@ -93,30 +91,11 @@
             btnViewAll.UseVisualStyleBackColor = false;
             btnViewAll.Click += btnViewAll_Click;
             // 
-            // lblStatus
-            // 
-            lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblStatus.Location = new Point(5, 9);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(0, 21);
-            lblStatus.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(9, 7);
-            label1.Name = "label1";
-            label1.Size = new Size(153, 21);
-            label1.TabIndex = 0;
-            label1.Text = "Thông báo hệ thống:";
-            // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.Controls.Add(viewStream);
-            panel4.Location = new Point(6, 90);
+            panel4.Location = new Point(6, 6);
             panel4.Name = "panel4";
             panel4.Size = new Size(514, 319);
             panel4.TabIndex = 10;
@@ -134,6 +113,8 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(panel1);
+            panel5.Controls.Add(label1);
             panel5.Controls.Add(viewCameraFullscreen);
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(label2);
@@ -143,10 +124,40 @@
             panel5.Controls.Add(label4);
             panel5.Controls.Add(btnViewAll);
             panel5.Controls.Add(btnDetect);
-            panel5.Location = new Point(6, 414);
+            panel5.Location = new Point(6, 331);
             panel5.Name = "panel5";
-            panel5.Size = new Size(514, 360);
+            panel5.Size = new Size(514, 443);
             panel5.TabIndex = 11;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.Controls.Add(txtVehicleName);
+            panel1.Location = new Point(5, 170);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(504, 44);
+            panel1.TabIndex = 26;
+            // 
+            // txtVehicleName
+            // 
+            txtVehicleName.BackColor = Color.WhiteSmoke;
+            txtVehicleName.BorderStyle = BorderStyle.None;
+            txtVehicleName.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtVehicleName.Location = new Point(7, 6);
+            txtVehicleName.MaxLength = 200;
+            txtVehicleName.Name = "txtVehicleName";
+            txtVehicleName.Size = new Size(487, 32);
+            txtVehicleName.TabIndex = 0;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(8, 147);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 21);
+            label1.TabIndex = 25;
+            label1.Text = "Tài xế:";
             // 
             // viewCameraFullscreen
             // 
@@ -171,7 +182,7 @@
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(pictureBoxLicensePlate);
-            panel6.Location = new Point(264, 174);
+            panel6.Location = new Point(264, 257);
             panel6.Name = "panel6";
             panel6.Size = new Size(244, 178);
             panel6.TabIndex = 24;
@@ -191,7 +202,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(267, 151);
+            label2.Location = new Point(267, 234);
             label2.Name = "label2";
             label2.Size = new Size(114, 21);
             label2.TabIndex = 23;
@@ -201,7 +212,7 @@
             // 
             panel8.BackColor = Color.WhiteSmoke;
             panel8.Controls.Add(pictureBoxVehicle);
-            panel8.Location = new Point(5, 174);
+            panel8.Location = new Point(5, 257);
             panel8.Name = "panel8";
             panel8.Size = new Size(244, 178);
             panel8.TabIndex = 22;
@@ -221,7 +232,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(8, 151);
+            label3.Location = new Point(8, 234);
             label3.Name = "label3";
             label3.Size = new Size(79, 21);
             label3.TabIndex = 21;
@@ -276,25 +287,6 @@
             btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDetect.UseVisualStyleBackColor = false;
             btnDetect.Click += btnDetect_Click;
-            // 
-            // panel3
-            // 
-            panel3.BackColor = Color.WhiteSmoke;
-            panel3.Controls.Add(lblStatus);
-            panel3.Location = new Point(6, 30);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(503, 40);
-            panel3.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(6, 6);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(514, 78);
-            panel1.TabIndex = 9;
             // 
             // panel2
             // 
@@ -453,7 +445,6 @@
             ClientSize = new Size(1344, 781);
             Controls.Add(panel4);
             Controls.Add(panel5);
-            Controls.Add(panel1);
             Controls.Add(panel2);
             FormBorderStyle = FormBorderStyle.None;
             Name = "CheckOut";
@@ -463,16 +454,14 @@
             ((System.ComponentModel.ISupportInitialize)viewStream).EndInit();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLicensePlate).EndInit();
             panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxVehicle).EndInit();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel12.ResumeLayout(false);
@@ -484,8 +473,6 @@
         #endregion
 
         private Button btnViewAll;
-        private Label lblStatus;
-        private Label label1;
         private Panel panel4;
         private LibVLCSharp.WinForms.VideoView viewStream;
         private Panel panel5;
@@ -493,8 +480,6 @@
         private TextBox txtLicensePlate;
         private Label label4;
         private Button btnDetect;
-        private Panel panel3;
-        private Panel panel1;
         private Panel panel2;
         private Panel panelDODetail;
         private Panel panel12;
@@ -513,5 +498,8 @@
         private PictureBox pictureBoxVehicle;
         private Label label3;
         private Button viewCameraFullscreen;
+        private Panel panel1;
+        private TextBox txtVehicleName;
+        private Label label1;
     }
 }

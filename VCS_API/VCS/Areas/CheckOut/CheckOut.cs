@@ -98,12 +98,14 @@ namespace VCS.Areas.CheckOut
                             x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
                             x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
                             x.IsCheckout == false).ToList();
+                        var name = i.FirstOrDefault().VehicleName;
                         if (i.Count() == 1)
                         {
                             selectVehicle.SelectedValue = i.FirstOrDefault().Id;
                         }
 
                         txtLicensePlate.Text = licensePlate;
+                        txtVehicleName.Text = name;
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
@@ -358,6 +360,7 @@ namespace VCS.Areas.CheckOut
                 var detail = GetCheckInDetail(selectedValue);
                 if (detail == null) return;
                 txtLicensePlate.Text = detail.LicensePlate;
+                txtVehicleName.Text = detail.VehicleName;
                 _lstDOSAP.Clear();
                 panelDODetail.Controls.OfType<DataGridView>().ToList()
                     .ForEach(x => { x.Dispose(); panelDODetail.Controls.Remove(x); });
@@ -508,6 +511,7 @@ namespace VCS.Areas.CheckOut
                 var result = new CheckInDetailModel
                 {
                     LicensePlate = header.VehicleCode,
+                    VehicleName = header.VehicleName,
                     ListDOSAP = new List<DOSAPDataDto>()
                 };
 

@@ -15,6 +15,7 @@ namespace VCS.Services
     }
     public class CheckInDetailModel
     {
+        public string? VehicleName { get; set; }
         public string? LicensePlate { get; set; }
         public string? VehicleImagePath { get; set; }
         public string? PlateImagePath { get; set; }

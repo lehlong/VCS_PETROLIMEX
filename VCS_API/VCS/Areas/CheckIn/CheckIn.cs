@@ -8,6 +8,7 @@ using LibVLCSharp.Shared;
 using LibVLCSharp.WinForms;
 using Microsoft.EntityFrameworkCore;
 using NPOI.HSSF.Record.Chart;
+using NPOI.SS.Formula.Functions;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System;
 using System.Collections.Generic;
@@ -357,6 +358,54 @@ namespace VCS.Areas.CheckIn
             txtNumberDO.Text = "";
 
         }
+        public static string GetText(string type)
+        {
+            if (type == "DCCH")
+            {
+                return "Di chuyển ra cửa hàng";
+            }
+            else if (type == "DCNB")
+            {
+                return "Di chuyển nội bộ ngành";
+            }
+            else if (type == "XBTX")
+            {
+                return "Xuất bán tái xuất";
+            }
+            else if (type == "XBND")
+            {
+                return "Xuất bán nội địa";
+            }
+            else if (type == "XTHG")
+            {
+                return "Xuất trả hàng gửi";
+            }
+            else if (type == "MHGL")
+            {
+                return "Mua hàng gửi lại";
+            }
+            else if (type == "HHK")
+            {
+                return "Hàng hóa khác";
+            }
+            else if (type == "KHLH")
+            {
+                return "Kế hoạch lấy hàng";
+            }
+            else if (type == "SUM")
+            {
+                return "Đơn hàng tổng";
+            }
+            else if (type == "XDTH")
+            {
+                return "Xuất đổi trả hàng";
+            }
+            else if (type == "XHND")
+            {
+                return "Xuất hàng nội dụng";
+            }
+            return string.Empty;
+        }
 
         private void AppendPanelDetail(DOSAPDataDto data)
         {
@@ -389,7 +438,32 @@ namespace VCS.Areas.CheckIn
                 {
                     deleteButton.Image = new Bitmap(deleteButton.Image, new Size(16, 16));
                 }
+                //CREATE TEXT
+                var customer = $"{data.DATA.LIST_DO.FirstOrDefault().CUSTOMER_NAME}";
+                var nguon = $"{GetText(data.DATA.LIST_DO.FirstOrDefault().MODUL_TYPE)} - {data.DATA.LIST_DO.FirstOrDefault().NGUON_HANG}";
 
+                // CREATE LABEL          
+                var customerLabel = new Label
+                {
+                    Text = customer,
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(10, yPosition),
+                    ForeColor = Color.Black,
+                    TextAlign = ContentAlignment.MiddleRight
+
+                };
+                yPosition += customerLabel.Height + 5;
+                var nguonLabel = new Label
+                {
+                    Text = nguon,
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(10, yPosition),
+                    ForeColor = Color.Black,
+                    TextAlign = ContentAlignment.MiddleRight
+
+                };
                 // CREATE DATA GRID VIEW
                 var dataGridView1 = new DataGridView
                 {
@@ -435,6 +509,7 @@ namespace VCS.Areas.CheckIn
                 dataTable.Columns.Add("MẶT HÀNG", typeof(string));
                 dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
 
+
                 // ADD DATA TO TABLE
                 var firstDo = data.DATA.LIST_DO.FirstOrDefault();
                 if (firstDo != null)
@@ -451,6 +526,7 @@ namespace VCS.Areas.CheckIn
                             data.DATA.VEHICLE,
                             materialName,
                             $"{i.QUANTITY} ({i.UNIT})"
+
                         );
                     }
                 }
@@ -502,6 +578,8 @@ namespace VCS.Areas.CheckIn
 
                 // ADD CONTROLS TO PANEL
                 panelDODetail.Controls.Add(deleteButton);
+                panelDODetail.Controls.Add(customerLabel);
+                panelDODetail.Controls.Add(nguonLabel);
                 panelDODetail.Controls.Add(dataGridView1);
             }
             catch (Exception ex)
