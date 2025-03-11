@@ -165,14 +165,13 @@
         <tr>
             <th style="width: fit-content;">Số lệnh</th>
             <th style="width: 42px;">Mã tự động hoá</th>
-            <th style="width: 140px;">Tên hàng hoá</th>
+            <th style="width: 120px;">Tên hàng hoá</th>
             <th style="width: 42px;">Mã bể</th>
             <th style="width: 42px;">Thứ tự ngăn</th>
             <th>Dung tích ngăn</th>
             <th>Mã số lượng kế/họng xuất</th>
             <th>Lượng xuất thực tế</th>
             <th>Nhiệt độ thực tế (oC)</th>
-            <th>Khoảng cách so với tấm mức (mm)</th>
             <th>Giàn<br>Họng</th>
         </tr>
         <tr *ngFor="let i of ticketDetail.detail">
@@ -182,7 +181,6 @@
             <td>{{i.beXuat}}</td>
             <td>002</td>
             <td style="text-align: right;">{{i.tongDuXuat | number}}</td>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>

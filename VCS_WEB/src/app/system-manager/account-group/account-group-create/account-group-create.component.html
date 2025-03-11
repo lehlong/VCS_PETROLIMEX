@@ -2,10 +2,10 @@
   [nzExtra]="extra" (nzOnClose)="close()">
   <ng-container *nzDrawerContent>
     <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
-      <app-input-clear placeholder="Nhập mã nhóm tài khoản" [required]="true" label="Mã nhóm tài khoản"
+      <app-input-clear placeholder="Nhập tên nhóm tài khoản" [required]="true" label="Tên nhóm tài khoản"
         [control]="$any(validateForm).controls['name']">
       </app-input-clear>
-      <app-input-clear type="textarea" placeholder="Nhập tên nhóm tài khoản" label="Tên nhóm tài khoản"
+      <app-input-clear type="textarea" placeholder="Nhập ghi chú" label="Ghi chú"
         [control]="$any(validateForm).controls['notes']">
       </app-input-clear>
 
