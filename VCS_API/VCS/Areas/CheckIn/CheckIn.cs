@@ -142,6 +142,7 @@ namespace VCS.Areas.CheckIn
             if (detail == null) return;
 
             txtLicensePlate.Text = detail.LicensePlate;
+            txtVehicleName.Text = detail.VehicleName;
 
             if (!string.IsNullOrEmpty(detail.VehicleImagePath))
             {
@@ -183,12 +184,8 @@ namespace VCS.Areas.CheckIn
             }
 
             _lstDOSAP.Clear();
-            panelDODetail.Controls.OfType<DataGridView>().ToList()
-                .ForEach(x => { x.Dispose(); panelDODetail.Controls.Remove(x); });
-            panelDODetail.Controls.OfType<Button>()
-                .Where(x => x.Size.Width == 30)
-                .ToList()
-                .ForEach(x => { x.Dispose(); panelDODetail.Controls.Remove(x); });
+
+            panelDODetail.Controls.Clear();
 
             _lstDOSAP.AddRange(detail.ListDOSAP);
             foreach (var doSap in detail.ListDOSAP)
@@ -201,8 +198,9 @@ namespace VCS.Areas.CheckIn
         {
             try
             {
-                var header = _dbContext.TblBuHeader
-                    .FirstOrDefault(x => x.Id == headerId);
+                lstCheckDo = new List<string>();
+
+                var header = _dbContext.TblBuHeader.Find(headerId);
 
                 if (header == null)
                 {
@@ -212,6 +210,7 @@ namespace VCS.Areas.CheckIn
                 var result = new CheckInDetailModel
                 {
                     LicensePlate = header.VehicleCode,
+                    VehicleName = header.VehicleName,
                     ListDOSAP = new List<DOSAPDataDto>()
                 };
 
@@ -230,6 +229,7 @@ namespace VCS.Areas.CheckIn
                     var materials = _dbContext.TblBuDetailMaterial
                         .Where(x => x.HeaderId == doDetail.Id)
                         .ToList();
+                    lstCheckDo.Add(doDetail.Do1Sap);
 
                     var doSapData = new DOSAPDataDto
                     {
@@ -242,6 +242,15 @@ namespace VCS.Areas.CheckIn
                                 new DO
                                 {
                                     DO_NUMBER = doDetail.Do1Sap,
+                                    NGUON_HANG = doDetail.NguonHang,
+                                    TANK_GROUP = doDetail.TankGroup,
+                                    MODUL_TYPE = doDetail.ModulType,
+                                    CUSTOMER_CODE = doDetail.CustomerCode,
+                                    CUSTOMER_NAME = doDetail.CustomerName,
+                                    PHONE = doDetail.Phone,
+                                    EMAIL = doDetail.Email,
+                                    TAI_XE = doDetail.TaiXe,
+
                                     LIST_MATERIAL = materials.Select(m => new LIST_MATERIAL
                                     {
                                         MATERIAL = m.MaterialCode,
@@ -263,35 +272,6 @@ namespace VCS.Areas.CheckIn
                 MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
-            }
-        }
-        private void selectVehicle_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            if (e.Index < 0) return;
-
-            ComboBox combo = sender as ComboBox;
-
-            Color backColor = combo.BackColor;
-
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-            {
-                backColor = Color.FromArgb(230, 230, 230);
-            }
-            else if ((e.State & DrawItemState.HotLight) == DrawItemState.HotLight)
-            {
-                backColor = Color.FromArgb(245, 245, 245);
-            }
-            e.Graphics.FillRectangle(new SolidBrush(backColor), e.Bounds);
-            if (e.Index >= 0)
-            {
-                string text = combo.Items[e.Index].ToString();
-                SizeF textSize = e.Graphics.MeasureString(text, e.Font);
-                float yPos = e.Bounds.Y + (e.Bounds.Height - textSize.Height) / 2;
-
-                e.Graphics.DrawString(text,
-                    e.Font,
-                    new SolidBrush(Color.Black),
-                    new Point(e.Bounds.X + 3, (int)yPos));
             }
         }
         #endregion
@@ -416,12 +396,6 @@ namespace VCS.Areas.CheckIn
 
                 var firstDo = data.DATA.LIST_DO.FirstOrDefault();
                 string doNumber = firstDo.DO_NUMBER;
-
-                if (panelDODetail.Controls.OfType<Panel>().Any(p => p.Name == $"panel_{doNumber}"))
-                {
-                    MessageBox.Show("Lệnh xuất này đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
 
                 int yPosition = panelDODetail.Controls.OfType<Panel>().Any()
                     ? panelDODetail.Controls.OfType<Panel>().Max(p => p.Bottom) + 6
@@ -751,6 +725,11 @@ namespace VCS.Areas.CheckIn
                 CommonService.Alert("Không có thông tin phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
+            if (string.IsNullOrEmpty(txtVehicleName.Text))
+            {
+                CommonService.Alert("Không có thông tin tài xế!", Alert.Alert.enumType.Error);
+                return;
+            }
 
             var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.StatusVehicle != "04"
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
@@ -761,12 +740,11 @@ namespace VCS.Areas.CheckIn
             }
 
             var headerId = Guid.NewGuid().ToString();
-            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
             _dbContext.TblBuHeader.Add(new TblBuHeader
             {
                 Id = headerId,
                 VehicleCode = txtLicensePlate.Text,
-                VehicleName = name,
+                VehicleName = txtVehicleName.Text,
                 CompanyCode = ProfileUtilities.User.OrganizeCode,
                 WarehouseCode = ProfileUtilities.User.WarehouseCode,
                 NoteIn = txtNoteIn.Text,
@@ -841,7 +819,7 @@ namespace VCS.Areas.CheckIn
                 });
             }
             _dbContext.SaveChanges();
-            CommonService.Alert("Cho phương tiện vào hàng chờ thàh công!", Alert.Alert.enumType.Success);
+            CommonService.Alert("Cho phương tiện vào hàng chờ thành công!", Alert.Alert.enumType.Success);
             ResetForm();
         }
         #endregion

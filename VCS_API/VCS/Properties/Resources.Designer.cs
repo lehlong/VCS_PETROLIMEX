@@ -73,6 +73,16 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bg_auth_1 {
+            get {
+                object obj = ResourceManager.GetObject("bg-auth-1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chien_luoc_nhuong_quyen_cua_petrolimex_3_muc_tieu_day_tham_vong {
             get {
                 object obj = ResourceManager.GetObject("chien-luoc-nhuong-quyen-cua-petrolimex-3-muc-tieu-day-tham-vong", resourceCulture);

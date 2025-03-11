@@ -144,9 +144,7 @@ namespace VCS.Areas.CheckOut
             items.Add(new ComboBoxItem("-", ""));
             foreach (var item in lstQueue)
             {
-                var v = _dbContext.TblMdVehicle.FirstOrDefault(x => x.Code == item.VehicleCode)?.OicPbatch +
-                    _dbContext.TblMdVehicle.FirstOrDefault(x => x.Code == item.VehicleCode)?.OicPtrip;
-                items.Add(new ComboBoxItem($"{item.VehicleCode} - {v}", item.Id));
+                items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.VehicleName}", item.Id));
             }
             selectVehicle.DataSource = items;
             selectVehicle.DisplayMember = "Text";

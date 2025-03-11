@@ -125,6 +125,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.White;
+            panelMenu.BackgroundImageLayout = ImageLayout.None;
             panelMenu.Controls.Add(btnLogOut);
             panelMenu.Controls.Add(btnStatus);
             panelMenu.Controls.Add(btnSetting);
