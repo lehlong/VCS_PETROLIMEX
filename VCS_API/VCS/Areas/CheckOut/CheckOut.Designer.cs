@@ -35,6 +35,7 @@
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
+            viewCameraFullscreen = new Button();
             panel6 = new Panel();
             pictureBoxLicensePlate = new PictureBox();
             label2 = new Label();
@@ -82,7 +83,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = Properties.Resources.icons8_application_18;
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(468, 6);
+            btnViewAll.Location = new Point(416, 9);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -133,6 +134,7 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(viewCameraFullscreen);
             panel5.Controls.Add(panel6);
             panel5.Controls.Add(label2);
             panel5.Controls.Add(panel8);
@@ -146,6 +148,25 @@
             panel5.Size = new Size(514, 360);
             panel5.TabIndex = 11;
             // 
+            // viewCameraFullscreen
+            // 
+            viewCameraFullscreen.BackColor = Color.FromArgb(52, 58, 64);
+            viewCameraFullscreen.Cursor = Cursors.Hand;
+            viewCameraFullscreen.FlatStyle = FlatStyle.Flat;
+            viewCameraFullscreen.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            viewCameraFullscreen.ForeColor = Color.White;
+            viewCameraFullscreen.Image = Properties.Resources.icons8_fullscreen_18;
+            viewCameraFullscreen.ImageAlign = ContentAlignment.MiddleLeft;
+            viewCameraFullscreen.Location = new Point(464, 9);
+            viewCameraFullscreen.Name = "viewCameraFullscreen";
+            viewCameraFullscreen.Padding = new Padding(6, 0, 0, 0);
+            viewCameraFullscreen.Size = new Size(42, 40);
+            viewCameraFullscreen.TabIndex = 22;
+            viewCameraFullscreen.TextAlign = ContentAlignment.MiddleLeft;
+            viewCameraFullscreen.TextImageRelation = TextImageRelation.ImageBeforeText;
+            viewCameraFullscreen.UseVisualStyleBackColor = false;
+            viewCameraFullscreen.Click += viewCameraFullscreen_Click;
+            // 
             // panel6
             // 
             panel6.BackColor = Color.WhiteSmoke;
@@ -157,12 +178,14 @@
             // 
             // pictureBoxLicensePlate
             // 
+            pictureBoxLicensePlate.Cursor = Cursors.Hand;
             pictureBoxLicensePlate.Location = new Point(5, 4);
             pictureBoxLicensePlate.Name = "pictureBoxLicensePlate";
             pictureBoxLicensePlate.Size = new Size(235, 170);
             pictureBoxLicensePlate.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxLicensePlate.TabIndex = 0;
             pictureBoxLicensePlate.TabStop = false;
+            pictureBoxLicensePlate.Click += pictureBoxLicensePlate_Click;
             // 
             // label2
             // 
@@ -185,12 +208,14 @@
             // 
             // pictureBoxVehicle
             // 
+            pictureBoxVehicle.Cursor = Cursors.Hand;
             pictureBoxVehicle.Location = new Point(5, 4);
             pictureBoxVehicle.Name = "pictureBoxVehicle";
             pictureBoxVehicle.Size = new Size(235, 170);
             pictureBoxVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxVehicle.TabIndex = 0;
             pictureBoxVehicle.TabStop = false;
+            pictureBoxVehicle.Click += pictureBoxVehicle_Click;
             // 
             // label3
             // 
@@ -241,7 +266,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(326, 6);
+            btnDetect.Location = new Point(274, 9);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(136, 40);
@@ -487,5 +512,6 @@
         private Panel panel8;
         private PictureBox pictureBoxVehicle;
         private Label label3;
+        private Button viewCameraFullscreen;
     }
 }

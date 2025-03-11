@@ -131,5 +131,19 @@ namespace VCS.APP.Areas.StatusSystem
                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Directory.Delete(Global.PathSaveFile, true);
+                CommonService.Alert("Dọn dẹp bộ nhớ thành công!", VCS.Areas.Alert.Alert.enumType.Success);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
+    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

@@ -183,6 +183,16 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_fullscreen_18 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-fullscreen-18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_history_18__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-history-18 (1)", resourceCulture);

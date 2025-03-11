@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.Areas.ViewAllCamera;
 using VCS.Services;
 
 namespace VCS.Areas.CheckOut
@@ -44,7 +45,7 @@ namespace VCS.Areas.CheckOut
         }
 
         #region Khởi tạo và stream camera
-       
+
         private void StreamCamera()
         {
             try
@@ -106,7 +107,7 @@ namespace VCS.Areas.CheckOut
                         pictureBoxLicensePlate.Image = croppedImage;
                     }
                 }
-                CommonService.Alert("Nhận diện biển số thành công!",Alert.Alert.enumType.Success);
+                CommonService.Alert("Nhận diện biển số thành công!", Alert.Alert.enumType.Success);
 
                 //Lưu các ảnh từ camera vào thư mục
                 var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
@@ -559,6 +560,52 @@ namespace VCS.Areas.CheckOut
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
+        }
+
+        private void pictureBoxVehicle_Click(object sender, EventArgs e)
+        {
+            PictureBox clickedPictureBox = sender as PictureBox;
+
+            if (clickedPictureBox != null && clickedPictureBox.Image != null)
+            {
+                Form fullscreenForm = new Form();
+                fullscreenForm.WindowState = FormWindowState.Maximized;
+                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                PictureBox fullscreenPictureBox = new PictureBox();
+                fullscreenPictureBox.Image = clickedPictureBox.Image;
+                fullscreenPictureBox.Dock = DockStyle.Fill;
+                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                fullscreenForm.Controls.Add(fullscreenPictureBox);
+                fullscreenForm.ShowDialog();
+            }
+        }
+
+        private void pictureBoxLicensePlate_Click(object sender, EventArgs e)
+        {
+            PictureBox clickedPictureBox = sender as PictureBox;
+
+            if (clickedPictureBox != null && clickedPictureBox.Image != null)
+            {
+                Form fullscreenForm = new Form();
+                fullscreenForm.WindowState = FormWindowState.Maximized;
+                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                PictureBox fullscreenPictureBox = new PictureBox();
+                fullscreenPictureBox.Image = clickedPictureBox.Image;
+                fullscreenPictureBox.Dock = DockStyle.Fill;
+                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                fullscreenForm.Controls.Add(fullscreenPictureBox);
+                fullscreenForm.ShowDialog();
+            }
+        }
+
+        private void viewCameraFullscreen_Click(object sender, EventArgs e)
+        {
+            var v = new ViewCamera(CameraDetect);
+            v.ShowDialog();
         }
     }
 }

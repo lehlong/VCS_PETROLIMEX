@@ -136,6 +136,7 @@ namespace VCS.APP.Areas.StatusSystem
             btnClean.TextAlign = ContentAlignment.MiddleLeft;
             btnClean.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClean.UseVisualStyleBackColor = false;
+            btnClean.Click += btnClean_Click;
             // 
             // panel9
             // 

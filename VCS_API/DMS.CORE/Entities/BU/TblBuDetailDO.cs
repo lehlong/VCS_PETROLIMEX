@@ -19,5 +19,22 @@ namespace DMS.CORE.Entities.BU
         [Column("VEHICLE_CODE", TypeName = "NVARCHAR(50)")]
         public string VehicleCode { get; set; }
 
+        [Column("TANK_GROUP", TypeName = "NVARCHAR(50)")]
+        public string? TankGroup { get; set; }
+        [Column("MODUL_TYPE", TypeName = "NVARCHAR(50)")]
+        public string? ModulType { get; set; }
+        [Column("CUSTOMER_CODE", TypeName = "NVARCHAR(50)")]
+        public string? CustomerCode { get; set; }
+        [Column("CUSTOMER_NAME", TypeName = "NVARCHAR(500)")]
+        public string? CustomerName { get; set; }
+        [Column("PHONE", TypeName = "NVARCHAR(50)")]
+        public string? Phone { get; set; }
+        [Column("EMAIL", TypeName = "NVARCHAR(50)")]
+        public string? Email { get; set; }
+        [Column("TAI_XE", TypeName = "NVARCHAR(50)")]
+        public string? TaiXe { get; set; }
+        [Column("NGUON_HANG", TypeName = "NVARCHAR(50)")]
+        public string? NguonHang { get; set; }
+
     }
 }

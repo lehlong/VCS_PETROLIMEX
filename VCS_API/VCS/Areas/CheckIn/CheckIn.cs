@@ -7,6 +7,7 @@ using LibVLCSharp.Forms.Shared;
 using LibVLCSharp.Shared;
 using LibVLCSharp.WinForms;
 using Microsoft.EntityFrameworkCore;
+using NPOI.HSSF.Record.Chart;
 using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ using VCS.APP.Areas.PrintStt;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.Areas.ViewAllCamera;
 using VCS.Services;
 
 namespace VCS.Areas.CheckIn
@@ -77,13 +79,6 @@ namespace VCS.Areas.CheckIn
             }
         }
         #endregion
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            _mediaPlayer?.Stop();
-            _mediaPlayer?.Dispose();
-            base.OnFormClosing(e);
-        }
 
         #region Reset Form
         private void btnResetForm_Click(object sender, EventArgs e)
@@ -355,6 +350,7 @@ namespace VCS.Areas.CheckIn
 
             _lstDOSAP.Add(dataDetail);
             lstCheckDo.Add(txtNumberDO.Text.Trim());
+            txtVehicleName.Text = dataDetail.DATA.LIST_DO.FirstOrDefault()?.TAI_XE;
             AppendPanelDetail(dataDetail);
 
             CommonService.Alert("Kiểm tra lệnh xuất thành công!", Alert.Alert.enumType.Success);
@@ -596,12 +592,21 @@ namespace VCS.Areas.CheckIn
                 foreach (var i in _lstDOSAP)
                 {
                     var hId = Guid.NewGuid().ToString();
+                    var _do = i.DATA.LIST_DO.FirstOrDefault();
                     _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
                     {
                         Id = hId,
                         HeaderId = headerId,
-                        Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
-                        VehicleCode = i.DATA.VEHICLE
+                        Do1Sap = _do.DO_NUMBER,
+                        VehicleCode = i.DATA.VEHICLE,
+                        TankGroup = _do?.TANK_GROUP,
+                        ModulType = _do?.MODUL_TYPE,
+                        CustomerCode = _do?.CUSTOMER_CODE,
+                        CustomerName = _do?.CUSTOMER_NAME,
+                        Phone = _do?.PHONE,
+                        Email = _do?.EMAIL,
+                        TaiXe = _do?.TAI_XE,
+                        NguonHang = _do?.NGUON_HANG,
                     });
                     foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
                     {
@@ -656,8 +661,6 @@ namespace VCS.Areas.CheckIn
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     OrgCode = ProfileUtilities.User.OrganizeCode
                 });
-
-                CommonService.Alert("Cho xe vào thành công!", Alert.Alert.enumType.Success);
             }
             else
             {
@@ -678,6 +681,7 @@ namespace VCS.Areas.CheckIn
             };
             STT sttForm = new STT(ticketInfo, lstCheckDo);
             sttForm.ShowDialog();
+            CommonService.Alert("Cho xe vào thành công!", Alert.Alert.enumType.Success);
             ResetForm();
         }
         #endregion
@@ -716,14 +720,23 @@ namespace VCS.Areas.CheckIn
             foreach (var i in _lstDOSAP)
             {
                 var hId = Guid.NewGuid().ToString();
+                var _do = i.DATA.LIST_DO.FirstOrDefault();
                 _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
                 {
                     Id = hId,
                     HeaderId = headerId,
-                    Do1Sap = i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
-                    VehicleCode = i.DATA.VEHICLE
+                    Do1Sap = _do.DO_NUMBER,
+                    VehicleCode = i.DATA.VEHICLE,
+                    TankGroup = _do?.TANK_GROUP,
+                    ModulType = _do?.MODUL_TYPE,
+                    CustomerCode = _do?.CUSTOMER_CODE,
+                    CustomerName = _do?.CUSTOMER_NAME,
+                    Phone = _do?.PHONE,
+                    Email = _do?.EMAIL,
+                    TaiXe = _do?.TAI_XE,
+                    NguonHang = _do?.NGUON_HANG,
                 });
-                foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                foreach (var l in _do.LIST_MATERIAL)
                 {
                     _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
                     {
@@ -818,15 +831,23 @@ namespace VCS.Areas.CheckIn
                 foreach (var doSap in _lstDOSAP)
                 {
                     var hId = Guid.NewGuid().ToString();
+                    var _do = doSap.DATA.LIST_DO.FirstOrDefault();
                     _dbContext.TblBuDetailDO.Add(new TblBuDetailDO
                     {
                         Id = hId,
                         HeaderId = selectedHeaderId,
-                        Do1Sap = doSap.DATA.LIST_DO.FirstOrDefault().DO_NUMBER,
+                        Do1Sap = _do.DO_NUMBER,
                         VehicleCode = doSap.DATA.VEHICLE,
+                        TankGroup = _do?.TANK_GROUP,
+                        ModulType = _do?.MODUL_TYPE,
+                        CustomerCode = _do?.CUSTOMER_CODE,
+                        CustomerName = _do?.CUSTOMER_NAME,
+                        Phone = _do?.PHONE,
+                        Email = _do?.EMAIL,
+                        TaiXe = _do?.TAI_XE,
+                        NguonHang = _do?.NGUON_HANG,
                     });
-
-                    foreach (var material in doSap.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
+                    foreach (var material in _do.LIST_MATERIAL)
                     {
                         _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
                         {
@@ -921,6 +942,12 @@ namespace VCS.Areas.CheckIn
                     {
                         txtLicensePlate.Text = licensePlate;
                         pictureBoxLicensePlate.Image = croppedImage;
+                        if (string.IsNullOrEmpty(txtVehicleName.Text))
+                        {
+                            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == licensePlate)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == licensePlate)?.OicPtrip ?? "";
+                            txtVehicleName.Text = name;
+                        }
+
                     }
                 }
                 CommonService.Alert("Nhận diện thành công!", Alert.Alert.enumType.Success);
@@ -1018,6 +1045,19 @@ namespace VCS.Areas.CheckIn
                 fullscreenForm.Controls.Add(fullscreenPictureBox);
                 fullscreenForm.ShowDialog();
             }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _mediaPlayer?.Stop();
+            _mediaPlayer?.Dispose();
+            base.OnFormClosing(e);
+        }
+
+        private void viewCameraFullscreen_Click(object sender, EventArgs e)
+        {
+            var v = new ViewCamera(CameraDetect);
+            v.ShowDialog();
         }
     }
 }

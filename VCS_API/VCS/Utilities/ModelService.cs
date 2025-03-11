@@ -39,6 +39,12 @@ namespace VCS.Services
         public string DO_NUMBER { get; set; }
         public string NGUON_HANG { get; set; }
         public string TANK_GROUP { get; set; }
+        public string MODUL_TYPE { get; set; }
+        public string CUSTOMER_CODE { get; set; }
+        public string CUSTOMER_NAME { get; set; }
+        public string PHONE { get; set; }
+        public string EMAIL { get; set; }
+        public string TAI_XE { get; set; }
         public List<LIST_MATERIAL> LIST_MATERIAL { get; set; }
     }
 

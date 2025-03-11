@@ -48,8 +48,9 @@
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
+            viewCameraFullscreen = new Button();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            txtVehicleName = new TextBox();
             label1 = new Label();
             panel6 = new Panel();
             pictureBoxLicensePlate = new PictureBox();
@@ -341,6 +342,7 @@
             // panel5
             // 
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(viewCameraFullscreen);
             panel5.Controls.Add(panel1);
             panel5.Controls.Add(label1);
             panel5.Controls.Add(panel6);
@@ -356,31 +358,50 @@
             panel5.Size = new Size(514, 444);
             panel5.TabIndex = 7;
             // 
+            // viewCameraFullscreen
+            // 
+            viewCameraFullscreen.BackColor = Color.FromArgb(52, 58, 64);
+            viewCameraFullscreen.Cursor = Cursors.Hand;
+            viewCameraFullscreen.FlatStyle = FlatStyle.Flat;
+            viewCameraFullscreen.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            viewCameraFullscreen.ForeColor = Color.White;
+            viewCameraFullscreen.Image = Properties.Resources.icons8_fullscreen_18;
+            viewCameraFullscreen.ImageAlign = ContentAlignment.MiddleLeft;
+            viewCameraFullscreen.Location = new Point(465, 8);
+            viewCameraFullscreen.Name = "viewCameraFullscreen";
+            viewCameraFullscreen.Padding = new Padding(6, 0, 0, 0);
+            viewCameraFullscreen.Size = new Size(42, 40);
+            viewCameraFullscreen.TabIndex = 21;
+            viewCameraFullscreen.TextAlign = ContentAlignment.MiddleLeft;
+            viewCameraFullscreen.TextImageRelation = TextImageRelation.ImageBeforeText;
+            viewCameraFullscreen.UseVisualStyleBackColor = false;
+            viewCameraFullscreen.Click += viewCameraFullscreen_Click;
+            // 
             // panel1
             // 
             panel1.BackColor = Color.WhiteSmoke;
-            panel1.Controls.Add(textBox1);
-            panel1.Location = new Point(5, 172);
+            panel1.Controls.Add(txtVehicleName);
+            panel1.Location = new Point(5, 177);
             panel1.Name = "panel1";
             panel1.Size = new Size(504, 44);
             panel1.TabIndex = 17;
             // 
-            // textBox1
+            // txtVehicleName
             // 
-            textBox1.BackColor = Color.WhiteSmoke;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(7, 6);
-            textBox1.MaxLength = 200;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(487, 32);
-            textBox1.TabIndex = 0;
+            txtVehicleName.BackColor = Color.WhiteSmoke;
+            txtVehicleName.BorderStyle = BorderStyle.None;
+            txtVehicleName.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtVehicleName.Location = new Point(7, 6);
+            txtVehicleName.MaxLength = 200;
+            txtVehicleName.Name = "txtVehicleName";
+            txtVehicleName.Size = new Size(487, 32);
+            txtVehicleName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(8, 149);
+            label1.Location = new Point(8, 154);
             label1.Name = "label1";
             label1.Size = new Size(50, 21);
             label1.TabIndex = 16;
@@ -390,7 +411,7 @@
             // 
             panel6.BackColor = Color.WhiteSmoke;
             panel6.Controls.Add(pictureBoxLicensePlate);
-            panel6.Location = new Point(265, 253);
+            panel6.Location = new Point(265, 259);
             panel6.Name = "panel6";
             panel6.Size = new Size(244, 178);
             panel6.TabIndex = 20;
@@ -410,7 +431,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(268, 230);
+            label2.Location = new Point(268, 236);
             label2.Name = "label2";
             label2.Size = new Size(114, 21);
             label2.TabIndex = 19;
@@ -420,7 +441,7 @@
             // 
             panel8.BackColor = Color.WhiteSmoke;
             panel8.Controls.Add(pictureBoxVehicle);
-            panel8.Location = new Point(6, 253);
+            panel8.Location = new Point(6, 259);
             panel8.Name = "panel8";
             panel8.Size = new Size(244, 178);
             panel8.TabIndex = 18;
@@ -440,7 +461,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(9, 230);
+            label3.Location = new Point(9, 236);
             label3.Name = "label3";
             label3.Size = new Size(79, 21);
             label3.TabIndex = 16;
@@ -450,7 +471,7 @@
             // 
             panel7.BackColor = Color.WhiteSmoke;
             panel7.Controls.Add(txtLicensePlate);
-            panel7.Location = new Point(5, 83);
+            panel7.Location = new Point(5, 86);
             panel7.Name = "panel7";
             panel7.Size = new Size(504, 60);
             panel7.TabIndex = 15;
@@ -470,7 +491,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(8, 60);
+            label4.Location = new Point(8, 63);
             label4.Name = "label4";
             label4.Size = new Size(152, 21);
             label4.TabIndex = 14;
@@ -485,7 +506,7 @@
             btnViewAll.ForeColor = Color.White;
             btnViewAll.Image = Properties.Resources.icons8_application_18;
             btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(466, 7);
+            btnViewAll.Location = new Point(417, 8);
             btnViewAll.Name = "btnViewAll";
             btnViewAll.Padding = new Padding(6, 0, 0, 0);
             btnViewAll.Size = new Size(42, 40);
@@ -504,7 +525,7 @@
             btnDetect.ForeColor = Color.White;
             btnDetect.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(324, 7);
+            btnDetect.Location = new Point(275, 8);
             btnDetect.Name = "btnDetect";
             btnDetect.Padding = new Padding(6, 0, 0, 0);
             btnDetect.Size = new Size(136, 40);
@@ -584,7 +605,8 @@
         private PictureBox pictureBoxLicensePlate;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox txtVehicleName;
         private Label label1;
+        private Button viewCameraFullscreen;
     }
 }
