@@ -33,7 +33,7 @@
             panel12 = new Panel();
             txtNoteIn = new TextBox();
             panel11 = new Panel();
-            selectVehicle = new ComboBox();
+            selectVehicle = new VCS.APP.Utilities.BorderlessComboBox();
             panel10 = new Panel();
             btnCheckDetailDO = new PictureBox();
             txtNumberDO = new TextBox();
@@ -138,20 +138,16 @@
             // 
             // selectVehicle
             // 
+            selectVehicle.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            selectVehicle.AutoCompleteSource = AutoCompleteSource.ListItems;
             selectVehicle.BackColor = Color.WhiteSmoke;
-            selectVehicle.Dock = DockStyle.Fill;
-            selectVehicle.DrawMode = DrawMode.OwnerDrawFixed;
-            selectVehicle.DropDownStyle = ComboBoxStyle.DropDownList;
             selectVehicle.FlatStyle = FlatStyle.Flat;
             selectVehicle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             selectVehicle.FormattingEnabled = true;
-            selectVehicle.ItemHeight = 35;
-            selectVehicle.Location = new Point(0, 0);
-            selectVehicle.Margin = new Padding(0);
+            selectVehicle.Location = new Point(5, 5);
             selectVehicle.Name = "selectVehicle";
-            selectVehicle.Size = new Size(399, 41);
-            selectVehicle.TabIndex = 16;
-            selectVehicle.DrawItem += selectVehicle_DrawItem;
+            selectVehicle.Size = new Size(389, 29);
+            selectVehicle.TabIndex = 1;
             selectVehicle.SelectedValueChanged += selectVehicle_SelectedValueChanged;
             // 
             // panel10
@@ -598,7 +594,6 @@
         private PictureBox btnCheckDetailDO;
         private TextBox txtNoteIn;
         private LibVLCSharp.WinForms.VideoView viewStream;
-        private ComboBox selectVehicle;
         private Panel panelDODetail;
         private PictureBox pictureBoxVehicle;
         private Panel panel6;
@@ -608,5 +603,6 @@
         private TextBox txtVehicleName;
         private Label label1;
         private Button viewCameraFullscreen;
+        private APP.Utilities.BorderlessComboBox selectVehicle;
     }
 }

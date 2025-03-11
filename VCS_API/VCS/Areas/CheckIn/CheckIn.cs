@@ -112,7 +112,7 @@ namespace VCS.Areas.CheckIn
             && x.CompanyCode == ProfileUtilities.User.OrganizeCode);
 
             List<ComboBoxItem> items = new List<ComboBoxItem>();
-            items.Add(new ComboBoxItem(" -", ""));
+            items.Add(new ComboBoxItem("-", ""));
             foreach (var item in lstQueue)
             {
                 items.Add(new ComboBoxItem($"{item.VehicleCode} - {item.VehicleName}", item.Id));
@@ -841,6 +841,7 @@ namespace VCS.Areas.CheckIn
                 });
             }
             _dbContext.SaveChanges();
+            CommonService.Alert("Cho phương tiện vào hàng chờ thàh công!", Alert.Alert.enumType.Success);
             ResetForm();
         }
         #endregion

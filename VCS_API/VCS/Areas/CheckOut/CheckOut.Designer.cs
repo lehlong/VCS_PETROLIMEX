@@ -1,4 +1,6 @@
-﻿namespace VCS.Areas.CheckOut
+﻿using VCS.APP.Utilities;
+
+namespace VCS.Areas.CheckOut
 {
     partial class CheckOut
     {
@@ -54,7 +56,7 @@
             panel12 = new Panel();
             txtNoteOut = new TextBox();
             panel11 = new Panel();
-            selectVehicle = new ComboBox();
+            selectVehicle = new BorderlessComboBox();
             label6 = new Label();
             label7 = new Label();
             btnResetForm = new Button();
@@ -383,20 +385,16 @@
             // 
             // selectVehicle
             // 
+            selectVehicle.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            selectVehicle.AutoCompleteSource = AutoCompleteSource.ListItems;
             selectVehicle.BackColor = Color.WhiteSmoke;
-            selectVehicle.Dock = DockStyle.Fill;
-            selectVehicle.DrawMode = DrawMode.OwnerDrawFixed;
-            selectVehicle.DropDownStyle = ComboBoxStyle.DropDownList;
             selectVehicle.FlatStyle = FlatStyle.Flat;
             selectVehicle.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             selectVehicle.FormattingEnabled = true;
-            selectVehicle.ItemHeight = 35;
-            selectVehicle.Location = new Point(0, 0);
-            selectVehicle.Margin = new Padding(0);
+            selectVehicle.Location = new Point(8, 5);
             selectVehicle.Name = "selectVehicle";
-            selectVehicle.Size = new Size(802, 41);
-            selectVehicle.TabIndex = 16;
-            selectVehicle.DrawItem += selectVehicle_DrawItem;
+            selectVehicle.Size = new Size(784, 29);
+            selectVehicle.TabIndex = 0;
             selectVehicle.SelectedValueChanged += selectVehicle_SelectedValueChanged;
             // 
             // label6
@@ -415,9 +413,9 @@
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(9, 62);
             label7.Name = "label7";
-            label7.Size = new Size(209, 21);
+            label7.Size = new Size(170, 21);
             label7.TabIndex = 34;
-            label7.Text = "Phương tiện trong hàng chờ:";
+            label7.Text = "Phương tiện trong kho:";
             // 
             // btnResetForm
             // 
@@ -485,7 +483,6 @@
         private Panel panel12;
         private TextBox txtNoteOut;
         private Panel panel11;
-        private ComboBox selectVehicle;
         private Label label6;
         private Label label7;
         private Button btnCheck;
@@ -501,5 +498,6 @@
         private Panel panel1;
         private TextBox txtVehicleName;
         private Label label1;
+        private BorderlessComboBox selectVehicle;
     }
 }

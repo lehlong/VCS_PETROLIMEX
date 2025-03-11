@@ -48,5 +48,22 @@ namespace VCS.APP.Utilities
             this.SetStyle(ControlStyles.UserPaint, true);
         }
     }
+
+    public class BorderlessComboBox : ComboBox
+    {
+        public BorderlessComboBox() { this.FlatStyle = FlatStyle.Flat; }
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == 0xF)
+            {
+                using (Graphics g = Graphics.FromHwnd(this.Handle))
+                {
+                    using (Pen p = new Pen(Color.WhiteSmoke, 1))
+                    { g.DrawRectangle(p, 0, 0, this.Width - 1, this.Height - 1); }
+                }
+            }
+        }
+    }
 }
 

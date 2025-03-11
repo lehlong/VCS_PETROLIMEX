@@ -141,7 +141,7 @@ namespace VCS.Areas.CheckOut
             x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
             x.StatusVehicle != "04" && x.StatusVehicle != "01").ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
-            items.Add(new ComboBoxItem(" -", ""));
+            items.Add(new ComboBoxItem("-", ""));
             foreach (var item in lstQueue)
             {
                 var v = _dbContext.TblMdVehicle.FirstOrDefault(x => x.Code == item.VehicleCode)?.OicPbatch +
@@ -611,5 +611,6 @@ namespace VCS.Areas.CheckOut
             var v = new ViewCamera(CameraDetect);
             v.ShowDialog();
         }
+       
     }
 }
