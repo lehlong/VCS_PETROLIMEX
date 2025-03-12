@@ -30,6 +30,8 @@ export class WarehouseComponent implements OnInit {
     tdh: '',
     tdh_e5: '',
     orgCode: '',
+    is_sms_in: false,
+    is_sms_out: false,
     isActive: true
   }
   lstWarehouse: any[] = [];
@@ -75,6 +77,8 @@ export class WarehouseComponent implements OnInit {
       tdh: '',
       tdh_e5: '',
       orgCode: '',
+      is_sms_in: false,
+      is_sms_out: false,
       isActive: true
     }
   }

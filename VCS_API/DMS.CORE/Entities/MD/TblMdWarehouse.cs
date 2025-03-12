@@ -26,5 +26,9 @@ namespace DMS.CORE.Entities.MD
         public string Tdh { get; set; }
         [Column("TDH_E5", TypeName = "NVARCHAR(50)")]
         public string? Tdh_e5 { get; set; }
+        [Column("IS_SMS_IN")]
+        public bool? Is_sms_in { get; set; }
+        [Column("IS_SMS_OUT")]
+        public bool? Is_sms_out { get; set; }
     }
 }

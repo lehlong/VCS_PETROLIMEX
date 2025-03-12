@@ -20,7 +20,7 @@
         <th>Tên kho</th>
         <th>Trung gian bơm xuất</th>
         <th>Tự động hóa</th>
-        <th>Tự động hóa (E5) </th>
+        <th>Tự động hóa (E5)</th>
         <th>Trạng thái</th>
       </tr>
     </thead>
@@ -61,6 +61,11 @@
       <input nz-input class="input-form" placeholder="Tự động hóa" [(ngModel)]="itemEdit.tdh" />
       <label>Tự động hóa (E5)</label>
       <input nz-input class="input-form" placeholder="Tự động hóa" [(ngModel)]="itemEdit.tdh_e5" />
+      <div class="custom-label">
+        <label nz-checkbox [(ngModel)]="itemEdit.is_sms_in" >SMS Cổng vào</label>
+        <label nz-checkbox [(ngModel)]="itemEdit.is_sms_out">SMS Cổng ra</label>
+    </div>
+    
       <label>Trạng thái</label>
       <div>
         <nz-radio-group [(ngModel)]="itemEdit.isActive">

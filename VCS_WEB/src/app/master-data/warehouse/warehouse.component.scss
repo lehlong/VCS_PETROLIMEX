@@ -27,3 +27,7 @@ nz-input-group {
   .input-form{
     margin-bottom: 12px;
   }
+  .custom-label {
+    display: block; /* Makes each label occupy its own line */
+    margin: 10px 0; /* Adds 10px margin on top and bottom */
+}

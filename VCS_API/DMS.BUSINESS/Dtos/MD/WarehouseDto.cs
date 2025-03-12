@@ -29,6 +29,10 @@ namespace DMS.BUSINESS.Dtos.MD
         public string Tdh { get; set; }
         [Description("Tự động hóa E5")]
         public string? Tdh_e5 { get; set; }
+        [Description("SMS Cổng vào")]
+        public bool? Is_sms_in { get; set; }
+        [Description("SMS Cổng ra")]
+        public bool? Is_sms_out { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblMdWarehouse, WarehouseDto>().ReverseMap();
