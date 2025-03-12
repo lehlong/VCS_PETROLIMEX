@@ -75,6 +75,7 @@ namespace VCS
             p4.BackColor = Color.Transparent;
             p5.BackColor = Color.Transparent;
             p6.BackColor = Color.Transparent;
+            this.Text = "Hệ thống VCS - Trang chủ";
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -86,6 +87,7 @@ namespace VCS
             p4.BackColor = Color.Transparent;
             p5.BackColor = Color.Transparent;
             p6.BackColor = Color.Transparent;
+            this.Text = "Hệ thống VCS - Trang chủ";
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -96,6 +98,7 @@ namespace VCS
             p4.BackColor = Color.Transparent;
             p5.BackColor = Color.Transparent;
             p6.BackColor = Color.Transparent;
+            this.Text = "Hệ thống VCS - Trang chủ";
         }
         #endregion
 
@@ -111,6 +114,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng vào";
             }
             else
             {
@@ -130,6 +134,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng vào";
             }
             else
             {
@@ -149,6 +154,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng vào";
             }
             else
             {
@@ -169,6 +175,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng ra";
             }
             else
             {
@@ -188,6 +195,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng ra";
             }
             else
             {
@@ -207,6 +215,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Quản lý cổng ra";
             }
             else
             {
@@ -229,6 +238,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.FromArgb(13, 92, 171);
+                this.Text = "Hệ thống VCS - Trạng thái kết nối";
             }
             else
             {
@@ -247,6 +257,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.FromArgb(13, 92, 171);
+                this.Text = "Hệ thống VCS - Trạng thái kết nối";
             }
             else
             {
@@ -266,6 +277,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.FromArgb(13, 92, 171);
+                this.Text = "Hệ thống VCS - Trạng thái kết nối";
             }
             else
             {
@@ -287,6 +299,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Cấu hình chung";
             }
             else
             {
@@ -306,6 +319,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Cấu hình chung";
             }
             else
             {
@@ -323,6 +337,7 @@ namespace VCS
                 p4.BackColor = Color.Transparent;
                 p5.BackColor = Color.FromArgb(13, 92, 171);
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Cấu hình chung";
             }
             else
             {
@@ -343,6 +358,7 @@ namespace VCS
                 p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Lịch sử vào ra";
             }
             else
             {
@@ -362,6 +378,7 @@ namespace VCS
                 p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Lịch sử vào ra";
             }
             else
             {
@@ -379,6 +396,7 @@ namespace VCS
                 p4.BackColor = Color.FromArgb(13, 92, 171);
                 p5.BackColor = Color.Transparent;
                 p6.BackColor = Color.Transparent;
+                this.Text = "Hệ thống VCS - Lịch sử vào ra";
             }
             else
             {
