@@ -22,6 +22,10 @@ namespace VCS
                 Application.Exit();
                 return;
             }
+
+            string exePath = AppDomain.CurrentDomain.BaseDirectory;
+            Directory.SetCurrentDirectory(exePath);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

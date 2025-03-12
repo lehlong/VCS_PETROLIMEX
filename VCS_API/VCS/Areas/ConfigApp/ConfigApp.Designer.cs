@@ -52,6 +52,7 @@
             label2 = new Label();
             label1 = new Label();
             button1 = new Button();
+            isStarup = new CheckBox();
             panel1.SuspendLayout();
             panel8.SuspendLayout();
             panel7.SuspendLayout();
@@ -65,6 +66,7 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(isStarup);
             panel1.Controls.Add(panel8);
             panel1.Controls.Add(Lable7);
             panel1.Controls.Add(panel7);
@@ -311,6 +313,18 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // isStarup
+            // 
+            isStarup.AutoSize = true;
+            isStarup.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            isStarup.Location = new Point(466, 361);
+            isStarup.Name = "isStarup";
+            isStarup.Size = new Size(201, 25);
+            isStarup.TabIndex = 47;
+            isStarup.Text = "Khởi động cùng Window";
+            isStarup.UseVisualStyleBackColor = true;
+            isStarup.CheckedChanged += isStarup_CheckedChanged;
+            // 
             // ConfigApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -365,5 +379,6 @@
         private Panel panel8;
         private TextBox txtTimeService;
         private Label Lable7;
+        private CheckBox isStarup;
     }
 }

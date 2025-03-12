@@ -557,7 +557,7 @@ namespace VCS.Areas.CheckOut
                 if (isHasInvoice)
                 {
                     var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
-                    text = res.STATUS ? $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} đã có hoá đơn" : $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} chưa có hoá đơn";
+                    text = res.STATUS ? $"ĐÃ XUẤT HOÁ ĐƠN" : $"CHƯA XUẤT HOÁ ĐƠN";
                     status = res.STATUS;
                 }
 

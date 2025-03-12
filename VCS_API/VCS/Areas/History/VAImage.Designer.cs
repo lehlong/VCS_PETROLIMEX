@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VAImage));
             SuspendLayout();
             // 
             // VAImage
@@ -35,10 +36,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1234, 635);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "VAImage";
             Padding = new Padding(12);
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "VAImage";
+            Text = "Xem tất cả ảnh";
             ResumeLayout(false);
         }
 

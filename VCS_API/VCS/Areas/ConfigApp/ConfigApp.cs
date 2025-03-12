@@ -19,13 +19,17 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using static Org.BouncyCastle.Math.EC.ECCurve;
+using Microsoft.Win32;
 
 namespace VCS.APP.Areas.ConfigApp
 {
     public partial class ConfigApp : Form
     {
         private readonly AppDbContextForm _dbContext;
-        private TblAdConfigApp _config = new TblAdConfigApp();
+
+        private string AppName = "VCS"; 
+        private RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+
         public ConfigApp(AppDbContextForm dbContext)
         {
             InitializeComponent();
@@ -35,7 +39,14 @@ namespace VCS.APP.Areas.ConfigApp
 
         private void ConfigApp_Load(object sender, EventArgs e)
         {
-
+            if (key.GetValue(AppName) == null)
+            {
+                isStarup.Checked = false;
+            }
+            else
+            {
+                isStarup.Checked = true;
+            }
         }
 
         private void GetConfig()
@@ -62,8 +73,8 @@ namespace VCS.APP.Areas.ConfigApp
                 var jsonObj = JsonNode.Parse(json);
                 FileInfo fileInfo = new FileInfo(filePath);
                 string serviceName = "VCS.SERVICE.IMAGE";
-             
-              
+
+
                 if (jsonObj != null)
                 {
                     jsonObj["Setting"]["SmoApiUrl"] = txtSmoApiUrl.Text;
@@ -76,8 +87,8 @@ namespace VCS.APP.Areas.ConfigApp
 
                     File.WriteAllText(filePath, jsonObj.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
                 }
-              
-           
+
+
 
                 Global.SmoApiUrl = txtSmoApiUrl.Text;
                 Global.SmoApiUsername = txtSmoApiUsername.Text;
@@ -94,9 +105,9 @@ namespace VCS.APP.Areas.ConfigApp
 
                 if (result == DialogResult.Yes)
                 {
-                  
+
                     RestartApplication();
-                   
+
                 }
                 else
                 {
@@ -117,6 +128,16 @@ namespace VCS.APP.Areas.ConfigApp
             Application.Exit();
         }
 
-       
+        private void isStarup_CheckedChanged(object sender, EventArgs e)
+        {
+            if (isStarup.Checked)
+            {
+                key.SetValue(AppName, $"\"{Application.ExecutablePath}\"");
+            }
+            else
+            {
+                key.DeleteValue(AppName);
+            }
+        }
     }
 }
