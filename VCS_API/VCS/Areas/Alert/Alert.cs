@@ -67,6 +67,10 @@ namespace VCS.Areas.Alert
                     this.pictureBox2.Image = Properties.Resources.error;
                     this.BackColor = Color.FromArgb(220, 53, 69);
                     break;
+                case enumType.Warning:
+                    this.pictureBox2.Image = Properties.Resources.error;
+                    this.BackColor = Color.FromArgb(245, 199, 26);
+                    break;
             }
 
             this.label1.Text = msg;

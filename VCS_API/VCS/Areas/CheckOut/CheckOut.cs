@@ -34,7 +34,7 @@ namespace VCS.Areas.CheckOut
         private List<string> lstPathImageCapture = new List<string>();
         private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
         private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
-        private bool isHasInvoice { get; set; } = false;
+        private bool isHasInvoice { get; set; } = true;
         public CheckOut(AppDbContextForm dbContext)
         {
             _dbContext = dbContext;
@@ -210,23 +210,22 @@ namespace VCS.Areas.CheckOut
                 var result = await detectTask;
                 if (result.Item1)
                 {
+                    pictureBoxLicensePlate.Image = CommonService.Base64ToImage(result.Item5);
+                    IMGPATH = snapshotPath;
+                    PLATEPATH = cropedPath;
+                    lstPathImageCapture = result.Item6;
                     if (!string.IsNullOrEmpty(result.Item3))
                     {
-                        var i = _dbContext.TblBuHeader.Where(x =>
+                        var i = await _dbContext.TblBuHeader.Where(x =>
                             x.VehicleCode == result.Item3 &&
                             x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
                             x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-                            x.StatusVehicle != "04").ToList();
+                            x.StatusVehicle != "04").ToListAsync();
                         if (i.Count() == 1)
                         {
                             selectVehicle.SelectedValue = i.FirstOrDefault().Id;
                         }
                     }
-                    pictureBoxLicensePlate.Image = CommonService.Base64ToImage(result.Item5);
-                    IMGPATH = snapshotPath;
-                    PLATEPATH = cropedPath;
-                    lstPathImageCapture = result.Item6;
-                    CommonService.Alert(result.Item2, Alert.Alert.enumType.Success);
                 }
                 else
                 {
@@ -247,60 +246,6 @@ namespace VCS.Areas.CheckOut
                 cts.Dispose();
             }
         }
-        //private async void btnDetect_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        btnDetect.Enabled = false;
-        //        var (filePath, snapshotImage) = CommonService.TakeSnapshot(viewStream.MediaPlayer);
-        //        IMGPATH = filePath;
-
-        //        if (!string.IsNullOrEmpty(filePath))
-        //        {
-        //            pictureBoxVehicle.Image = snapshotImage;
-
-        //            var (licensePlate, croppedImage, savedImagePath) = await CommonService.DetectLicensePlateAsync(filePath);
-        //            PLATEPATH = savedImagePath;
-        //            if (!string.IsNullOrEmpty(licensePlate))
-        //            {
-        //                var i = _dbContext.TblBuHeader.Where(x =>
-        //                    x.VehicleCode == licensePlate &&
-        //                    x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
-        //                    x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-        //                    x.IsCheckout == false).ToList();
-        //                var name = i.FirstOrDefault().VehicleName;
-        //                if (i.Count() == 1)
-        //                {
-        //                    selectVehicle.SelectedValue = i.FirstOrDefault().Id;
-        //                }
-
-        //                txtLicensePlate.Text = licensePlate;
-        //                txtVehicleName.Text = name;
-        //                pictureBoxLicensePlate.Image = croppedImage;
-        //            }
-        //        }
-        //        CommonService.Alert("Nhận diện biển số thành công!", Alert.Alert.enumType.Success);
-
-        //        //Lưu các ảnh từ camera vào thư mục
-        //        var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
-        //        lstPathImageCapture = new List<string>();
-        //        foreach (var c in lstCamera)
-        //        {
-        //            byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
-        //            var path = CommonService.SaveDetectedImage(imageBytes);
-        //            lstPathImageCapture.Add(path);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        CommonService.Alert($"Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
-        //        txtLicensePlate.Text = "";
-        //    }
-        //    finally
-        //    {
-        //        btnDetect.Enabled = true;
-        //    }
-        //}
         #endregion
 
         #region Xử lý phương tiện chưa ra
@@ -517,159 +462,180 @@ namespace VCS.Areas.CheckOut
             }
         }
 
-        private void selectVehicle_SelectedValueChanged(object sender, EventArgs e)
+        private async void selectVehicle_SelectedValueChanged(object sender, EventArgs e)
         {
             try
             {
+                _dbContext.ChangeTracker.Clear();
                 ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
                 string selectedValue = selectedItem.Value;
                 if (string.IsNullOrEmpty(selectedValue)) return;
 
-                var detail = GetCheckInDetail(selectedValue);
+                // Thực hiện xử lý nặng trong một thread khác để không chặn UI
+                var detail = await Task.Run(() => GetCheckInDetail(selectedValue));
                 if (detail == null) return;
+
                 txtLicensePlate.Text = detail.LicensePlate;
                 txtVehicleName.Text = detail.VehicleName;
 
+                // Xóa các panel cũ trên UI trong luồng chính
                 panelCheckIn.Controls.Clear();
-                foreach (var doSap in detail.ListDOSAP)
+                panelCheckOut.Controls.Clear();
+
+                // Append CheckIn Panels
+                await Task.Run(() =>
                 {
-                    AppendPanelDetailCheckIn(doSap);
+                    foreach (var doSap in detail.ListDOSAP)
+                    {
+                        Invoke(new Action(() => AppendPanelDetailCheckIn(doSap)));
+                    }
+                });
+
+                // Truy vấn dữ liệu xuất kho
+                var headerTgbx = await Task.Run(() => _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).ToList());
+                var detailTgbx = await Task.Run(() => _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == selectedValue).ToList());
+                var lstDo = detailTgbx.Select(x => x.SoLenh).Distinct().ToList();
+                var vehicle = await Task.Run(() => _dbContext.TblBuHeader.Find(selectedValue));
+
+                // Append CheckOut Panels
+                if (lstDo.Count > 0)
+                {
+                    await Task.Run(() =>
+                    {
+                        foreach (var doSap in lstDo)
+                        {
+                            var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
+                            Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien)));
+                        }
+                    });
                 }
 
+                // Kiểm tra trạng thái và cảnh báo
+                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05" || lstDo.Count == 0)
+                {
+                    CommonService.Alert($"Phương tiện không có ticket hoặc không xử lý!", Alert.Alert.enumType.Error);
+                    this.isHasInvoice = false;
+                    txtNoteOut.Text = "Phương tiện không có ticket hoặc không xử lý";
+                    return;
+                }
 
-
-                //_lstDOSAP.Clear();
-                //panelCheckIn.Controls.OfType<DataGridView>().ToList()
-                //    .ForEach(x => { x.Dispose(); panelCheckIn.Controls.Remove(x); });
-                //panelCheckIn.Controls.OfType<Button>()
-                //    .Where(x => x.Size.Width == 30)
-                //    .ToList()
-                //    .ForEach(x => { x.Dispose(); panelCheckIn.Controls.Remove(x); });
-
-                //_lstDOSAP.AddRange(detail.ListDOSAP);
-
-                // Kiểm tra trạng thái xe
-
-                //var headerTgbx = _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).ToList();
-                //var detailTgbx = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == selectedValue).ToList();
-                //var lstDo = detailTgbx.Select(x => x.SoLenh).Distinct().ToList();
-                //var vehicle = _dbContext.TblBuHeader.Find(selectedValue);
-                //if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05" || lstDo.Count() == 0)
-                //{
-                //    CommonService.Alert($"Phương tiện không có ticket hoặc không xử lý!", Alert.Alert.enumType.Error);
-                //    this.isHasInvoice = true; // Bỏ qua kiểm tra hóa đơn
-                //    txtNoteOut.Text = "Phương tiện không có ticket hoặc không xử lý";
-                //    return;
-                //}
-
-                //foreach (var doSap in lstDo)
-                //{
-                //    var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
-                //    AppendPanelDetail(lstData, headerTgbx.FirstOrDefault().MaPhuongTien);
-                //}
                 CommonService.Alert($"Kiểm tra thông tin thành công!", Alert.Alert.enumType.Success);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}",
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void AppendPanelDetail(List<TblBuDetailTgbx> data, string vehicleCode)
+
+        private void AppendPanelDetailChechkOut(List<TblBuDetailTgbx> data, string vehicleCode)
         {
-            //try
-            //{
-            //    int yPosition = 6;
-            //    var existingGrids = panelCheckIn.Controls.OfType<DataGridView>().ToList();
-            //    if (existingGrids.Any())
-            //    {
-            //        yPosition = existingGrids.Last().Bottom + 6;
-            //    }
+            try
+            {
+                var text = "Không xử lý hoặc chưa có ticket!";
+                var status = false;
+                //if (isHasInvoice)
+                //{
+                //    var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
+                //    text = res.STATUS ? $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} đã có hoá đơn" : $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} chưa có hoá đơn";
+                //    status = res.STATUS;
+                //}
+               
 
-            //    var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
-            //    var text = res.STATUS ? $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} đã có hoá đơn" : $"SỐ LỆNH XUẤT {data.FirstOrDefault().SoLenh} chưa có hoá đơn";
+                int yPosition = panelCheckOut.Controls.OfType<Panel>().Any()
+                    ? panelCheckOut.Controls.OfType<Panel>().Max(p => p.Bottom) + 6
+                    : 6;
 
-            //    // CREATE LABEL
-            //    var titleLabel = new Label
-            //    {
-            //        Text = text,
-            //        Font = new Font("Segoe UI", 12, FontStyle.Bold),
-            //        AutoSize = true,
-            //        Location = new Point(10, yPosition),
-            //    };
-            //    titleLabel.ForeColor = res.STATUS ? Color.Green : Color.Red;
+                var containerPanel = new Panel
+                {
+                    Name = $"panel_{data.FirstOrDefault().SoLenh}",
+                    BackColor = Color.WhiteSmoke,
+                    Location = new Point(0, yPosition),
+                    Size = new Size(860, 10),
+                    Padding = new Padding(12),
+                    BorderStyle = BorderStyle.None
+                };
 
-            //    // DATA GRID VIEW
-            //    var dataGridView1 = new DataGridView
-            //    {
-            //        BackgroundColor = Color.White,
-            //        BorderStyle = BorderStyle.None,
-            //        ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
-            //        ColumnHeadersHeight = 35,
-            //        Location = new Point(0, yPosition + 35),
-            //        Name = $"dataGridView_{panelCheckIn.Controls.Count + 1}",
-            //        ReadOnly = true,
-            //        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-            //        AllowUserToAddRows = false,
-            //        AllowUserToResizeRows = false,
-            //        RowHeadersVisible = false,
-            //        SelectionMode = DataGridViewSelectionMode.RowHeaderSelect,
-            //        DefaultCellStyle = new DataGridViewCellStyle
-            //        {
-            //            SelectionBackColor = Color.Transparent,
-            //            SelectionForeColor = Color.Black,
-            //            Padding = new Padding(5),
-            //            Font = new Font("Segoe UI", 12, FontStyle.Regular)
-            //        },
-            //        RowTemplate = { Height = 35 }
-            //    };
+                int innerY = 6;
+                var customerLabel = new Label
+                {
+                    Text = text,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(6, innerY),
+                    ForeColor = status ? Color.Green : Color.Red
+                };
+                innerY += customerLabel.Height + 6;
+                containerPanel.Controls.Add(customerLabel);
 
-            //    // HEADER STYLE
-            //    dataGridView1.EnableHeadersVisualStyles = false;
-            //    dataGridView1.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
-            //    {
-            //        BackColor = Color.FromArgb(52, 58, 64),
-            //        ForeColor = Color.White,
-            //        Font = new Font("Segoe UI", 12, FontStyle.Regular),
-            //        Alignment = DataGridViewContentAlignment.MiddleCenter
-            //    };
-            //    dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            //    dataGridView1.GridColor = Color.Gray;
+                var dataGridView = new DataGridView
+                {
+                    BackgroundColor = Color.WhiteSmoke,
+                    BorderStyle = BorderStyle.None,
+                    ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+                    ColumnHeadersHeight = 40,
+                    ReadOnly = true,
+                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                    AllowUserToAddRows = false,
+                    AllowUserToResizeRows = false,
+                    RowHeadersVisible = false,
+                    SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                    Location = new Point(6, innerY),
+                    Margin = new Padding(6),
+                    Width = 750,
+                    RowTemplate = { Height = 40 }
+                };
 
-            //    // CREATE DATA TABLE
-            //    DataTable dataTable = new DataTable();
-            //    dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
-            //    dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
-            //    dataTable.Columns.Add("MẶT HÀNG", typeof(string));
-            //    dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
+                dataGridView.CellClick += (sender, e) => { };
+                dataGridView.EnableHeadersVisualStyles = false;
+                dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+                dataGridView.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(52, 58, 64),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    Padding = new Padding(6)
+                };
+                dataGridView.GridColor = Color.Gray;
+                dataGridView.DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Font = new Font("Segoe UI", 12, FontStyle.Regular),
+                    Alignment = DataGridViewContentAlignment.MiddleCenter,
+                    SelectionBackColor = Color.WhiteSmoke,
+                    SelectionForeColor = Color.Black,
+                    Padding = new Padding(6)
+                };
 
-            //    foreach (var item in data)
-            //    {
-            //        var materials = _dbContext.TblMdGoods.Find("000000000000" + item.MaHangHoa);
-            //        string materialName = materials?.Name ?? "Unknown";
-            //        dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat} ({item.DonViTinh})");
-            //    }
+                dataGridView.CellMouseEnter += (sender, e) => { };
+                dataGridView.SelectionChanged += (sender, e) => dataGridView.ClearSelection();
 
-            //    dataGridView1.DataSource = dataTable;
+                var dataTable = new DataTable();
+                dataTable.Columns.Add("SỐ LỆNH XUẤT", typeof(string));
+                dataTable.Columns.Add("PHƯƠNG TIỆN", typeof(string));
+                dataTable.Columns.Add("MẶT HÀNG", typeof(string));
+                dataTable.Columns.Add("SỐ LƯỢNG (ĐVT)", typeof(string));
 
-            //    // CENTER ALIGNMENT
-            //    foreach (DataGridViewColumn col in dataGridView1.Columns)
-            //    {
-            //        col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            //    }
+                foreach (var item in data)
+                {
+                    var materials = _dbContext.TblMdGoods.Find("000000000000" + item.MaHangHoa);
+                    string materialName = materials?.Name ?? "Unknown";
+                    dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat?.ToString("#,#")} ({item.DonViTinh})");
+                }
 
-            //    // ADJUST GRID HEIGHT
-            //    int totalHeight = dataGridView1.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView1.RowTemplate.Height) + 20;
-            //    dataGridView1.Size = new Size(809, totalHeight);
+                dataGridView.DataSource = dataTable;
 
-            //    // ADD TO PANEL
-            //    panelCheckIn.Controls.Add(titleLabel);
-            //    panelCheckIn.Controls.Add(dataGridView1);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Lỗi hệ thống: {ex.Message}\nVui lòng liên hệ quản trị viên.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                int totalGridViewHeight = dataGridView.ColumnHeadersHeight + (dataTable.Rows.Count * dataGridView.RowTemplate.Height) + 6;
+                dataGridView.Size = new Size(790, totalGridViewHeight);
+
+                containerPanel.Size = new Size(802, totalGridViewHeight + innerY + 6);
+                containerPanel.Controls.Add(dataGridView);
+
+                panelCheckOut.Controls.Add(containerPanel);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AppendPanelDetailCheckIn(DOSAPDataDto data)

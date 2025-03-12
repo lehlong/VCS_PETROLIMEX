@@ -328,7 +328,6 @@ namespace VCS.Areas.CheckIn
                 CommonService.Alert("Đã có thông tin! Vui lòng thử lệnh xuất khác!", Alert.Alert.enumType.Error);
                 return;
             }
-
             var dataDetail = CommonService.GetDetailDO(txtNumberDO.Text.Trim());
             if (!dataDetail.STATUS)
             {

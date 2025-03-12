@@ -61,9 +61,9 @@ namespace VCS.Areas.CheckOut
             btnResetForm = new Button();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            panelCheckOut = new Panel();
             tabPage2 = new TabPage();
             panelCheckIn = new Panel();
-            panelCheckOut = new Panel();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStream).BeginInit();
             panel5.SuspendLayout();
@@ -439,8 +439,9 @@ namespace VCS.Areas.CheckOut
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Cursor = Cursors.Hand;
             tabControl1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tabControl1.ItemSize = new Size(200, 30);
+            tabControl1.ItemSize = new Size(200, 40);
             tabControl1.Location = new Point(525, 220);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -451,21 +452,29 @@ namespace VCS.Areas.CheckOut
             // tabPage1
             // 
             tabPage1.Controls.Add(panelCheckOut);
-            tabPage1.Location = new Point(4, 34);
+            tabPage1.Location = new Point(4, 44);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(810, 518);
+            tabPage1.Size = new Size(810, 508);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Lệnh xuất CheckOut";
             tabPage1.UseVisualStyleBackColor = true;
             // 
+            // panelCheckOut
+            // 
+            panelCheckOut.Dock = DockStyle.Fill;
+            panelCheckOut.Location = new Point(3, 3);
+            panelCheckOut.Name = "panelCheckOut";
+            panelCheckOut.Size = new Size(804, 502);
+            panelCheckOut.TabIndex = 0;
+            // 
             // tabPage2
             // 
             tabPage2.Controls.Add(panelCheckIn);
-            tabPage2.Location = new Point(4, 34);
+            tabPage2.Location = new Point(4, 44);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(810, 518);
+            tabPage2.Size = new Size(810, 508);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Lệnh xuất CheckIn";
             tabPage2.UseVisualStyleBackColor = true;
@@ -475,16 +484,8 @@ namespace VCS.Areas.CheckOut
             panelCheckIn.Dock = DockStyle.Fill;
             panelCheckIn.Location = new Point(3, 3);
             panelCheckIn.Name = "panelCheckIn";
-            panelCheckIn.Size = new Size(804, 512);
+            panelCheckIn.Size = new Size(804, 502);
             panelCheckIn.TabIndex = 0;
-            // 
-            // panelCheckOut
-            // 
-            panelCheckOut.Dock = DockStyle.Fill;
-            panelCheckOut.Location = new Point(3, 3);
-            panelCheckOut.Name = "panelCheckOut";
-            panelCheckOut.Size = new Size(804, 512);
-            panelCheckOut.TabIndex = 0;
             // 
             // CheckOut
             // 
