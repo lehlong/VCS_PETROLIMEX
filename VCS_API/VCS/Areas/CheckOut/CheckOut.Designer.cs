@@ -52,7 +52,6 @@ namespace VCS.Areas.CheckOut
             panel2 = new Panel();
             btnCheck = new Button();
             btnCheckOut = new Button();
-            panelDODetail = new Panel();
             panel12 = new Panel();
             txtNoteOut = new TextBox();
             panel11 = new Panel();
@@ -60,6 +59,11 @@ namespace VCS.Areas.CheckOut
             label6 = new Label();
             label7 = new Label();
             btnResetForm = new Button();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            panelCheckIn = new Panel();
+            panelCheckOut = new Panel();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStream).BeginInit();
             panel5.SuspendLayout();
@@ -72,6 +76,9 @@ namespace VCS.Areas.CheckOut
             panel2.SuspendLayout();
             panel12.SuspendLayout();
             panel11.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // btnViewAll
@@ -296,7 +303,6 @@ namespace VCS.Areas.CheckOut
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
             panel2.Controls.Add(btnCheck);
             panel2.Controls.Add(btnCheckOut);
-            panel2.Controls.Add(panelDODetail);
             panel2.Controls.Add(panel12);
             panel2.Controls.Add(panel11);
             panel2.Controls.Add(label6);
@@ -305,7 +311,7 @@ namespace VCS.Areas.CheckOut
             panel2.Location = new Point(525, 6);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
-            panel2.Size = new Size(814, 768);
+            panel2.Size = new Size(814, 209);
             panel2.TabIndex = 8;
             // 
             // btnCheck
@@ -347,13 +353,6 @@ namespace VCS.Areas.CheckOut
             btnCheckOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCheckOut.UseVisualStyleBackColor = false;
             btnCheckOut.Click += btnCheckOut_Click;
-            // 
-            // panelDODetail
-            // 
-            panelDODetail.Location = new Point(6, 210);
-            panelDODetail.Name = "panelDODetail";
-            panelDODetail.Size = new Size(801, 550);
-            panelDODetail.TabIndex = 38;
             // 
             // panel12
             // 
@@ -436,11 +435,63 @@ namespace VCS.Areas.CheckOut
             btnResetForm.UseVisualStyleBackColor = false;
             btnResetForm.Click += btnResetForm_Click;
             // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tabControl1.ItemSize = new Size(200, 30);
+            tabControl1.Location = new Point(525, 220);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(818, 556);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(panelCheckOut);
+            tabPage1.Location = new Point(4, 34);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(810, 518);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Lệnh xuất CheckOut";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(panelCheckIn);
+            tabPage2.Location = new Point(4, 34);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(810, 518);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Lệnh xuất CheckIn";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panelCheckIn
+            // 
+            panelCheckIn.Dock = DockStyle.Fill;
+            panelCheckIn.Location = new Point(3, 3);
+            panelCheckIn.Name = "panelCheckIn";
+            panelCheckIn.Size = new Size(804, 512);
+            panelCheckIn.TabIndex = 0;
+            // 
+            // panelCheckOut
+            // 
+            panelCheckOut.Dock = DockStyle.Fill;
+            panelCheckOut.Location = new Point(3, 3);
+            panelCheckOut.Name = "panelCheckOut";
+            panelCheckOut.Size = new Size(804, 512);
+            panelCheckOut.TabIndex = 0;
+            // 
             // CheckOut
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1344, 781);
+            Controls.Add(tabControl1);
             Controls.Add(panel4);
             Controls.Add(panel5);
             Controls.Add(panel2);
@@ -465,6 +516,9 @@ namespace VCS.Areas.CheckOut
             panel12.ResumeLayout(false);
             panel12.PerformLayout();
             panel11.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -479,7 +533,6 @@ namespace VCS.Areas.CheckOut
         private Label label4;
         private Button btnDetect;
         private Panel panel2;
-        private Panel panelDODetail;
         private Panel panel12;
         private TextBox txtNoteOut;
         private Panel panel11;
@@ -499,5 +552,10 @@ namespace VCS.Areas.CheckOut
         private TextBox txtVehicleName;
         private Label label1;
         private BorderlessComboBox selectVehicle;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private Panel panelCheckOut;
+        private Panel panelCheckIn;
     }
 }

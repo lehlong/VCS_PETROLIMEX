@@ -405,16 +405,72 @@ namespace VCS.APP.Services
         }
 
 
-        private static byte[] ImageToByteArray(Image image)
+        public static byte[] ImageToByteArray(Image image)
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                image.Save(ms, ImageFormat.Jpeg);
                 return ms.ToArray();
             }
         }
-        #endregion
 
+        public static Image Base64ToImage(string base64String)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            using (MemoryStream ms = new MemoryStream(imageBytes))
+            {
+                return Image.FromStream(ms);
+            }
+        }
+        #endregion
+        public static string GetText(string type)
+        {
+            if (type == "DCCH")
+            {
+                return "Di chuyển ra cửa hàng";
+            }
+            else if (type == "DCNB")
+            {
+                return "Di chuyển nội bộ ngành";
+            }
+            else if (type == "XBTX")
+            {
+                return "Xuất bán tái xuất";
+            }
+            else if (type == "XBND")
+            {
+                return "Xuất bán nội địa";
+            }
+            else if (type == "XTHG")
+            {
+                return "Xuất trả hàng gửi";
+            }
+            else if (type == "MHGL")
+            {
+                return "Mua hàng gửi lại";
+            }
+            else if (type == "HHK")
+            {
+                return "Hàng hóa khác";
+            }
+            else if (type == "KHLH")
+            {
+                return "Kế hoạch lấy hàng";
+            }
+            else if (type == "SUM")
+            {
+                return "Đơn hàng tổng";
+            }
+            else if (type == "XDTH")
+            {
+                return "Xuất đổi trả hàng";
+            }
+            else if (type == "XHND")
+            {
+                return "Xuất hàng nội dụng";
+            }
+            return string.Empty;
+        }
         public static void Alert(string msg, Alert.enumType type)
         {
             VCS.Areas.Alert.Alert alert = new VCS.Areas.Alert.Alert();

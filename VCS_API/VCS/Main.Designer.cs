@@ -140,11 +140,11 @@
             // 
             // btnLogOut
             // 
+            btnLogOut.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnLogOut.BackColor = Color.Transparent;
             btnLogOut.Controls.Add(pictureBox10);
             btnLogOut.Controls.Add(label9);
             btnLogOut.Cursor = Cursors.Hand;
-            btnLogOut.Dock = DockStyle.Top;
             btnLogOut.Location = new Point(0, 336);
             btnLogOut.Name = "btnLogOut";
             btnLogOut.Padding = new Padding(0, 12, 0, 12);
@@ -176,12 +176,12 @@
             // 
             // btnStatus
             // 
+            btnStatus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnStatus.BackColor = Color.Transparent;
             btnStatus.Controls.Add(p6);
             btnStatus.Controls.Add(pictureBox3);
             btnStatus.Controls.Add(label2);
             btnStatus.Cursor = Cursors.Hand;
-            btnStatus.Dock = DockStyle.Top;
             btnStatus.Location = new Point(0, 280);
             btnStatus.Name = "btnStatus";
             btnStatus.Padding = new Padding(0, 12, 0, 12);
@@ -222,12 +222,12 @@
             // 
             // btnSetting
             // 
+            btnSetting.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnSetting.BackColor = Color.Transparent;
             btnSetting.Controls.Add(p5);
             btnSetting.Controls.Add(pictureBox4);
             btnSetting.Controls.Add(label3);
             btnSetting.Cursor = Cursors.Hand;
-            btnSetting.Dock = DockStyle.Top;
             btnSetting.Location = new Point(0, 224);
             btnSetting.Name = "btnSetting";
             btnSetting.Padding = new Padding(0, 12, 0, 12);
@@ -268,12 +268,12 @@
             // 
             // btnHistory
             // 
+            btnHistory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnHistory.BackColor = Color.Transparent;
             btnHistory.Controls.Add(p4);
             btnHistory.Controls.Add(pictureBox5);
             btnHistory.Controls.Add(label4);
             btnHistory.Cursor = Cursors.Hand;
-            btnHistory.Dock = DockStyle.Top;
             btnHistory.Location = new Point(0, 168);
             btnHistory.Name = "btnHistory";
             btnHistory.Padding = new Padding(0, 12, 0, 12);
@@ -314,12 +314,12 @@
             // 
             // btnCheckOut
             // 
+            btnCheckOut.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnCheckOut.BackColor = Color.Transparent;
             btnCheckOut.Controls.Add(p3);
             btnCheckOut.Controls.Add(pictureBox6);
             btnCheckOut.Controls.Add(label5);
             btnCheckOut.Cursor = Cursors.Hand;
-            btnCheckOut.Dock = DockStyle.Top;
             btnCheckOut.Location = new Point(0, 112);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.Padding = new Padding(0, 12, 0, 12);
@@ -360,12 +360,12 @@
             // 
             // btnCheckIn
             // 
+            btnCheckIn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnCheckIn.BackColor = Color.Transparent;
             btnCheckIn.Controls.Add(p2);
             btnCheckIn.Controls.Add(pictureBox7);
             btnCheckIn.Controls.Add(label6);
             btnCheckIn.Cursor = Cursors.Hand;
-            btnCheckIn.Dock = DockStyle.Top;
             btnCheckIn.Location = new Point(0, 56);
             btnCheckIn.Name = "btnCheckIn";
             btnCheckIn.Padding = new Padding(0, 12, 0, 12);
@@ -411,7 +411,6 @@
             pHome.Controls.Add(pictureBox2);
             pHome.Controls.Add(label1);
             pHome.Cursor = Cursors.Hand;
-            pHome.Dock = DockStyle.Top;
             pHome.Location = new Point(0, 0);
             pHome.Name = "pHome";
             pHome.Padding = new Padding(0, 12, 0, 12);
@@ -510,6 +509,7 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel1.BackColor = Color.White;
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
             panel1.Controls.Add(pictureBox1);
