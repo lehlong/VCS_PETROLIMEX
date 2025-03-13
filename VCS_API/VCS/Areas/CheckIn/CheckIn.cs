@@ -511,6 +511,11 @@ namespace VCS.Areas.CheckIn
                 CommonService.Alert("Không có thông tin phương tiện!", Alert.Alert.enumType.Error);
                 return;
             }
+            if (string.IsNullOrEmpty(txtVehicleName.Text))
+            {
+                CommonService.Alert("Không có thông tin tài xế!", Alert.Alert.enumType.Error);
+                return;
+            }
 
             var c = _dbContext.TblBuHeader.Where(x => x.VehicleCode == txtLicensePlate.Text && x.StatusVehicle != "04"
             && x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode).Count();
