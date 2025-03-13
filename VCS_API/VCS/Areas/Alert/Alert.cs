@@ -33,6 +33,7 @@ namespace VCS.Areas.Alert
         private int x, y;
 
         private static List<Alert> openAlerts = new List<Alert>();
+        private int waitTime;
         public void ShowAlert(string msg, enumType type)
         {
             this.Opacity = 0.0;
@@ -55,21 +56,27 @@ namespace VCS.Areas.Alert
             }
 
             this.TopMost = true;
-
-            // Gán kiểu cảnh báo
             switch (type)
             {
                 case enumType.Success:
                     this.pictureBox2.Image = Properties.Resources.done;
                     this.BackColor = Color.FromArgb(40, 167, 69);
+                    waitTime = 3000;
                     break;
                 case enumType.Error:
                     this.pictureBox2.Image = Properties.Resources.error;
                     this.BackColor = Color.FromArgb(220, 53, 69);
+                    waitTime = 10000;
                     break;
                 case enumType.Warning:
                     this.pictureBox2.Image = Properties.Resources.error;
                     this.BackColor = Color.FromArgb(245, 199, 26);
+                    waitTime = 5000;
+                    break;
+                case enumType.Info:
+                    this.pictureBox2.Image = Properties.Resources.error;
+                    this.BackColor = Color.FromArgb(23, 162, 184);
+                    waitTime = 5000;
                     break;
             }
 
@@ -78,6 +85,9 @@ namespace VCS.Areas.Alert
             this.action = enumAction.start;
             this.timer1.Interval = 10;
             timer1.Start();
+
+            // Dùng biến waitTime để thay đổi thời gian chờ
+            Task.Delay(waitTime).ContinueWith(t => action = enumAction.close);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -91,7 +101,7 @@ namespace VCS.Areas.Alert
             switch (this.action)
             {
                 case enumAction.wait:
-                    timer1.Interval = 3000; // Tự động đóng sau 3 giây
+                    timer1.Interval = waitTime; // Tự động đóng sau 3 giây
                     action = enumAction.close;
                     break;
                 case enumAction.start:

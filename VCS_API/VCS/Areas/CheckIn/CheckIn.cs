@@ -1045,7 +1045,7 @@ namespace VCS.Areas.CheckIn
                     if (completedTask == timeoutTask)
                     {
                         cts.Cancel();
-                        CommonService.Alert("Quá thời gian nhận diện, vui lòng thử lại!", Alert.Alert.enumType.Error);
+                        CommonService.Alert("Hệ thống nhận diện lỗi hoặc chưa khởi động!", Alert.Alert.enumType.Error);
                         txtNumberDO.Focus();
                         return;
                     }

@@ -554,7 +554,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Main";
-            StartPosition = FormStartPosition.Manual;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
             Load += Main_Load;
             panelMenu.ResumeLayout(false);

@@ -55,6 +55,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AllCamera";
             Padding = new Padding(20);
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Tất cả Camera";
             ResumeLayout(false);
         }

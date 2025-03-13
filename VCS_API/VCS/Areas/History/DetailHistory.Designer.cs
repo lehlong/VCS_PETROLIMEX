@@ -685,7 +685,7 @@ namespace VCS.APP.Areas.History
             MaximizeBox = false;
             Name = "DetailHistory";
             Padding = new Padding(8);
-            StartPosition = FormStartPosition.Manual;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Thông tin chi tiết";
             Load += DetailHistory_Load;
             panel16.ResumeLayout(false);

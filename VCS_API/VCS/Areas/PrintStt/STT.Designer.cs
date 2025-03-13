@@ -170,6 +170,7 @@
             MaximizeBox = false;
             Name = "STT";
             Padding = new Padding(8);
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "In STT";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
