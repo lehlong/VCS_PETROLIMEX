@@ -68,6 +68,7 @@ namespace VCS.APP.Services
                 Global.PathSaveFile = config["Setting:PathSaveFile"];
                 Global.DetectApiUrl = config["Setting:DetectApiUrl"];
                 Global.DetectFilePath = config["Setting:DetectFilePath"];
+                Global.VcsUrl = config["Setting:VcsUrl"];
             }
             catch (Exception ex)
             {
@@ -303,6 +304,29 @@ namespace VCS.APP.Services
         {
             VCS.Areas.Alert.Alert alert = new VCS.Areas.Alert.Alert();
             alert.ShowAlert(msg, type);
+        }
+
+        public static async void UploadImagesServer(List<string> imagePaths)
+        {
+            if (imagePaths.Count() == 0)
+            {
+                return;
+            }
+            HttpClient _client = new HttpClient();
+            var content = new MultipartFormDataContent();
+            foreach (var filePath in imagePaths)
+            {
+                var fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath));
+                fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("image/jpeg");
+                content.Add(fileContent, "files", System.IO.Path.GetFileName(filePath));
+            }
+
+            var response = await _client.PostAsync($"{Global.VcsUrl}/api/Header/UploadImage", content);
+            if (!response.IsSuccessStatusCode)
+            {
+                Alert("Lưu ý! Chưa đẩy được thông tin ảnh lên server", VCS.Areas.Alert.Alert.enumType.Warning);
+            }
+            
         }
     }
 }

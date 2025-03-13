@@ -35,13 +35,24 @@ namespace VCS.APP.Areas.History
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             panel1 = new Panel();
             dataTable = new DataGridView();
+            Id = new DataGridViewTextBoxColumn();
+            Stt = new DataGridViewTextBoxColumn();
+            VehicleName = new DataGridViewTextBoxColumn();
+            VehicleCode = new DataGridViewTextBoxColumn();
+            Order = new DataGridViewTextBoxColumn();
+            StatusVehicle = new DataGridViewTextBoxColumn();
+            TimeCheckIn = new DataGridViewTextBoxColumn();
+            TimeCheckOut = new DataGridViewTextBoxColumn();
+            Edit = new DataGridViewButtonColumn();
+            Print = new DataGridViewButtonColumn();
+            Cancel = new DataGridViewButtonColumn();
             label6 = new Label();
             cbStatus = new ComboBox();
             txtVehicleName = new TextBox();
@@ -53,16 +64,6 @@ namespace VCS.APP.Areas.History
             label2 = new Label();
             label1 = new Label();
             btnSearch = new Button();
-            Id = new DataGridViewTextBoxColumn();
-            Stt = new DataGridViewTextBoxColumn();
-            VehicleName = new DataGridViewTextBoxColumn();
-            VehicleCode = new DataGridViewTextBoxColumn();
-            Order = new DataGridViewTextBoxColumn();
-            StatusVehicle = new DataGridViewTextBoxColumn();
-            TimeCheckIn = new DataGridViewTextBoxColumn();
-            TimeCheckOut = new DataGridViewTextBoxColumn();
-            Edit = new DataGridViewButtonColumn();
-            Print = new DataGridViewButtonColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataTable).BeginInit();
             SuspendLayout();
@@ -95,7 +96,7 @@ namespace VCS.APP.Areas.History
             dataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataTable.BackgroundColor = Color.White;
             dataTable.BorderStyle = BorderStyle.None;
-            dataTable.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataTable.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 58, 64);
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -106,7 +107,7 @@ namespace VCS.APP.Areas.History
             dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataTable.ColumnHeadersHeight = 40;
             dataTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataTable.Columns.AddRange(new DataGridViewColumn[] { Id, Stt, VehicleName, VehicleCode, Order, StatusVehicle, TimeCheckIn, TimeCheckOut, Edit, Print });
+            dataTable.Columns.AddRange(new DataGridViewColumn[] { Id, Stt, VehicleName, VehicleCode, Order, StatusVehicle, TimeCheckIn, TimeCheckOut, Edit, Print, Cancel });
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = Color.White;
             dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -134,7 +135,122 @@ namespace VCS.APP.Areas.History
             dataTable.Size = new Size(1320, 697);
             dataTable.TabIndex = 56;
             dataTable.CellClick += dataTable_CellClick;
+            dataTable.CellMouseMove += dataTable_CellMouseMove;
             dataTable.CellPainting += dataTable_CellPainting;
+            // 
+            // Id
+            // 
+            Id.HeaderText = "ID";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // Stt
+            // 
+            Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stt.DefaultCellStyle = dataGridViewCellStyle2;
+            Stt.FillWeight = 14F;
+            Stt.HeaderText = "STT";
+            Stt.MinimumWidth = 16;
+            Stt.Name = "Stt";
+            Stt.ReadOnly = true;
+            Stt.Resizable = DataGridViewTriState.False;
+            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
+            Stt.Width = 53;
+            // 
+            // VehicleName
+            // 
+            VehicleName.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            VehicleName.FillWeight = 240F;
+            VehicleName.HeaderText = "TÀI XẾ";
+            VehicleName.MinimumWidth = 240;
+            VehicleName.Name = "VehicleName";
+            VehicleName.ReadOnly = true;
+            VehicleName.Width = 240;
+            // 
+            // VehicleCode
+            // 
+            VehicleCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            VehicleCode.FillWeight = 180F;
+            VehicleCode.HeaderText = "PHƯƠNG TIỆN";
+            VehicleCode.MinimumWidth = 180;
+            VehicleCode.Name = "VehicleCode";
+            VehicleCode.ReadOnly = true;
+            VehicleCode.Width = 180;
+            // 
+            // Order
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Order.DefaultCellStyle = dataGridViewCellStyle3;
+            Order.FillWeight = 5.931089F;
+            Order.HeaderText = "STT VÀO KHO";
+            Order.Name = "Order";
+            Order.ReadOnly = true;
+            // 
+            // StatusVehicle
+            // 
+            StatusVehicle.FillWeight = 5.931089F;
+            StatusVehicle.HeaderText = "TRẠNG THÁI XE";
+            StatusVehicle.Name = "StatusVehicle";
+            StatusVehicle.ReadOnly = true;
+            // 
+            // TimeCheckIn
+            // 
+            TimeCheckIn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TimeCheckIn.DefaultCellStyle = dataGridViewCellStyle4;
+            TimeCheckIn.FillWeight = 200F;
+            TimeCheckIn.HeaderText = "THỜI GIAN VÀO";
+            TimeCheckIn.MinimumWidth = 200;
+            TimeCheckIn.Name = "TimeCheckIn";
+            TimeCheckIn.ReadOnly = true;
+            TimeCheckIn.Width = 200;
+            // 
+            // TimeCheckOut
+            // 
+            TimeCheckOut.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TimeCheckOut.DefaultCellStyle = dataGridViewCellStyle5;
+            TimeCheckOut.FillWeight = 200F;
+            TimeCheckOut.HeaderText = "THỜI GIAN RA";
+            TimeCheckOut.MinimumWidth = 200;
+            TimeCheckOut.Name = "TimeCheckOut";
+            TimeCheckOut.ReadOnly = true;
+            TimeCheckOut.Width = 200;
+            // 
+            // Edit
+            // 
+            Edit.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Edit.FillWeight = 20F;
+            Edit.FlatStyle = FlatStyle.Flat;
+            Edit.HeaderText = "";
+            Edit.MinimumWidth = 40;
+            Edit.Name = "Edit";
+            Edit.ReadOnly = true;
+            Edit.Width = 40;
+            // 
+            // Print
+            // 
+            Print.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Print.FillWeight = 40F;
+            Print.FlatStyle = FlatStyle.Flat;
+            Print.HeaderText = "";
+            Print.MinimumWidth = 40;
+            Print.Name = "Print";
+            Print.ReadOnly = true;
+            Print.Width = 40;
+            // 
+            // Cancel
+            // 
+            Cancel.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Cancel.FillWeight = 40F;
+            Cancel.FlatStyle = FlatStyle.Flat;
+            Cancel.HeaderText = "";
+            Cancel.MinimumWidth = 40;
+            Cancel.Name = "Cancel";
+            Cancel.ReadOnly = true;
+            Cancel.Width = 40;
             // 
             // label6
             // 
@@ -259,109 +375,6 @@ namespace VCS.APP.Areas.History
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += btnSearch_Click;
             // 
-            // Id
-            // 
-            Id.HeaderText = "ID";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            Id.Visible = false;
-            // 
-            // Stt
-            // 
-            Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Stt.DefaultCellStyle = dataGridViewCellStyle2;
-            Stt.FillWeight = 14F;
-            Stt.HeaderText = "STT";
-            Stt.MinimumWidth = 16;
-            Stt.Name = "Stt";
-            Stt.ReadOnly = true;
-            Stt.Resizable = DataGridViewTriState.False;
-            Stt.SortMode = DataGridViewColumnSortMode.NotSortable;
-            Stt.Width = 54;
-            // 
-            // VehicleName
-            // 
-            VehicleName.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            VehicleName.FillWeight = 240F;
-            VehicleName.HeaderText = "TÀI XẾ";
-            VehicleName.MinimumWidth = 240;
-            VehicleName.Name = "VehicleName";
-            VehicleName.ReadOnly = true;
-            VehicleName.Width = 240;
-            // 
-            // VehicleCode
-            // 
-            VehicleCode.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            VehicleCode.FillWeight = 180F;
-            VehicleCode.HeaderText = "PHƯƠNG TIỆN";
-            VehicleCode.MinimumWidth = 180;
-            VehicleCode.Name = "VehicleCode";
-            VehicleCode.ReadOnly = true;
-            VehicleCode.Width = 180;
-            // 
-            // Order
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Order.DefaultCellStyle = dataGridViewCellStyle3;
-            Order.FillWeight = 5.931089F;
-            Order.HeaderText = "STT VÀO KHO";
-            Order.Name = "Order";
-            Order.ReadOnly = true;
-            // 
-            // StatusVehicle
-            // 
-            StatusVehicle.FillWeight = 5.931089F;
-            StatusVehicle.HeaderText = "TRẠNG THÁI XE";
-            StatusVehicle.Name = "StatusVehicle";
-            StatusVehicle.ReadOnly = true;
-            // 
-            // TimeCheckIn
-            // 
-            TimeCheckIn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TimeCheckIn.DefaultCellStyle = dataGridViewCellStyle4;
-            TimeCheckIn.FillWeight = 200F;
-            TimeCheckIn.HeaderText = "THỜI GIAN VÀO";
-            TimeCheckIn.MinimumWidth = 200;
-            TimeCheckIn.Name = "TimeCheckIn";
-            TimeCheckIn.ReadOnly = true;
-            TimeCheckIn.Width = 200;
-            // 
-            // TimeCheckOut
-            // 
-            TimeCheckOut.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TimeCheckOut.DefaultCellStyle = dataGridViewCellStyle5;
-            TimeCheckOut.FillWeight = 200F;
-            TimeCheckOut.HeaderText = "THỜI GIAN RA";
-            TimeCheckOut.MinimumWidth = 200;
-            TimeCheckOut.Name = "TimeCheckOut";
-            TimeCheckOut.ReadOnly = true;
-            TimeCheckOut.Width = 200;
-            // 
-            // Edit
-            // 
-            Edit.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Edit.FillWeight = 20F;
-            Edit.FlatStyle = FlatStyle.Flat;
-            Edit.HeaderText = "";
-            Edit.MinimumWidth = 40;
-            Edit.Name = "Edit";
-            Edit.ReadOnly = true;
-            Edit.Width = 40;
-            // 
-            // Print
-            // 
-            Print.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            Print.FillWeight = 40F;
-            Print.FlatStyle = FlatStyle.Flat;
-            Print.HeaderText = "";
-            Print.MinimumWidth = 40;
-            Print.Name = "Print";
-            Print.ReadOnly = true;
-            Print.Width = 40;
-            // 
             // History
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -405,5 +418,6 @@ namespace VCS.APP.Areas.History
         private DataGridViewTextBoxColumn TimeCheckOut;
         private DataGridViewButtonColumn Edit;
         private DataGridViewButtonColumn Print;
+        private DataGridViewButtonColumn Cancel;
     }
 }

@@ -109,6 +109,7 @@ namespace VCS.Areas.CheckOut
             {
                 pictureBoxVehicle.Image = new Bitmap(image);
             }
+            IMGPATH = snapshotPath;
 
             // Chuẩn bị HTTP client với headers
             client.DefaultRequestHeaders.Accept.Clear();
@@ -231,7 +232,6 @@ namespace VCS.Areas.CheckOut
                         {
                             pictureBoxLicensePlate.Image = new Bitmap(plateImage);
                         }
-                        IMGPATH = snapshotPath;
                         PLATEPATH = cropedPath;
                         lstPathImageCapture = capturedPaths;
 
@@ -395,26 +395,32 @@ namespace VCS.Areas.CheckOut
         {
             ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
             string selectedValue = selectedItem.Value;
-            _dbContext.TblBuImage.Add(new TblBuImage
+            if (!string.IsNullOrEmpty(IMGPATH))
             {
-                Id = Guid.NewGuid().ToString(),
-                HeaderId = selectedValue,
-                Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
-                InOut = "out",
-                IsPlate = true,
-                IsActive = true,
-            });
-            _dbContext.TblBuImage.Add(new TblBuImage
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = selectedValue,
+                    Path = IMGPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = IMGPATH,
+                    InOut = "out",
+                    IsPlate = false,
+                    IsActive = true,
+                });
+            }
+            if (!string.IsNullOrEmpty(PLATEPATH))
             {
-                Id = Guid.NewGuid().ToString(),
-                HeaderId = selectedValue,
-                Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
-                InOut = "out",
-                IsPlate = true,
-                IsActive = true,
-            });
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = selectedValue,
+                    Path = PLATEPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = PLATEPATH,
+                    InOut = "out",
+                    IsPlate = true,
+                    IsActive = true
+                });
+            }
             foreach (var o in lstPathImageCapture)
             {
                 _dbContext.TblBuImage.Add(new TblBuImage
@@ -435,6 +441,10 @@ namespace VCS.Areas.CheckOut
             i.NoteOut = txtNoteOut.Text;
             _dbContext.TblBuHeader.Update(i);
             _dbContext.SaveChanges();
+
+            lstPathImageCapture.Add(IMGPATH);
+            lstPathImageCapture.Add(PLATEPATH);
+            CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
 
             CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
             ResetForm();

@@ -19,6 +19,7 @@ namespace VCS.APP.Areas.History
     {
         private AppDbContextForm _dbContext;
         private string _headerId;
+        private readonly HttpClient _httpClient = new HttpClient();
         public DetailHistory(AppDbContextForm dbContext, string headerId)
         {
             InitializeComponent();
@@ -41,50 +42,57 @@ namespace VCS.APP.Areas.History
                 lblNoteout.Text = i.NoteOut;
                 lblStt.Text = _stt != null ? _stt.ToString("D2") : "";
             }
-            var imgINList = _dbContext.TblBuImage
+            var lstImgIn = _dbContext.TblBuImage
                                     .Where(x => x.HeaderId == _headerId && x.InOut == "in")
-                                    .Select(x => x.FullPath)
+                                    .Select(x => x.Path)
                                     .ToList();
-
-
-            var pictureBoxes = new List<PictureBox> { ptbIn1, ptbIn2, pcbIn3, pcbIn4 };
-            for (int i = 0; i < pictureBoxes.Count; i++)
+            var orderIn = 1;
+            if (lstImgIn.Count() > 4)
             {
-                if (imgINList.Count > i)
+                for (var i = 0; i < 4; i++)
                 {
-                    if (File.Exists(imgINList[i]))
-                        pictureBoxes[i].Image = Image.FromFile(imgINList[i]);
-                    else
-                        pictureBoxes[i].Image = null;
-                }
-                else
-                {
-                    pictureBoxes[i].Image = null;
+                    LoadImageAsync($"{Global.VcsUrl}/Images/{lstImgIn[i]}", orderIn, "in");
+                    orderIn++;
                 }
             }
-                var imgOUTList = _dbContext.TblBuImage
-                                    .Where(x => x.HeaderId == _headerId && x.InOut == "out")
-                                    .Select(x => x.FullPath)
-                                    .ToList();
-            var pictureBoxesOut = new List<PictureBox> { ptcOut1, ptbOut2, ptcOut3, ptcOut4 };
-            for (int i = 0; i < pictureBoxesOut.Count; i++)
+            else
             {
-                if (imgOUTList.Count > i)
+                foreach (var i in lstImgIn)
                 {
-                    if (File.Exists(imgOUTList[i]))
-                        pictureBoxesOut[i].Image = Image.FromFile(imgOUTList[i]);
-                    else
-                        pictureBoxesOut[i].Image = null;
-                }
-                else
-                {
-                    pictureBoxesOut[i].Image = null;
+                    LoadImageAsync($"{Global.VcsUrl}/Images/{i}", orderIn, "in");
+                    orderIn++;
                 }
             }
+
+
+            var lstImgOut = _dbContext.TblBuImage
+                                .Where(x => x.HeaderId == _headerId && x.InOut == "out")
+                                .Select(x => x.FullPath)
+                                .ToList();
+
+            var orderOut = 1;
+            if (lstImgOut.Count() > 4)
+            {
+                for (var i = 0; i < 4; i++)
+                {
+                    LoadImageAsync($"{Global.VcsUrl}/Images/{lstImgIn[i]}", orderOut, "out");
+                    orderIn++;
+                }
+            }
+            else
+            {
+                foreach (var i in lstImgOut)
+                {
+                    LoadImageAsync($"{Global.VcsUrl}/Images/{i}", orderOut, "out");
+                    orderIn++;
+                }
+            }
+
+
+
+
             var lstDO = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == _headerId).ToList();
             var lstDOOUT = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == _headerId).ToList();
-
-
 
             var detail = GetCheckInDetail(_headerId);
             if (detail != null)
@@ -108,7 +116,56 @@ namespace VCS.APP.Areas.History
                 }
             }
         }
-      
+        private async Task LoadImageAsync(string url, int order, string type)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                var stream = await response.Content.ReadAsStreamAsync();
+
+                if (type == "in")
+                {
+                    switch (order)
+                    {
+                        case 1:
+                            ptbIn1.Image = Image.FromStream(stream);
+                            break;
+                        case 2:
+                            ptbIn2.Image = Image.FromStream(stream);
+                            break;
+                        case 3:
+                            pcbIn3.Image = Image.FromStream(stream);
+                            break;
+                        case 4:
+                            pcbIn4.Image = Image.FromStream(stream);
+                            break;
+                    }
+                }
+                if (type == "out")
+                {
+                    switch (order)
+                    {
+                        case 1:
+                            ptcOut1.Image = Image.FromStream(stream);
+                            break;
+                        case 2:
+                            ptbOut2.Image = Image.FromStream(stream);
+                            break;
+                        case 3:
+                            ptcOut3.Image = Image.FromStream(stream);
+                            break;
+                        case 4:
+                            ptcOut4.Image = Image.FromStream(stream);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonService.Alert("Ảnh không tồn tại trên server!", VCS.Areas.Alert.Alert.enumType.Error);
+            }
+        }
         private string? GetNameWarehouse()
         {
             try
@@ -469,7 +526,7 @@ namespace VCS.APP.Areas.History
                 fullscreenForm.ShowDialog();
             }
         }
-            private void btnIn_Click(object sender, EventArgs e)
+        private void btnIn_Click(object sender, EventArgs e)
         {
             var imgINList = _dbContext.TblBuImage
                                   .Where(x => x.HeaderId == _headerId && x.InOut == "in")

@@ -39,7 +39,12 @@ namespace VCS.APP.Areas.History
 
         private void SearchData()
         {
-            var data = _dbContext.TblBuHeader.Where(x => x.CreateDate >= fromDate.Value && x.CreateDate <= toDate.Value).OrderByDescending(x => x.CreateDate).ThenByDescending(x => x.Stt).AsQueryable();
+            var data = _dbContext.TblBuHeader.Where(x => x.CreateDate >= fromDate.Value && x.CreateDate <= toDate.Value 
+            && x.CompanyCode == ProfileUtilities.User.OrganizeCode 
+            && x.WarehouseCode == ProfileUtilities.User.WarehouseCode)
+                .OrderByDescending(x => x.CreateDate)
+                .ThenByDescending(x => x.Stt).AsQueryable();
+
             if (!string.IsNullOrEmpty(txtVehicleName.Text))
             {
                 data = data.Where(x => x.VehicleName.Contains(txtVehicleName.Text));
@@ -110,7 +115,6 @@ namespace VCS.APP.Areas.History
                 return;
             }
         }
-
         private void txtVehicleName_TextChanged(object sender, EventArgs e)
         {
             var status = ValidateSearch();
@@ -137,25 +141,50 @@ namespace VCS.APP.Areas.History
 
         private void dataTable_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.ColumnIndex == dataTable.Columns["Edit"].Index && e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                Bitmap iconBitmap = Properties.Resources.icons8_details_18;
-                int iconSize = 18;
-                int x = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
-                int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
-                e.Graphics.DrawImage(iconBitmap, new Rectangle(x, y, iconSize, iconSize));
-                e.Handled = true;
-            }
-            if (e.ColumnIndex == dataTable.Columns["Print"].Index && e.RowIndex >= 0)
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                Bitmap iconBitmap = Properties.Resources.icons8_print_18__1_;
-                int iconSize = 18;
-                int x = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
-                int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
-                e.Graphics.DrawImage(iconBitmap, new Rectangle(x, y, iconSize, iconSize));
-                e.Handled = true;
+                Bitmap iconBitmap = null;
+
+                // Xác định icon cho từng cột
+                if (e.ColumnIndex == dataTable.Columns["Edit"].Index)
+                {
+                    iconBitmap = Properties.Resources.icons8_list_18;
+                }
+                else if (e.ColumnIndex == dataTable.Columns["Print"].Index)
+                {
+                    iconBitmap = Properties.Resources.icons8_print_18__2_;
+                }
+                else if (e.ColumnIndex == dataTable.Columns["Cancel"].Index)
+                {
+                    iconBitmap = Properties.Resources.icons8_close_18;
+                }
+
+                // Nếu là cột chứa icon, thực hiện vẽ
+                if (iconBitmap != null)
+                {
+                    // Vẽ nền trắng khi hover
+                    if (dataTable.CurrentCell != null &&
+                        dataTable.CurrentCell.RowIndex == e.RowIndex &&
+                        dataTable.CurrentCell.ColumnIndex == e.ColumnIndex)
+                    {
+                        e.Graphics.FillRectangle(Brushes.White, e.CellBounds);
+                    }
+                    else
+                    {
+                        e.Paint(e.CellBounds, DataGridViewPaintParts.Background);
+                    }
+
+                    // Vẽ icon căn giữa 18x18
+                    int iconSize = 18;
+                    int x = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
+                    int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
+                    e.Graphics.DrawImage(iconBitmap, new Rectangle(x, y, iconSize, iconSize));
+
+                    // Vẽ lại border sau khi vẽ icon để không mất khung
+                    e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
+
+                    e.Handled = true;
+                }
             }
         }
 
@@ -169,6 +198,24 @@ namespace VCS.APP.Areas.History
             {
                 var f = new DetailHistory(_dbContext, dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
                 f.ShowDialog();
+            }
+            if (e.ColumnIndex == dataTable.Columns["Cancel"].Index && e.RowIndex >= 0)
+            {
+                MessageBox.Show(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+            }
+        }
+
+        private void dataTable_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0 && (e.ColumnIndex == dataTable.Columns["Edit"].Index ||
+                             e.ColumnIndex == dataTable.Columns["Print"].Index ||
+                             e.ColumnIndex == dataTable.Columns["Cancel"].Index))
+            {
+                dataTable.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                dataTable.Cursor = Cursors.Default;
             }
         }
     }

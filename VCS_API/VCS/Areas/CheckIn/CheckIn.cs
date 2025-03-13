@@ -344,7 +344,7 @@ namespace VCS.Areas.CheckIn
             txtNumberDO.Text = "";
 
         }
-        
+
 
         private void AppendPanelDetail(DOSAPDataDto data)
         {
@@ -616,26 +616,34 @@ namespace VCS.Areas.CheckIn
 
                     }
                 }
-                _dbContext.TblBuImage.Add(new TblBuImage
+                if (!string.IsNullOrEmpty(IMGPATH))
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = headerId,
-                    Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
-                    InOut = "in",
-                    IsPlate = true,
-                    IsActive = true,
-                });
-                _dbContext.TblBuImage.Add(new TblBuImage
+                    _dbContext.TblBuImage.Add(new TblBuImage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = headerId,
+                        Path = IMGPATH.Replace(Global.PathSaveFile, ""),
+                        FullPath = IMGPATH,
+                        InOut = "in",
+                        IsPlate = false,
+                        IsActive = true,
+                    });
+                }
+                if (!string.IsNullOrEmpty(PLATEPATH))
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = headerId,
-                    Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
-                    InOut = "in",
-                    IsPlate = false,
-                    IsActive = true
-                });
+                    _dbContext.TblBuImage.Add(new TblBuImage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = headerId,
+                        Path = PLATEPATH.Replace(Global.PathSaveFile, ""),
+                        FullPath = PLATEPATH,
+                        InOut = "in",
+                        IsPlate = true,
+                        IsActive = true
+                    });
+                }
+
+
                 foreach (var i in lstPathImageCapture)
                 {
                     _dbContext.TblBuImage.Add(new TblBuImage
@@ -667,6 +675,10 @@ namespace VCS.Areas.CheckIn
                 _dbContext.TblBuHeader.Update(h);
             }
             _dbContext.SaveChanges();
+
+            lstPathImageCapture.Add(IMGPATH);
+            lstPathImageCapture.Add(PLATEPATH);
+            CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
 
             var ticketInfo = new TicketInfo
             {
@@ -748,26 +760,32 @@ namespace VCS.Areas.CheckIn
 
                 }
             }
-            _dbContext.TblBuImage.Add(new TblBuImage
+            if (!string.IsNullOrEmpty(IMGPATH))
             {
-                Id = Guid.NewGuid().ToString(),
-                HeaderId = headerId,
-                Path = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = string.IsNullOrEmpty(PLATEPATH) ? "" : PLATEPATH,
-                InOut = "in",
-                IsPlate = true,
-                IsActive = true,
-            }); ;
-            _dbContext.TblBuImage.Add(new TblBuImage
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    Path = IMGPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = IMGPATH,
+                    InOut = "in",
+                    IsPlate = false,
+                    IsActive = true,
+                });
+            }
+            if (!string.IsNullOrEmpty(PLATEPATH))
             {
-                Id = Guid.NewGuid().ToString(),
-                HeaderId = headerId,
-                InOut = "in",
-                Path = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH.Replace(Global.PathSaveFile, ""),
-                FullPath = string.IsNullOrEmpty(IMGPATH) ? "" : IMGPATH,
-                IsPlate = false,
-                IsActive = true
-            });
+                _dbContext.TblBuImage.Add(new TblBuImage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    HeaderId = headerId,
+                    Path = PLATEPATH.Replace(Global.PathSaveFile, ""),
+                    FullPath = PLATEPATH,
+                    InOut = "in",
+                    IsPlate = true,
+                    IsActive = true
+                });
+            }
 
             foreach (var i in lstPathImageCapture)
             {
@@ -783,6 +801,11 @@ namespace VCS.Areas.CheckIn
                 });
             }
             _dbContext.SaveChanges();
+
+            lstPathImageCapture.Add(IMGPATH);
+            lstPathImageCapture.Add(PLATEPATH);
+            CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
+
             CommonService.Alert("Cho phương tiện vào hàng chờ thành công!", Alert.Alert.enumType.Success);
             ResetForm();
         }
@@ -952,6 +975,7 @@ namespace VCS.Areas.CheckIn
             {
                 pictureBoxVehicle.Image = new Bitmap(image);
             }
+            IMGPATH = snapshotPath;
 
             // Chuẩn bị HTTP client với headers
             client.DefaultRequestHeaders.Accept.Clear();
@@ -1077,7 +1101,6 @@ namespace VCS.Areas.CheckIn
                         {
                             pictureBoxLicensePlate.Image = new Bitmap(plateImage);
                         }
-                        IMGPATH = snapshotPath;
                         PLATEPATH = cropedPath;
                         lstPathImageCapture = capturedPaths;
                         CommonService.Alert(result.Item2, Alert.Alert.enumType.Success);

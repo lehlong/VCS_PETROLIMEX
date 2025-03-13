@@ -50,5 +50,36 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
+
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> UploadImages([FromForm] IFormFileCollection files)
+        {
+            string _baseDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            if (files == null || files.Count == 0)
+            {
+                return Ok(new { Status = true, Message = "Không có ảnh!" });
+            }
+
+            string todayPath = Path.Combine(_baseDirectory, DateTime.Now.ToString("yyyy/MM/dd"));
+            if (!Directory.Exists(todayPath))
+            {
+                Directory.CreateDirectory(todayPath);
+            }
+
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    string filePath = Path.Combine(todayPath, file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            return Ok(new {Status = true, Message = "Đẩy ảnh lên server thành công!" });
+        }
+
     }
 }
