@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VCS.APP.Areas.PrintStt;
+using VCS.APP.Services;
 using VCS.APP.Utilities;
 
 namespace VCS.APP.Areas.History
@@ -20,184 +21,155 @@ namespace VCS.APP.Areas.History
     public partial class History : Form
     {
         private AppDbContextForm _dbContext;
-        private int currentPage = 1;
-        private int itemsPerPage = 10;
-        private List<TblBuHeader> data = new List<TblBuHeader>();
         public History(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            dataGridView.CellContentClick += dataGridView_CellContentClick;
-
-
+            fromDate.Value = DateTime.Now.Date;
+            toDate.Value = DateTime.Now.Date.AddDays(1).AddTicks(-1);
         }
-        private void fromDate_ValueChanged(object sender, EventArgs e)
+        private void History_Load(object sender, EventArgs e)
         {
-
+            SearchData();
         }
-
         private void btnSearch_Click(object sender, EventArgs e)
         {
             SearchData();
         }
-        private void History_Load(object sender, EventArgs e)
-        {
-            try
-            {
 
-                data = _dbContext.TblBuHeader
-                     .Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode)
-                     .ToList();
-
-                btnPrevious.Click += btnPrevious_Click;
-                btnNext.Click += btnNext_Click;
-                DisplayPage(data);
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi lấy danh sách lịch sử vào ra: {ex.Message}", "Lỗi",
-                   MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-        }
-        private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.ColumnIndex == dataGridView.Columns["details"].Index && e.RowIndex >= 0)
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                Image icon = Properties.Resources.icons8_details_18;
-                int iconSize = 18;
-                int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
-                int iconY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
-                e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
-                e.Handled = true;
-            }
-            if (e.ColumnIndex == dataGridView.Columns["rePrintColumn"].Index && e.RowIndex >= 0)
-            {
-                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
-                Image icon = Properties.Resources.icons8_print_18__1_;
-                int iconSize = 18;
-                int iconX = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
-                int iconY = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
-                e.Graphics.DrawImage(icon, new Rectangle(iconX, iconY, iconSize, iconSize));
-                e.Handled = true;
-            }
-
-        }
-        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            if (e.ColumnIndex == dataGridView.Columns["rePrintColumn"].Index && e.RowIndex >= 0)
-            {
-                var headerId = dataGridView.Rows[e.RowIndex].Cells["Id"].Value;
-                if (headerId != null)
-                {
-                    string id = headerId.ToString();
-                    var data = _dbContext.TblBuHeader.Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode && x.CompanyCode == ProfileUtilities.User.OrganizeCode && x.Id == id).FirstOrDefault();
-                    var lstDO = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == id).Select(x => x.Do1Sap).ToList();
-                    var ticketInfo = new TicketInfo
-                    {
-                        WarehouseName = GetNameWarehouse(),
-                        Vehicle = data.VehicleCode,
-                        STT = _dbContext.TblBuHeader.Where(x => x.Id == id).Select(x => x.Stt).FirstOrDefault().ToString("00"),
-                    };
-                    STT sttForm = new STT(ticketInfo, lstDO);
-                    sttForm.ShowDialog();
-                }
-            }
-
-            if (e.ColumnIndex == dataGridView.Columns["details"].Index && e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dataGridView.Rows[e.RowIndex];
-                object cellValue = row.Cells[8].Value;
-                DetailHistory detail = new DetailHistory(_dbContext, cellValue.ToString());
-                detail.ShowDialog();
-            }
-        }
-        private string? GetNameWarehouse()
-        {
-            try
-            {
-                return _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-        private void btnPrevious_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-                DisplayPage(data);
-            }
-        }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            if ((currentPage * itemsPerPage) < data.Count)
-            {
-                currentPage++;
-                DisplayPage(data);
-            }
-        }
-
-        private void DisplayPage(List<TblBuHeader> data)
-        {
-            dataGridView.Rows.Clear();
-            var sortedData = data.OrderByDescending(d => d.CreateDate).ToList();
-
-            var pagedData = sortedData.Skip((currentPage - 1) * itemsPerPage).Take(itemsPerPage).ToList();
-            int i = (currentPage - 1) * itemsPerPage + 1;
-
-            foreach (var d in pagedData)
-            {
-                dataGridView.Rows.Add(new object[]
-                {
-                    i.ToString(),
-                    d.VehicleName,
-                    d.VehicleCode,
-                    d.CreateDate,
-                    d.TimeCheckout,
-                    d.NoteIn,
-                    d.NoteOut,
-                    _dbContext.TblBuHeader.Where(x => x.Id == d.Id).Select(x => x.Stt).FirstOrDefault(),
-                    d.Id
-                });
-                i++;
-            }
-            lblPageInfo.Text = $"Page {currentPage} of {Math.Ceiling((double)data.Count / itemsPerPage)}";
-        }
         private void SearchData()
         {
-            var filteredData = data.Where(x =>
-                (string.IsNullOrEmpty(txtNumber.Text) || x.VehicleCode.Contains(txtNumber.Text)) &&
-                (string.IsNullOrEmpty(textBox2.Text) || x.VehicleName.Contains(textBox2.Text)) &&
-                (x.CreateDate >= fromDate.Value && x.CreateDate <= toDate.Value)
-            ).ToList();
+            var data = _dbContext.TblBuHeader.Where(x => x.CreateDate >= fromDate.Value && x.CreateDate <= toDate.Value).OrderByDescending(x => x.CreateDate).ThenByDescending(x => x.Stt).AsQueryable();
+            if (!string.IsNullOrEmpty(txtVehicleName.Text))
+            {
+                data = data.Where(x => x.VehicleName.Contains(txtVehicleName.Text));
+            }
+            if (!string.IsNullOrEmpty(txtVehicleCode.Text))
+            {
+                data = data.Where(x => x.VehicleCode.Contains(txtVehicleCode.Text));
+            }
+            dataTable.Rows.Clear();
 
-            DisplayPage(filteredData);
-        }
-        private void ResetForm()
-        {
-            txtNumber.Text = string.Empty;   
-            textBox2.Text = string.Empty;  
-            fromDate.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            toDate.Value = DateTime.Now;
-            data = _dbContext.TblBuHeader
-                .Where(x => x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-                            x.CompanyCode == ProfileUtilities.User.OrganizeCode)
-                .ToList();
-            currentPage = 1;
-            DisplayPage(data);
-        }
-        private void btnResetForm_Click(object sender, EventArgs e)
-        {
-            ResetForm();
+            var order = 0;
+            foreach (var i in data.ToList())
+            {
+                var timeCheckout = i.TimeCheckout.HasValue ? i.TimeCheckout.Value.ToString("dd/MM/yyyy hh:mm:ss") : "";
+                dataTable.Rows.Add(i.Id, order, i.VehicleName, i.VehicleCode, i.Stt.ToString("00"), "", i.CreateDate.Value.ToString("dd/MM/yyyy hh:mm:ss"), timeCheckout);
+                order++;
+            }
         }
 
+        private void toDate_ValueChanged(object sender, EventArgs e)
+        {
+            var status = ValidateSearch();
+            if (status)
+            {
+                SearchData();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void fromDate_ValueChanged(object sender, EventArgs e)
+        {
+            var status = ValidateSearch();
+            if (status)
+            {
+                SearchData();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void cbStatus_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var status = ValidateSearch();
+            if (status)
+            {
+                SearchData();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void txtVehicleCode_TextChanged(object sender, EventArgs e)
+        {
+            var status = ValidateSearch();
+            if (status)
+            {
+                SearchData();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void txtVehicleName_TextChanged(object sender, EventArgs e)
+        {
+            var status = ValidateSearch();
+            if (status)
+            {
+                SearchData();
+            }
+            else
+            {
+                return;
+            }
+        }
+        private bool ValidateSearch()
+        {
+            fromDate.Value = fromDate.Value.Date;
+            toDate.Value = toDate.Value.Date.AddDays(1).AddTicks(-1);
+            if (toDate.Value < fromDate.Value)
+            {
+                CommonService.Alert("Từ ngày > Đến ngày! Vui lòng kiểm tra lại!", VCS.Areas.Alert.Alert.enumType.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private void dataTable_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dataTable.Columns["Edit"].Index && e.RowIndex >= 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                Bitmap iconBitmap = Properties.Resources.icons8_details_18;
+                int iconSize = 18;
+                int x = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
+                e.Graphics.DrawImage(iconBitmap, new Rectangle(x, y, iconSize, iconSize));
+                e.Handled = true;
+            }
+            if (e.ColumnIndex == dataTable.Columns["Print"].Index && e.RowIndex >= 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+                Bitmap iconBitmap = Properties.Resources.icons8_print_18__1_;
+                int iconSize = 18;
+                int x = e.CellBounds.Left + (e.CellBounds.Width - iconSize) / 2;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
+                e.Graphics.DrawImage(iconBitmap, new Rectangle(x, y, iconSize, iconSize));
+                e.Handled = true;
+            }
+        }
+
+        private void dataTable_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataTable.Columns["Print"].Index && e.RowIndex >= 0)
+            {
+                MessageBox.Show(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+            }
+            if (e.ColumnIndex == dataTable.Columns["Edit"].Index && e.RowIndex >= 0)
+            {
+                var f = new DetailHistory(_dbContext, dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                f.ShowDialog();
+            }
+        }
     }
 }

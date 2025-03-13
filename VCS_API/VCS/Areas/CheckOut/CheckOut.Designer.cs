@@ -441,7 +441,7 @@ namespace VCS.Areas.CheckOut
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Cursor = Cursors.Hand;
             tabControl1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tabControl1.ItemSize = new Size(200, 40);
+            tabControl1.ItemSize = new Size(160, 40);
             tabControl1.Location = new Point(525, 220);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -457,7 +457,7 @@ namespace VCS.Areas.CheckOut
             tabPage1.Padding = new Padding(3);
             tabPage1.Size = new Size(810, 508);
             tabPage1.TabIndex = 0;
-            tabPage1.Text = "Lệnh xuất CheckOut";
+            tabPage1.Text = "Thông tin ra kho";
             tabPage1.UseVisualStyleBackColor = true;
             // 
             // panelCheckOut
@@ -476,7 +476,7 @@ namespace VCS.Areas.CheckOut
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(810, 508);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Lệnh xuất CheckIn";
+            tabPage2.Text = "Thông tin vào kho";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // panelCheckIn
