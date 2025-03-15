@@ -1,5 +1,6 @@
 ﻿using DMS.CORE.Entities.MD;
 using LibVLCSharp.Shared;
+using Microsoft.ML.OnnxRuntime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace VCS.APP.Utilities
         public static string? VcsUrl { get; set; }
         public static List<TblMdCamera> lstCamera { get; set; } = new List<TblMdCamera>();
         public static LibVLC _libVLC { get; set; }
+        public static InferenceSession _session;
     }
 }

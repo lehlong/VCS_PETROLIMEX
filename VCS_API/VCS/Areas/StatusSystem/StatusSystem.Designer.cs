@@ -664,9 +664,6 @@ namespace VCS.APP.Areas.StatusSystem
         private Label label3;
         private Label label2;
         private Label label1;
-        private CircularPanel statusDB;
-        private CircularPanel panel8;
-        private CircularPanel statusSMO;
         private Panel panel3;
         private Label label11;
         private Panel panel2;

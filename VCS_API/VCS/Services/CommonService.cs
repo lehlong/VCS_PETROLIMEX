@@ -12,14 +12,17 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using DMS.CORE.Entities.AD;
 using VCS.Areas.Alert;
+using Microsoft.AspNetCore.Http;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace VCS.APP.Services
 {
     public class CommonService
     {
-        public static TblAdAccount CurrentUser { get; private set; }
         public static Dictionary<string, bool> UserPermissions { get; private set; } = new Dictionary<string, bool>();
-      
+
+        #region Xử lý phân quyền 
         public static void LoadUserPermissions(TblAdAccount user)
         {
             UserPermissions.Clear();
@@ -54,6 +57,9 @@ namespace VCS.APP.Services
         {
             return UserPermissions.ContainsKey(rightId) && UserPermissions[rightId];
         }
+        #endregion
+
+        #region Load Config vào Global từ appsetting.json
         public static void LoadUserConfig()
         {
             try
@@ -75,6 +81,8 @@ namespace VCS.APP.Services
                 throw new Exception($"Lỗi khi tải cấu hình người dùng: {ex.Message}");
             }
         }
+
+        #endregion
 
         #region SMO API
         public static string LoginSmoApi()
@@ -252,60 +260,189 @@ namespace VCS.APP.Services
             }
         }
         #endregion
-        public static string GetText(string type)
+
+        #region Xử lý nhận diện biển số và cắt
+        public static Bitmap DetectLicensePlate(string imagePath)
         {
-            if (type == "DCCH")
+            try
             {
-                return "Di chuyển ra cửa hàng";
+                Bitmap bitmap = new Bitmap(imagePath);
+                int originalWidth = bitmap.Width;
+                int originalHeight = bitmap.Height;
+                var inputTensor = PreprocessImage(bitmap);
+
+                var inputs = new List<NamedOnnxValue> { NamedOnnxValue.CreateFromTensor("images", inputTensor) };
+                using (var results = Global._session.Run(inputs))
+                {
+                    var output = results.First().AsTensor<float>();
+                    var bestPlateRect = ProcessOutput(output, originalWidth, originalHeight, 0.5f, 0.45f);
+
+                    if (bestPlateRect != Rectangle.Empty)
+                    {
+                        using (Bitmap licensePlate = new Bitmap(bestPlateRect.Width, bestPlateRect.Height))
+                        {
+                            using (Graphics g = Graphics.FromImage(licensePlate))
+                            {
+                                g.DrawImage(bitmap,
+                                          new Rectangle(0, 0, bestPlateRect.Width, bestPlateRect.Height),
+                                          bestPlateRect,
+                                          GraphicsUnit.Pixel);
+                            }
+                            return new Bitmap(licensePlate);
+                        }
+                    }
+                    return null;
+                }
             }
-            else if (type == "DCNB")
+            catch (Exception ex)
             {
-                return "Di chuyển nội bộ ngành";
+                return null;
             }
-            else if (type == "XBTX")
-            {
-                return "Xuất bán tái xuất";
-            }
-            else if (type == "XBND")
-            {
-                return "Xuất bán nội địa";
-            }
-            else if (type == "XTHG")
-            {
-                return "Xuất trả hàng gửi";
-            }
-            else if (type == "MHGL")
-            {
-                return "Mua hàng gửi lại";
-            }
-            else if (type == "HHK")
-            {
-                return "Hàng hóa khác";
-            }
-            else if (type == "KHLH")
-            {
-                return "Kế hoạch lấy hàng";
-            }
-            else if (type == "SUM")
-            {
-                return "Đơn hàng tổng";
-            }
-            else if (type == "XDTH")
-            {
-                return "Xuất đổi trả hàng";
-            }
-            else if (type == "XHND")
-            {
-                return "Xuất hàng nội dụng";
-            }
-            return string.Empty;
         }
+
+        private static Rectangle ProcessOutput(Tensor<float> output, int originalWidth, int originalHeight, float confThreshold = 0.5f, float iouThreshold = 0.45f)
+        {
+            // Chuyển đổi output tensor thành mảng 2D (giống np.transpose trong Python)
+            var outputArray = new List<float[]>();
+            int rowLength = output.Dimensions[1]; // Số features cho mỗi detection
+            int numDetections = output.Dimensions[2];
+
+            for (int i = 0; i < numDetections; i++)
+            {
+                var row = new float[rowLength];
+                for (int j = 0; j < rowLength; j++)
+                {
+                    row[j] = output[0, j, i];
+                }
+                outputArray.Add(row);
+            }
+
+            // Tính toán các hệ số scale
+            float xFactor = (float)originalWidth / 640;
+            float yFactor = (float)originalHeight / 640;
+
+            var boxes = new List<Rectangle>();
+            var scores = new List<float>();
+
+            // Xử lý từng detection
+            foreach (var row in outputArray)
+            {
+                float score = row[4] * 10;
+                if (score >= confThreshold)
+                {
+                    float x = row[0];
+                    float y = row[1];
+                    float w = row[2];
+                    float h = row[3];
+
+                    int left = (int)((x - w / 2) * xFactor);
+                    int top = (int)((y - h / 2) * yFactor);
+                    int width = (int)(w * xFactor);
+                    int height = (int)(h * yFactor);
+
+
+                    left = Math.Max(0, left);
+                    top = Math.Max(0, top);
+                    width = Math.Min(width, originalWidth - left);
+                    height = Math.Min(height, originalHeight - top);
+
+                    boxes.Add(new Rectangle(left, top, width, height));
+                    scores.Add(score);
+                }
+            }
+            var indices = NonMaxSuppression(boxes, scores, iouThreshold);
+            if (indices.Count > 0)
+            {
+                int bestIdx = indices[0];
+                return boxes[bestIdx];
+            }
+
+            return Rectangle.Empty;
+        }
+
+        private static List<int> NonMaxSuppression(List<Rectangle> boxes, List<float> scores, float iouThreshold)
+        {
+            var indices = new List<int>();
+            var sortedIndices = Enumerable.Range(0, scores.Count)
+                                         .OrderByDescending(i => scores[i])
+                                         .ToList();
+
+            while (sortedIndices.Count > 0)
+            {
+                int currentIdx = sortedIndices[0];
+                indices.Add(currentIdx);
+                sortedIndices.RemoveAt(0);
+                sortedIndices.RemoveAll(idx =>
+                {
+                    float iou = CalculateIoU(boxes[currentIdx], boxes[idx]);
+                    return iou > iouThreshold;
+                });
+            }
+            return indices;
+        }
+
+        private static float CalculateIoU(Rectangle box1, Rectangle box2)
+        {
+            int intersectionLeft = Math.Max(box1.Left, box2.Left);
+            int intersectionTop = Math.Max(box1.Top, box2.Top);
+            int intersectionRight = Math.Min(box1.Right, box2.Right);
+            int intersectionBottom = Math.Min(box1.Bottom, box2.Bottom);
+
+            if (intersectionRight < intersectionLeft || intersectionBottom < intersectionTop)
+                return 0;
+
+            float intersectionArea = (intersectionRight - intersectionLeft) *
+                                   (intersectionBottom - intersectionTop);
+            float box1Area = box1.Width * box1.Height;
+            float box2Area = box2.Width * box2.Height;
+            float unionArea = box1Area + box2Area - intersectionArea;
+
+            return intersectionArea / unionArea;
+        }
+
+        private static DenseTensor<float> PreprocessImage(Bitmap bitmap)
+        {
+            const int targetSize = 640;
+            Bitmap resized = new Bitmap(bitmap, new Size(targetSize, targetSize));
+            var input = new DenseTensor<float>(new[] { 1, 3, targetSize, targetSize });
+
+            for (int y = 0; y < targetSize; y++)
+            {
+                for (int x = 0; x < targetSize; x++)
+                {
+                    Color pixel = resized.GetPixel(x, y);
+                    input[0, 0, y, x] = pixel.R / 255.0f;
+                    input[0, 1, y, x] = pixel.G / 255.0f;
+                    input[0, 2, y, x] = pixel.B / 255.0f;
+                }
+            }
+            return input;
+        }
+        #endregion
+
+        #region GetText Mapping
+        private static readonly Dictionary<string, string> TypeMappings = new()
+        {
+            { "DCCH", "Di chuyển ra cửa hàng" }, { "DCNB", "Di chuyển nội bộ ngành" },
+            { "XBTX", "Xuất bán tái xuất" }, { "XBND", "Xuất bán nội địa" },
+            { "XTHG", "Xuất trả hàng gửi" }, { "MHGL", "Mua hàng gửi lại" },
+            { "HHK", "Hàng hóa khác" }, { "KHLH", "Kế hoạch lấy hàng" },
+            { "SUM", "Đơn hàng tổng" }, { "XDTH", "Xuất đổi trả hàng" },
+            { "XHND", "Xuất hàng nội dung" }
+        };
+
+        public static string GetText(string type) => TypeMappings.GetValueOrDefault(type, string.Empty);
+        #endregion
+
+        #region Alert
         public static void Alert(string msg, Alert.enumType type)
         {
             VCS.Areas.Alert.Alert alert = new VCS.Areas.Alert.Alert();
             alert.ShowAlert(msg, type);
         }
+        #endregion
 
+        #region Upload ảnh lên server
         public static async void UploadImagesServer(List<string> imagePaths)
         {
             if (imagePaths.Count() == 0)
@@ -328,5 +465,6 @@ namespace VCS.APP.Services
             }
             
         }
+        #endregion
     }
 }

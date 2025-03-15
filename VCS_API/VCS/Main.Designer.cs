@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             txtWarehouse = new Label();
             txtUsername = new Label();
-            panelMenu = new Panel();
+            Navigation = new Panel();
             btnLogOut = new Panel();
             pictureBox10 = new PictureBox();
             label9 = new Label();
@@ -69,7 +69,7 @@
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
-            panelMenu.SuspendLayout();
+            Navigation.SuspendLayout();
             btnLogOut.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             btnStatus.SuspendLayout();
@@ -105,7 +105,6 @@
             txtWarehouse.TabIndex = 1;
             txtWarehouse.Text = "Kho";
             txtWarehouse.TextAlign = ContentAlignment.MiddleCenter;
-            txtWarehouse.Click += txtWarehouse_Click;
             // 
             // txtUsername
             // 
@@ -122,21 +121,21 @@
             txtUsername.Text = "Hệ thống";
             txtUsername.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // panelMenu
+            // Navigation
             // 
-            panelMenu.BackColor = Color.White;
-            panelMenu.BackgroundImageLayout = ImageLayout.None;
-            panelMenu.Controls.Add(btnLogOut);
-            panelMenu.Controls.Add(btnStatus);
-            panelMenu.Controls.Add(btnSetting);
-            panelMenu.Controls.Add(btnHistory);
-            panelMenu.Controls.Add(btnCheckOut);
-            panelMenu.Controls.Add(btnCheckIn);
-            panelMenu.Controls.Add(pHome);
-            panelMenu.Location = new Point(0, 83);
-            panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(228, 641);
-            panelMenu.TabIndex = 1;
+            Navigation.BackColor = Color.White;
+            Navigation.BackgroundImageLayout = ImageLayout.None;
+            Navigation.Controls.Add(btnLogOut);
+            Navigation.Controls.Add(btnStatus);
+            Navigation.Controls.Add(btnSetting);
+            Navigation.Controls.Add(btnHistory);
+            Navigation.Controls.Add(btnCheckOut);
+            Navigation.Controls.Add(btnCheckIn);
+            Navigation.Controls.Add(pHome);
+            Navigation.Location = new Point(0, 83);
+            Navigation.Name = "Navigation";
+            Navigation.Size = new Size(228, 641);
+            Navigation.TabIndex = 1;
             // 
             // btnLogOut
             // 
@@ -548,7 +547,7 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(panelMain);
-            Controls.Add(panelMenu);
+            Controls.Add(Navigation);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
@@ -557,7 +556,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
             Load += Main_Load;
-            panelMenu.ResumeLayout(false);
+            Navigation.ResumeLayout(false);
             btnLogOut.ResumeLayout(false);
             btnLogOut.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
@@ -590,7 +589,7 @@
         }
 
         #endregion
-        private Panel panelMenu;
+        private Panel Navigation;
         private Panel btnStatus;
         private PictureBox pictureBox3;
         private Label label2;

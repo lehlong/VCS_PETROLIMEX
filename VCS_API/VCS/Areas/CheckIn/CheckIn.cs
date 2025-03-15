@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -977,6 +978,14 @@ namespace VCS.Areas.CheckIn
             }
             IMGPATH = snapshotPath;
 
+            var cropedImage = CommonService.DetectLicensePlate(snapshotPath);
+            if(cropedImage != null)
+            {
+                pictureBoxLicensePlate.Image = cropedImage;
+                cropedImage.Save(cropedPath, ImageFormat.Jpeg);
+            }
+
+
             // Chuẩn bị HTTP client với headers
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -1016,13 +1025,13 @@ namespace VCS.Areas.CheckIn
                         try
                         {
                             // Gửi ảnh nhận diện - sử dụng FileStream thay vì đọc toàn bộ file vào bộ nhớ
-                            using var fileStream = new FileStream(snapshotPath, FileMode.Open, FileAccess.Read);
+                            using var fileStream = new FileStream(cropedPath, FileMode.Open, FileAccess.Read);
                             using var streamContent = new StreamContent(fileStream);
                             streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
                             using var form = new MultipartFormDataContent
                     {
-                        { streamContent, "file", Path.GetFileName(snapshotPath) }
+                        { streamContent, "file", Path.GetFileName(cropedPath) }
                     };
 
                             // Sử dụng timeout để tránh chờ quá lâu
@@ -1035,30 +1044,18 @@ namespace VCS.Areas.CheckIn
                             // Đọc và xử lý response
                             var responseString = await response.Content.ReadAsStringAsync();
                             var jsonResponse = JObject.Parse(responseString);
-                            var detection = jsonResponse["data"]?.FirstOrDefault();
 
-                            if (detection == null ||
-                                string.IsNullOrEmpty(detection["text"]?.ToString()) ||
-                                string.IsNullOrEmpty(detection["image_base64"]?.ToString()))
+                            var detection = jsonResponse["license_text"]?.ToString();
+
+                            if (string.IsNullOrEmpty(detection))
                             {
                                 return (false, "Không nhận diện được phương tiện!", null, null, null);
                             }
-
-                            var licensePlate = detection["text"].ToString();
-                            var base64Image = detection["image_base64"].ToString();
-
-                            // Lưu ảnh đã cắt
-                            using (var plateImage = CommonService.Base64ToImage(base64Image))
-                            using (var tempBitmap = new Bitmap(plateImage))
-                            {
-                                tempBitmap.Save(cropedPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            }
-
                             // Lấy thông tin tên xe từ database
-                            var vehicleInfo = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == licensePlate);
+                            var vehicleInfo = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == detection);
                             var vehicleName = vehicleInfo?.OicPbatch + vehicleInfo?.OicPtrip ?? "";
 
-                            return (true, "Nhận diện phương tiện thành công!", licensePlate, vehicleName, base64Image);
+                            return (true, "Nhận diện phương tiện thành công!", detection, vehicleName, "");
                         }
                         catch (Exception ex)
                         {
@@ -1097,10 +1094,6 @@ namespace VCS.Areas.CheckIn
                     {
                         txtLicensePlate.Text = result.Item3;
                         txtVehicleName.Text = result.Item4;
-                        using (var plateImage = CommonService.Base64ToImage(result.Item5))
-                        {
-                            pictureBoxLicensePlate.Image = new Bitmap(plateImage);
-                        }
                         PLATEPATH = cropedPath;
                         lstPathImageCapture = capturedPaths;
                         CommonService.Alert(result.Item2, Alert.Alert.enumType.Success);
