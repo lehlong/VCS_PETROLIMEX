@@ -71,12 +71,12 @@ namespace VCS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap bg_auth_1 {
+        internal static byte[] bg_auth_1 {
             get {
                 object obj = ResourceManager.GetObject("bg-auth-1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         

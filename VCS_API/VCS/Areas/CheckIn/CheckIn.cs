@@ -46,7 +46,6 @@ namespace VCS.Areas.CheckIn
         private string PLATEPATH;
         private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
         private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
-
         private System.Windows.Forms.Timer resetTimer;
         public CheckIn(AppDbContextForm dbContext)
         {
@@ -950,173 +949,98 @@ namespace VCS.Areas.CheckIn
         private async void btnDetect_Click(object sender, EventArgs e)
         {
             var player = viewStream.MediaPlayer;
-            if (player == null || !player.IsPlaying)
+            if (player?.IsPlaying != true)
             {
                 CommonService.Alert("Không thể nhận diện khi camera không hoạt động!", Alert.Alert.enumType.Error);
                 return;
             }
 
-            // Tạo đường dẫn và tên file trước
             string snapshotDir = Path.Combine(Global.PathSaveFile, DateTime.Now.ToString("yyyy/MM/dd"));
-            string snapshotPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
-            string cropedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
             Directory.CreateDirectory(snapshotDir);
+            string snapshotPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
+            string croppedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
 
-            // Chụp ảnh từ camera
-            player.TakeSnapshot(0, snapshotPath, 640, 480);
-
+            player.TakeSnapshot(0, snapshotPath, 0, 0);
             if (!File.Exists(snapshotPath))
             {
                 CommonService.Alert("Không thể chụp ảnh!", Alert.Alert.enumType.Error);
                 return;
             }
 
-            // Hiển thị ảnh chụp ở UI và chuẩn bị client trước khi chạy task
-            using (var image = Image.FromFile(snapshotPath))
-            {
-                pictureBoxVehicle.Image = new Bitmap(image);
-            }
+            pictureBoxVehicle.Image = new Bitmap(snapshotPath);
             IMGPATH = snapshotPath;
 
-            var cropedImage = CommonService.DetectLicensePlate(snapshotPath);
-            if(cropedImage != null)
+            var croppedImage = CommonService.DetectLicensePlate(snapshotPath);
+            if (croppedImage != null)
             {
-                pictureBoxLicensePlate.Image = cropedImage;
-                cropedImage.Save(cropedPath, ImageFormat.Jpeg);
+                pictureBoxLicensePlate.Image = croppedImage;
+                croppedImage.Save(croppedPath, ImageFormat.Jpeg);
+            }
+            else
+            {
+                CommonService.Alert("Không nhận diện được biển số!", Alert.Alert.enumType.Error);
+                return;
             }
 
-
-            // Chuẩn bị HTTP client với headers
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // Bắt đầu xử lý nhận diện ở luồng nền
-            using (CancellationTokenSource cts = new CancellationTokenSource())
+            _ = Task.Run(async () =>
             {
+                using CancellationTokenSource cts = new(10000);
                 try
                 {
-                    // Chụp ảnh từ các camera khác trước khi gọi API nhận diện (thực hiện song song)
-                    var lstCamera = Global.lstCamera.Where(x => x.IsIn == true && x.Code != CameraDetect.Code).ToList();
-                    List<string> capturedPaths = new List<string>();
-
-                    // Tạo các task chụp ảnh từ các camera khác
+                    var lstCamera = Global.lstCamera.Where(x => x.IsIn && x.Code != CameraDetect.Code);
                     var cameraCaptureTasks = lstCamera.Select(async c =>
                     {
                         try
                         {
-                            using (var cancellationSource = new CancellationTokenSource(3000)) // Timeout 3 giây cho mỗi camera
-                            {
-                                return await Task.Run(() =>
-                                {
-                                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
-                                    return CommonService.SaveDetectedImage(imageBytes);
-                                }, cancellationSource.Token);
-                            }
+                            byte[] imageBytes = await Task.Run(() => CommonService.CaptureFrameFromRTSP(c.Rtsp), new CancellationTokenSource(3000).Token);
+                            return CommonService.SaveDetectedImage(imageBytes);
                         }
-                        catch
-                        {
-                            return null; // Bỏ qua lỗi từ camera phụ
-                        }
+                        catch { return null; }
                     }).ToList();
 
-                    // Chạy task nhận diện API song song với việc chụp ảnh từ camera phụ
-                    var detectTask = Task.Run(async () =>
+                    using var fileStream = new FileStream(croppedPath, FileMode.Open, FileAccess.Read);
+                    using var streamContent = new StreamContent(fileStream) { Headers = { ContentType = new MediaTypeHeaderValue("image/jpeg") } };
+                    using var form = new MultipartFormDataContent { { streamContent, "file", Path.GetFileName(croppedPath) } };
+
+                    var response = await client.PostAsync(Global.DetectApiUrl, form, cts.Token);
+                    if (!response.IsSuccessStatusCode)
                     {
-                        try
-                        {
-                            // Gửi ảnh nhận diện - sử dụng FileStream thay vì đọc toàn bộ file vào bộ nhớ
-                            using var fileStream = new FileStream(cropedPath, FileMode.Open, FileAccess.Read);
-                            using var streamContent = new StreamContent(fileStream);
-                            streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-
-                            using var form = new MultipartFormDataContent
-                    {
-                        { streamContent, "file", Path.GetFileName(cropedPath) }
-                    };
-
-                            // Sử dụng timeout để tránh chờ quá lâu
-                            var response = await client.PostAsync(Global.DetectApiUrl, form, cts.Token);
-                            if (!response.IsSuccessStatusCode)
-                            {
-                                return (false, "Hệ thống nhận diện lỗi hoặc chưa khởi động!", null, null, null);
-                            }
-
-                            // Đọc và xử lý response
-                            var responseString = await response.Content.ReadAsStringAsync();
-                            var jsonResponse = JObject.Parse(responseString);
-
-                            var detection = jsonResponse["license_text"]?.ToString();
-
-                            if (string.IsNullOrEmpty(detection))
-                            {
-                                return (false, "Không nhận diện được phương tiện!", null, null, null);
-                            }
-                            // Lấy thông tin tên xe từ database
-                            var vehicleInfo = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == detection);
-                            var vehicleName = vehicleInfo?.OicPbatch + vehicleInfo?.OicPtrip ?? "";
-
-                            return (true, "Nhận diện phương tiện thành công!", detection, vehicleName, "");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
-                            return (false, "Lỗi không nhận diện được biển số!", null, null, null);
-                        }
-                    }, cts.Token);
-
-                    // Chờ API call với timeout 10 giây
-                    var timeoutTask = Task.Delay(10000, cts.Token);
-                    var completedTask = await Task.WhenAny(detectTask, timeoutTask);
-
-                    if (completedTask == timeoutTask)
-                    {
-                        cts.Cancel();
-                        CommonService.Alert("Hệ thống nhận diện lỗi hoặc chưa khởi động!", Alert.Alert.enumType.Error);
-                        txtNumberDO.Focus();
+                        this.Invoke(() => CommonService.Alert("Hệ thống nhận diện lỗi hoặc chưa khởi động!", Alert.Alert.enumType.Error));
                         return;
                     }
 
-                    // Thu thập kết quả chụp hình từ các camera phụ (đã hoàn thành hoặc đang trong quá trình)
-                    // Đặt timeout cho việc thu thập kết quả từ camera phụ
-                    var cameraResults = await Task.WhenAny(
-                        Task.WhenAll(cameraCaptureTasks),
-                        Task.Delay(2000) // Tối đa chờ thêm 2 giây nữa để thu thập kết quả từ camera phụ
-                    );
-
-                    // Lọc các kết quả thành công
-                    capturedPaths = cameraCaptureTasks
-                        .Where(t => t.IsCompleted && !t.IsFaulted && t.Result != null)
-                        .Select(t => t.Result)
-                        .ToList();
-
-                    var result = await detectTask;
-                    if (result.Item1)
+                    var detection = JObject.Parse(await response.Content.ReadAsStringAsync())["license_text"]?.ToString();
+                    if (string.IsNullOrEmpty(detection))
                     {
-                        txtLicensePlate.Text = result.Item3;
-                        txtVehicleName.Text = result.Item4;
-                        PLATEPATH = cropedPath;
-                        lstPathImageCapture = capturedPaths;
-                        CommonService.Alert(result.Item2, Alert.Alert.enumType.Success);
+                        this.Invoke(() => CommonService.Alert("Không nhận diện được phương tiện!", Alert.Alert.enumType.Error));
+                        return;
                     }
-                    else
+
+                    var vehicleInfo = _dbContext.TblMdVehicle.AsNoTracking().Where(v => v.Code == detection).Select(v => new { v.OicPbatch, v.OicPtrip }).FirstOrDefault();
+                    this.Invoke(() =>
                     {
-                        txtLicensePlate.Text = "";
-                        pictureBoxLicensePlate.Image = null;
-                        CommonService.Alert(result.Item2, Alert.Alert.enumType.Error);
-                    }
+                        txtLicensePlate.Text = detection;
+                        txtVehicleName.Text = vehicleInfo != null ? vehicleInfo.OicPbatch + vehicleInfo.OicPtrip ?? "" : "";
+                        PLATEPATH = croppedPath;
+                        CommonService.Alert("Nhận diện phương tiện thành công!", Alert.Alert.enumType.Success);
+                    });
+
+                    await Task.WhenAny(Task.WhenAll(cameraCaptureTasks), Task.Delay(2000));
+                    lstPathImageCapture = cameraCaptureTasks.Where(t => t.IsCompletedSuccessfully && t.Result != null).Select(t => t.Result).ToList();
                 }
                 catch (Exception ex)
                 {
-                    txtLicensePlate.Text = "";
-                    pictureBoxLicensePlate.Image = null;
-                    CommonService.Alert("Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
-                    Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                    this.Invoke(() =>
+                    {
+                        txtLicensePlate.Text = "";
+                        pictureBoxLicensePlate.Image = null;
+                        CommonService.Alert("Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
+                    });
+                    Console.WriteLine(ex);
                 }
-                finally
-                {
-                    txtNumberDO.Focus();
-                }
-            } // CancellationTokenSource được giải phóng tự động
+            });
+
+            txtNumberDO.Focus();
         }
         #endregion
 
@@ -1150,57 +1074,37 @@ namespace VCS.Areas.CheckIn
         }
         #endregion
 
-        private void pictureBoxVehicle_Click(object sender, EventArgs e)
+        #region Xem ảnh và camera toàn màn hình
+        private void pictureBoxVehicle_Click(object sender, EventArgs e) => ViewImageFullScreen(sender, e);
+        private void pictureBoxLicensePlate_Click(object sender, EventArgs e) => ViewImageFullScreen(sender, e);
+        private void viewCameraFullscreen_Click(object sender, EventArgs e)
+        {
+            var v = new ViewCamera(CameraDetect);
+            v.ShowDialog();
+        }
+        private void ViewImageFullScreen(object sender, EventArgs e)
         {
             PictureBox clickedPictureBox = sender as PictureBox;
-
             if (clickedPictureBox != null && clickedPictureBox.Image != null)
             {
                 Form fullscreenForm = new Form();
                 fullscreenForm.WindowState = FormWindowState.Maximized;
                 fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-
                 PictureBox fullscreenPictureBox = new PictureBox();
                 fullscreenPictureBox.Image = clickedPictureBox.Image;
                 fullscreenPictureBox.Dock = DockStyle.Fill;
                 fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
                 fullscreenForm.Controls.Add(fullscreenPictureBox);
                 fullscreenForm.ShowDialog();
             }
         }
-
-        private void pictureBoxLicensePlate_Click(object sender, EventArgs e)
-        {
-            PictureBox clickedPictureBox = sender as PictureBox;
-
-            if (clickedPictureBox != null && clickedPictureBox.Image != null)
-            {
-                Form fullscreenForm = new Form();
-                fullscreenForm.WindowState = FormWindowState.Maximized;
-                fullscreenForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-                PictureBox fullscreenPictureBox = new PictureBox();
-                fullscreenPictureBox.Image = clickedPictureBox.Image;
-                fullscreenPictureBox.Dock = DockStyle.Fill;
-                fullscreenPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
-                fullscreenForm.Controls.Add(fullscreenPictureBox);
-                fullscreenForm.ShowDialog();
-            }
-        }
+        #endregion
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
             base.OnFormClosing(e);
-        }
-
-        private void viewCameraFullscreen_Click(object sender, EventArgs e)
-        {
-            var v = new ViewCamera(CameraDetect);
-            v.ShowDialog();
         }
     }
 }

@@ -60,8 +60,6 @@ namespace VCS.Areas.Login
             CommonService.LoadUserPermissions(user);
             SaveCredentials();
             Global.lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode).ToList();
-            InitializeLibVLC();
-            LoadOnnxModel();
             CommonService.Alert("Đăng nhập thành công!", Alert.Alert.enumType.Success);
 
             new Main(_dbContext).Show();
@@ -98,12 +96,7 @@ namespace VCS.Areas.Login
 
         protected override void OnFormClosing(FormClosingEventArgs e) => Application.Exit();
 
-        private void InitializeLibVLC()
-        {
-            Core.Initialize();
-            Global._libVLC = new LibVLC("--network-caching=30", "--live-caching=30", "--file-caching=30", "--clock-jitter=0", "--clock-synchro=0", "--no-audio", "--rtsp-tcp");
-        }
+       
 
-        private void LoadOnnxModel() => Global._session = new InferenceSession(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "models", "model.onnx"));
     }
 }

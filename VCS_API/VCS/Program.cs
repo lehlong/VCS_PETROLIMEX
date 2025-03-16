@@ -8,6 +8,9 @@ using DMS.CORE;
 using VCS.Areas.Login;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
+using LibVLCSharp.Shared;
+using VCS.APP.Utilities;
+using Microsoft.ML.OnnxRuntime;
 
 namespace VCS
 {
@@ -28,35 +31,68 @@ namespace VCS
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            var host = CreateHostBuilder().Build();
-            using var scope = host.Services.CreateScope();
-            var services = scope.ServiceProvider;
-
+            InitializeLibVLC();
+            LoadOnnxModel();
+            LoadDbContext();
+        }
+        static void LoadDbContext()
+        {
             try
             {
+
+                var host = CreateHostBuilder().Build();
+                using var scope = host.Services.CreateScope();
+                var services = scope.ServiceProvider;
                 var dbContextFactory = services.GetRequiredService<IDbContextFactory<AppDbContextForm>>();
                 using var dbContext = dbContextFactory.CreateDbContext();
                 Application.Run(new Login(dbContext));
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show($"Lỗi khi chạy chương trình: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải DbContext: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        static void InitializeLibVLC()
+        {
+            try
+            {
+                Core.Initialize();
+                Global._libVLC = new LibVLC(
+                    "--no-sub-autodetect-file",
+                    "--no-snapshot-preview", 
+                    "--no-spu",
+                    "--no-video-title-show",
+                    "--no-osd",
+                    "--network-caching=30", 
+                    "--live-caching=30", 
+                    "--file-caching=30",
+                    "--clock-jitter=0", 
+                    "--clock-synchro=0",
+                    "--no-audio",
+                    "--rtsp-tcp");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi khởi tạo LibVLC: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        static void LoadOnnxModel()
+        {
+            try
+            {
+                Global._session = new InferenceSession(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "models", "model.onnx"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải model ONNX: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         static bool IsApplicationRunning()
         {
-            // Lấy tên ứng dụng của bạn
             string appName = System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath);
-
-            // Kiểm tra nếu đã có một instance của ứng dụng này đang chạy
             Process[] processes = Process.GetProcessesByName(appName);
-
-            // Nếu có hơn một tiến trình, thì ứng dụng đã chạy
             return processes.Length > 1;
         }
-
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
                 .ConfigureLogging(logging =>

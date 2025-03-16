@@ -191,7 +191,6 @@ namespace VCS.APP.Services
         #endregion
 
         #region Nhận diện và xử lý file ảnh
-
         public static byte[] CaptureFrameFromRTSP(string rtspUrl)
         {
             using (VideoCapture capture = new VideoCapture(rtspUrl))

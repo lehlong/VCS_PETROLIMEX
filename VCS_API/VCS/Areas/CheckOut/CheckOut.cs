@@ -81,185 +81,111 @@ namespace VCS.Areas.CheckOut
         #endregion
 
         #region Nhận diện xe
-
         private async void btnDetect_Click(object sender, EventArgs e)
         {
             var player = viewStream.MediaPlayer;
-            if (player == null || !player.IsPlaying)
+            if (player?.IsPlaying != true)
             {
                 CommonService.Alert("Không thể nhận diện khi camera không hoạt động!", Alert.Alert.enumType.Error);
                 return;
             }
 
-            // Tạo đường dẫn và tên file trước
             string snapshotDir = Path.Combine(Global.PathSaveFile, DateTime.Now.ToString("yyyy/MM/dd"));
-            string snapshotPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
-            string cropedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
             Directory.CreateDirectory(snapshotDir);
+            string snapshotPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
+            string croppedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
 
-            // Chụp ảnh từ camera
-            player.TakeSnapshot(0, snapshotPath, 640, 480);
-
+            player.TakeSnapshot(0, snapshotPath, 0, 0);
             if (!File.Exists(snapshotPath))
             {
                 CommonService.Alert("Không thể chụp ảnh!", Alert.Alert.enumType.Error);
                 return;
             }
 
-            // Hiển thị ảnh chụp ở UI và chuẩn bị client trước khi chạy task
-            using (var image = Image.FromFile(snapshotPath))
-            {
-                pictureBoxVehicle.Image = new Bitmap(image);
-            }
+            pictureBoxVehicle.Image = new Bitmap(snapshotPath);
             IMGPATH = snapshotPath;
 
-            var cropedImage = CommonService.DetectLicensePlate(snapshotPath);
-            if (cropedImage != null)
+            var croppedImage = CommonService.DetectLicensePlate(snapshotPath);
+            if (croppedImage != null)
             {
-                pictureBoxLicensePlate.Image = cropedImage;
-                cropedImage.Save(cropedPath, ImageFormat.Jpeg);
+                pictureBoxLicensePlate.Image = croppedImage;
+                croppedImage.Save(croppedPath, ImageFormat.Jpeg);
+            }
+            else
+            {
+                CommonService.Alert("Không nhận diện được biển số!", Alert.Alert.enumType.Error);
+                return;
             }
 
-
-            // Chuẩn bị HTTP client với headers
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            // Bắt đầu xử lý nhận diện ở luồng nền
-            using (CancellationTokenSource cts = new CancellationTokenSource())
+            _ = Task.Run(async () =>
             {
+                using CancellationTokenSource cts = new(10000);
                 try
                 {
-                    // Chụp ảnh từ các camera khác trước khi gọi API nhận diện (thực hiện song song)
-                    var lstCamera = Global.lstCamera.Where(x => x.IsOut == true && x.Code != CameraDetect.Code).ToList();
-                    List<string> capturedPaths = new List<string>();
-
-                    // Tạo các task chụp ảnh từ các camera khác
+                    var lstCamera = Global.lstCamera.Where(x => x.IsIn && x.Code != CameraDetect.Code);
                     var cameraCaptureTasks = lstCamera.Select(async c =>
                     {
                         try
                         {
-                            using (var cancellationSource = new CancellationTokenSource(3000)) // Timeout 3 giây cho mỗi camera
-                            {
-                                return await Task.Run(() =>
-                                {
-                                    byte[] imageBytes = CommonService.CaptureFrameFromRTSP(c.Rtsp);
-                                    return CommonService.SaveDetectedImage(imageBytes);
-                                }, cancellationSource.Token);
-                            }
+                            byte[] imageBytes = await Task.Run(() => CommonService.CaptureFrameFromRTSP(c.Rtsp), new CancellationTokenSource(3000).Token);
+                            return CommonService.SaveDetectedImage(imageBytes);
                         }
-                        catch
-                        {
-                            return null; // Bỏ qua lỗi từ camera phụ
-                        }
+                        catch { return null; }
                     }).ToList();
 
-                    // Chạy task nhận diện API song song với việc chụp ảnh từ camera phụ
-                    var detectTask = Task.Run(async () =>
+                    using var fileStream = new FileStream(croppedPath, FileMode.Open, FileAccess.Read);
+                    using var streamContent = new StreamContent(fileStream) { Headers = { ContentType = new MediaTypeHeaderValue("image/jpeg") } };
+                    using var form = new MultipartFormDataContent { { streamContent, "file", Path.GetFileName(croppedPath) } };
+
+                    var response = await client.PostAsync(Global.DetectApiUrl, form, cts.Token);
+                    if (!response.IsSuccessStatusCode)
                     {
-                        try
-                        {
-                            // Gửi ảnh nhận diện - sử dụng FileStream thay vì đọc toàn bộ file vào bộ nhớ
-                            using var fileStream = new FileStream(cropedPath, FileMode.Open, FileAccess.Read);
-                            using var streamContent = new StreamContent(fileStream);
-                            streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
-
-                            using var form = new MultipartFormDataContent
-                    {
-                        { streamContent, "file", Path.GetFileName(cropedPath) }
-                    };
-
-                            // Sử dụng timeout để tránh chờ quá lâu
-                            var response = await client.PostAsync(Global.DetectApiUrl, form, cts.Token);
-                            if (!response.IsSuccessStatusCode)
-                            {
-                                return (false, "Hệ thống nhận diện lỗi hoặc chưa khởi động!", null, null, null);
-                            }
-
-                            // Đọc và xử lý response
-                            var responseString = await response.Content.ReadAsStringAsync();
-                            var jsonResponse = JObject.Parse(responseString);
-
-                            var detection = jsonResponse["license_text"]?.ToString();
-
-                            if (string.IsNullOrEmpty(detection))
-                            {
-                                return (false, "Không nhận diện được phương tiện!", null, null, null);
-                            }
-                            // Lấy thông tin tên xe từ database
-                            var vehicleInfo = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == detection);
-                            var vehicleName = vehicleInfo?.OicPbatch + vehicleInfo?.OicPtrip ?? "";
-
-                            return (true, "Nhận diện phương tiện thành công!", detection, vehicleName, "");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
-                            return (false, "Lỗi không nhận diện được biển số!", null, null, null);
-                        }
-                    }, cts.Token);
-
-                    // Chờ API call với timeout 10 giây
-                    var timeoutTask = Task.Delay(10000, cts.Token);
-                    var completedTask = await Task.WhenAny(detectTask, timeoutTask);
-
-                    if (completedTask == timeoutTask)
-                    {
-                        cts.Cancel();
-                        CommonService.Alert("Hệ thống nhận diện lỗi hoặc chưa khởi động!", Alert.Alert.enumType.Error);
+                        this.Invoke(() => CommonService.Alert("Hệ thống nhận diện lỗi hoặc chưa khởi động!", Alert.Alert.enumType.Error));
                         return;
                     }
 
-                    // Thu thập kết quả chụp hình từ các camera phụ (đã hoàn thành hoặc đang trong quá trình)
-                    // Đặt timeout cho việc thu thập kết quả từ camera phụ
-                    var cameraResults = await Task.WhenAny(
-                        Task.WhenAll(cameraCaptureTasks),
-                        Task.Delay(2000) // Tối đa chờ thêm 2 giây nữa để thu thập kết quả từ camera phụ
-                    );
-
-                    // Lọc các kết quả thành công
-                    capturedPaths = cameraCaptureTasks
-                        .Where(t => t.IsCompleted && !t.IsFaulted && t.Result != null)
-                        .Select(t => t.Result)
-                        .ToList();
-
-                    var result = await detectTask;
-                    if (result.Item1)
+                    var detection = JObject.Parse(await response.Content.ReadAsStringAsync())["license_text"]?.ToString();
+                    if (string.IsNullOrEmpty(detection))
                     {
-                        PLATEPATH = cropedPath;
-                        lstPathImageCapture = capturedPaths;
+                        this.Invoke(() => CommonService.Alert("Không nhận diện được phương tiện!", Alert.Alert.enumType.Error));
+                        return;
+                    }
 
-                        if (!string.IsNullOrEmpty(result.Item3))
+                    var headerId = await _dbContext.TblBuHeader.AsNoTracking().Where(x =>
+                               x.VehicleCode == detection &&
+                               x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
+                               x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
+                               x.StatusVehicle != "04").Select(x => x.Id).FirstOrDefaultAsync();
+                    
+                    this.Invoke(() =>
+                    {
+                        txtLicensePlate.Text = detection;
+                        PLATEPATH = croppedPath;
+                        if (headerId != null)
                         {
-                            var i = await _dbContext.TblBuHeader.Where(x =>
-                                x.VehicleCode == result.Item3 &&
-                                x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
-                                x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-                                x.StatusVehicle != "04").ToListAsync();
-                            if (i.Count() == 1)
-                            {
-                                selectVehicle.SelectedValue = i.FirstOrDefault().Id;
-                            }
+                            selectVehicle.SelectedValue = headerId;
                         }
-                    }
-                    else
-                    {
-                        txtLicensePlate.Text = "";
-                        pictureBoxLicensePlate.Image = null;
-                        CommonService.Alert(result.Item2, Alert.Alert.enumType.Error);
-                    }
+                        else
+                        {
+                            CommonService.Alert("Phương tiện không có trong kho! Vui lòng nhận diện lại!", Alert.Alert.enumType.Error);
+                        }
+                        CommonService.Alert("Nhận diện phương tiện thành công!", Alert.Alert.enumType.Success);
+                    });
+
+                    await Task.WhenAny(Task.WhenAll(cameraCaptureTasks), Task.Delay(2000));
+                    lstPathImageCapture = cameraCaptureTasks.Where(t => t.IsCompletedSuccessfully && t.Result != null).Select(t => t.Result).ToList();
                 }
                 catch (Exception ex)
                 {
-                    txtLicensePlate.Text = "";
-                    pictureBoxLicensePlate.Image = null;
-                    CommonService.Alert("Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
-                    Console.WriteLine($"Error: {ex.Message}\n{ex.StackTrace}");
+                    this.Invoke(() =>
+                    {
+                        txtLicensePlate.Text = "";
+                        pictureBoxLicensePlate.Image = null;
+                        CommonService.Alert("Lỗi không nhận diện được biển số!", Alert.Alert.enumType.Error);
+                    });
+                    Console.WriteLine(ex);
                 }
-                finally
-                {
-                }
-            } // CancellationTokenSource được giải phóng tự động
+            });
         }
         #endregion
 
@@ -500,7 +426,6 @@ namespace VCS.Areas.CheckOut
                 var detail = await Task.Run(() => GetCheckInDetail(selectedValue));
                 if (detail == null) return;
 
-                txtLicensePlate.Text = detail.LicensePlate;
                 txtVehicleName.Text = detail.VehicleName;
 
                 // Xóa các panel cũ trên UI trong luồng chính
@@ -536,13 +461,23 @@ namespace VCS.Areas.CheckOut
                 }
 
                 // Kiểm tra trạng thái và cảnh báo
-                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05" || lstDo.Count == 0)
+                if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05")
                 {
-                    CommonService.Alert($"Phương tiện không có ticket hoặc không xử lý!", Alert.Alert.enumType.Error);
+                    CommonService.Alert($"Phương tiện không được xử lý!", Alert.Alert.enumType.Error);
                     this.isHasInvoice = false;
-                    txtNoteOut.Text = "Phương tiện không có ticket hoặc không xử lý";
+                    txtNoteOut.Text = "Phương tiện không được xử lý!";
                     return;
                 }
+
+                if (vehicle.StatusProcess == "02" || lstDo.Count == 0)
+                {
+                    CommonService.Alert($"Phương tiện không có ticket!", Alert.Alert.enumType.Error);
+                    this.isHasInvoice = false;
+                    txtNoteOut.Text = "Phương tiện không có ticket!";
+                    return;
+                }
+
+
 
                 CommonService.Alert($"Kiểm tra thông tin thành công!", Alert.Alert.enumType.Success);
             }
