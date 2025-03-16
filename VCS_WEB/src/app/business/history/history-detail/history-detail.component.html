@@ -36,25 +36,32 @@
           <nz-page-header-extra>
             <nz-space [nzWrap]="true" class="gap-[5px]">
               <nz-space>
-                <button class="!flex !items-center" nzType="primary" nz-button
-                >
-                 <span nz-icon nzType="camera"></span> Xem tất cả
-               </button>
+                <button class="camera-button" nzType="primary" nz-button>
+                  <span nz-icon nzType="camera"></span>
+                </button>
+                
               </nz-space>
             </nz-space>
           </nz-page-header-extra>
         </nz-page-header>
         <div nz-row [nzGutter]="6" class="items-center">
-          <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesIn">
-            <img
-              nz-image
-              width="160px"
-              height="160px"
-              [nzSrc]="imageUrl"
-              alt=""
-            />
+          <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesIn; let i = index">
+            <ng-container *ngIf="!imageErrors[i]; else noImageTemplate">
+              <img
+                nz-image
+                width="160px"
+                height="160px"
+                [nzSrc]="imageUrl"
+                alt="Không tải được ảnh từ Server"
+                (error)="onImageError(i, 'in')"
+              />
+            </ng-container>
           </div>
-        </div>
+          <ng-template #noImageTemplate>
+            <div class="no-image">Chưa có ảnh</div>
+          </ng-template>
+        </div>        
+        
           <!-- <div nz-row [nzGutter]="6" class="items-center">
             <div nz-col class="gutter-row" nzSpan="6">
               <img
@@ -125,25 +132,36 @@
         <nz-page-header-extra>
           <nz-space [nzWrap]="true" class="gap-[5px]">
             <nz-space>
-              <button class="!flex !items-center" nzType="primary" nz-button
-              >
-               <span nz-icon nzType="camera"></span> Xem tất cả
-             </button>
+              <button class="camera-button" nzType="primary" nz-button>
+                <span nz-icon nzType="camera"></span>
+              </button>
+              
             </nz-space>
           </nz-space>
         </nz-page-header-extra>
       </nz-page-header>
       <div nz-row [nzGutter]="6" class="items-center">
-        <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesOut">
-          <img
-            nz-image
-            width="160px"
-            height="160px"
-            [nzSrc]="imageUrl"
-            alt=""
-          />
-        </div>
+        <ng-container *ngIf="imagesOut.length > 0; else noImageOutTemplate">
+          <div nz-col class="gutter-row" nzSpan="6" *ngFor="let imageUrl of imagesOut; let i = index">
+            <ng-container *ngIf="!imageErrorsOut[i]; else noImageOutTemplate">
+              <img
+                nz-image
+                width="160px"
+                height="160px"
+                [nzSrc]="imageUrl"
+                alt="Không tải được ảnh từ Server"
+                (error)="onImageError(i, 'out')"
+              />
+            </ng-container>
+          </div>
+        </ng-container>
       </div>
+      <ng-template #noImageOutTemplate>
+        <div class="no-image">Chưa có ảnh</div>
+      </ng-template>
+      
+      
+      
         <!-- <div nz-row [nzGutter]="6" class="items-center">
           <div nz-col class="gutter-row" nzSpan="6">
             <img

@@ -22,6 +22,8 @@ export class HistoryDetailComponent implements OnInit {
   dataOut: any = [];
   imagesIn: any = [];
   imagesOut: any = [];
+  imageErrors: boolean[] = [];
+imageErrorsOut: boolean[] = [];
   constructor(
     private _service: HeaderService,
     private globalService: GlobalService,
@@ -42,6 +44,14 @@ export class HistoryDetailComponent implements OnInit {
   ngOnInit() {
     this.search();
   }
+  
+onImageError(index: number, type: 'in' | 'out') {
+  if (type === 'in') {
+    this.imageErrors[index] = true;
+  } else {
+    this.imageErrorsOut[index] = true;
+  }
+}
   search() {
     this.isSubmit = false
     this.route.paramMap.subscribe((params) => {

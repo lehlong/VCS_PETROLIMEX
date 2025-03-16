@@ -15,10 +15,7 @@
                 <span nz-icon nzType="redo"></span>
               </button>
             </nz-space>
-            <button (click)="openCreate()" class="!flex !items-center" nzType="primary" nz-button
-             >
-              <span nz-icon nzType="plus-circle"></span> Thêm mới
-            </button>
+           
           </nz-space>
         </nz-page-header-extra>
       </nz-page-header>
@@ -29,10 +26,10 @@
         <thead>
           <tr>
             <th nzWidth="30px">STT</th>
-            <th nzAlign="center" nzWidth="20%">
+            <th nzAlign="center" nzWidth="224px">
               Tài xế
             </th>
-            <th nzAlign="center" nzWidth="300px">
+            <th nzAlign="center" nzWidth="224px">
               Biển số
             </th>
             <th nzAlign="center" nzWidth="300px">
@@ -47,17 +44,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of headerTable.data; let i = index" >
-            <td>
+          <tr *ngFor="let data of headerTable.data; let i = index" (dblclick)="navigate(data.id)">
+            <td nzAlign="center">
               {{
               (paginationResult.currentPage - 1) * paginationResult.pageSize +
               i +
               1
               }}
             </td>
-            <td nzAlign="center">
-              <a 
-              (click)="navigate(data.id)">{{ data.vehicleName }}</a>
+            <td nzAlign="left">
+              {{ data.vehicleName }}
             </td>
             <td nzAlign="center">{{ data.vehicleCode }}</td>
            
