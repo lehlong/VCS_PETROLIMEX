@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using VCS.APP.Areas.PrintStt;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.Services;
 
 namespace VCS.APP.Areas.History
 {
@@ -211,7 +212,17 @@ namespace VCS.APP.Areas.History
         {
             if (e.ColumnIndex == dataTable.Columns["Print"].Index && e.RowIndex >= 0)
             {
-                MessageBox.Show(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var header = _dbContext.TblBuHeader.Find(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var t = new TicketInfo
+                {
+                    WarehouseName = _dbContext.TblMdWarehouse.FirstOrDefault(x => x.Code == ProfileUtilities.User.WarehouseCode)?.Name,
+                    Vehicle = header.VehicleCode,
+                    STT = header.Stt.ToString("00"),
+                    DO_Code = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == header.Id).Select(x => x.Do1Sap).Distinct().ToList(),
+                };
+                var f = new STT(t, t.DO_Code);
+                f.ShowDialog();
+
             }
             if (e.ColumnIndex == dataTable.Columns["Edit"].Index && e.RowIndex >= 0)
             {
@@ -220,7 +231,51 @@ namespace VCS.APP.Areas.History
             }
             if (e.ColumnIndex == dataTable.Columns["Cancel"].Index && e.RowIndex >= 0)
             {
-                MessageBox.Show(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                var result = MessageBox.Show("Huỷ không xử lý phương tiện này?",
+                                             "Xác nhận",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        var header = _dbContext.TblBuHeader.Find(dataTable.Rows[e.RowIndex].Cells[0].Value.ToString());
+                        var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == header.Id).Select(x => x.Do1Sap).ToList();
+                        if (header.StatusVehicle != "01")
+                        {
+                            CommonService.Alert("Chỉ được huỷ phương tiện trong hàng chờ!", VCS.Areas.Alert.Alert.enumType.Error);
+                            return;
+                        }
+                        header.StatusVehicle = "05";
+                        _dbContext.TblBuHeader.Update(header);
+                        _dbContext.SaveChanges();
+
+                        if (lstDo.Count() > 0)
+                        {
+                            var model = new PostStatusVehicleToSMO
+                            {
+                                VEHICLE = header.VehicleCode,
+                                TYPE = "CANCEL",
+                                LIST_DO = string.Join(",", lstDo),
+                                DATE_INFO = DateTime.Now,
+                            };
+                            CommonService.PostStatusVehicleToSMO(model);
+                        }
+
+                        CommonService.Alert("Cập nhật thông tin thành công!", VCS.Areas.Alert.Alert.enumType.Success);
+                        SearchData();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi lấy thông tin chi tiết: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 

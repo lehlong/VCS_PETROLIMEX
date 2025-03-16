@@ -63,10 +63,11 @@
             // txtDateTime
             // 
             txtDateTime.AutoSize = true;
-            txtDateTime.Location = new Point(50, 233);
+            txtDateTime.Location = new Point(60, 233);
             txtDateTime.Name = "txtDateTime";
-            txtDateTime.Size = new Size(0, 15);
+            txtDateTime.Size = new Size(10, 15);
             txtDateTime.TabIndex = 8;
+            txtDateTime.Text = ".";
             txtDateTime.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblSTT
@@ -75,8 +76,9 @@
             lblSTT.Font = new Font("Segoe UI", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSTT.Location = new Point(64, 142);
             lblSTT.Name = "lblSTT";
-            lblSTT.Size = new Size(0, 86);
+            lblSTT.Size = new Size(54, 86);
             lblSTT.TabIndex = 7;
+            lblSTT.Text = ".";
             // 
             // label3
             // 

@@ -34,6 +34,7 @@ namespace VCS.Areas.CheckOut
         private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private List<string> lstPathImageCapture = new List<string>();
         private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
+        private bool IsCancel { get; set; } = false;
         private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
         private bool isHasInvoice { get; set; } = true;
         public CheckOut(AppDbContextForm dbContext)
@@ -122,7 +123,7 @@ namespace VCS.Areas.CheckOut
                 using CancellationTokenSource cts = new(10000);
                 try
                 {
-                    var lstCamera = Global.lstCamera.Where(x => x.IsIn && x.Code != CameraDetect.Code);
+                    var lstCamera = Global.lstCamera.Where(x => x.IsOut && x.Code != CameraDetect.Code);
                     var cameraCaptureTasks = lstCamera.Select(async c =>
                     {
                         try
@@ -156,7 +157,7 @@ namespace VCS.Areas.CheckOut
                                x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
                                x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
                                x.StatusVehicle != "04").Select(x => x.Id).FirstOrDefaultAsync();
-                    
+
                     this.Invoke(() =>
                     {
                         txtLicensePlate.Text = detection;
@@ -194,7 +195,7 @@ namespace VCS.Areas.CheckOut
             var lstQueue = _dbContext.TblBuHeader.Where(x =>
             x.CompanyCode == ProfileUtilities.User.OrganizeCode &&
             x.WarehouseCode == ProfileUtilities.User.WarehouseCode &&
-            x.StatusVehicle != "04" && x.StatusVehicle != "01").ToList();
+            x.StatusVehicle != "04" && x.StatusVehicle != "01" && x.StatusProcess != "05").ToList();
             List<ComboBoxItem> items = new List<ComboBoxItem>();
             items.Add(new ComboBoxItem("-", ""));
             foreach (var item in lstQueue)
@@ -354,6 +355,8 @@ namespace VCS.Areas.CheckOut
                 });
             }
             var i = _dbContext.TblBuHeader.Find(selectedValue);
+            var lstCheckDoCheckIn = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).Select(x => x.Do1Sap).Distinct().ToList();
+            var lstCheckDoTgbx = _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).Select(x => x.SoLenh).Distinct().ToList();
             i.IsCheckout = true;
             i.TimeCheckout = DateTime.Now;
             i.StatusVehicle = "04";
@@ -364,6 +367,43 @@ namespace VCS.Areas.CheckOut
             lstPathImageCapture.Add(IMGPATH);
             lstPathImageCapture.Add(PLATEPATH);
             CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
+
+            if (IsCancel)
+            {
+                var model = new PostStatusVehicleToSMO
+                {
+                    VEHICLE = txtLicensePlate.Text,
+                    TYPE = "CANCEL",
+                    LIST_DO = string.Join(",", lstCheckDoCheckIn),
+                    DATE_INFO = DateTime.Now,
+                };
+                CommonService.PostStatusVehicleToSMO(model);
+            }
+            else
+            {
+                var model = new PostStatusVehicleToSMO
+                {
+                    VEHICLE = txtLicensePlate.Text,
+                    TYPE = "OUT",
+                    LIST_DO = string.Join(",", lstCheckDoTgbx),
+                    DATE_INFO = DateTime.Now,
+                };
+                CommonService.PostStatusVehicleToSMO(model);
+
+                var diff = lstCheckDoCheckIn.Except(lstCheckDoTgbx).ToList();
+                if (diff.Count() > 0)
+                {
+                    var model_cancel = new PostStatusVehicleToSMO
+                    {
+                        VEHICLE = txtLicensePlate.Text,
+                        TYPE = "CANCEL",
+                        LIST_DO = string.Join(",", diff),
+                        DATE_INFO = DateTime.Now,
+                    };
+                    CommonService.PostStatusVehicleToSMO(model_cancel);
+                }
+            }
+
 
             CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
             ResetForm();
@@ -465,6 +505,7 @@ namespace VCS.Areas.CheckOut
                     CommonService.Alert($"Phương tiện không được xử lý!", Alert.Alert.enumType.Error);
                     this.isHasInvoice = false;
                     txtNoteOut.Text = "Phương tiện không được xử lý!";
+                    IsCancel = true;
                     return;
                 }
 
@@ -473,11 +514,10 @@ namespace VCS.Areas.CheckOut
                     CommonService.Alert($"Phương tiện không có ticket!", Alert.Alert.enumType.Error);
                     this.isHasInvoice = false;
                     txtNoteOut.Text = "Phương tiện không có ticket!";
+                    IsCancel = true;
                     return;
                 }
-
-
-
+                IsCancel = false;
                 CommonService.Alert($"Kiểm tra thông tin thành công!", Alert.Alert.enumType.Success);
             }
             catch (Exception ex)
@@ -845,6 +885,6 @@ namespace VCS.Areas.CheckOut
             var v = new ViewCamera(CameraDetect);
             v.ShowDialog();
         }
-       
+
     }
 }
