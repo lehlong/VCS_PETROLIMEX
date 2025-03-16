@@ -3,6 +3,7 @@ import { ShareModule } from '../../../shared/share-module';
 import { GlobalService } from '../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderService } from '../../../services/business/header.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-history-detail',
@@ -23,7 +24,8 @@ export class HistoryDetailComponent implements OnInit {
   imagesIn: any = [];
   imagesOut: any = [];
   imageErrors: boolean[] = [];
-imageErrorsOut: boolean[] = [];
+  imageErrorsOut: boolean[] = [];
+  ImageApiUrl = environment.imageApiUrl;
   constructor(
     private _service: HeaderService,
     private globalService: GlobalService,
@@ -43,6 +45,7 @@ imageErrorsOut: boolean[] = [];
   
   ngOnInit() {
     this.search();
+    console.log(this.imagesIn)
   }
   
 onImageError(index: number, type: 'in' | 'out') {

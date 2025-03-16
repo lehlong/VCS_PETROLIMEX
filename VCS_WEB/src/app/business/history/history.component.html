@@ -1,73 +1,76 @@
-<div class="container-list" >
-    <div class="site-page-header-ghost-wrapper">
-      <nz-page-header nzTitle="LỊCH SỬ VÀO RA" class="site-page-header">
-        <nz-page-header-extra>
-          <nz-space [nzWrap]="true" class="gap-[5px]">
-            <nz-space>
-              <app-input-clear placeholder="Tìm kiếm" (enterEvent)="search()"
-                [(value)]="filter.keyWord"></app-input-clear>
-              <button (click)="search()" class="flex !items-center !border-l-0 gray-btn" nzType="default" nz-button
-                nzType="default">
-                <span nz-icon nzType="search"></span>
-              </button>
-              <button (click)="reset()" class="flex !items-center !border-l-0 gray-btn" nzType="default" nz-button
-                nzType="default">
-                <span nz-icon nzType="redo"></span>
-              </button>
-            </nz-space>
-           
+<div class="container-list">
+  <div class="site-page-header-ghost-wrapper">
+    <nz-page-header nzTitle="LỊCH SỬ VÀO RA" class="site-page-header">
+      <nz-page-header-extra>
+        <nz-space [nzWrap]="true" class="gap-[5px]">
+          <nz-space>
+            <app-input-clear *nzSpaceItem placeholder="Tên tài xế" [(value)]="filter.vehicleName"></app-input-clear>
+            <app-input-clear *nzSpaceItem placeholder="Biển số xe" [(value)]="filter.vehicleCode"></app-input-clear>
+            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.fromDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Từ ngày">
+            </nz-date-picker>
+            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.toDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Đến ngày">
+            </nz-date-picker>
+            <button *nzSpaceItem (click)="search()" class="flex !items-center !border-l-1" nzType="primary" nz-button
+              nzType="primary">
+              <span nz-icon nzType="search"></span>
+            </button>
+            <button *nzSpaceItem (click)="reset()" class="flex !items-center !border-l-1" nzType="default" nz-button
+              nzType="default">
+              <span nz-icon nzType="redo"></span>
+            </button>
           </nz-space>
-        </nz-page-header-extra>
-      </nz-page-header>
-    </div>
-    <div class="overflow-auto flex-grow">
-      <nz-table [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed" [nzShowPagination]="false"
-        [nzFrontPagination]="false" #headerTable [nzData]="paginationResult.data">
-        <thead>
-          <tr>
-            <th nzWidth="30px">STT</th>
-            <th nzAlign="center" nzWidth="224px">
-              Tài xế
-            </th>
-            <th nzAlign="center" nzWidth="224px">
-              Biển số
-            </th>
-            <th nzAlign="center" nzWidth="300px">
-              Thời gian vào
-            </th>
-            <th nzAlign="center" nzWidth="300px">
-              Thời gian ra
-            </th>
-            <th nzAlign="center" nzWidth="150px">
-              Số TT vào kho
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of headerTable.data; let i = index" (dblclick)="navigate(data.id)">
-            <td nzAlign="center">
-              {{
-              (paginationResult.currentPage - 1) * paginationResult.pageSize +
-              i +
-              1
-              }}
-            </td>
-            <td nzAlign="left">
-              {{ data.vehicleName }}
-            </td>
-            <td nzAlign="center">{{ data.vehicleCode }}</td>
-           
-            <td nzAlign="center">{{ data.createDate  | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-            <td nzAlign="center">{{ data.timeCheckout  | date:'dd/MM/yyyy HH:mm:ss' }}</td>
-            <td nzAlign="center">{{ data.stt }}</td>
-          </tr>
-        </tbody>
-      </nz-table>
-    </div>
-    <div *ngIf="paginationResult?.data" class="flex justify-end p-[10px] border-t border-custom-gray border-solid">
-      <nz-pagination nzShowSizeChanger [nzPageIndex]="filter.currentPage" [nzTotal]="paginationResult.totalRecord"
-        [nzPageSize]="filter.pageSize" (nzPageIndexChange)="pageIndexChange($event)"
-        (nzPageSizeChange)="pageSizeChange($event)"></nz-pagination>
-    </div>
+
+        </nz-space>
+      </nz-page-header-extra>
+    </nz-page-header>
   </div>
-  
+  <div class="overflow-auto flex-grow">
+    <nz-table [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed" [nzShowPagination]="false"
+      [nzFrontPagination]="false" #headerTable [nzData]="paginationResult.data">
+      <thead>
+        <tr>
+          <th nzWidth="30px">STT</th>
+          <th nzAlign="center" nzWidth="224px">
+            Tài xế
+          </th>
+          <th nzAlign="center" nzWidth="224px">
+            Biển số
+          </th>
+          <th nzAlign="center" nzWidth="300px">
+            Thời gian vào
+          </th>
+          <th nzAlign="center" nzWidth="300px">
+            Thời gian ra
+          </th>
+          <th nzAlign="center" nzWidth="150px">
+            Số TT vào kho
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of headerTable.data; let i = index" (dblclick)="navigate(data.id)">
+          <td nzAlign="center">
+            {{
+            (paginationResult.currentPage - 1) * paginationResult.pageSize +
+            i +
+            1
+            }}
+          </td>
+          <td nzAlign="left">
+            {{ data.vehicleName }}
+          </td>
+          <td nzAlign="center">{{ data.vehicleCode }}</td>
+
+          <td nzAlign="center">{{ data.createDate | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td nzAlign="center">{{ data.timeCheckout | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td nzAlign="center">{{ data.stt }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div *ngIf="paginationResult?.data" class="flex justify-end p-[10px] border-t border-custom-gray border-solid">
+    <nz-pagination nzShowSizeChanger [nzPageIndex]="filter.currentPage" [nzTotal]="paginationResult.totalRecord"
+      [nzPageSize]="filter.pageSize" (nzPageIndexChange)="pageIndexChange($event)"
+      (nzPageSizeChange)="pageSizeChange($event)"></nz-pagination>
+  </div>
+</div>

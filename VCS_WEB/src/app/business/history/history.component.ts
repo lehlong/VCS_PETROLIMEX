@@ -10,10 +10,12 @@ import { OrderService } from '../../services/business/order.service';
 import { HeaderService } from '../../services/business/header.service';
 import { HeaderFilter } from '../../models/bussiness/header.model';
 import { Router } from '@angular/router';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [ShareModule],
+  imports: [ShareModule, NzDatePickerModule],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss'
 })
@@ -83,8 +85,12 @@ validateForm: FormGroup = this.fb.group({
   }
 
   reset() {
-    this.filter = new AreaFilter()
-    this.search()
+    this.filter = new HeaderFilter();
+    this.filter.vehicleName = '';
+    this.filter.vehicleCode = '';
+    this.filter.fromDate = undefined;
+    this.filter.toDate = undefined;
+    this.search();
   }
 
   openCreate() {

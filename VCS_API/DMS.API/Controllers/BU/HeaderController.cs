@@ -3,6 +3,7 @@ using DMS.API.AppCode.Enum;
 using DMS.API.AppCode.Extensions;
 using DMS.BUSINESS.Services.BU;
 using DMS.BUSINESS.Services.MD;
+using DMS.BUSINESS.Filter.BU;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.API.Controllers.BU
@@ -13,7 +14,7 @@ namespace DMS.API.Controllers.BU
     {
         public readonly IHeaderService _service = service;
         [HttpGet("Search")]
-        public async Task<IActionResult> Search([FromQuery] BaseFilter filter)
+        public async Task<IActionResult> Search([FromQuery] HeaderFilter filter)
         {
             var transferObject = new TransferObject();
             var result = await _service.Search(filter);

@@ -2,6 +2,7 @@
 using Common;
 using DMS.BUSINESS.Common;
 using DMS.BUSINESS.Dtos.BU;
+using DMS.BUSINESS.Filter.BU;
 using DMS.CORE;
 using DMS.CORE.Entities.BU;
 using Microsoft.EntityFrameworkCore;
@@ -15,24 +16,51 @@ namespace DMS.BUSINESS.Services.BU
 {
     public interface IHeaderService : IGenericService<TblBuHeader, HeaderDto>
     {
-        Task <HistoryDto> GetHistoryDetail (string headerId);
+        Task<HistoryDto> GetHistoryDetail(string headerId);
+        Task<PagedResponseDto> Search(HeaderFilter filter);
     }
     public class HeaderService(AppDbContext dbContext, IMapper mapper) : GenericService<TblBuHeader, HeaderDto>(dbContext, mapper), IHeaderService
     {
-        public override async Task<PagedResponseDto> Search(BaseFilter filter)
+        public async Task<PagedResponseDto> Search(HeaderFilter filter)
         {
             try
             {
                 var query = _dbContext.TblBuHeader.AsQueryable();
+
+                // Tìm theo tên tài xế
+                if (!string.IsNullOrWhiteSpace(filter.VehicleName))
+                {
+                    query = query.Where(x => x.VehicleName.Contains(filter.VehicleName));
+                }
+
+                // Tìm theo biển số xe
+                if (!string.IsNullOrWhiteSpace(filter.VehicleCode))
+                {
+                    query = query.Where(x => x.VehicleCode.Contains(filter.VehicleCode));
+                }
+
+                // Tìm theo khoảng thời gian
+                if (filter.FromDate.HasValue)
+                {
+                    query = query.Where(x => x.CreateDate >= filter.FromDate.Value);
+                }
+
+                if (filter.ToDate.HasValue)
+                {
+                    query = query.Where(x => x.TimeCheckout <= filter.ToDate.Value);
+                }
+
                 if (!string.IsNullOrWhiteSpace(filter.KeyWord))
                 {
                     query = query.Where(x =>
                     x.VehicleCode.Contains(filter.KeyWord) || x.Id.ToString().Contains(filter.KeyWord));
                 }
+
                 if (filter.IsActive.HasValue)
                 {
                     query = query.Where(x => x.IsActive == filter.IsActive);
                 }
+
                 return await Paging(query, filter);
             }
             catch (Exception ex)
@@ -41,6 +69,15 @@ namespace DMS.BUSINESS.Services.BU
                 Exception = ex;
                 return null;
             }
+        }
+
+        public override async Task<PagedResponseDto> Search(BaseFilter baseFilter)
+        {
+            if (baseFilter is HeaderFilter filter)
+            {
+                return await Search(filter);
+            }
+            return await base.Search(baseFilter);
         }
         public async Task<HistoryDto> GetHistoryDetail(string headerId)
         {
@@ -73,12 +110,12 @@ namespace DMS.BUSINESS.Services.BU
 
                 header.ImagesIn = await _dbContext.TblBuImage
                     .Where(x => x.HeaderId == headerId && x.InOut == "in")
-                    .Select(x => x.FullPath)
+                    .Select(x => x.Path)
                     .ToListAsync();
 
                 header.ImagesOut = await _dbContext.TblBuImage
                     .Where(x => x.HeaderId == headerId && x.InOut == "out")
-                    .Select(x => x.FullPath)
+                    .Select(x => x.Path)
                     .ToListAsync();
 
                 header.DetailDOs = await (from d in _dbContext.TblBuDetailDO

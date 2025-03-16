@@ -1,6 +1,6 @@
 <div class="container-list" >
     <div class="site-page-header-ghost-wrapper">
-      <nz-page-header nzTitle="CHI TIẾT LỊCH SỬ" class="site-page-header">
+      <nz-page-header  nzBackIcon nzTitle="CHI TIẾT LỊCH SỬ" class="site-page-header">
       </nz-page-header>
     </div>
     <div nz-row [nzGutter]="16">
@@ -51,7 +51,7 @@
                 nz-image
                 width="160px"
                 height="160px"
-                [nzSrc]="imageUrl"
+                [nzSrc]="ImageApiUrl + imageUrl"
                 alt="Không tải được ảnh từ Server"
                 (error)="onImageError(i, 'in')"
               />
@@ -128,7 +128,7 @@
           </div>
       </div>
       <div nz-col class="gutter-row" nzSpan="12" style="margin-top: 24px;">
-         <nz-page-header nzTitle="Thông tin cổng vào" class="site-page-header">
+         <nz-page-header nzTitle="Thông tin cổng ra" class="site-page-header">
         <nz-page-header-extra>
           <nz-space [nzWrap]="true" class="gap-[5px]">
             <nz-space>
@@ -148,7 +148,7 @@
                 nz-image
                 width="160px"
                 height="160px"
-                [nzSrc]="imageUrl"
+                [nzSrc]="ImageApiUrl + imageUrl"
                 alt="Không tải được ảnh từ Server"
                 (error)="onImageError(i, 'out')"
               />

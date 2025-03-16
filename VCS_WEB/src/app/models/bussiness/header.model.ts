@@ -3,8 +3,8 @@ import { BaseFilter } from "../base.model";
 export class HeaderFilter extends BaseFilter {
     id?: string;
     stt?: number;
-    vehicleCode?: string;
-    vehicleName?: string;
+    vehicleCode: string = '';
+    vehicleName: string = '';
     isCheckOut?: boolean;
     isVoice?: boolean;
     isPrint?: boolean;
@@ -14,6 +14,8 @@ export class HeaderFilter extends BaseFilter {
     NoteOut?: string;
     NoteIn?: string;
     isActive?: boolean | string | null;
+    fromDate?: Date;
+    toDate?: Date;
     SortColumn: string = '';
     IsDescending: boolean = true;
 }
