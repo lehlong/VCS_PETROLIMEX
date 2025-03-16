@@ -169,7 +169,6 @@ namespace VCS.Areas.CheckOut
                         {
                             CommonService.Alert("Phương tiện không có trong kho! Vui lòng nhận diện lại!", Alert.Alert.enumType.Error);
                         }
-                        CommonService.Alert("Nhận diện phương tiện thành công!", Alert.Alert.enumType.Success);
                     });
 
                     await Task.WhenAny(Task.WhenAll(cameraCaptureTasks), Task.Delay(2000));

@@ -15,6 +15,7 @@ using VCS.Areas.Alert;
 using Microsoft.AspNetCore.Http;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
+using System.Text;
 
 namespace VCS.APP.Services
 {
@@ -115,6 +116,35 @@ namespace VCS.APP.Services
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+        public static void PostStatusVehicleToSMO(PostStatusVehicleToSMO model)
+        {
+            try
+            {
+                var token = LoginSmoApi();
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var request = new HttpRequestMessage(HttpMethod.Post, $"{Global.SmoApiUrl}PO/InOutStore/")
+                    {
+                        Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json")
+                    };
+
+                    HttpResponseMessage response = client.Send(request);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Alert("Chưa cập nhật được trạng thái lên SMO!", VCS.Areas.Alert.Alert.enumType.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Alert("Chưa cập nhật được trạng thái lên SMO!", VCS.Areas.Alert.Alert.enumType.Warning);
             }
         }
 

@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace VCS.Services
 {
+    public class PostStatusVehicleToSMO
+    {
+        public string? TYPE { get; set; }
+        public string? VEHICLE { get; set; }
+        public string? LIST_DO { get; set; }
+        public DateTime? DATE_INFO { get; set; }
+    }
     public class ResponseLoginSmoApi
     {
         public bool STATUS { get; set; }

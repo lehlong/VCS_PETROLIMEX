@@ -680,6 +680,18 @@ namespace VCS.Areas.CheckIn
             lstPathImageCapture.Add(PLATEPATH);
             CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
 
+            if (lstCheckDo.Count() > 0)
+            {
+                var model = new PostStatusVehicleToSMO
+                {
+                    VEHICLE = txtLicensePlate.Text,
+                    TYPE = "IN",
+                    LIST_DO = string.Join(",", lstCheckDo),
+                    DATE_INFO = DateTime.Now,
+                };
+                CommonService.PostStatusVehicleToSMO(model);
+            }
+
             var ticketInfo = new TicketInfo
             {
                 WarehouseName = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name,

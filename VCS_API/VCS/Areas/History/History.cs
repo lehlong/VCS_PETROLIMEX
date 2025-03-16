@@ -27,6 +27,19 @@ namespace VCS.APP.Areas.History
             _dbContext = dbContext;
             fromDate.Value = DateTime.Now.Date;
             toDate.Value = DateTime.Now.Date.AddDays(1).AddTicks(-1);
+
+
+            List<ComboBoxItem> items = new List<ComboBoxItem>();
+            items.Add(new ComboBoxItem("-", ""));
+            items.Add(new ComboBoxItem("Trong hàng chờ", "01"));
+            items.Add(new ComboBoxItem("Đang trong kho", "02"));
+            items.Add(new ComboBoxItem("Đang lấy hàng", "03"));
+            items.Add(new ComboBoxItem("Đã ra kho", "04"));
+            items.Add(new ComboBoxItem("Không xử lý", "05"));
+
+            cbStatus.DataSource = items;
+            cbStatus.DisplayMember = "Text";
+            cbStatus.ValueMember = "Value";
         }
         private void History_Load(object sender, EventArgs e)
         {
@@ -53,13 +66,19 @@ namespace VCS.APP.Areas.History
             {
                 data = data.Where(x => x.VehicleCode.Contains(txtVehicleCode.Text));
             }
+            ComboBoxItem selectedItem = (ComboBoxItem)cbStatus.SelectedItem;
+            string selectedValue = selectedItem == null ? "" : selectedItem.Value;
+            if (!string.IsNullOrEmpty(selectedValue))
+            {
+                data = data.Where(x => x.StatusVehicle == selectedValue);
+            }
             dataTable.Rows.Clear();
-
             var order = 0;
             foreach (var i in data.ToList())
             {
+                var statusVehicle = i.StatusVehicle == "01" ? "Trong hàng chờ" : i.StatusVehicle== "02" ? "Đang trong kho" : i.StatusVehicle == "03" ? "Đang lấy hàng" : i.StatusVehicle == "04" ? "Đã ra kho" : i.StatusVehicle == "05" ? "Không xử lý" : "";
                 var timeCheckout = i.TimeCheckout.HasValue ? i.TimeCheckout.Value.ToString("dd/MM/yyyy hh:mm:ss") : "";
-                dataTable.Rows.Add(i.Id, order, i.VehicleName, i.VehicleCode, i.Stt.ToString("00"), "", i.CreateDate.Value.ToString("dd/MM/yyyy hh:mm:ss"), timeCheckout);
+                dataTable.Rows.Add(i.Id, order, i.VehicleName, i.VehicleCode, i.Stt.ToString("00"), statusVehicle, i.CreateDate.Value.ToString("dd/MM/yyyy hh:mm:ss"), timeCheckout);
                 order++;
             }
         }
