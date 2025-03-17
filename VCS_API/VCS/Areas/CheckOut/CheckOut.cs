@@ -2,21 +2,9 @@
 using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DocumentFormat.OpenXml;
-using ICSharpCode.SharpZipLib.Zip;
 using LibVLCSharp.Shared;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
@@ -31,9 +19,7 @@ namespace VCS.Areas.CheckOut
         private MediaPlayer _mediaPlayer;
         private string IMGPATH;
         private string PLATEPATH;
-        private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
         private List<string> lstPathImageCapture = new List<string>();
-        private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
         private bool IsCancel { get; set; } = false;
         private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
         private bool isHasInvoice { get; set; } = true;
@@ -376,7 +362,6 @@ namespace VCS.Areas.CheckOut
         {
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
-            _lstDOSAP = new List<DOSAPDataDto>();
             lstPathImageCapture = new List<string>();
             IMGPATH = "";
             PLATEPATH = "";

@@ -1,31 +1,10 @@
-﻿using Azure;
-using DMS.CORE;
+﻿using DMS.CORE;
 using DMS.CORE.Entities.BU;
 using DMS.CORE.Entities.MD;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.InkML;
-using ICSharpCode.SharpZipLib.Zip;
-using LibVLCSharp.Forms.Shared;
 using LibVLCSharp.Shared;
-using LibVLCSharp.WinForms;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
-using NPOI.HSSF.Record.Chart;
-using NPOI.SS.Formula.Functions;
-using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using VCS.APP.Areas.PrintStt;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
@@ -39,17 +18,20 @@ namespace VCS.Areas.CheckIn
     {
         private MediaPlayer _mediaPlayer;
         private AppDbContextForm _dbContext;
-        private List<DOSAPDataDto> _lstDOSAP = new List<DOSAPDataDto>();
-        private List<string> lstCheckDo = new List<string>();
-        private List<string> lstPathImageCapture = new List<string>();
+        private List<DOSAPDataDto> _lstDOSAP;
+        private List<string> lstCheckDo;
+        private List<string> lstPathImageCapture;
         private string IMGPATH;
         private string PLATEPATH;
-        private static readonly HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
-        private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
+        private TblMdCamera CameraDetect { get; set; }
         private System.Windows.Forms.Timer resetTimer;
         public CheckIn(AppDbContextForm dbContext)
         {
             _dbContext = dbContext;
+            _lstDOSAP = new List<DOSAPDataDto>();
+            lstCheckDo = new List<string>();
+            lstPathImageCapture = new List<string>();
+
             InitializeComponent();
             resetTimer = new System.Windows.Forms.Timer();
             resetTimer.Interval = 500;

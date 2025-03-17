@@ -85,7 +85,10 @@ namespace VCS
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e) => Application.Exit();
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {

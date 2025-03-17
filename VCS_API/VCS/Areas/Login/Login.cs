@@ -94,9 +94,9 @@ namespace VCS.Areas.Login
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e) => Application.Exit();
-
-       
-
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
