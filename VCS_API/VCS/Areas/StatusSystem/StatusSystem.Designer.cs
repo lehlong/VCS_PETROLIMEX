@@ -33,12 +33,6 @@ namespace VCS.APP.Areas.StatusSystem
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusSystem));
             panel1 = new Panel();
             btnClean = new Button();
-            panel9 = new Panel();
-            btnRestartDetect = new Button();
-            label21 = new Label();
-            pictureBox11 = new PictureBox();
-            label22 = new Label();
-            label2 = new Label();
             panel10 = new Panel();
             label23 = new Label();
             pictureBox12 = new PictureBox();
@@ -77,8 +71,6 @@ namespace VCS.APP.Areas.StatusSystem
             label12 = new Label();
             button1 = new Button();
             panel1.SuspendLayout();
-            panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             panel11.SuspendLayout();
@@ -101,7 +93,6 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(btnClean);
-            panel1.Controls.Add(panel9);
             panel1.Controls.Add(panel10);
             panel1.Controls.Add(panel11);
             panel1.Controls.Add(panel12);
@@ -137,81 +128,6 @@ namespace VCS.APP.Areas.StatusSystem
             btnClean.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnClean.UseVisualStyleBackColor = false;
             btnClean.Click += btnClean_Click;
-            // 
-            // panel9
-            // 
-            panel9.BackColor = Color.WhiteSmoke;
-            panel9.Controls.Add(btnRestartDetect);
-            panel9.Controls.Add(label21);
-            panel9.Controls.Add(pictureBox11);
-            panel9.Controls.Add(label22);
-            panel9.Controls.Add(label2);
-            panel9.Location = new Point(356, 312);
-            panel9.Name = "panel9";
-            panel9.Padding = new Padding(12);
-            panel9.Size = new Size(431, 77);
-            panel9.TabIndex = 46;
-            // 
-            // btnRestartDetect
-            // 
-            btnRestartDetect.BackColor = Color.FromArgb(40, 167, 69);
-            btnRestartDetect.Cursor = Cursors.Hand;
-            btnRestartDetect.FlatAppearance.BorderSize = 0;
-            btnRestartDetect.FlatStyle = FlatStyle.Flat;
-            btnRestartDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRestartDetect.ForeColor = Color.White;
-            btnRestartDetect.Image = (Image)resources.GetObject("btnRestartDetect.Image");
-            btnRestartDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRestartDetect.Location = new Point(272, 19);
-            btnRestartDetect.Margin = new Padding(4);
-            btnRestartDetect.Name = "btnRestartDetect";
-            btnRestartDetect.Padding = new Padding(6, 0, 0, 0);
-            btnRestartDetect.Size = new Size(139, 40);
-            btnRestartDetect.TabIndex = 48;
-            btnRestartDetect.Text = "Khởi động lại";
-            btnRestartDetect.TextAlign = ContentAlignment.MiddleLeft;
-            btnRestartDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnRestartDetect.UseVisualStyleBackColor = false;
-            btnRestartDetect.Click += btnRestartDetect_Click;
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.Location = new Point(96, 44);
-            label21.Name = "label21";
-            label21.Size = new Size(0, 15);
-            label21.TabIndex = 13;
-            // 
-            // pictureBox11
-            // 
-            pictureBox11.Dock = DockStyle.Left;
-            pictureBox11.Image = (Image)resources.GetObject("pictureBox11.Image");
-            pictureBox11.Location = new Point(12, 12);
-            pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(50, 53);
-            pictureBox11.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox11.TabIndex = 12;
-            pictureBox11.TabStop = false;
-            // 
-            // label22
-            // 
-            label22.AutoSize = true;
-            label22.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label22.Location = new Point(65, 15);
-            label22.Name = "label22";
-            label22.Size = new Size(188, 21);
-            label22.TabIndex = 11;
-            label22.Text = "HỆ THỐNG NHẬN DIỆN";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(65, 39);
-            label2.Name = "label2";
-            label2.Size = new Size(146, 21);
-            label2.TabIndex = 35;
-            label2.Text = "Không có trạng thái";
             // 
             // panel10
             // 
@@ -272,7 +188,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel11.Controls.Add(pictureBox13);
             panel11.Controls.Add(label26);
             panel11.Controls.Add(label4);
-            panel11.Location = new Point(691, 209);
+            panel11.Location = new Point(356, 312);
             panel11.Name = "panel11";
             panel11.Padding = new Padding(12);
             panel11.Size = new Size(300, 77);
@@ -625,9 +541,6 @@ namespace VCS.APP.Areas.StatusSystem
             Text = "StatusSystem";
             Load += StatusSystem_Load;
             panel1.ResumeLayout(false);
-            panel9.ResumeLayout(false);
-            panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
@@ -662,7 +575,6 @@ namespace VCS.APP.Areas.StatusSystem
         private Label label5;
         private Label label4;
         private Label label3;
-        private Label label2;
         private Label label1;
         private Panel panel3;
         private Label label11;
@@ -681,10 +593,6 @@ namespace VCS.APP.Areas.StatusSystem
         private Label label17;
         private Label label16;
         private Label label18;
-        private Panel panel9;
-        private Label label21;
-        private PictureBox pictureBox11;
-        private Label label22;
         private Panel panel10;
         private Label label23;
         private PictureBox pictureBox12;
@@ -706,6 +614,5 @@ namespace VCS.APP.Areas.StatusSystem
         private PictureBox pictureBox7;
         private PictureBox pictureBox6;
         private Button btnClean;
-        private Button btnRestartDetect;
     }
 }
