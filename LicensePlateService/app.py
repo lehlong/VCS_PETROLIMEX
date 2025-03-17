@@ -53,6 +53,7 @@ server_running = False
 server_thread = None
 server_url = "http://localhost:1002"
 SERVER_PORT = 1002
+icon_folder = os.path.join(application_path, "icon")
 
 # Tên ứng dụng
 APP_NAME = "LicensePlateOCR"
@@ -195,20 +196,32 @@ def show_auto_close_message(title, message):
 
 # Tạo icon cho system tray
 def create_image():
-    # Tạo một hình ảnh đơn giản cho icon
-    width = 64
-    height = 64
-    color1 = (0, 0, 255)  # Màu đỏ
-    color2 = (255, 255, 255)  # Màu trắng
-    
-    image = Image.new('RGB', (width, height), color1)
-    dc = ImageDraw.Draw(image)
-    
-    # Vẽ chữ LP (License Plate) lên icon
-    dc.rectangle([(10, 10), (width-10, height-10)], fill=color2)
-    dc.text((20, 25), "LP", fill=color1)
-    
-    return image
+    try:
+        # Đọc file icon từ thư mục icon
+        icon_path = os.path.join(icon_folder, "ocr.png")
+        logger.info(f"Đang tìm icon tại đường dẫn: {icon_path}")
+        
+        if os.path.exists(icon_path):
+            logger.info("Đã tìm thấy file icon")
+            image = Image.open(icon_path)
+            # Đảm bảo icon có kích thước phù hợp
+            image = image.resize((32, 32))
+            return image
+        else:
+            logger.warning(f"Không tìm thấy file icon tại {icon_path}")
+            # Tạo icon mặc định
+            width = 32
+            height = 32
+            image = Image.new('RGB', (width, height), (0, 0, 255))
+            dc = ImageDraw.Draw(image)
+            dc.rectangle([(2, 2), (width-2, height-2)], fill=(255, 255, 255))
+            dc.text((8, 8), "LP", fill=(0, 0, 255))
+            return image
+            
+    except Exception as e:
+        logger.error(f"Lỗi khi tạo icon: {str(e)}")
+        # Tạo một icon mặc định đơn giản
+        return Image.new('RGB', (32, 32), (0, 0, 255))
 
 # Hàm mở trình duyệt
 def open_browser():
@@ -224,27 +237,34 @@ def exit_app(icon):
 
 # Hàm khởi tạo system tray
 def setup_tray():
-    image = create_image()
-    
-    # Hàm xử lý khi người dùng chọn bật/tắt khởi động cùng Windows
-    def toggle_startup(icon, item):
-        if is_startup_enabled():
-            remove_from_startup()
-            show_message("Nhận dạng biển số xe", "Đã tắt chế độ khởi động cùng Windows", 0)
-        else:
-            add_to_startup()
-            show_message("Nhận dạng biển số xe", "Đã bật chế độ khởi động cùng Windows", 0)
-    
-    # Kiểm tra trạng thái khởi động cùng Windows để hiển thị đúng trên menu
-    startup_text = "Tắt khởi động cùng Windows" if is_startup_enabled() else "Bật khởi động cùng Windows"
-    
-    menu = pystray.Menu(
-        pystray.MenuItem("Mở ứng dụng", lambda: open_browser()),
-        pystray.MenuItem(startup_text, toggle_startup),
-        pystray.MenuItem("Thoát", exit_app)
-    )
-    icon = pystray.Icon("license_plate", image, "Nhận dạng biển số xe", menu)
-    return icon
+    try:
+        image = create_image()
+        logger.info("Đã tạo icon thành công")
+        
+        # Hàm xử lý khi người dùng chọn bật/tắt khởi động cùng Windows
+        def toggle_startup(icon, item):
+            if is_startup_enabled():
+                remove_from_startup()
+                show_message("Nhận dạng biển số xe", "Đã tắt chế độ khởi động cùng Windows", 0)
+            else:
+                add_to_startup()
+                show_message("Nhận dạng biển số xe", "Đã bật chế độ khởi động cùng Windows", 0)
+        
+        startup_text = "Tắt khởi động cùng Windows" if is_startup_enabled() else "Bật khởi động cùng Windows"
+        
+        menu = pystray.Menu(
+            pystray.MenuItem("Mở ứng dụng", open_browser),
+            pystray.MenuItem(startup_text, toggle_startup),
+            pystray.MenuItem("Thoát", exit_app)
+        )
+        
+        icon = pystray.Icon("license_plate", image, "Nhận dạng biển số xe", menu)
+        logger.info("Đã tạo system tray icon thành công")
+        return icon
+        
+    except Exception as e:
+        logger.error(f"Lỗi khi tạo system tray: {str(e)}")
+        return None
 
 # Khởi tạo các mô hình OCR
 try:
