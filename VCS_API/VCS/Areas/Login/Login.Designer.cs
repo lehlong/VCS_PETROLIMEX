@@ -195,6 +195,7 @@
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";
+            FormClosed += Login_FormClosed;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

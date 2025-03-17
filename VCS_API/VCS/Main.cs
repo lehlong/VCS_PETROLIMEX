@@ -1,4 +1,5 @@
 ﻿using DMS.CORE;
+using Python.Runtime;
 using System.Diagnostics;
 using VCS.APP.Areas.ConfigApp;
 using VCS.APP.Areas.History;
@@ -87,6 +88,7 @@ namespace VCS
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            PythonEngine.Shutdown();
             Application.Exit();
         }
 

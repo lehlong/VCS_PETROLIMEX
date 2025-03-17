@@ -4,6 +4,7 @@ using IWshRuntimeLibrary;
 using LibVLCSharp.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML.OnnxRuntime;
+using Python.Runtime;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
 
@@ -94,8 +95,9 @@ namespace VCS.Areas.Login
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
+            PythonEngine.Shutdown();
             Application.Exit();
         }
     }
