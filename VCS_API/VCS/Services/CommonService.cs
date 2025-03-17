@@ -223,28 +223,6 @@ namespace VCS.APP.Services
 
         #region Nhận diện và xử lý file ảnh
 
-        public static string ProcessImage(string imagePath)
-        {
-            try
-            {
-                using (Py.GIL())
-                {
-                    // Đọc ảnh bằng OpenCV
-                    dynamic img = Global.cv2.imread(imagePath);
-
-                    // Gọi hàm run_ocr
-                    var result = Global.ocr_module.run_ocr(img);
-
-                    // Kết quả trả về là tuple (text, boxes)
-                    string licensePlateText = result[0].As<string>();
-                    return licensePlateText;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
         public static byte[] CaptureFrameFromRTSP(string rtspUrl)
         {
             using (VideoCapture capture = new VideoCapture(rtspUrl))
@@ -315,39 +293,10 @@ namespace VCS.APP.Services
         #endregion
 
         #region Xử lý nhận diện biển số và cắt
-        static void InitializePython()
-        {
-            try
-            {
-                // Đường dẫn đến Python environment của bạn
-                string pythonPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\venv";
-                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL",
-                    Path.Combine(pythonPath, "python312.dll"));
-
-                PythonEngine.Initialize();
-                using (Py.GIL())
-                {
-                    // Import các thư viện cần thiết
-                    Global.np = Py.Import("numpy");
-                    Global.cv2 = Py.Import("cv2");
-
-                    // Import module chứa hàm OCR
-                    string scriptPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\app.py";
-                    dynamic sys = Py.Import("sys");
-                    sys.path.append(Path.GetDirectoryName(scriptPath));
-                    Global.ocr_module = Py.Import("app");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi khởi tạo Python: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
         public static ResultDectect DetectLicensePlate(string imagePath, string croppedPath)
         {
             try
             {
-                InitializePython();
                 using (Bitmap bitmap = new Bitmap(imagePath))
                 {
                     int originalWidth = bitmap.Width;
@@ -362,7 +311,6 @@ namespace VCS.APP.Services
 
                         if (bestPlateRect == Rectangle.Empty)
                         {
-                            PythonEngine.Shutdown();
                             return new ResultDectect();
                         }
 
@@ -370,7 +318,6 @@ namespace VCS.APP.Services
                         {
                             licensePlate.Save(croppedPath, ImageFormat.Jpeg);
                             var txt = ProcessImage(croppedPath);
-                            PythonEngine.Initialize();
                             return new ResultDectect
                             {
                                 ImageCrop = new Bitmap(licensePlate),
@@ -380,15 +327,41 @@ namespace VCS.APP.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // Log lỗi để dễ debug
+                Console.WriteLine($"Error in DetectLicensePlate: {ex.Message}");
                 return new ResultDectect();
+            }
+        }
+
+        public static string ProcessImage(string imagePath)
+        {
+            try
+            {
+                using (Py.GIL())
+                {
+                    // Đọc ảnh bằng OpenCV
+                    dynamic img = Global.cv2.imread(imagePath);
+
+                    // Gọi hàm run_ocr
+                    var result = Global.ocr_module.run_ocr(img);
+
+                    // Kết quả trả về là tuple (text, boxes)
+                    string licensePlateText = result[0].As<string>();
+                    return licensePlateText;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi chi tiết
+                Console.WriteLine($"Error in ProcessImage: {ex.Message}");
+                return null;
             }
         }
 
         private static Rectangle ProcessOutput(Tensor<float> output, int originalWidth, int originalHeight, float confThreshold = 0.5f, float iouThreshold = 0.45f)
         {
-            // Chuyển đổi output tensor thành mảng 2D (giống np.transpose trong Python)
             var outputArray = new List<float[]>();
             int rowLength = output.Dimensions[1]; // Số features cho mỗi detection
             int numDetections = output.Dimensions[2];
@@ -403,14 +376,12 @@ namespace VCS.APP.Services
                 outputArray.Add(row);
             }
 
-            // Tính toán các hệ số scale
             float xFactor = (float)originalWidth / 640;
             float yFactor = (float)originalHeight / 640;
 
             var boxes = new List<Rectangle>();
             var scores = new List<float>();
 
-            // Xử lý từng detection
             foreach (var row in outputArray)
             {
                 float score = row[4] * 10;
@@ -426,7 +397,6 @@ namespace VCS.APP.Services
                     int width = (int)(w * xFactor);
                     int height = (int)(h * yFactor);
 
-
                     left = Math.Max(0, left);
                     top = Math.Max(0, top);
                     width = Math.Min(width, originalWidth - left);
@@ -436,33 +406,28 @@ namespace VCS.APP.Services
                     scores.Add(score);
                 }
             }
-            var indices = NonMaxSuppression(boxes, scores, iouThreshold);
-            if (indices.Count > 0)
-            {
-                int bestIdx = indices[0];
-                return boxes[bestIdx];
-            }
 
-            return Rectangle.Empty;
+            var indices = NonMaxSuppression(boxes, scores, iouThreshold);
+            return indices.Count > 0 ? boxes[indices[0]] : Rectangle.Empty;
         }
 
         private static List<int> NonMaxSuppression(List<Rectangle> boxes, List<float> scores, float iouThreshold)
         {
             var indices = new List<int>();
-            var sortedIndices = Enumerable.Range(0, scores.Count)
-                                         .OrderByDescending(i => scores[i])
-                                         .ToList();
+            var sortedIndices = scores
+                .Select((score, idx) => new { Score = score, Index = idx })
+                .OrderByDescending(x => x.Score)
+                .Select(x => x.Index)
+                .ToList();
 
-            while (sortedIndices.Count > 0)
+            while (sortedIndices.Any())
             {
-                int currentIdx = sortedIndices[0];
+                int currentIdx = sortedIndices.First();
                 indices.Add(currentIdx);
-                sortedIndices.RemoveAt(0);
-                sortedIndices.RemoveAll(idx =>
-                {
-                    float iou = CalculateIoU(boxes[currentIdx], boxes[idx]);
-                    return iou > iouThreshold;
-                });
+
+                sortedIndices = sortedIndices.Skip(1)
+                    .Where(idx => CalculateIoU(boxes[currentIdx], boxes[idx]) <= iouThreshold)
+                    .ToList();
             }
             return indices;
         }
@@ -478,7 +443,7 @@ namespace VCS.APP.Services
                 return 0;
 
             float intersectionArea = (intersectionRight - intersectionLeft) *
-                                   (intersectionBottom - intersectionTop);
+                                     (intersectionBottom - intersectionTop);
             float box1Area = box1.Width * box1.Height;
             float box2Area = box2.Width * box2.Height;
             float unionArea = box1Area + box2Area - intersectionArea;
@@ -492,18 +457,29 @@ namespace VCS.APP.Services
             Bitmap resized = new Bitmap(bitmap, new Size(targetSize, targetSize));
             var input = new DenseTensor<float>(new[] { 1, 3, targetSize, targetSize });
 
-            for (int y = 0; y < targetSize; y++)
+            BitmapData bitmapData = resized.LockBits(
+                new Rectangle(0, 0, resized.Width, resized.Height),
+                ImageLockMode.ReadOnly,
+                PixelFormat.Format24bppRgb);
+
+            unsafe
             {
-                for (int x = 0; x < targetSize; x++)
+                byte* ptr = (byte*)bitmapData.Scan0;
+                for (int y = 0; y < targetSize; y++)
                 {
-                    Color pixel = resized.GetPixel(x, y);
-                    input[0, 0, y, x] = pixel.R / 255.0f;
-                    input[0, 1, y, x] = pixel.G / 255.0f;
-                    input[0, 2, y, x] = pixel.B / 255.0f;
+                    for (int x = 0; x < targetSize; x++)
+                    {
+                        int index = (y * bitmapData.Stride) + (x * 3);
+                        input[0, 0, y, x] = ptr[index + 2] / 255.0f; // R
+                        input[0, 1, y, x] = ptr[index + 1] / 255.0f; // G
+                        input[0, 2, y, x] = ptr[index] / 255.0f;     // B
+                    }
                 }
             }
+            resized.UnlockBits(bitmapData);
             return input;
         }
+
         #endregion
 
         #region GetText Mapping

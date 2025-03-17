@@ -34,6 +34,7 @@ namespace VCS
             Application.SetCompatibleTextRenderingDefault(false);
             InitializeLibVLC();
             LoadOnnxModel();
+            InitializePython();
             LoadDbContext();
         }
         static void LoadDbContext()
@@ -88,6 +89,60 @@ namespace VCS
             string appName = System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath);
             Process[] processes = Process.GetProcessesByName(appName);
             return processes.Length > 1;
+        }
+        static void InitializePython()
+        {
+            try
+            {
+                // Lấy đường dẫn Python từ biến môi trường, hoặc sử dụng đường dẫn mặc định
+                string pythonPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\venv";
+                string pythonDll = Path.Combine(pythonPath, "python312.dll");
+
+                if (!File.Exists(pythonDll))
+                {
+                    throw new FileNotFoundException($"Không tìm thấy thư viện Python: {pythonDll}");
+                }
+
+                // Cài đặt biến môi trường
+                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
+
+                if (!PythonEngine.IsInitialized)
+                {
+                    PythonEngine.Initialize();
+                }
+
+                using (Py.GIL())
+                {
+                    // Import các thư viện cần thiết
+                    Global.np = Py.Import("numpy");
+                    Global.cv2 = Py.Import("cv2");
+
+                    // Import module chứa hàm OCR
+                    string scriptPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\app.py";
+                    string scriptDir = Path.GetDirectoryName(scriptPath);
+
+                    if (!File.Exists(scriptPath))
+                    {
+                        throw new FileNotFoundException($"Không tìm thấy tệp Python OCR script: {scriptPath}");
+                    }
+
+                    dynamic sys = Py.Import("sys");
+                    sys.path.append(scriptDir);
+                    Global.ocr_module = Py.Import("app");
+                }
+            }
+            catch (FileNotFoundException fileEx)
+            {
+                Console.WriteLine($"Lỗi tệp: {fileEx.Message}");
+            }
+            catch (PythonException pyEx)
+            {
+                Console.WriteLine($"Lỗi từ Python: {pyEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi không xác định: {ex.Message}");
+            }
         }
 
         static IHostBuilder CreateHostBuilder() =>
