@@ -65,7 +65,6 @@ validateForm: FormGroup = this.fb.group({
     this.isSubmit = false
     this._service.searchHeader(this.filter).subscribe({
       next: (data) => {
-        console.log(data)
         this.paginationResult = data
       },
       error: (response) => {

@@ -56,7 +56,7 @@ export class OrderService {
   UpdateOrderCome(params: any): Observable<any> {
     return this.commonService.put('Order/UpdateOrderCome', params);
   }
-
+  // Ticket
   CheckTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/CheckTicket?headerId=${headerId}`);
   }

@@ -67,13 +67,13 @@
                             <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
                         <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button (click)="updateOrder(i)"
-                            nz-popover *ngIf=" i.statusProcess == '01' &&i.statusProcess != '03'" nzPopoverTitle="Kiểm tra ticket và Xếp xe"
+                            nz-popover *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '03'" nzPopoverTitle="Kiểm tra ticket và Xếp xe"
                             [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
 
 
                         <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button nz-popover
-                            *ngIf=" i.statusProcess == '01' && i.statusProcess != '05'" (click)="printTicket(i.id)" nzPopoverTitle="In ticket"
+                            *ngIf=" i.statusProcess == '03' && i.statusProcess != '05'" (click)="printTicket(i.id)" nzPopoverTitle="In ticket"
                             [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
                             <span nz-icon nzType="printer" nzTheme="outline">
                             </span></button>
@@ -87,7 +87,7 @@
 
 
                         <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nz-button (click)="updateStatus(i,'05')"
-                            *ngIf=" i.statusProcess == '01' && i.statusProcess != '04' && i.statusProcess != '05'" nz-popover
+                            *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '04' && i.statusProcess != '05'" nz-popover
                             nzPopoverTitle="Không xử lý" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top"><span nz-icon nzType="close" nzTheme="outline"></span></button>
                     </td>
