@@ -315,10 +315,39 @@ namespace VCS.APP.Services
         #endregion
 
         #region Xử lý nhận diện biển số và cắt
+        static void InitializePython()
+        {
+            try
+            {
+                // Đường dẫn đến Python environment của bạn
+                string pythonPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\venv";
+                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL",
+                    Path.Combine(pythonPath, "python312.dll"));
+
+                PythonEngine.Initialize();
+                using (Py.GIL())
+                {
+                    // Import các thư viện cần thiết
+                    Global.np = Py.Import("numpy");
+                    Global.cv2 = Py.Import("cv2");
+
+                    // Import module chứa hàm OCR
+                    string scriptPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\app.py";
+                    dynamic sys = Py.Import("sys");
+                    sys.path.append(Path.GetDirectoryName(scriptPath));
+                    Global.ocr_module = Py.Import("app");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi khởi tạo Python: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         public static ResultDectect DetectLicensePlate(string imagePath, string croppedPath)
         {
             try
             {
+                InitializePython();
                 using (Bitmap bitmap = new Bitmap(imagePath))
                 {
                     int originalWidth = bitmap.Width;
@@ -333,6 +362,7 @@ namespace VCS.APP.Services
 
                         if (bestPlateRect == Rectangle.Empty)
                         {
+                            PythonEngine.Shutdown();
                             return new ResultDectect();
                         }
 
@@ -340,6 +370,7 @@ namespace VCS.APP.Services
                         {
                             licensePlate.Save(croppedPath, ImageFormat.Jpeg);
                             var txt = ProcessImage(croppedPath);
+                            PythonEngine.Initialize();
                             return new ResultDectect
                             {
                                 ImageCrop = new Bitmap(licensePlate),
