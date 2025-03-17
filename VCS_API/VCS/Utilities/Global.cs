@@ -24,5 +24,9 @@ namespace VCS.APP.Utilities
         public static List<TblMdCamera> lstCamera { get; set; } = new List<TblMdCamera>();
         public static LibVLC _libVLC { get; set; }
         public static InferenceSession _session;
+
+        public static dynamic np { get; set; }
+        public static dynamic cv2 { get; set; }
+        public static dynamic ocr_module { get; set; }
     }
 }

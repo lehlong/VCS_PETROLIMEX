@@ -11,6 +11,7 @@ using System.Diagnostics;
 using LibVLCSharp.Shared;
 using VCS.APP.Utilities;
 using Microsoft.ML.OnnxRuntime;
+using Python.Runtime;
 
 namespace VCS
 {
@@ -33,6 +34,7 @@ namespace VCS
             Application.SetCompatibleTextRenderingDefault(false);
             InitializeLibVLC();
             LoadOnnxModel();
+            InitializePython();
             LoadDbContext();
         }
         static void LoadDbContext()
@@ -58,11 +60,6 @@ namespace VCS
             {
                 Core.Initialize();
                 Global._libVLC = new LibVLC(
-                    "--no-sub-autodetect-file",
-                    "--no-snapshot-preview", 
-                    "--no-spu",
-                    "--no-video-title-show",
-                    "--no-osd",
                     "--network-caching=30", 
                     "--live-caching=30", 
                     "--file-caching=30",
@@ -92,6 +89,34 @@ namespace VCS
             string appName = System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath);
             Process[] processes = Process.GetProcessesByName(appName);
             return processes.Length > 1;
+        }
+        static void InitializePython()
+        {
+            try
+            {
+                // Đường dẫn đến Python environment của bạn
+                string pythonPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\venv";
+                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL",
+                    Path.Combine(pythonPath, "python312.dll"));
+
+                PythonEngine.Initialize();
+                using (Py.GIL())
+                {
+                    // Import các thư viện cần thiết
+                    Global.np = Py.Import("numpy");
+                    Global.cv2 = Py.Import("cv2");
+
+                    // Import module chứa hàm OCR
+                    string scriptPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\app.py";
+                    dynamic sys = Py.Import("sys");
+                    sys.path.append(Path.GetDirectoryName(scriptPath));
+                    Global.ocr_module = Py.Import("app");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi khởi tạo Python: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
         }
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()

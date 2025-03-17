@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System.Text;
+using Python.Runtime;
 
 namespace VCS.APP.Services
 {
@@ -221,6 +222,29 @@ namespace VCS.APP.Services
         #endregion
 
         #region Nhận diện và xử lý file ảnh
+
+        public static string ProcessImage(string imagePath)
+        {
+            try
+            {
+                using (Py.GIL())
+                {
+                    // Đọc ảnh bằng OpenCV
+                    dynamic img = Global.cv2.imread(imagePath);
+
+                    // Gọi hàm run_ocr
+                    var result = Global.ocr_module.run_ocr(img);
+
+                    // Kết quả trả về là tuple (text, boxes)
+                    string licensePlateText = result[0].As<string>();
+                    return licensePlateText;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public static byte[] CaptureFrameFromRTSP(string rtspUrl)
         {
             using (VideoCapture capture = new VideoCapture(rtspUrl))
@@ -291,41 +315,43 @@ namespace VCS.APP.Services
         #endregion
 
         #region Xử lý nhận diện biển số và cắt
-        public static Bitmap DetectLicensePlate(string imagePath)
+        public static ResultDectect DetectLicensePlate(string imagePath, string croppedPath)
         {
             try
             {
-                Bitmap bitmap = new Bitmap(imagePath);
-                int originalWidth = bitmap.Width;
-                int originalHeight = bitmap.Height;
-                var inputTensor = PreprocessImage(bitmap);
-
-                var inputs = new List<NamedOnnxValue> { NamedOnnxValue.CreateFromTensor("images", inputTensor) };
-                using (var results = Global._session.Run(inputs))
+                using (Bitmap bitmap = new Bitmap(imagePath))
                 {
-                    var output = results.First().AsTensor<float>();
-                    var bestPlateRect = ProcessOutput(output, originalWidth, originalHeight, 0.5f, 0.45f);
+                    int originalWidth = bitmap.Width;
+                    int originalHeight = bitmap.Height;
+                    var inputTensor = PreprocessImage(bitmap);
 
-                    if (bestPlateRect != Rectangle.Empty)
+                    var inputs = new List<NamedOnnxValue> { NamedOnnxValue.CreateFromTensor("images", inputTensor) };
+                    using (var results = Global._session.Run(inputs))
                     {
-                        using (Bitmap licensePlate = new Bitmap(bestPlateRect.Width, bestPlateRect.Height))
+                        var output = results.First().AsTensor<float>();
+                        var bestPlateRect = ProcessOutput(output, originalWidth, originalHeight, 0.5f, 0.45f);
+
+                        if (bestPlateRect == Rectangle.Empty)
                         {
-                            using (Graphics g = Graphics.FromImage(licensePlate))
+                            return new ResultDectect();
+                        }
+
+                        using (Bitmap licensePlate = bitmap.Clone(bestPlateRect, bitmap.PixelFormat))
+                        {
+                            licensePlate.Save(croppedPath, ImageFormat.Jpeg);
+                            var txt = ProcessImage(croppedPath);
+                            return new ResultDectect
                             {
-                                g.DrawImage(bitmap,
-                                          new Rectangle(0, 0, bestPlateRect.Width, bestPlateRect.Height),
-                                          bestPlateRect,
-                                          GraphicsUnit.Pixel);
-                            }
-                            return new Bitmap(licensePlate);
+                                ImageCrop = new Bitmap(licensePlate),
+                                LicensePlateNumber = txt
+                            };
                         }
                     }
-                    return null;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return null;
+                return new ResultDectect();
             }
         }
 
@@ -495,5 +521,11 @@ namespace VCS.APP.Services
             
         }
         #endregion
+    }
+
+    public class ResultDectect
+    {
+        public Bitmap? ImageCrop { get; set; }
+        public string? LicensePlateNumber { get; set; }
     }
 }
