@@ -23,9 +23,11 @@ namespace VCS.Areas.CheckOut
         private bool IsCancel { get; set; } = false;
         private TblMdCamera CameraDetect { get; set; } = new TblMdCamera();
         private bool isHasInvoice { get; set; } = true;
-        public CheckOut(AppDbContextForm dbContext)
+        private bool isTriggerDetect { get; set; } = false;
+        public CheckOut(AppDbContextForm dbContext, bool isTriggerDetect)
         {
             _dbContext = dbContext;
+            this.isTriggerDetect = isTriggerDetect;
             InitializeComponent();
         }
 
@@ -37,7 +39,7 @@ namespace VCS.Areas.CheckOut
 
         #region Khởi tạo và stream camera
 
-        private void StreamCamera()
+        private async void StreamCamera()
         {
             try
             {
@@ -50,6 +52,19 @@ namespace VCS.Areas.CheckOut
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
                     mediaPlayer.Play();
+
+                    if (isTriggerDetect)
+                    {
+                        for (var i = 0; i < 20; i++)
+                        {
+                            await Task.Delay(500);
+                            if (viewStream.MediaPlayer.IsPlaying)
+                            {
+                                btnDetect.PerformClick();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)

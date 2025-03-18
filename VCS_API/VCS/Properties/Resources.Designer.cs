@@ -463,6 +463,16 @@ namespace VCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_wall_mount_camera_30 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-wall-mount-camera-30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_d2s {
             get {
                 object obj = ResourceManager.GetObject("logo-d2s", resourceCulture);

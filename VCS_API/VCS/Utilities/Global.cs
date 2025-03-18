@@ -25,6 +25,9 @@ namespace VCS.APP.Utilities
         public static LibVLC _libVLC { get; set; }
         public static InferenceSession _session;
 
+        public static Button OpenCheckIn = new Button();
+        public static Button OpenCheckOut = new Button();
+
         public static dynamic np { get; set; }
         public static dynamic cv2 { get; set; }
         public static dynamic ocr_module { get; set; }

@@ -147,5 +147,15 @@ namespace VCS.Areas.Home
             var v = new ViewCamera(CameraDetectOut);
             v.ShowDialog();
         }
+
+        private void btnDetectIn_Click(object sender, EventArgs e)
+        {
+            Global.OpenCheckIn.PerformClick();
+        }
+
+        private void btnDetectOut_Click(object sender, EventArgs e)
+        {
+            Global.OpenCheckOut.PerformClick();
+        }
     }
 }

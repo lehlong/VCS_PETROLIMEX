@@ -29,6 +29,8 @@ namespace VCS
         private async void Main_Load(object sender, EventArgs e)
         {
             txtUsername.Text = ProfileUtilities.User.FullName;
+            Global.OpenCheckIn.Click += OpenCheckInTrigger;
+            Global.OpenCheckOut.Click += OpenCheckOutTrigger;
             txtWarehouse.Text = await Task.Run(() => _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name);
             notifyIcon.Visible = false;
             OpenChildForm(new Home(_dbContext), 0, "Trang chủ");
@@ -69,10 +71,11 @@ namespace VCS
             else
                 MessageBox.Show("Tài khoản không có quyền truy cập vào chức năng này");
         }
-
+        private void OpenCheckInTrigger(object sender, EventArgs e) => OpenSection(new CheckIn(_dbContext, true), 1, "R410", "Quản lý cổng vào");
+        private void OpenCheckOutTrigger(object sender, EventArgs e) => OpenSection(new CheckOut(_dbContext, true), 2, "R411", "Quản lý cổng ra");
         private void OpenHome(object sender, EventArgs e) => OpenChildForm(new Home(_dbContext), 0, "Trang chủ");
-        private void OpenCheckIn(object sender, EventArgs e) => OpenSection(new CheckIn(_dbContext), 1, "R410", "Quản lý cổng vào");
-        private void OpenCheckOut(object sender, EventArgs e) => OpenSection(new CheckOut(_dbContext), 2, "R411", "Quản lý cổng ra");
+        private void OpenCheckIn(object sender, EventArgs e) => OpenSection(new CheckIn(_dbContext, false), 1, "R410", "Quản lý cổng vào");
+        private void OpenCheckOut(object sender, EventArgs e) => OpenSection(new CheckOut(_dbContext, false), 2, "R411", "Quản lý cổng ra");
         private void OpenHistory(object sender, EventArgs e) => OpenSection(new History(_dbContext), 3, "R412", "Lịch sử vào ra");
         private void OpenSetting(object sender, EventArgs e) => OpenSection(new ConfigApp(_dbContext), 4, "R413", "Cấu hình chung");
         private void OpenStatus(object sender, EventArgs e) => OpenSection(new StatusSystem(_dbContext), 5, "R414", "Trạng thái kết nối");

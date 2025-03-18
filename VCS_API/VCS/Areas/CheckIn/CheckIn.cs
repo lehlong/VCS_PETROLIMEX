@@ -25,12 +25,14 @@ namespace VCS.Areas.CheckIn
         private string PLATEPATH;
         private TblMdCamera CameraDetect { get; set; }
         private System.Windows.Forms.Timer resetTimer;
-        public CheckIn(AppDbContextForm dbContext)
+        private bool isTriggerDetect { get; set; } = false;
+        public CheckIn(AppDbContextForm dbContext, bool isTriggerDetect)
         {
             _dbContext = dbContext;
             _lstDOSAP = new List<DOSAPDataDto>();
             lstCheckDo = new List<string>();
             lstPathImageCapture = new List<string>();
+            this.isTriggerDetect = isTriggerDetect;
 
             InitializeComponent();
             resetTimer = new System.Windows.Forms.Timer();
@@ -46,7 +48,7 @@ namespace VCS.Areas.CheckIn
         }
 
         #region Khởi tạo và stream camera
-        private void StreamCamera()
+        private async void StreamCamera()
         {
             try
             {
@@ -59,7 +61,18 @@ namespace VCS.Areas.CheckIn
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
                     mediaPlayer.Play();
-
+                    if (isTriggerDetect)
+                    {
+                        for (var i = 0; i < 20; i++)
+                        {
+                            await Task.Delay(500);
+                            if (viewStream.MediaPlayer.IsPlaying)
+                            {
+                                btnDetect.PerformClick();
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)

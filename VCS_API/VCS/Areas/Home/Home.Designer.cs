@@ -29,81 +29,106 @@
         private void InitializeComponent()
         {
             panel2 = new Panel();
+            viewStreamOut = new LibVLCSharp.WinForms.VideoView();
+            viewStreamIn = new LibVLCSharp.WinForms.VideoView();
+            pictureBox2 = new PictureBox();
+            pictureBox1 = new PictureBox();
             label2 = new Label();
             label1 = new Label();
-            panel1 = new Panel();
-            viewStreamOut = new LibVLCSharp.WinForms.VideoView();
             vCFullscreenOut = new Button();
-            panel4 = new Panel();
-            viewStreamIn = new LibVLCSharp.WinForms.VideoView();
             btnViewAllOut = new Button();
             vCFullscreenIn = new Button();
-            button3 = new Button();
+            btnDetectOut = new Button();
             btnViewAllIn = new Button();
-            btnDetect = new Button();
+            btnDetectIn = new Button();
             panel2.SuspendLayout();
-            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStreamOut).BeginInit();
-            panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)viewStreamIn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
+            panel2.Controls.Add(viewStreamOut);
+            panel2.Controls.Add(viewStreamIn);
+            panel2.Controls.Add(pictureBox2);
+            panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
-            panel2.Controls.Add(panel1);
             panel2.Controls.Add(vCFullscreenOut);
-            panel2.Controls.Add(panel4);
             panel2.Controls.Add(btnViewAllOut);
             panel2.Controls.Add(vCFullscreenIn);
-            panel2.Controls.Add(button3);
+            panel2.Controls.Add(btnDetectOut);
             panel2.Controls.Add(btnViewAllIn);
-            panel2.Controls.Add(btnDetect);
+            panel2.Controls.Add(btnDetectIn);
             panel2.Location = new Point(6, 6);
             panel2.Margin = new Padding(6);
             panel2.Name = "panel2";
             panel2.Size = new Size(1332, 770);
             panel2.TabIndex = 3;
             // 
+            // viewStreamOut
+            // 
+            viewStreamOut.BackColor = Color.Black;
+            viewStreamOut.Location = new Point(670, 66);
+            viewStreamOut.MediaPlayer = null;
+            viewStreamOut.Name = "viewStreamOut";
+            viewStreamOut.Size = new Size(644, 378);
+            viewStreamOut.TabIndex = 0;
+            viewStreamOut.Text = "videoView1";
+            // 
+            // viewStreamIn
+            // 
+            viewStreamIn.BackColor = Color.Black;
+            viewStreamIn.Location = new Point(17, 66);
+            viewStreamIn.MediaPlayer = null;
+            viewStreamIn.Name = "viewStreamIn";
+            viewStreamIn.Size = new Size(644, 378);
+            viewStreamIn.TabIndex = 0;
+            viewStreamIn.Text = "videoView1";
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources.icons8_wall_mount_camera_30;
+            pictureBox2.Location = new Point(670, 27);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(30, 30);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 36;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.icons8_wall_mount_camera_30;
+            pictureBox1.Location = new Point(18, 29);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 30);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 35;
+            pictureBox1.TabStop = false;
+            // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(964, 22);
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label2.Location = new Point(706, 32);
             label2.Name = "label2";
-            label2.Size = new Size(110, 15);
+            label2.Size = new Size(151, 21);
             label2.TabIndex = 34;
             label2.Text = "CAMERA CỔNG RA";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(276, 22);
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.Location = new Point(54, 34);
             label1.Name = "label1";
-            label1.Size = new Size(118, 15);
+            label1.Size = new Size(163, 21);
             label1.TabIndex = 33;
             label1.Text = "CAMERA CỔNG VÀO";
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(viewStreamOut);
-            panel1.Location = new Point(702, 55);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(581, 369);
-            panel1.TabIndex = 32;
-            // 
-            // viewStreamOut
-            // 
-            viewStreamOut.BackColor = Color.Black;
-            viewStreamOut.Location = new Point(5, 4);
-            viewStreamOut.MediaPlayer = null;
-            viewStreamOut.Name = "viewStreamOut";
-            viewStreamOut.Size = new Size(572, 360);
-            viewStreamOut.TabIndex = 0;
-            viewStreamOut.Text = "videoView1";
             // 
             // vCFullscreenOut
             // 
@@ -114,7 +139,7 @@
             vCFullscreenOut.ForeColor = Color.White;
             vCFullscreenOut.Image = Properties.Resources.icons8_fullscreen_18;
             vCFullscreenOut.ImageAlign = ContentAlignment.MiddleLeft;
-            vCFullscreenOut.Location = new Point(1241, 440);
+            vCFullscreenOut.Location = new Point(1272, 453);
             vCFullscreenOut.Name = "vCFullscreenOut";
             vCFullscreenOut.Padding = new Padding(6, 0, 0, 0);
             vCFullscreenOut.Size = new Size(42, 40);
@@ -123,25 +148,6 @@
             vCFullscreenOut.TextImageRelation = TextImageRelation.ImageBeforeText;
             vCFullscreenOut.UseVisualStyleBackColor = false;
             vCFullscreenOut.Click += vCFullscreenOut_Click;
-            // 
-            // panel4
-            // 
-            panel4.BackColor = Color.White;
-            panel4.Controls.Add(viewStreamIn);
-            panel4.Location = new Point(54, 55);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(581, 369);
-            panel4.TabIndex = 28;
-            // 
-            // viewStreamIn
-            // 
-            viewStreamIn.BackColor = Color.Black;
-            viewStreamIn.Location = new Point(5, 4);
-            viewStreamIn.MediaPlayer = null;
-            viewStreamIn.Name = "viewStreamIn";
-            viewStreamIn.Size = new Size(572, 360);
-            viewStreamIn.TabIndex = 0;
-            viewStreamIn.Text = "videoView1";
             // 
             // btnViewAllOut
             // 
@@ -152,7 +158,7 @@
             btnViewAllOut.ForeColor = Color.White;
             btnViewAllOut.Image = Properties.Resources.icons8_application_18;
             btnViewAllOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAllOut.Location = new Point(1193, 440);
+            btnViewAllOut.Location = new Point(1224, 453);
             btnViewAllOut.Name = "btnViewAllOut";
             btnViewAllOut.Padding = new Padding(6, 0, 0, 0);
             btnViewAllOut.Size = new Size(42, 40);
@@ -171,7 +177,7 @@
             vCFullscreenIn.ForeColor = Color.White;
             vCFullscreenIn.Image = Properties.Resources.icons8_fullscreen_18;
             vCFullscreenIn.ImageAlign = ContentAlignment.MiddleLeft;
-            vCFullscreenIn.Location = new Point(595, 440);
+            vCFullscreenIn.Location = new Point(620, 453);
             vCFullscreenIn.Name = "vCFullscreenIn";
             vCFullscreenIn.Padding = new Padding(6, 0, 0, 0);
             vCFullscreenIn.Size = new Size(42, 40);
@@ -181,24 +187,25 @@
             vCFullscreenIn.UseVisualStyleBackColor = false;
             vCFullscreenIn.Click += vCFullscreenIn_Click;
             // 
-            // button3
+            // btnDetectOut
             // 
-            button3.BackColor = Color.FromArgb(13, 92, 171);
-            button3.Cursor = Cursors.Hand;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Image = Properties.Resources.icons8_camera_18__1_;
-            button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(1051, 440);
-            button3.Name = "button3";
-            button3.Padding = new Padding(6, 0, 0, 0);
-            button3.Size = new Size(136, 40);
-            button3.TabIndex = 29;
-            button3.Text = "Nhận diện xe";
-            button3.TextAlign = ContentAlignment.MiddleLeft;
-            button3.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button3.UseVisualStyleBackColor = false;
+            btnDetectOut.BackColor = Color.FromArgb(13, 92, 171);
+            btnDetectOut.Cursor = Cursors.Hand;
+            btnDetectOut.FlatStyle = FlatStyle.Flat;
+            btnDetectOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDetectOut.ForeColor = Color.White;
+            btnDetectOut.Image = Properties.Resources.icons8_camera_18__1_;
+            btnDetectOut.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDetectOut.Location = new Point(1081, 453);
+            btnDetectOut.Name = "btnDetectOut";
+            btnDetectOut.Padding = new Padding(6, 0, 0, 0);
+            btnDetectOut.Size = new Size(137, 40);
+            btnDetectOut.TabIndex = 29;
+            btnDetectOut.Text = "Nhận diện xe";
+            btnDetectOut.TextAlign = ContentAlignment.MiddleLeft;
+            btnDetectOut.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDetectOut.UseVisualStyleBackColor = false;
+            btnDetectOut.Click += btnDetectOut_Click;
             // 
             // btnViewAllIn
             // 
@@ -209,7 +216,7 @@
             btnViewAllIn.ForeColor = Color.White;
             btnViewAllIn.Image = Properties.Resources.icons8_application_18;
             btnViewAllIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAllIn.Location = new Point(547, 440);
+            btnViewAllIn.Location = new Point(572, 453);
             btnViewAllIn.Name = "btnViewAllIn";
             btnViewAllIn.Padding = new Padding(6, 0, 0, 0);
             btnViewAllIn.Size = new Size(42, 40);
@@ -219,24 +226,25 @@
             btnViewAllIn.UseVisualStyleBackColor = false;
             btnViewAllIn.Click += btnViewAllIn_Click;
             // 
-            // btnDetect
+            // btnDetectIn
             // 
-            btnDetect.BackColor = Color.FromArgb(13, 92, 171);
-            btnDetect.Cursor = Cursors.Hand;
-            btnDetect.FlatStyle = FlatStyle.Flat;
-            btnDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDetect.ForeColor = Color.White;
-            btnDetect.Image = Properties.Resources.icons8_camera_18__1_;
-            btnDetect.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetect.Location = new Point(405, 440);
-            btnDetect.Name = "btnDetect";
-            btnDetect.Padding = new Padding(6, 0, 0, 0);
-            btnDetect.Size = new Size(136, 40);
-            btnDetect.TabIndex = 22;
-            btnDetect.Text = "Nhận diện xe";
-            btnDetect.TextAlign = ContentAlignment.MiddleLeft;
-            btnDetect.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnDetect.UseVisualStyleBackColor = false;
+            btnDetectIn.BackColor = Color.FromArgb(13, 92, 171);
+            btnDetectIn.Cursor = Cursors.Hand;
+            btnDetectIn.FlatStyle = FlatStyle.Flat;
+            btnDetectIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDetectIn.ForeColor = Color.White;
+            btnDetectIn.Image = Properties.Resources.icons8_camera_18__1_;
+            btnDetectIn.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDetectIn.Location = new Point(430, 453);
+            btnDetectIn.Name = "btnDetectIn";
+            btnDetectIn.Padding = new Padding(6, 0, 0, 0);
+            btnDetectIn.Size = new Size(136, 40);
+            btnDetectIn.TabIndex = 22;
+            btnDetectIn.Text = "Nhận diện xe";
+            btnDetectIn.TextAlign = ContentAlignment.MiddleLeft;
+            btnDetectIn.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnDetectIn.UseVisualStyleBackColor = false;
+            btnDetectIn.Click += btnDetectIn_Click;
             // 
             // Home
             // 
@@ -250,10 +258,10 @@
             Load += Home_Load;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)viewStreamOut).EndInit();
-            panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)viewStreamIn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -261,15 +269,15 @@
         private Panel panel2;
         private Button vCFullscreenIn;
         private Button btnViewAllIn;
-        private Button btnDetect;
-        private Panel panel1;
+        private Button btnDetectIn;
         private LibVLCSharp.WinForms.VideoView viewStreamOut;
         private Button vCFullscreenOut;
-        private Panel panel4;
         private LibVLCSharp.WinForms.VideoView viewStreamIn;
         private Button btnViewAllOut;
-        private Button button3;
+        private Button btnDetectOut;
         private Label label2;
         private Label label1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
     }
 }
