@@ -12,7 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Utilities;
+using VCS.Areas.ViewAllCamera;
 using Media = LibVLCSharp.Shared.Media;
 
 namespace VCS.Areas.Home
@@ -21,6 +23,9 @@ namespace VCS.Areas.Home
     {
         private readonly AppDbContextForm _dbContext;
         private Dictionary<string, MediaPlayer> _mediaPlayers = new Dictionary<string, MediaPlayer>();
+        private TblMdCamera CameraDetectIn { get; set; }
+        private TblMdCamera CameraDetectOut { get; set; }
+        private MediaPlayer _mediaPlayer;
 
         public Home(AppDbContextForm dbContext)
         {
@@ -29,91 +34,118 @@ namespace VCS.Areas.Home
         }
         private void Home_Load(object sender, EventArgs e)
         {
-            InitializeCameraStreams();
+            InitializeCamera(true, viewStreamIn);
+            InitializeCamera(false, viewStreamOut);
         }
-
-        
-        private async void InitializeCameraStreams()
+        private void InitializeCamera(bool isIn, VideoView videoView)
         {
             try
             {
+                var camera = Global.lstCamera.FirstOrDefault(x =>
+                    (isIn ? x.IsIn : x.IsOut) && x.IsRecognition);
 
-                foreach (var camera in Global.lstCamera)
+                if (isIn)
+                    CameraDetectIn = camera;
+                else
+                    CameraDetectOut = camera;
+
+                if (camera != null)
                 {
-                    AddCameraStream(camera);
+                    var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
+                    var mediaPlayer = new MediaPlayer(media);
+                    _mediaPlayers[isIn ? "in" : "out"] = mediaPlayer;
+
+                    videoView.MediaPlayer = mediaPlayer;
+                    mediaPlayer.Play();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách camera: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string cameraType = isIn ? "vào" : "ra";
+                MessageBox.Show($"Lỗi khởi tạo camera {cameraType}: {ex.Message}", "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void AddCameraStream(TblMdCamera camera)
-        {
-            var cameraContainer = new Panel
-            {
-                Width = 615,
-                Height = 365,
-                Margin = new Padding(0, 0, 0, 10),
-                BorderStyle = BorderStyle.FixedSingle,
-                BackColor = Color.FromArgb(52, 58, 64)
-            };
-
-            var plateText = camera.IsRecognition ? "(Camera nhận diện)" : "";
-            var label = new Label
-            {
-                Text = camera.IsIn ? $"{camera.Name} - CAMERA CỔNG VÀO {plateText}" : $"{camera.Name} - CAMERA CỔNG RA {plateText}",
-                Dock = DockStyle.Top,
-                Height = 30,
-                ForeColor = Color.White,
-                BackColor = Color.FromArgb(52, 58, 64),
-                Font = new Font("Segoe UI", 12, FontStyle.Regular),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-
-            cameraContainer.Controls.Add(label);
-
-            var videoView = new VideoView
-            {
-                Dock = DockStyle.Fill
-            };
-
-            string rtspUrl = camera.Rtsp;
-            var media = new Media(Global._libVLC, rtspUrl, FromType.FromLocation);
-            var player = new MediaPlayer(media);
-
-            videoView.MediaPlayer = player;
-            _mediaPlayers[camera.Code] = player;
-
-            cameraContainer.Controls.Add(videoView);
-
-            if (camera.IsIn)
-            {
-                cameraPanelIn.Controls.Add(cameraContainer);
-            }
-            else
-            {
-                cameraPanelOut.Controls.Add(cameraContainer);
-            }
-
-            player.Play();
-        }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             foreach (var player in _mediaPlayers.Values)
             {
-                if (player.IsPlaying)
-                    player.Stop();
-                player.Dispose();
+                player?.Stop();
+                player?.Dispose();
             }
-
             _mediaPlayers.Clear();
-            cameraPanelIn.Controls.Clear();
-            cameraPanelOut.Controls.Clear();
 
             base.OnFormClosing(e);
+        }
+
+        private void btnViewAllIn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var lstCamera = _dbContext.TblMdCamera
+                    .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
+                        && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
+                        && x.IsIn)
+                    .ToList();
+
+                if (lstCamera.Any())
+                {
+                    AllCamera allCameraForm = new AllCamera(lstCamera);
+                    allCameraForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Không có camera nào được tìm thấy!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnViewAllOut_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var lstCamera = _dbContext.TblMdCamera
+                    .Where(x => x.OrgCode == ProfileUtilities.User.OrganizeCode
+                        && x.WarehouseCode == ProfileUtilities.User.WarehouseCode
+                        && x.IsOut)
+                    .ToList();
+
+                if (lstCamera.Any())
+                {
+                    AllCamera allCameraForm = new AllCamera(lstCamera);
+                    allCameraForm.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Không có camera nào được tìm thấy!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lấy danh sách camera: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void vCFullscreenIn_Click(object sender, EventArgs e)
+        {
+            var v = new ViewCamera(CameraDetectIn);
+            v.ShowDialog();
+        }
+
+        private void vCFullscreenOut_Click(object sender, EventArgs e)
+        {
+
+            var v = new ViewCamera(CameraDetectOut);
+            v.ShowDialog();
         }
     }
 }
