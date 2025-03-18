@@ -482,6 +482,7 @@
             txtLicensePlate.Name = "txtLicensePlate";
             txtLicensePlate.Size = new Size(487, 47);
             txtLicensePlate.TabIndex = 0;
+            txtLicensePlate.TextChanged += txtLicensePlate_TextChanged;
             // 
             // label4
             // 

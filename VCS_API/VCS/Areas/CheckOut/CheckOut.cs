@@ -135,7 +135,7 @@ namespace VCS.Areas.CheckOut
                 CommonService.Alert($"Lỗi: {ex.Message}", Alert.Alert.enumType.Error);
             }
         }
-        
+
         #endregion
 
         #region Xử lý phương tiện chưa ra
@@ -412,8 +412,6 @@ namespace VCS.Areas.CheckOut
                 // Thực hiện xử lý nặng trong một thread khác để không chặn UI
                 var detail = await Task.Run(() => GetCheckInDetail(selectedValue));
                 if (detail == null) return;
-
-                txtVehicleName.Text = detail.VehicleName;
 
                 // Xóa các panel cũ trên UI trong luồng chính
                 panelCheckIn.Controls.Clear();
@@ -834,5 +832,23 @@ namespace VCS.Areas.CheckOut
             v.ShowDialog();
         }
 
+        private void txtLicensePlate_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtLicensePlate.Text))
+            {
+                txtVehicleName.Text = string.Empty;
+                return;
+            }
+            else
+            {
+                // Truy xuất thông tin phương tiện
+                var vehicleInfo = _dbContext.TblMdVehicle
+                    .AsNoTracking()
+                    .Where(v => v.Code == txtLicensePlate.Text)
+                    .Select(v => new { v.OicPbatch, v.OicPtrip })
+                    .FirstOrDefault();
+                txtVehicleName.Text = vehicleInfo != null ? $"{vehicleInfo.OicPbatch}{vehicleInfo.OicPtrip}" : string.Empty;
+            }
+        }
     }
 }

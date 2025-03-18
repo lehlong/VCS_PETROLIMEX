@@ -40,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DMS.COMMON\DMS.COMMON.csproj" />
     <ProjectReference Include="..\DMS.CORE\DMS.CORE.csproj" />
   </ItemGroup>
 

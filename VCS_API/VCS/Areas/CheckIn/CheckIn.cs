@@ -656,6 +656,24 @@ namespace VCS.Areas.CheckIn
                 h.CreateDate = DateTime.Now;
                 _dbContext.TblBuHeader.Update(h);
             }
+
+            var vehicle = _dbContext.TblMdVehicle.Find(txtLicensePlate.Text);
+
+            if(vehicle != null)
+            {
+                _dbContext.TblMdVehicle.Update(vehicle);
+            }
+            else
+            {
+                _dbContext.TblMdVehicle.Add(new TblMdVehicle
+                {
+                    Code = txtLicensePlate.Text,
+                    OicPbatch = txtVehicleName.Text,
+                    IsActive = true,
+                    CreateDate = DateTime.Now,
+                    CreateBy = ProfileUtilities.User.UserName,
+                });
+            }
             _dbContext.SaveChanges();
 
             lstPathImageCapture.Add(IMGPATH);
@@ -980,15 +998,6 @@ namespace VCS.Areas.CheckIn
                 pictureBoxLicensePlate.Image = result.ImageCrop;
                 txtLicensePlate.Text = result.LicensePlateNumber;
 
-                // Truy xuất thông tin phương tiện
-                var vehicleInfo = _dbContext.TblMdVehicle
-                    .AsNoTracking()
-                    .Where(v => v.Code == result.LicensePlateNumber)
-                    .Select(v => new { v.OicPbatch, v.OicPtrip })
-                    .FirstOrDefault();
-
-                txtVehicleName.Text = vehicleInfo != null ? $"{vehicleInfo.OicPbatch}{vehicleInfo.OicPtrip}" : string.Empty;
-
                 // Chụp từ các camera khác
                 lstPathImageCapture = Global.lstCamera
                     .Where(x => x.IsIn && x.Code != CameraDetect.Code)
@@ -1066,6 +1075,25 @@ namespace VCS.Areas.CheckIn
             _mediaPlayer?.Stop();
             _mediaPlayer?.Dispose();
             base.OnFormClosing(e);
+        }
+
+        private void txtLicensePlate_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtLicensePlate.Text))
+            {
+                txtVehicleName.Text = string.Empty;
+                return;
+            }
+            else
+            {
+                // Truy xuất thông tin phương tiện
+                var vehicleInfo = _dbContext.TblMdVehicle
+                    .AsNoTracking()
+                    .Where(v => v.Code == txtLicensePlate.Text)
+                    .Select(v => new { v.OicPbatch, v.OicPtrip })
+                    .FirstOrDefault();
+                txtVehicleName.Text = vehicleInfo != null ? $"{vehicleInfo.OicPbatch}{vehicleInfo.OicPtrip}" : string.Empty;
+            }
         }
     }
 }
