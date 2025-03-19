@@ -77,6 +77,8 @@ namespace VCS.APP.Services
                 Global.DetectApiUrl = config["Setting:DetectApiUrl"];
                 Global.DetectFilePath = config["Setting:DetectFilePath"];
                 Global.VcsUrl = config["Setting:VcsUrl"];
+                Global.CropWidth = string.IsNullOrEmpty(config["Setting:CropImagesWidth"].ToString()) ? 0: Math.Max(0, Convert.ToUInt32(config["Setting:CropImagesWidth"]));
+                Global.CropHeight = string.IsNullOrEmpty(config["Setting:CropImagesHeight"].ToString()) ? 0 : Math.Max(0, Convert.ToUInt32(config["Setting:CropImagesHeight"]));
             }
             catch (Exception ex)
             {

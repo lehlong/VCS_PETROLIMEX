@@ -21,6 +21,8 @@ namespace VCS.APP.Utilities
         public static string? DetectFilePath { get; set; }
         public static string? TimeService { get; set; }
         public static string? VcsUrl { get; set; }
+        public static uint CropWidth { get; set; }
+        public static uint CropHeight { get; set; }
         public static List<TblMdCamera> lstCamera { get; set; } = new List<TblMdCamera>();
         public static LibVLC _libVLC { get; set; }
         public static InferenceSession _session;
