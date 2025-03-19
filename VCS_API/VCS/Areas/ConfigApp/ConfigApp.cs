@@ -59,9 +59,9 @@ namespace VCS.APP.Areas.ConfigApp
             txtSmoApiPassword.Text = config["Setting:SmoApiPassword"];
             txtSmoApiUrl.Text = config["Setting:SmoApiUrl"];
             txtPathSaveFile.Text = config["Setting:PathSaveFile"];
-            txtUrlDetect.Text = config["Setting:DetectApiUrl"];
-            txtDetectFilePath.Text = config["Setting:DetectFilePath"];
-            txtTimeService.Text = config["Setting:TimeService"];
+            txtCropWidth.Text = config["Setting:CropImagesWidth"];
+            txtCropHeight.Text = config["Setting:CropImagesHeight"];
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -81,9 +81,9 @@ namespace VCS.APP.Areas.ConfigApp
                     jsonObj["Setting"]["SmoApiUsername"] = txtSmoApiUsername.Text;
                     jsonObj["Setting"]["SmoApiPassword"] = txtSmoApiPassword.Text;
                     jsonObj["Setting"]["PathSaveFile"] = txtPathSaveFile.Text;
-                    jsonObj["Setting"]["DetectApiUrl"] = txtUrlDetect.Text;
-                    jsonObj["Setting"]["DetectFilePath"] = txtDetectFilePath.Text;
-                    jsonObj["Setting"]["TimeService"] = txtTimeService.Text;
+                    jsonObj["Setting"]["CropImagesWidth"] = txtCropWidth.Text;
+                    jsonObj["Setting"]["CropImagesHeight"] = txtCropHeight.Text;
+                   
 
                     File.WriteAllText(filePath, jsonObj.ToJsonString(new JsonSerializerOptions { WriteIndented = true }));
                 }
@@ -94,9 +94,9 @@ namespace VCS.APP.Areas.ConfigApp
                 Global.SmoApiUsername = txtSmoApiUsername.Text;
                 Global.SmoApiPassword = txtSmoApiPassword.Text;
                 Global.PathSaveFile = txtPathSaveFile.Text;
-                Global.DetectApiUrl = txtUrlDetect.Text;
-                Global.DetectFilePath = txtDetectFilePath.Text;
-                Global.TimeService = txtTimeService.Text;
+                Global.CropWidth = Convert.ToUInt32(txtCropWidth.Text);
+                Global.CropHeight = Convert.ToUInt32(txtCropHeight.Text);
+
 
                 var result = MessageBox.Show("Vui lòng khởi động lại hệ thống để áp dụng cài đặt!",
                                              "Xác nhận",

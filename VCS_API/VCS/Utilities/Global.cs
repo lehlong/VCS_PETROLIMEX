@@ -16,10 +16,7 @@ namespace VCS.APP.Utilities
         public static string? SmoApiPassword { get; set; }
         public static string? SmoApiUrl { get; set; }
         public static string? PathSaveFile { get; set; }
-        public static string? Connection { get; set; }
-        public static string? DetectApiUrl { get; set; }
-        public static string? DetectFilePath { get; set; }
-        public static string? TimeService { get; set; }
+        public static string? Connection { get; set; }      
         public static string? VcsUrl { get; set; }
         public static uint CropWidth { get; set; }
         public static uint CropHeight { get; set; }

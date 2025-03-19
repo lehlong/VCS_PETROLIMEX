@@ -119,19 +119,7 @@ namespace VCS.APP.Areas.StatusSystem
             UpdateGPUInfo();
             CheckStatusSystem();
         }
-        private void btnRestartDetect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Process.Start(Global.DetectFilePath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}",
-                   "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+       
         private void btnClean_Click(object sender, EventArgs e)
         {
             try

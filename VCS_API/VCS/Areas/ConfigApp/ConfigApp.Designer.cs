@@ -30,16 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigApp));
             panel1 = new Panel();
+            isStarup = new CheckBox();
             panel8 = new Panel();
             txtTimeService = new TextBox();
             Lable7 = new Label();
             panel7 = new Panel();
-            txtDetectFilePath = new TextBox();
+            txtCropHeight = new TextBox();
             label6 = new Label();
             panel6 = new Panel();
             txtPathSaveFile = new TextBox();
             panel5 = new Panel();
-            txtUrlDetect = new TextBox();
+            txtCropWidth = new TextBox();
             panel4 = new Panel();
             txtSmoApiPassword = new TextBox();
             panel2 = new Panel();
@@ -52,7 +53,6 @@
             label2 = new Label();
             label1 = new Label();
             button1 = new Button();
-            isStarup = new CheckBox();
             panel1.SuspendLayout();
             panel8.SuspendLayout();
             panel7.SuspendLayout();
@@ -87,6 +87,18 @@
             panel1.Size = new Size(1334, 770);
             panel1.TabIndex = 0;
             // 
+            // isStarup
+            // 
+            isStarup.AutoSize = true;
+            isStarup.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            isStarup.Location = new Point(466, 361);
+            isStarup.Name = "isStarup";
+            isStarup.Size = new Size(201, 25);
+            isStarup.TabIndex = 47;
+            isStarup.Text = "Khởi động cùng Window";
+            isStarup.UseVisualStyleBackColor = true;
+            isStarup.CheckedChanged += isStarup_CheckedChanged;
+            // 
             // panel8
             // 
             panel8.BackColor = Color.WhiteSmoke;
@@ -119,21 +131,21 @@
             // panel7
             // 
             panel7.BackColor = Color.WhiteSmoke;
-            panel7.Controls.Add(txtDetectFilePath);
+            panel7.Controls.Add(txtCropHeight);
             panel7.Location = new Point(466, 186);
             panel7.Name = "panel7";
             panel7.Size = new Size(420, 40);
             panel7.TabIndex = 44;
             // 
-            // txtDetectFilePath
+            // txtCropHeight
             // 
-            txtDetectFilePath.BackColor = Color.WhiteSmoke;
-            txtDetectFilePath.BorderStyle = BorderStyle.None;
-            txtDetectFilePath.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDetectFilePath.Location = new Point(13, 9);
-            txtDetectFilePath.Name = "txtDetectFilePath";
-            txtDetectFilePath.Size = new Size(390, 22);
-            txtDetectFilePath.TabIndex = 10;
+            txtCropHeight.BackColor = Color.WhiteSmoke;
+            txtCropHeight.BorderStyle = BorderStyle.None;
+            txtCropHeight.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCropHeight.Location = new Point(13, 9);
+            txtCropHeight.Name = "txtCropHeight";
+            txtCropHeight.Size = new Size(390, 22);
+            txtCropHeight.TabIndex = 10;
             // 
             // label6
             // 
@@ -141,9 +153,9 @@
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(469, 163);
             label6.Name = "label6";
-            label6.Size = new Size(141, 21);
+            label6.Size = new Size(111, 21);
             label6.TabIndex = 43;
-            label6.Text = "Path file nhận diện:";
+            label6.Text = "Chiều cao ảnh:";
             // 
             // panel6
             // 
@@ -167,21 +179,21 @@
             // panel5
             // 
             panel5.BackColor = Color.WhiteSmoke;
-            panel5.Controls.Add(txtUrlDetect);
+            panel5.Controls.Add(txtCropWidth);
             panel5.Location = new Point(466, 103);
             panel5.Name = "panel5";
             panel5.Size = new Size(420, 40);
             panel5.TabIndex = 42;
             // 
-            // txtUrlDetect
+            // txtCropWidth
             // 
-            txtUrlDetect.BackColor = Color.WhiteSmoke;
-            txtUrlDetect.BorderStyle = BorderStyle.None;
-            txtUrlDetect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtUrlDetect.Location = new Point(13, 9);
-            txtUrlDetect.Name = "txtUrlDetect";
-            txtUrlDetect.Size = new Size(390, 22);
-            txtUrlDetect.TabIndex = 10;
+            txtCropWidth.BackColor = Color.WhiteSmoke;
+            txtCropWidth.BorderStyle = BorderStyle.None;
+            txtCropWidth.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCropWidth.Location = new Point(13, 9);
+            txtCropWidth.Name = "txtCropWidth";
+            txtCropWidth.Size = new Size(390, 22);
+            txtCropWidth.TabIndex = 10;
             // 
             // panel4
             // 
@@ -257,9 +269,9 @@
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(469, 80);
             label4.Name = "label4";
-            label4.Size = new Size(107, 21);
+            label4.Size = new Size(120, 21);
             label4.TabIndex = 38;
-            label4.Text = "Url nhận diện:";
+            label4.Text = "Chiều rộng ảnh:";
             // 
             // label3
             // 
@@ -313,18 +325,6 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // isStarup
-            // 
-            isStarup.AutoSize = true;
-            isStarup.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            isStarup.Location = new Point(466, 361);
-            isStarup.Name = "isStarup";
-            isStarup.Size = new Size(201, 25);
-            isStarup.TabIndex = 47;
-            isStarup.Text = "Khởi động cùng Window";
-            isStarup.UseVisualStyleBackColor = true;
-            isStarup.CheckedChanged += isStarup_CheckedChanged;
-            // 
             // ConfigApp
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -368,13 +368,13 @@
         private Panel panel6;
         private TextBox txtPathSaveFile;
         private Panel panel5;
-        private TextBox txtUrlDetect;
+        private TextBox txtCropWidth;
         private Panel panel4;
         private TextBox txtSmoApiPassword;
         private Panel panel2;
         private TextBox txtSmoApiUsername;
         private Panel panel7;
-        private TextBox txtDetectFilePath;
+        private TextBox txtCropHeight;
         private Label label6;
         private Panel panel8;
         private TextBox txtTimeService;
