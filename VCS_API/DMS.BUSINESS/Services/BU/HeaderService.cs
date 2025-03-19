@@ -137,7 +137,7 @@ namespace DMS.BUSINESS.Services.BU
                                           }).ToListAsync();
 
                 header.DetailTgbx = await (from t in _dbContext.TblBuDetailTgbx
-                                           join g in _dbContext.TblMdGoods on ("000000000000" + t.MaHangHoa) equals g.Code into goodsGroup
+                                           join g in _dbContext.TblMdGoods on ("00000000000" + t.MaHangHoa) equals g.Code into goodsGroup
                                            from goods in goodsGroup.DefaultIfEmpty()
                                            where t.HeaderId == headerId
                                            select new DetailTgbxDto

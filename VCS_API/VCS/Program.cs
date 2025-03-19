@@ -60,9 +60,9 @@ namespace VCS
             {
                 Core.Initialize();
                 Global._libVLC = new LibVLC(
-                    "--network-caching=30", 
-                    "--live-caching=30", 
-                    "--file-caching=30",
+                    "--network-caching=3000", 
+                    "--live-caching=3000", 
+                    "--file-caching=3000",
                     "--clock-jitter=0", 
                     "--clock-synchro=0",
                     "--no-audio",

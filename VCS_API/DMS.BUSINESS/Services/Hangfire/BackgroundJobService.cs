@@ -29,7 +29,7 @@ namespace DMS.BUSINESS.Services.Hangfire
 
                 string[] order = i.OrderVehicle.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var vehicle = order[0].Trim();
-                var material = i.GoodsCode == "000000000000201004" ? i.GoodsCode.Substring(11) : i.GoodsCode.Substring(12);
+                var material = i.GoodsCode.Substring(11);
 
                 DataTable tableData = new DataTable();
                 var query = $"SELECT MaPhuongTien FROM tblLenhXuatChiTiet " +

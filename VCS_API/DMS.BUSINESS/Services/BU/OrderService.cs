@@ -329,12 +329,12 @@ namespace DMS.BUSINESS.Services.BU
                 var i = _dbContext.TblBuHeader.Find(headerId);
                 var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
                 DataTable tableData = new DataTable();
-                var queryTest = $"SELECT * FROM tblLenhXuatE5 WHERE STATUS = '3' AND SoLenh = '2061976967'";
-                var query = $"SELECT * FROM tblLenhXuatE5 WHERE STATUS = '3' AND MaPhuongTien = '{i.VehicleCode}' AND NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
+                //var queryTest = $"SELECT * FROM tblLenhXuatE5 WHERE STATUS = '3' AND SoLenh = '2061976967'";
+                var query = $"SELECT * FROM tblLenhXuatE5 WHERE Status = '3' AND MaPhuongTien = '{i.VehicleCode}' AND NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
 
                 using (SqlConnection con = new SqlConnection(w.Tgbx))
                 {
-                    SqlCommand cmd = new SqlCommand(queryTest, con);
+                    SqlCommand cmd = new SqlCommand(query, con);
                     cmd.CommandType = CommandType.Text;
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     try
@@ -409,7 +409,7 @@ namespace DMS.BUSINESS.Services.BU
                 var lstDetail = await _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).ToListAsync();
                 foreach(var i in lstDetail)
                 {
-                    var materialCode = i.MaHangHoa.Trim() == "0201004" ? "00000000000" + i.MaHangHoa : "000000000000" + i.MaHangHoa;
+                    var materialCode ="00000000000" + i.MaHangHoa;
                     var o = lstPumpThroat.Where(x => x.GoodsCode == materialCode).OrderBy(x => x.OrderVehicle).FirstOrDefault();
                     o.OrderVehicle = o.OrderVehicle + "," + header.VehicleCode;
                     _dbContext.TblMdPumpThroat.Update(o);
@@ -444,7 +444,7 @@ namespace DMS.BUSINESS.Services.BU
                 d.Detail = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).OrderBy(x => x.SoLenh).ThenBy(x => x.MaHangHoa).ToList();
                 foreach (var _d in d.Detail)
                 {
-                    var gCode = "000000000000" + _d.MaHangHoa;
+                    var gCode = "00000000000" + _d.MaHangHoa;
                     _d.MaHangHoa = _dbContext.TblMdGoods.Find(gCode)?.Name;
                 }
                 return d;
@@ -479,81 +479,6 @@ namespace DMS.BUSINESS.Services.BU
                         MaPhuongThucBan = row["MaPhuongThucBan"].ToString(),
                         MaPhuongThucXuat = row["MaPhuongThucXuat"].ToString(),
                         MaKhachHang = row["MaKhachHang"].ToString(),
-                        LoaiPhieu = row["LoaiPhieu"].ToString(),
-                        Niem = row["Niem"].ToString(),
-                        LuongGiamDinh = string.IsNullOrEmpty(row["LuongGiamDinh"].ToString()) ? 0 : Convert.ToDecimal(row["LuongGiamDinh"].ToString()),
-                        NhietDoTaiTau = string.IsNullOrEmpty(row["NhietDoTaiTau"].ToString()) ? 0 : Convert.ToDecimal(row["NhietDoTaiTau"].ToString()),
-                        GhiChu = row["GhiChu"].ToString(),
-                        NgayHieuLuc = row["NgayHieuLuc"] != DBNull.Value ? Convert.ToDateTime(row["NgayHieuLuc"]) : null,
-                        Status = row["Status"].ToString(),
-                        Number = row["Number"] != DBNull.Value ? Convert.ToInt32(row["Number"]) : null,
-                        SoLenhSAP = row["SoLenhSAP"].ToString(),
-                        Client = row["Client"].ToString(),
-                        HTTG = row["HTTG"].ToString(),
-                        Approved = row["Approved"].ToString(),
-                        User_Approve = row["User_Approve"].ToString(),
-                        Date_Approve = row["Date_Approve"] != DBNull.Value ? Convert.ToDateTime(row["Date_Approve"]) : null,
-                        EditApprove = row["EditApprove"].ToString(),
-                        NhaCungCap = row["NhaCungCap"].ToString(),
-                        AppDesc = row["AppDesc"].ToString(),
-                        AppN30 = row["AppN30"].ToString(),
-                        AppN30Date = row["AppN30Date"] != DBNull.Value ? Convert.ToDateTime(row["AppN30Date"]) : null,
-                        AppN30User = row["AppN30User"].ToString(),
-                        QCI_KG = string.IsNullOrEmpty(row["QCI_KG"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_KG"].ToString()),
-                        QCI_NhietDo = string.IsNullOrEmpty(row["QCI_NhietDo"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_NhietDo"].ToString()),
-                        Slog = row["Slog"].ToString(),
-                        NgayHetHieuLuc = row["NgayHetHieuLuc"] != DBNull.Value ? Convert.ToDateTime(row["NgayHetHieuLuc"]) : null,
-                        NgayTickKe = row["NgayTickKe"] != DBNull.Value ? Convert.ToDateTime(row["NgayTickKe"]) : null,
-                        STO = row["STO"].ToString(),
-                        NguoiDaiDien = row["NguoiDaiDien"].ToString(),
-                        DonViCungCapVanTai = row["DonViCungCapVanTai"].ToString(),
-                        UserTickKe = row["UserTickKe"].ToString(),
-                        DiemTraHang = row["DiemTraHang"].ToString(),
-                        Tax = row["Tax"].ToString(),
-                        PaymentMethod = row["PaymentMethod"].ToString(),
-                        Term = row["Term"].ToString(),
-                        MaKhoNhap = row["MaKhoNhap"].ToString(),
-                        SoHopDong = row["SoHopDong"].ToString(),
-                        NgayHopDong = row["NgayHopDong"] != DBNull.Value ? Convert.ToDateTime(row["NgayHopDong"]) : null,
-                        TyGia = string.IsNullOrEmpty(row["TyGia"].ToString()) ? 0 : Convert.ToDecimal(row["TyGia"].ToString()),
-                        SoTKQNhap = row["SoTKQNhap"].ToString(),
-                        SoTKQXuat = row["SoTKQXuat"].ToString(),
-                        SelfShipping = row["SelfShipping"].ToString(),
-                        PriceGroup = row["PriceGroup"].ToString(),
-                        Inco1 = row["Inco1"].ToString(),
-                        Inco2 = row["Inco2"].ToString(),
-                        SoPXK = row["SoPXK"].ToString(),
-                        NgayPXK = row["NgayPXK"] != DBNull.Value ? Convert.ToDateTime(row["NgayPXK"]) : null,
-                        MaTuyenDuong = row["MaTuyenDuong"].ToString(),
-                        Xuathanggui = row["Xuathanggui"].ToString(),
-                        So_TKTN = row["So_TKTN"].ToString(),
-                        So_TKTX = row["So_TKTX"].ToString(),
-                        Ngay_TKTX = row["Ngay_TKTX"] != DBNull.Value ? Convert.ToDateTime(row["Ngay_TKTX"]) : null,
-                        DischargePoint = row["DischargePoint"].ToString(),
-                        DesDischargePoint = row["DesDischargePoint"].ToString(),
-                        BSART = row["BSART"].ToString(),
-                        BWART = row["BWART"].ToString(),
-                        VTWEG = row["VTWEG"].ToString(),
-                        TenKhoNhap = row["TenKhoNhap"].ToString(),
-                        Xitec_Option = row["Xitec_Option"].ToString(),
-                        SoLenhGoc = row["SoLenhGoc"].ToString(),
-                        Dem = row["Dem"].ToString(),
-                        DO1_MaNguon = row["DO1_MaNguon"].ToString(),
-                        HDChuyen = row["HDChuyen"].ToString(),
-                        BatchNum = row["BatchNum"].ToString(),
-                        PriceGroupDO1 = row["PriceGroupDO1"].ToString(),
-                        SOType = row["SOType"].ToString(),
-                        PrcingDate = row["PrcingDate"] != DBNull.Value ? Convert.ToDateTime(row["PrcingDate"]) : null,
-                        POType = row["POType"].ToString(),
-                        FromSoLenh = row["FromSoLenh"].ToString(),
-                        PTXuat_ID = row["PTXuat_ID"].ToString(),
-                        PTIEN = row["PTIEN"].ToString(),
-                        SCHUVEN = row["SCHUVEN"].ToString(),
-                        DO1_SoLenh = row["DO1_SoLenh"].ToString(),
-                        DO1_MaKhach = row["DO1_MaKhach"].ToString(),
-                        CardNum = row["CardNum"].ToString(),
-                        CardData = row["CardData"].ToString(),
-                        SoBienBanMau = row["SoBienBanMau"].ToString()
                     };
 
                     list.Add(model);
@@ -585,27 +510,6 @@ namespace DMS.BUSINESS.Services.BU
                         TongDuXuat = string.IsNullOrEmpty(row["TongDuXuat"].ToString()) ? 0 : Convert.ToDecimal(row["TongDuXuat"].ToString()),
                         MaHangHoa = row["MaHangHoa"].ToString(),
                         DonViTinh = row["DonViTinh"].ToString(),
-                        BeXuat = row["BeXuat"].ToString(),
-                        TableID = row["TableID"].ToString(),
-                        MeterId = row["MeterId"].ToString(),
-                        QCI_KG = string.IsNullOrEmpty(row["QCI_KG"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_KG"].ToString()),
-                        QCI_NhietDo = string.IsNullOrEmpty(row["QCI_NhietDo"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_NhietDo"].ToString()),
-                        QCI_TyTrong = string.IsNullOrEmpty(row["QCI_TyTrong"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_TyTrong"].ToString()),
-                        DonGia = string.IsNullOrEmpty(row["DonGia"].ToString()) ? 0 : Convert.ToDecimal(row["DonGia"].ToString()),
-                        CurrencyKey = row["CurrencyKey"].ToString(),
-                        VCF = string.IsNullOrEmpty(row["VCF"].ToString()) ? 0 : Convert.ToDecimal(row["VCF"].ToString()),
-                        WCF = string.IsNullOrEmpty(row["WCF"].ToString()) ? 0 : Convert.ToDecimal(row["WCF"].ToString()),
-                        NhietDo_BQGQ = string.IsNullOrEmpty(row["NhietDo_BQGQ"].ToString()) ? 0 : Convert.ToDecimal(row["NhietDo_BQGQ"].ToString()),
-                        D15_BQGQ = string.IsNullOrEmpty(row["D15_BQGQ"].ToString()) ? 0 : Convert.ToDecimal(row["D15_BQGQ"].ToString()),
-                        KG = string.IsNullOrEmpty(row["KG"].ToString()) ? 0 : Convert.ToDecimal(row["KG"].ToString()),
-                        L15 = string.IsNullOrEmpty(row["L15"].ToString()) ? 0 : Convert.ToDecimal(row["L15"].ToString()),
-                        GiaCty = string.IsNullOrEmpty(row["GiaCty"].ToString()) ? 0 : Convert.ToDecimal(row["GiaCty"].ToString()),
-                        PhiVT = string.IsNullOrEmpty(row["PhiVT"].ToString()) ? 0 : Convert.ToDecimal(row["PhiVT"].ToString()),
-                        TheBVMT = string.IsNullOrEmpty(row["TheBVMT"].ToString()) ? 0 : Convert.ToDecimal(row["TheBVMT"].ToString()),
-                        BatchNum = row["BatchNum"].ToString(),
-                        TongSoTien = string.IsNullOrEmpty(row["TongSoTien"].ToString()) ? 0 : Convert.ToDecimal(row["TongSoTien"].ToString()),
-                        QCI_L15 = string.IsNullOrEmpty(row["QCI_L15"].ToString()) ? 0 : Convert.ToDecimal(row["QCI_L15"].ToString()),
-                        ChietKhau = string.IsNullOrEmpty(row["ChietKhau"].ToString()) ? 0 : Convert.ToDecimal(row["ChietKhau"].ToString())
                     };
                     list.Add(model);
                 }

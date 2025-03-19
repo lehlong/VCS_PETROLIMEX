@@ -57,6 +57,9 @@ namespace VCS.Areas.CheckIn
                 if (camera != null)
                 {
                     var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
+                    media.AddOption(":network-caching=3000");
+                    media.AddOption(":sout-mux-caching=1000");
+                    media.AddOption(":deinterlace");
                     var mediaPlayer = new MediaPlayer(media);
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
@@ -989,7 +992,7 @@ namespace VCS.Areas.CheckIn
                 string croppedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
 
                 // Chụp ảnh
-                player.TakeSnapshot(0, snapshotPath, 640, 380);
+                player.TakeSnapshot(0, snapshotPath, 0, 0);
                 if (!File.Exists(snapshotPath))
                 {
                     CommonService.Alert("Không thể chụp ảnh!", Alert.Alert.enumType.Error);

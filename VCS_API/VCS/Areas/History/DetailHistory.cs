@@ -392,7 +392,7 @@ namespace VCS.APP.Areas.History
 
                 foreach (var item in data)
                 {
-                    var materials = _dbContext.TblMdGoods.Find("000000000000" + item.MaHangHoa);
+                    var materials = _dbContext.TblMdGoods.Find("00000000000" + item.MaHangHoa);
                     string materialName = materials?.Name ?? "Unknown";
                     dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat?.ToString("#,#")} ({item.DonViTinh})");
                 }
