@@ -57,7 +57,7 @@ export class InputClearComponent implements ControlValueAccessor {
   @Input() onlyNumber: boolean = false;
   @Input() disabled: boolean = false;
   @Input() textArea: boolean = false;
-  @Input() placeholder: string = '';
+  @Input() placeholder: string = '' ;
   @Input() showErrors: any = null;
   @Input() errorsRequired: any = null;
   @Input() errorsWrongFormat: any = null;

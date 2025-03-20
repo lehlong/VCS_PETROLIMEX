@@ -56,9 +56,10 @@ export class MainLayoutComponent {
   selectedWarehouse? : string =localStorage.getItem('warehouseCode')?.toString()
 
   _companyCode : any = localStorage.getItem('UserInfo')
+  _accountType = JSON.parse(this._companyCode)?.accountType
   companyCode = JSON.parse(this._companyCode)?.organizeCode
 
-  isDisableSelect : boolean = this.companyCode.toString() == COMPANY_CODE_TAP_DOAN ? false : true
+  isDisableSelect: boolean = this._accountType !== 'IV';
 
   constructor(
     private globalService: GlobalService,

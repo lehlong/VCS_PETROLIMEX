@@ -59,12 +59,12 @@
         <div class="header-trigger flex items-center gap-[24px]">
           <div class="text-change">Công ty</div>
           <nz-select nzShowSearch nzAllowClear [ngModel]="selectedCompanyCode" nzPlaceHolder="Chọn công ty"
-            style="width: 240px;" (ngModelChange)="companyCodeChange($event)" [nzDisabled]="isDisableSelect">
+            style="width: 240px;" (ngModelChange)="companyCodeChange($event)" nzDisabled>
             <nz-option *ngFor="let item of lstCompanyCode" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
           </nz-select>
           <div class="text-change">Kho</div>
           <nz-select nzShowSearch nzAllowClear [ngModel]="selectedWarehouse" nzPlaceHolder="Chọn kho"
-            style="width: 240px;" (ngModelChange)="warehouseChange($event)">
+            style="width: 240px;" (ngModelChange)="warehouseChange($event)"  [nzDisabled]="isDisableSelect">
             <nz-option *ngFor="let item of lstWarehouse" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
           </nz-select>
           <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="topLeft"

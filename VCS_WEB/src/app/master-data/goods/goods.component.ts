@@ -20,10 +20,9 @@ export class GoodsComponent {
   validateForm: FormGroup = this.fb.group({
     code: ['', [Validators.required]],
     name: ['', [Validators.required]],
-    type: [''],
-    thueBvmt: ['', [Validators.required]],
     createDate: [new Date(), [Validators.required]],
     isActive: [true, [Validators.required]],
+    unitCode: [''] 
   })
 
   isSubmit: boolean = false
@@ -58,10 +57,7 @@ export class GoodsComponent {
 
   ngOnInit(): void {
     this.search()
-    this.lstType = [
-      {code:'X', name: 'Xăng'},
-      {code:'D', name: 'Dầu'}
-    ]
+    
   }
 
   onSortChange(name: string, value: any) {
@@ -77,9 +73,7 @@ export class GoodsComponent {
     this.isSubmit = false
     this._service.searchGoods(this.filter).subscribe({
       next: (data) => {
-        console.log( this.filter)
         this.paginationResult = data
-        console.log(this.paginationResult);
 
       },
       error: (response) => {
@@ -180,11 +174,10 @@ export class GoodsComponent {
   openEdit(data: any) {
     this.validateForm.setValue({
       code: data.code,
-      name: data.name,
-      type: data.type,
-      thueBvmt: data.thueBvmt,
+      name: data.name, 
       createDate: data.createDate,
       isActive: data.isActive,
+      unitCode: data.unitCode
     })
     setTimeout(() => {
       this.edit = true
