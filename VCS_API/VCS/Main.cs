@@ -32,7 +32,6 @@ namespace VCS
             Global.OpenCheckIn.Click += OpenCheckInTrigger;
             Global.OpenCheckOut.Click += OpenCheckOutTrigger;
             txtWarehouse.Text = await Task.Run(() => _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode)?.Name);
-            notifyIcon.Visible = false;
             OpenChildForm(new Home(_dbContext), 0, "Trang chủ");
         }
 
@@ -93,13 +92,6 @@ namespace VCS
         {
             PythonEngine.Shutdown();
             Application.Exit();
-        }
-
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            this.Show();
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon.Visible = false;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

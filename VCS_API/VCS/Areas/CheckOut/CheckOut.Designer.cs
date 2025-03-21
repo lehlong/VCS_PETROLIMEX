@@ -121,6 +121,7 @@ namespace VCS.Areas.CheckOut
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel5.BackColor = Color.White;
             panel5.Controls.Add(panel1);
             panel5.Controls.Add(label1);
@@ -300,6 +301,7 @@ namespace VCS.Areas.CheckOut
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
             panel2.Controls.Add(btnCheck);
@@ -317,6 +319,7 @@ namespace VCS.Areas.CheckOut
             // 
             // btnCheck
             // 
+            btnCheck.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCheck.BackColor = Color.FromArgb(52, 58, 64);
             btnCheck.Cursor = Cursors.Hand;
             btnCheck.FlatStyle = FlatStyle.Flat;
@@ -337,6 +340,7 @@ namespace VCS.Areas.CheckOut
             // 
             // btnCheckOut
             // 
+            btnCheckOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCheckOut.BackColor = Color.FromArgb(13, 92, 171);
             btnCheckOut.Cursor = Cursors.Hand;
             btnCheckOut.FlatStyle = FlatStyle.Flat;
@@ -357,6 +361,7 @@ namespace VCS.Areas.CheckOut
             // 
             // panel12
             // 
+            panel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel12.BackColor = Color.WhiteSmoke;
             panel12.Controls.Add(txtNoteOut);
             panel12.Location = new Point(6, 159);
@@ -366,6 +371,7 @@ namespace VCS.Areas.CheckOut
             // 
             // txtNoteOut
             // 
+            txtNoteOut.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNoteOut.BackColor = Color.WhiteSmoke;
             txtNoteOut.BorderStyle = BorderStyle.None;
             txtNoteOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -376,6 +382,7 @@ namespace VCS.Areas.CheckOut
             // 
             // panel11
             // 
+            panel11.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel11.BackColor = Color.WhiteSmoke;
             panel11.Controls.Add(selectVehicle);
             panel11.Location = new Point(6, 85);
@@ -385,6 +392,7 @@ namespace VCS.Areas.CheckOut
             // 
             // selectVehicle
             // 
+            selectVehicle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             selectVehicle.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             selectVehicle.AutoCompleteSource = AutoCompleteSource.ListItems;
             selectVehicle.BackColor = Color.WhiteSmoke;
@@ -419,6 +427,7 @@ namespace VCS.Areas.CheckOut
             // 
             // btnResetForm
             // 
+            btnResetForm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnResetForm.BackColor = Color.FromArgb(220, 53, 69);
             btnResetForm.Cursor = Cursors.Hand;
             btnResetForm.FlatStyle = FlatStyle.Flat;
@@ -438,6 +447,7 @@ namespace VCS.Areas.CheckOut
             // 
             // tabControl1
             // 
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Cursor = Cursors.Hand;

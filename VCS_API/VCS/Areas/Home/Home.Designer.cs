@@ -50,6 +50,7 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
             panel2.Controls.Add(viewStreamOut);
@@ -72,6 +73,7 @@
             // 
             // viewStreamOut
             // 
+            viewStreamOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             viewStreamOut.BackColor = Color.Black;
             viewStreamOut.Location = new Point(670, 66);
             viewStreamOut.MediaPlayer = null;
@@ -82,6 +84,7 @@
             // 
             // viewStreamIn
             // 
+            viewStreamIn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             viewStreamIn.BackColor = Color.Black;
             viewStreamIn.Location = new Point(17, 66);
             viewStreamIn.MediaPlayer = null;
@@ -92,6 +95,7 @@
             // 
             // pictureBox2
             // 
+            pictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox2.Image = Properties.Resources.icons8_wall_mount_camera_30;
             pictureBox2.Location = new Point(670, 27);
             pictureBox2.Name = "pictureBox2";
@@ -112,6 +116,7 @@
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label2.Location = new Point(706, 32);
@@ -132,6 +137,7 @@
             // 
             // vCFullscreenOut
             // 
+            vCFullscreenOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             vCFullscreenOut.BackColor = Color.FromArgb(52, 58, 64);
             vCFullscreenOut.Cursor = Cursors.Hand;
             vCFullscreenOut.FlatStyle = FlatStyle.Flat;
@@ -151,6 +157,7 @@
             // 
             // btnViewAllOut
             // 
+            btnViewAllOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnViewAllOut.BackColor = Color.Gold;
             btnViewAllOut.Cursor = Cursors.Hand;
             btnViewAllOut.FlatStyle = FlatStyle.Flat;
@@ -170,6 +177,7 @@
             // 
             // vCFullscreenIn
             // 
+            vCFullscreenIn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             vCFullscreenIn.BackColor = Color.FromArgb(52, 58, 64);
             vCFullscreenIn.Cursor = Cursors.Hand;
             vCFullscreenIn.FlatStyle = FlatStyle.Flat;
@@ -189,6 +197,7 @@
             // 
             // btnDetectOut
             // 
+            btnDetectOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDetectOut.BackColor = Color.FromArgb(13, 92, 171);
             btnDetectOut.Cursor = Cursors.Hand;
             btnDetectOut.FlatStyle = FlatStyle.Flat;
@@ -209,6 +218,7 @@
             // 
             // btnViewAllIn
             // 
+            btnViewAllIn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnViewAllIn.BackColor = Color.Gold;
             btnViewAllIn.Cursor = Cursors.Hand;
             btnViewAllIn.FlatStyle = FlatStyle.Flat;
@@ -228,6 +238,7 @@
             // 
             // btnDetectIn
             // 
+            btnDetectIn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDetectIn.BackColor = Color.FromArgb(13, 92, 171);
             btnDetectIn.Cursor = Cursors.Hand;
             btnDetectIn.FlatStyle = FlatStyle.Flat;

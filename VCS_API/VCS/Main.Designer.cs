@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             txtWarehouse = new Label();
             txtUsername = new Label();
@@ -64,7 +63,6 @@
             linkLabel1 = new LinkLabel();
             label10 = new Label();
             panelMain = new Panel();
-            notifyIcon = new NotifyIcon(components);
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
             panel2 = new Panel();
@@ -123,6 +121,7 @@
             // 
             // Navigation
             // 
+            Navigation.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             Navigation.BackColor = Color.White;
             Navigation.BackgroundImageLayout = ImageLayout.None;
             Navigation.Controls.Add(btnLogOut);
@@ -134,12 +133,11 @@
             Navigation.Controls.Add(pHome);
             Navigation.Location = new Point(0, 83);
             Navigation.Name = "Navigation";
-            Navigation.Size = new Size(228, 641);
+            Navigation.Size = new Size(228, 639);
             Navigation.TabIndex = 1;
             // 
             // btnLogOut
             // 
-            btnLogOut.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnLogOut.BackColor = Color.Transparent;
             btnLogOut.Controls.Add(pictureBox10);
             btnLogOut.Controls.Add(label9);
@@ -175,7 +173,6 @@
             // 
             // btnStatus
             // 
-            btnStatus.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnStatus.BackColor = Color.Transparent;
             btnStatus.Controls.Add(p6);
             btnStatus.Controls.Add(pictureBox3);
@@ -221,7 +218,6 @@
             // 
             // btnSetting
             // 
-            btnSetting.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnSetting.BackColor = Color.Transparent;
             btnSetting.Controls.Add(p5);
             btnSetting.Controls.Add(pictureBox4);
@@ -267,7 +263,6 @@
             // 
             // btnHistory
             // 
-            btnHistory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnHistory.BackColor = Color.Transparent;
             btnHistory.Controls.Add(p4);
             btnHistory.Controls.Add(pictureBox5);
@@ -313,7 +308,6 @@
             // 
             // btnCheckOut
             // 
-            btnCheckOut.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnCheckOut.BackColor = Color.Transparent;
             btnCheckOut.Controls.Add(p3);
             btnCheckOut.Controls.Add(pictureBox6);
@@ -359,7 +353,6 @@
             // 
             // btnCheckIn
             // 
-            btnCheckIn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             btnCheckIn.BackColor = Color.Transparent;
             btnCheckIn.Controls.Add(p2);
             btnCheckIn.Controls.Add(pictureBox7);
@@ -461,6 +454,7 @@
             // linkLabel1
             // 
             linkLabel1.ActiveLinkColor = Color.DarkGray;
+            linkLabel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             linkLabel1.AutoSize = true;
             linkLabel1.LinkColor = Color.DarkGray;
             linkLabel1.Location = new Point(1500, 4);
@@ -473,6 +467,7 @@
             // 
             // label10
             // 
+            label10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             label10.AutoSize = true;
             label10.ForeColor = Color.DarkGray;
             label10.Location = new Point(1403, 4);
@@ -483,17 +478,12 @@
             // 
             // panelMain
             // 
+            panelMain.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelMain.BackColor = Color.Transparent;
-            panelMain.Location = new Point(229, 1);
+            panelMain.Location = new Point(229, 2);
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1344, 776);
             panelMain.TabIndex = 2;
-            // 
-            // notifyIcon
-            // 
-            notifyIcon.Icon = (Icon)resources.GetObject("notifyIcon.Icon");
-            notifyIcon.Text = "Hệ thống VCS";
-            notifyIcon.DoubleClick += notifyIcon_DoubleClick;
             // 
             // pictureBox1
             // 
@@ -508,7 +498,6 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             panel1.BackColor = Color.White;
             panel1.BackgroundImageLayout = ImageLayout.Stretch;
             panel1.Controls.Add(pictureBox1);
@@ -519,21 +508,23 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = Color.White;
             panel2.Controls.Add(linkLabel1);
             panel2.Controls.Add(label10);
-            panel2.Location = new Point(0, 782);
+            panel2.Location = new Point(0, 777);
             panel2.Name = "panel2";
             panel2.Size = new Size(1579, 26);
             panel2.TabIndex = 4;
             // 
             // panel3
             // 
+            panel3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             panel3.BackColor = Color.White;
             panel3.Controls.Add(txtWarehouse);
             panel3.Controls.Add(pictureBox8);
             panel3.Controls.Add(txtUsername);
-            panel3.Location = new Point(0, 725);
+            panel3.Location = new Point(0, 720);
             panel3.Name = "panel3";
             panel3.Size = new Size(228, 83);
             panel3.TabIndex = 5;
@@ -542,7 +533,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1574, 808);
+            ClientSize = new Size(1574, 804);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -612,7 +603,6 @@
         private Panel btnLogOut;
         private PictureBox pictureBox10;
         private Label label9;
-        private NotifyIcon notifyIcon;
         private LinkLabel linkLabel1;
         private Label label10;
         private Panel p6;

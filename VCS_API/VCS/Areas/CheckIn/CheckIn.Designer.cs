@@ -81,6 +81,7 @@
             // 
             // panel2
             // 
+            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = Color.White;
             panel2.BackgroundImageLayout = ImageLayout.Stretch;
             panel2.Controls.Add(panelDODetail);
@@ -103,6 +104,7 @@
             // 
             // panelDODetail
             // 
+            panelDODetail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panelDODetail.Location = new Point(6, 210);
             panelDODetail.Name = "panelDODetail";
             panelDODetail.Size = new Size(801, 553);
@@ -110,6 +112,7 @@
             // 
             // panel12
             // 
+            panel12.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel12.BackColor = Color.WhiteSmoke;
             panel12.Controls.Add(txtNoteIn);
             panel12.Location = new Point(6, 159);
@@ -119,6 +122,7 @@
             // 
             // txtNoteIn
             // 
+            txtNoteIn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNoteIn.BackColor = Color.WhiteSmoke;
             txtNoteIn.BorderStyle = BorderStyle.None;
             txtNoteIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -129,6 +133,7 @@
             // 
             // panel11
             // 
+            panel11.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel11.BackColor = Color.WhiteSmoke;
             panel11.Controls.Add(selectVehicle);
             panel11.Location = new Point(409, 85);
@@ -138,6 +143,7 @@
             // 
             // selectVehicle
             // 
+            selectVehicle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             selectVehicle.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             selectVehicle.AutoCompleteSource = AutoCompleteSource.ListItems;
             selectVehicle.BackColor = Color.WhiteSmoke;
@@ -152,6 +158,7 @@
             // 
             // panel10
             // 
+            panel10.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel10.BackColor = Color.WhiteSmoke;
             panel10.Controls.Add(btnCheckDetailDO);
             panel10.Controls.Add(txtNumberDO);
@@ -162,6 +169,7 @@
             // 
             // btnCheckDetailDO
             // 
+            btnCheckDetailDO.Anchor = AnchorStyles.Right;
             btnCheckDetailDO.Cursor = Cursors.Hand;
             btnCheckDetailDO.Image = Properties.Resources.search;
             btnCheckDetailDO.Location = new Point(368, 10);
@@ -174,6 +182,7 @@
             // 
             // txtNumberDO
             // 
+            txtNumberDO.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNumberDO.BackColor = Color.WhiteSmoke;
             txtNumberDO.BorderStyle = BorderStyle.None;
             txtNumberDO.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -197,6 +206,7 @@
             // 
             // label7
             // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(412, 62);
@@ -217,6 +227,7 @@
             // 
             // btnDeleteQueue
             // 
+            btnDeleteQueue.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnDeleteQueue.BackColor = Color.FromArgb(220, 53, 69);
             btnDeleteQueue.Cursor = Cursors.Hand;
             btnDeleteQueue.FlatStyle = FlatStyle.Flat;
@@ -238,6 +249,7 @@
             // 
             // btnResetForm
             // 
+            btnResetForm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnResetForm.BackColor = Color.FromArgb(220, 53, 69);
             btnResetForm.Cursor = Cursors.Hand;
             btnResetForm.FlatStyle = FlatStyle.Flat;
@@ -257,6 +269,7 @@
             // 
             // btnUpdateQueue
             // 
+            btnUpdateQueue.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnUpdateQueue.BackColor = Color.FromArgb(40, 167, 69);
             btnUpdateQueue.Cursor = Cursors.Hand;
             btnUpdateQueue.FlatStyle = FlatStyle.Flat;
@@ -278,6 +291,7 @@
             // 
             // btnCheckIn
             // 
+            btnCheckIn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnCheckIn.BackColor = Color.FromArgb(13, 92, 171);
             btnCheckIn.Cursor = Cursors.Hand;
             btnCheckIn.FlatStyle = FlatStyle.Flat;
@@ -298,6 +312,7 @@
             // 
             // btnQueue
             // 
+            btnQueue.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnQueue.BackColor = Color.FromArgb(52, 58, 64);
             btnQueue.Cursor = Cursors.Hand;
             btnQueue.FlatStyle = FlatStyle.Flat;
@@ -337,6 +352,7 @@
             // 
             // panel5
             // 
+            panel5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel5.BackColor = Color.White;
             panel5.Controls.Add(viewCameraFullscreen);
             panel5.Controls.Add(panel1);

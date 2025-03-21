@@ -48,8 +48,6 @@ namespace VCS.Areas.CheckOut
                 if (camera != null)
                 {
                     var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
-                    media.AddOption(":network-caching=3000");
-                    media.AddOption(":sout-mux-caching=1000");
                     media.AddOption(":deinterlace");
                     var mediaPlayer = new MediaPlayer(media);
                     _mediaPlayer = mediaPlayer;

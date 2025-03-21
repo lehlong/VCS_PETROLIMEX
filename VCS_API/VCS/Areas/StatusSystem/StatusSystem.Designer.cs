@@ -91,6 +91,7 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
             panel1.Controls.Add(btnClean);
             panel1.Controls.Add(panel10);
@@ -104,7 +105,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel1.Controls.Add(button1);
             panel1.Location = new Point(6, 6);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1396, 812);
+            panel1.Size = new Size(1334, 770);
             panel1.TabIndex = 0;
             // 
             // btnClean
@@ -535,7 +536,7 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1425, 1061);
+            ClientSize = new Size(1346, 779);
             Controls.Add(panel1);
             Name = "StatusSystem";
             Text = "StatusSystem";
