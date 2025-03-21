@@ -26,5 +26,9 @@ namespace DMS.CORE.Entities.MD
         public decimal? Capacity { get; set; }
         [Column("ORDER_VEHICLE", TypeName = "NVARCHAR(1000)")]
         public string? OrderVehicle { get; set; }
+        [Column("TDH_CODE", TypeName = "NVARCHAR(50)")]
+        public string? TdhCode { get; set; }
+        [Column("TDHE5_CODE", TypeName = "NVARCHAR(50)")]
+        public string? TdhE5Code { get; set; }
     }
 }

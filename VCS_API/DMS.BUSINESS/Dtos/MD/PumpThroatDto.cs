@@ -31,7 +31,10 @@ namespace DMS.CORE.Entities.MD
         public string GoodsCode { get; set; }
         [Description("Công Suất")]
         public decimal? Capacity { get; set; }
-
+        [Description("Mã tự động hóa")]
+        public string? TdhCode { get; set; }
+        [Description("Mã tự động hóa E5")]
+        public string? TdhE5Code { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblMdPumpThroat, PumpThroatDto>().ReverseMap();
