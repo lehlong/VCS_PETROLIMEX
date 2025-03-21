@@ -548,10 +548,8 @@
             Controls.Add(panel1);
             Controls.Add(panelMain);
             Controls.Add(Navigation);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            MinimizeBox = false;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hệ thống VCS";

@@ -33,12 +33,11 @@ namespace DMS.BUSINESS.Services.Hangfire
                 #region Kho Bến Thuỷ
                 if (w.Code == "2810-BT")
                 {
-                    var material = i.GoodsCode == "000000000000201004" ? i.GoodsCode.Substring(11) : i.GoodsCode.Substring(12);
                     DataTable tableData = new DataTable();
                     var query = $"SELECT MaPhuongTien FROM tblLenhXuatChiTiet " +
                         $"WHERE MaPhuongTien='{vehicle}' " +
                         $"AND TrangThai= 'KT' " +
-                        $"AND NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MaHangHoa = {material}";
+                        $"AND NgayXuat = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MaHangHoa = {i.TdhCode}";
 
                     try
                     {
@@ -62,11 +61,10 @@ namespace DMS.BUSINESS.Services.Hangfire
                         Console.WriteLine(ex.ToString());
                     }
 
-                    var materiale5 = i.GoodsCode.Substring(11);
                     var querye5 = $"SELECT SO_PTIEN FROM LENH_GH " +
                         $"WHERE SO_PTIEN='{vehicle}' " +
                         $"AND TRANG_THAI= '3' " +
-                        $"AND NGAY_DKY = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MA_HHOA = {materiale5}";
+                        $"AND NGAY_DKY = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MA_HHOA = {i.TdhE5Code}";
 
                     try
                     {
@@ -103,12 +101,11 @@ namespace DMS.BUSINESS.Services.Hangfire
                 #region Kho Nghi Hương
                 if (w.Code == "2810-NH")
                 {
-                    var materiale5 = i.GoodsCode == "000000000000201004" ? i.GoodsCode.Substring(11) : i.GoodsCode.Substring(12);
                     DataTable tableData = new DataTable();
                     var querye5 = $"SELECT SO_PTIEN FROM LENH_GH " +
                         $"WHERE SO_PTIEN='{vehicle}' " +
                         $"AND TRANG_THAI= '3' " +
-                        $"AND NGAY_DKY = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MA_HHOA = {materiale5}";
+                        $"AND NGAY_DKY = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND MA_HHOA = {i.TdhE5Code}";
 
                     try
                     {
@@ -136,7 +133,7 @@ namespace DMS.BUSINESS.Services.Hangfire
                     var query = $"SELECT so_ptien FROM LENH_GH " +
                         $"WHERE so_ptien='{vehicle}' " +
                         $"AND Trang_thai_lenh= '4' " +
-                        $"AND Time_tao_lenh = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND Ma_hang = {material}";
+                        $"AND Time_tao_lenh = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND Ma_hang = {i.TdhCode}";
 
                     try
                     {
