@@ -4,7 +4,6 @@ import { BaseFilter } from '../models/base.model';
 import { CameraService } from '../services/master-data/camera.service';
 import { GlobalService } from '../services/global.service';
 import { NzMessageService } from 'ng-zorro-antd/message'
-declare var google: any
 declare var flvjs: any
 @Component({
   selector: 'app-home',
