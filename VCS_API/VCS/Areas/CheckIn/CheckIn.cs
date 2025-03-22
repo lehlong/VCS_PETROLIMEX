@@ -1011,6 +1011,8 @@ namespace VCS.Areas.CheckIn
                 pictureBoxLicensePlate.Image = result.ImageCrop;
                 txtLicensePlate.Text = result.LicensePlateNumber;
 
+                PLATEPATH = croppedPath;
+
                 // Chụp từ các camera khác
                 lstPathImageCapture = Global.lstCamera
                     .Where(x => x.IsIn && x.Code != CameraDetect.Code)
