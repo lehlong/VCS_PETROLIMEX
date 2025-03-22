@@ -130,7 +130,7 @@ namespace DMS.BUSINESS.Services.Hangfire
                     }
 
                     var material =i.GoodsCode.Substring(12);
-                    var query = $"SELECT so_ptien FROM LENH_GH " +
+                    var query = $"SELECT so_ptien FROM BX_BangMaLenh " +
                         $"WHERE so_ptien='{vehicle}' " +
                         $"AND Trang_thai_lenh= '4' " +
                         $"AND Time_tao_lenh = '{DateTime.Now.ToString("yyyy-MM-dd")}' AND Ma_hang = {i.TdhCode}";

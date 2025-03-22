@@ -337,16 +337,19 @@
             panel4.Controls.Add(viewStream);
             panel4.Location = new Point(6, 6);
             panel4.Name = "panel4";
-            panel4.Size = new Size(514, 319);
+            panel4.Padding = new Padding(6);
+            panel4.Size = new Size(514, 295);
             panel4.TabIndex = 6;
             // 
             // viewStream
             // 
             viewStream.BackColor = Color.Black;
+            viewStream.Dock = DockStyle.Fill;
             viewStream.Location = new Point(6, 6);
+            viewStream.Margin = new Padding(0);
             viewStream.MediaPlayer = null;
             viewStream.Name = "viewStream";
-            viewStream.Size = new Size(503, 307);
+            viewStream.Size = new Size(502, 283);
             viewStream.TabIndex = 0;
             viewStream.Text = "videoView1";
             // 
@@ -365,9 +368,9 @@
             panel5.Controls.Add(label4);
             panel5.Controls.Add(btnViewAll);
             panel5.Controls.Add(btnDetect);
-            panel5.Location = new Point(6, 331);
+            panel5.Location = new Point(6, 306);
             panel5.Name = "panel5";
-            panel5.Size = new Size(514, 444);
+            panel5.Size = new Size(514, 469);
             panel5.TabIndex = 7;
             // 
             // viewCameraFullscreen

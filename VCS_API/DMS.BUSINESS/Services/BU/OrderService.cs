@@ -409,12 +409,14 @@ namespace DMS.BUSINESS.Services.BU
                 var lstDetail = await _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).ToListAsync();
                 foreach(var i in lstDetail)
                 {
-                    var materialCode ="00000000000" + i.MaHangHoa;
-                    var o = lstPumpThroat.Where(x => x.GoodsCode == materialCode).OrderBy(x => x.OrderVehicle).FirstOrDefault();
+                    var materialCode ="00000000000" + i.MaHangHoa.Replace(" ","").Trim();
+                    var o = lstPumpThroat.Where(x => x.GoodsCode == materialCode)
+                      .OrderBy(x => x.OrderVehicle == null ? 0 : x.OrderVehicle.Length)
+                      .FirstOrDefault();
                     o.OrderVehicle = o.OrderVehicle + "," + header.VehicleCode;
                     _dbContext.TblMdPumpThroat.Update(o);
 
-                    i.OrderName = _dbContext.TblMdPumpRig.Find(o.PumpRigCode)?.Name + ", " + o.Name;
+                    i.OrderName = _dbContext.TblMdPumpRig.Find(o.PumpRigCode)?.Name + " " + o.Name;
                     _dbContext.TblBuDetailTgbx.Update(i);
                 }
                 _dbContext.SaveChanges();

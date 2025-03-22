@@ -78,7 +78,7 @@
             viewStreamOut.Location = new Point(670, 66);
             viewStreamOut.MediaPlayer = null;
             viewStreamOut.Name = "viewStreamOut";
-            viewStreamOut.Size = new Size(644, 378);
+            viewStreamOut.Size = new Size(644, 364);
             viewStreamOut.TabIndex = 0;
             viewStreamOut.Text = "videoView1";
             // 
@@ -89,7 +89,7 @@
             viewStreamIn.Location = new Point(17, 66);
             viewStreamIn.MediaPlayer = null;
             viewStreamIn.Name = "viewStreamIn";
-            viewStreamIn.Size = new Size(644, 378);
+            viewStreamIn.Size = new Size(644, 364);
             viewStreamIn.TabIndex = 0;
             viewStreamIn.Text = "videoView1";
             // 
@@ -145,7 +145,7 @@
             vCFullscreenOut.ForeColor = Color.White;
             vCFullscreenOut.Image = Properties.Resources.icons8_fullscreen_18;
             vCFullscreenOut.ImageAlign = ContentAlignment.MiddleLeft;
-            vCFullscreenOut.Location = new Point(1272, 453);
+            vCFullscreenOut.Location = new Point(1272, 440);
             vCFullscreenOut.Name = "vCFullscreenOut";
             vCFullscreenOut.Padding = new Padding(6, 0, 0, 0);
             vCFullscreenOut.Size = new Size(42, 40);
@@ -165,7 +165,7 @@
             btnViewAllOut.ForeColor = Color.White;
             btnViewAllOut.Image = Properties.Resources.icons8_application_18;
             btnViewAllOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAllOut.Location = new Point(1224, 453);
+            btnViewAllOut.Location = new Point(1224, 440);
             btnViewAllOut.Name = "btnViewAllOut";
             btnViewAllOut.Padding = new Padding(6, 0, 0, 0);
             btnViewAllOut.Size = new Size(42, 40);
@@ -185,7 +185,7 @@
             vCFullscreenIn.ForeColor = Color.White;
             vCFullscreenIn.Image = Properties.Resources.icons8_fullscreen_18;
             vCFullscreenIn.ImageAlign = ContentAlignment.MiddleLeft;
-            vCFullscreenIn.Location = new Point(620, 453);
+            vCFullscreenIn.Location = new Point(620, 440);
             vCFullscreenIn.Name = "vCFullscreenIn";
             vCFullscreenIn.Padding = new Padding(6, 0, 0, 0);
             vCFullscreenIn.Size = new Size(42, 40);
@@ -205,7 +205,7 @@
             btnDetectOut.ForeColor = Color.White;
             btnDetectOut.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetectOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetectOut.Location = new Point(1081, 453);
+            btnDetectOut.Location = new Point(1081, 440);
             btnDetectOut.Name = "btnDetectOut";
             btnDetectOut.Padding = new Padding(6, 0, 0, 0);
             btnDetectOut.Size = new Size(137, 40);
@@ -226,7 +226,7 @@
             btnViewAllIn.ForeColor = Color.White;
             btnViewAllIn.Image = Properties.Resources.icons8_application_18;
             btnViewAllIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAllIn.Location = new Point(572, 453);
+            btnViewAllIn.Location = new Point(572, 440);
             btnViewAllIn.Name = "btnViewAllIn";
             btnViewAllIn.Padding = new Padding(6, 0, 0, 0);
             btnViewAllIn.Size = new Size(42, 40);
@@ -246,7 +246,7 @@
             btnDetectIn.ForeColor = Color.White;
             btnDetectIn.Image = Properties.Resources.icons8_camera_18__1_;
             btnDetectIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDetectIn.Location = new Point(430, 453);
+            btnDetectIn.Location = new Point(430, 440);
             btnDetectIn.Name = "btnDetectIn";
             btnDetectIn.Padding = new Padding(6, 0, 0, 0);
             btnDetectIn.Size = new Size(136, 40);

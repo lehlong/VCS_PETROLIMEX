@@ -48,7 +48,6 @@ namespace VCS.Areas.CheckOut
                 if (camera != null)
                 {
                     var media = new Media(Global._libVLC, camera.Rtsp, FromType.FromLocation);
-                    media.AddOption(":deinterlace");
                     var mediaPlayer = new MediaPlayer(media);
                     _mediaPlayer = mediaPlayer;
                     viewStream.MediaPlayer = mediaPlayer;
@@ -246,35 +245,7 @@ namespace VCS.Areas.CheckOut
             }
         }
 
-        private void btnCheck_Click(object sender, EventArgs e)
-        {
-            ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
-            string selectedValue = selectedItem.Value;
-            if (string.IsNullOrEmpty(selectedValue))
-            {
-                CommonService.Alert($"Vui lòng chọn phương tiện!", Alert.Alert.enumType.Error);
-                return;
-            }
-            ;
-            var number = "";
-            var lstDo = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).ToList();
-            foreach (var x in lstDo) number += x.Do1Sap + ", ";
-
-
-            var dataDetail = CommonService.CheckInvoice(number);
-            //if (!dataDetail.STATUS)
-            //{
-            //    lblStatus.Text = $"Lệnh xuất chưa có hoá đơn: {dataDetail.DATA}!";
-            //    lblStatus.ForeColor = Color.Red;
-            //    this.isHasInvoice = false;
-            //}
-            //else
-            //{
-            //    lblStatus.Text = $"Các lệnh xuất đã có hoá đơn!";
-            //    lblStatus.ForeColor = Color.Green;
-            //    this.isHasInvoice = true;
-            //}
-        }
+        
 
         private void CheckOutProcess()
         {
@@ -465,7 +436,6 @@ namespace VCS.Areas.CheckOut
                 if (vehicle.StatusProcess == "02" || vehicle.StatusProcess == "05")
                 {
                     CommonService.Alert($"Phương tiện không được xử lý!", Alert.Alert.enumType.Error);
-                    this.isHasInvoice = false;
                     txtNoteOut.Text = "Phương tiện không được xử lý!";
                     IsCancel = true;
                     return;
@@ -474,7 +444,6 @@ namespace VCS.Areas.CheckOut
                 if (vehicle.StatusProcess == "02" || lstDo.Count == 0)
                 {
                     CommonService.Alert($"Phương tiện không có ticket!", Alert.Alert.enumType.Error);
-                    this.isHasInvoice = false;
                     txtNoteOut.Text = "Phương tiện không có ticket!";
                     IsCancel = true;
                     return;
@@ -486,6 +455,37 @@ namespace VCS.Areas.CheckOut
             {
                 MessageBox.Show($"Lỗi khi tải thông tin: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private async void btnCheck_Click(object sender, EventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
+            string selectedValue = selectedItem.Value;
+            if (string.IsNullOrEmpty(selectedValue))
+            {
+                CommonService.Alert($"Vui lòng chọn phương tiện!", Alert.Alert.enumType.Error);
+                return;
+            }
+            panelCheckOut.Controls.Clear();
+            // Truy vấn dữ liệu xuất kho
+            var headerTgbx = await Task.Run(() => _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).ToList());
+            var detailTgbx = await Task.Run(() => _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == selectedValue).ToList());
+            var lstDo = detailTgbx.Select(x => x.SoLenh).Distinct().ToList();
+            var vehicle = await Task.Run(() => _dbContext.TblBuHeader.Find(selectedValue));
+
+            // Append CheckOut Panels
+            if (lstDo.Count > 0)
+            {
+                await Task.Run(() =>
+                {
+                    foreach (var doSap in lstDo)
+                    {
+                        var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
+                        Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien)));
+                    }
+                });
+            }
+
         }
 
         private void AppendPanelDetailChechkOut(List<TblBuDetailTgbx> data, string vehicleCode)
@@ -578,7 +578,7 @@ namespace VCS.Areas.CheckOut
 
                 foreach (var item in data)
                 {
-                    var materials = _dbContext.TblMdGoods.Find("00000000000" + item.MaHangHoa);
+                    var materials = _dbContext.TblMdGoods.Find("00000000000" + item.MaHangHoa.Replace(" ","").Trim());
                     string materialName = materials?.Name ?? "Unknown";
                     dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat?.ToString("#,#")} ({item.DonViTinh})");
                 }
