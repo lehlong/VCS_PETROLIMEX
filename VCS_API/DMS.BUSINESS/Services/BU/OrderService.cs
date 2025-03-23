@@ -409,9 +409,8 @@ namespace DMS.BUSINESS.Services.BU
                 var lstDetail = await _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).ToListAsync();
                 foreach(var i in lstDetail)
                 {
-                    var materialCode ="00000000000" + i.MaHangHoa.Replace(" ","").Trim();
-                    var o = lstPumpThroat.Where(x => x.GoodsCode == materialCode)
-                      .OrderBy(x => x.OrderVehicle == null ? 0 : x.OrderVehicle.Length)
+                    var o = lstPumpThroat.Where(x => x.GoodsCode.Contains(i.MaHangHoa))
+                      .OrderBy(x => x.OrderVehicle.Length)
                       .FirstOrDefault();
                     o.OrderVehicle = o.OrderVehicle + "," + header.VehicleCode;
                     _dbContext.TblMdPumpThroat.Update(o);

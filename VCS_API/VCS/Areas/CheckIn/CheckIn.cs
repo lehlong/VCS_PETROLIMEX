@@ -552,16 +552,13 @@ namespace VCS.Areas.CheckIn
                     }
                 }
             }
-            var name = _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch + _dbContext.TblMdVehicle.FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
 
-            var _stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date
-            && q.WarehouseCode == ProfileUtilities.User.WarehouseCode
-            && q.OrgCode == ProfileUtilities.User.OrganizeCode).Count();
 
-            _stt = _stt == 0 ? 1 :
-                _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date
+            var _stt = 0;
+            var stt = _dbContext.tblMdSequence.Where(q => q.CreateDate.Value.Date == DateTime.Now.Date
             && q.WarehouseCode == ProfileUtilities.User.WarehouseCode
-            && q.OrgCode == ProfileUtilities.User.OrganizeCode).Max(x => x.STT) + 1;
+            && q.OrgCode == ProfileUtilities.User.OrganizeCode).ToList();
+            _stt = stt.Count() == 0 ? 1 : stt.Max(x => x.STT) + 1;
 
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
@@ -571,7 +568,7 @@ namespace VCS.Areas.CheckIn
                 {
                     Id = headerId,
                     VehicleCode = txtLicensePlate.Text,
-                    VehicleName = name,
+                    VehicleName = txtVehicleName.Text,
                     CompanyCode = ProfileUtilities.User.OrganizeCode,
                     WarehouseCode = ProfileUtilities.User.WarehouseCode,
                     NoteIn = txtNoteIn.Text,
@@ -672,8 +669,9 @@ namespace VCS.Areas.CheckIn
 
             var vehicle = _dbContext.TblMdVehicle.Find(txtLicensePlate.Text);
 
-            if(vehicle != null)
+            if (vehicle != null)
             {
+                vehicle.OicPbatch = txtVehicleName.Text;
                 _dbContext.TblMdVehicle.Update(vehicle);
             }
             else

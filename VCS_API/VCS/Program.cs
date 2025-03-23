@@ -63,6 +63,8 @@ namespace VCS
                     "--network-caching=50", 
                     "--live-caching=50", 
                     "--file-caching=50",
+                    "--drop-late-frames",
+                    "--skip-frames",
                     "--clock-jitter=0", 
                     "--clock-synchro=0",
                     "--no-audio",
