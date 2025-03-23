@@ -32,13 +32,13 @@ namespace VCS.APP.Areas.History
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             panel1 = new Panel();
             dataTable = new DataGridView();
@@ -94,42 +94,43 @@ namespace VCS.APP.Areas.History
             dataTable.AllowUserToAddRows = false;
             dataTable.AllowUserToDeleteRows = false;
             dataTable.AllowUserToResizeRows = false;
+            dataTable.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataTable.BackgroundColor = Color.White;
             dataTable.BorderStyle = BorderStyle.None;
             dataTable.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            dataGridViewCellStyle8.Padding = new Padding(6, 0, 6, 0);
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle8.SelectionForeColor = Color.White;
-            dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.Padding = new Padding(6, 0, 6, 0);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
+            dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataTable.ColumnHeadersHeight = 40;
             dataTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataTable.Columns.AddRange(new DataGridViewColumn[] { Id, Stt, VehicleName, VehicleCode, Order, StatusVehicle, TimeCheckIn, TimeCheckOut, Edit, Print, Cancel });
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = Color.White;
-            dataGridViewCellStyle13.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle13.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle13.SelectionBackColor = Color.White;
-            dataGridViewCellStyle13.SelectionForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.False;
-            dataTable.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = Color.White;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dataTable.DefaultCellStyle = dataGridViewCellStyle6;
             dataTable.EnableHeadersVisualStyles = false;
             dataTable.GridColor = Color.Gray;
             dataTable.Location = new Point(8, 86);
             dataTable.Name = "dataTable";
             dataTable.ReadOnly = true;
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle14.ForeColor = Color.White;
-            dataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(52, 58, 64);
-            dataGridViewCellStyle14.SelectionForeColor = Color.White;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-            dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(52, 58, 64);
+            dataGridViewCellStyle7.SelectionForeColor = Color.White;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dataTable.RowHeadersVisible = false;
             dataTable.RowTemplate.Height = 40;
             dataTable.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -149,8 +150,8 @@ namespace VCS.APP.Areas.History
             // Stt
             // 
             Stt.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Stt.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Stt.DefaultCellStyle = dataGridViewCellStyle2;
             Stt.FillWeight = 14F;
             Stt.HeaderText = "STT";
             Stt.MinimumWidth = 16;
@@ -182,8 +183,8 @@ namespace VCS.APP.Areas.History
             // 
             // Order
             // 
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            Order.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Order.DefaultCellStyle = dataGridViewCellStyle3;
             Order.FillWeight = 5.931089F;
             Order.HeaderText = "STT VÀO KHO";
             Order.Name = "Order";
@@ -199,8 +200,8 @@ namespace VCS.APP.Areas.History
             // TimeCheckIn
             // 
             TimeCheckIn.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TimeCheckIn.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TimeCheckIn.DefaultCellStyle = dataGridViewCellStyle4;
             TimeCheckIn.FillWeight = 200F;
             TimeCheckIn.HeaderText = "THỜI GIAN VÀO";
             TimeCheckIn.MinimumWidth = 200;
@@ -211,8 +212,8 @@ namespace VCS.APP.Areas.History
             // TimeCheckOut
             // 
             TimeCheckOut.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TimeCheckOut.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TimeCheckOut.DefaultCellStyle = dataGridViewCellStyle5;
             TimeCheckOut.FillWeight = 200F;
             TimeCheckOut.HeaderText = "THỜI GIAN RA";
             TimeCheckOut.MinimumWidth = 200;
@@ -255,6 +256,7 @@ namespace VCS.APP.Areas.History
             // 
             // label6
             // 
+            label6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(854, 14);
@@ -265,6 +267,7 @@ namespace VCS.APP.Areas.History
             // 
             // cbStatus
             // 
+            cbStatus.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             cbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cbStatus.FlatStyle = FlatStyle.System;
             cbStatus.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -277,6 +280,7 @@ namespace VCS.APP.Areas.History
             // 
             // txtVehicleName
             // 
+            txtVehicleName.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             txtVehicleName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtVehicleName.Location = new Point(565, 37);
             txtVehicleName.Name = "txtVehicleName";
@@ -286,6 +290,7 @@ namespace VCS.APP.Areas.History
             // 
             // txtVehicleCode
             // 
+            txtVehicleCode.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             txtVehicleCode.BackColor = Color.White;
             txtVehicleCode.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtVehicleCode.Location = new Point(711, 37);
@@ -296,6 +301,7 @@ namespace VCS.APP.Areas.History
             // 
             // toDate
             // 
+            toDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             toDate.CustomFormat = "dd/MM/yyyy";
             toDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             toDate.Format = DateTimePickerFormat.Custom;
@@ -307,6 +313,7 @@ namespace VCS.APP.Areas.History
             // 
             // fromDate
             // 
+            fromDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             fromDate.CustomFormat = "dd/MM/yyyy";
             fromDate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             fromDate.Format = DateTimePickerFormat.Custom;
@@ -318,6 +325,7 @@ namespace VCS.APP.Areas.History
             // 
             // label5
             // 
+            label5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
             label5.Location = new Point(708, 14);
@@ -328,6 +336,7 @@ namespace VCS.APP.Areas.History
             // 
             // label4
             // 
+            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
             label4.Location = new Point(562, 14);
@@ -338,6 +347,7 @@ namespace VCS.APP.Areas.History
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
             label2.Location = new Point(1146, 14);
@@ -348,6 +358,7 @@ namespace VCS.APP.Areas.History
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(1000, 14);
@@ -358,6 +369,7 @@ namespace VCS.APP.Areas.History
             // 
             // btnSearch
             // 
+            btnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSearch.BackColor = Color.FromArgb(13, 92, 171);
             btnSearch.Cursor = Cursors.Hand;
             btnSearch.FlatAppearance.BorderSize = 0;

@@ -32,12 +32,17 @@ namespace VCS.APP.Areas.StatusSystem
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusSystem));
             panel1 = new Panel();
+            panel8 = new Panel();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
+            label6 = new Label();
+            tdhe5 = new Label();
             btnClean = new Button();
             panel10 = new Panel();
             label23 = new Label();
             pictureBox12 = new PictureBox();
             label24 = new Label();
-            label5 = new Label();
+            tgbx = new Label();
             panel11 = new Panel();
             label25 = new Label();
             pictureBox13 = new PictureBox();
@@ -52,7 +57,7 @@ namespace VCS.APP.Areas.StatusSystem
             label19 = new Label();
             pictureBox10 = new PictureBox();
             label20 = new Label();
-            label1 = new Label();
+            tdh = new Label();
             panel6 = new Panel();
             label18 = new Label();
             pictureBox9 = new PictureBox();
@@ -71,6 +76,8 @@ namespace VCS.APP.Areas.StatusSystem
             label12 = new Label();
             button1 = new Button();
             panel1.SuspendLayout();
+            panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             panel11.SuspendLayout();
@@ -93,6 +100,7 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel8);
             panel1.Controls.Add(btnClean);
             panel1.Controls.Add(panel10);
             panel1.Controls.Add(panel11);
@@ -107,6 +115,58 @@ namespace VCS.APP.Areas.StatusSystem
             panel1.Name = "panel1";
             panel1.Size = new Size(1334, 770);
             panel1.TabIndex = 0;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.WhiteSmoke;
+            panel8.Controls.Add(label2);
+            panel8.Controls.Add(pictureBox1);
+            panel8.Controls.Add(label6);
+            panel8.Controls.Add(tdhe5);
+            panel8.Location = new Point(356, 209);
+            panel8.Name = "panel8";
+            panel8.Padding = new Padding(12);
+            panel8.Size = new Size(300, 77);
+            panel8.TabIndex = 48;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(108, 56);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 15);
+            label2.TabIndex = 13;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Left;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(12, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(50, 53);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 12;
+            pictureBox1.TabStop = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(64, 15);
+            label6.Name = "label6";
+            label6.Size = new Size(145, 21);
+            label6.TabIndex = 11;
+            label6.Text = "TỰ ĐỘNG HOÁ E5";
+            // 
+            // tdhe5
+            // 
+            tdhe5.AutoSize = true;
+            tdhe5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tdhe5.Location = new Point(65, 39);
+            tdhe5.Name = "tdhe5";
+            tdhe5.Size = new Size(146, 21);
+            tdhe5.TabIndex = 34;
+            tdhe5.Text = "Không có trạng thái";
             // 
             // btnClean
             // 
@@ -136,8 +196,8 @@ namespace VCS.APP.Areas.StatusSystem
             panel10.Controls.Add(label23);
             panel10.Controls.Add(pictureBox12);
             panel10.Controls.Add(label24);
-            panel10.Controls.Add(label5);
-            panel10.Location = new Point(356, 209);
+            panel10.Controls.Add(tgbx);
+            panel10.Location = new Point(689, 209);
             panel10.Name = "panel10";
             panel10.Padding = new Padding(12);
             panel10.Size = new Size(300, 77);
@@ -172,15 +232,15 @@ namespace VCS.APP.Areas.StatusSystem
             label24.TabIndex = 11;
             label24.Text = "HỆ THỐNG TGBX";
             // 
-            // label5
+            // tgbx
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(65, 39);
-            label5.Name = "label5";
-            label5.Size = new Size(146, 21);
-            label5.TabIndex = 38;
-            label5.Text = "Không có trạng thái";
+            tgbx.AutoSize = true;
+            tgbx.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tgbx.Location = new Point(65, 39);
+            tgbx.Name = "tgbx";
+            tgbx.Size = new Size(146, 21);
+            tgbx.TabIndex = 38;
+            tgbx.Text = "Không có trạng thái";
             // 
             // panel11
             // 
@@ -292,7 +352,7 @@ namespace VCS.APP.Areas.StatusSystem
             panel7.Controls.Add(label19);
             panel7.Controls.Add(pictureBox10);
             panel7.Controls.Add(label20);
-            panel7.Controls.Add(label1);
+            panel7.Controls.Add(tdh);
             panel7.Location = new Point(24, 209);
             panel7.Name = "panel7";
             panel7.Padding = new Padding(12);
@@ -328,15 +388,15 @@ namespace VCS.APP.Areas.StatusSystem
             label20.TabIndex = 11;
             label20.Text = "HỆ THỐNG TỰ ĐỘNG HOÁ";
             // 
-            // label1
+            // tdh
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(65, 39);
-            label1.Name = "label1";
-            label1.Size = new Size(146, 21);
-            label1.TabIndex = 34;
-            label1.Text = "Không có trạng thái";
+            tdh.AutoSize = true;
+            tdh.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tdh.Location = new Point(65, 39);
+            tdh.Name = "tdh";
+            tdh.Size = new Size(146, 21);
+            tdh.TabIndex = 34;
+            tdh.Text = "Không có trạng thái";
             // 
             // panel6
             // 
@@ -540,8 +600,10 @@ namespace VCS.APP.Areas.StatusSystem
             Controls.Add(panel1);
             Name = "StatusSystem";
             Text = "StatusSystem";
-            Load += StatusSystem_Load;
             panel1.ResumeLayout(false);
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
@@ -573,10 +635,10 @@ namespace VCS.APP.Areas.StatusSystem
 
         private Panel panel1;
         private Button button1;
-        private Label label5;
+        private Label tgbx;
         private Label label4;
         private Label label3;
-        private Label label1;
+        private Label tdh;
         private Panel panel3;
         private Label label11;
         private Panel panel2;
@@ -615,5 +677,10 @@ namespace VCS.APP.Areas.StatusSystem
         private PictureBox pictureBox7;
         private PictureBox pictureBox6;
         private Button btnClean;
+        private Panel panel8;
+        private Label label2;
+        private PictureBox pictureBox1;
+        private Label label6;
+        private Label tdhe5;
     }
 }

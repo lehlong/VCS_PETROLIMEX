@@ -12,6 +12,11 @@
         {
             Opacity = 0.0;
             StartPosition = FormStartPosition.Manual;
+            using (Graphics g = CreateGraphics())
+            {
+                int textWidth = (int)g.MeasureString(msg, label1.Font).Width + 40;
+                Width = Math.Max(Width, textWidth);
+            }
             int screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int alertHeight = Height + 5, alertWidth = Width, startX = (screenWidth - alertWidth) / 2;
             openAlerts.Add(this);
