@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using DMS.CORE;
 using VCS.Areas.Login;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
@@ -12,6 +11,7 @@ using LibVLCSharp.Shared;
 using VCS.APP.Utilities;
 using Microsoft.ML.OnnxRuntime;
 using Python.Runtime;
+using VCS.DbContext.Common;
 
 namespace VCS
 {
@@ -79,7 +79,7 @@ namespace VCS
         {
             try
             {
-                Global._session = new InferenceSession(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "models", "model.onnx"));
+                Global._session = new InferenceSession($"{Environment.CurrentDirectory}\\checkpoints\\license_plate_onnx\\model.onnx");
             }
             catch (Exception ex)
             {

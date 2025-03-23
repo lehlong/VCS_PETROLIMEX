@@ -1,8 +1,8 @@
-﻿using DMS.CORE;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Management;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.DbContext.Common;
 
 namespace VCS.APP.Areas.StatusSystem
 {

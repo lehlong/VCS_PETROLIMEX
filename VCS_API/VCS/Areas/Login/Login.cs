@@ -1,12 +1,9 @@
-﻿using Common.Util;
-using DMS.CORE;
-using IWshRuntimeLibrary;
-using LibVLCSharp.Shared;
+﻿using IWshRuntimeLibrary;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.ML.OnnxRuntime;
 using Python.Runtime;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.DbContext.Common;
 
 namespace VCS.Areas.Login
 {
@@ -43,7 +40,7 @@ namespace VCS.Areas.Login
             var user = _dbContext.TblAdAccount
                 .Include(x => x.Account_AccountGroups).ThenInclude(x => x.AccountGroup).ThenInclude(x => x.ListAccountGroupRight).ThenInclude(x => x.Right)
                 .Include(x => x.AccountRights).ThenInclude(x => x.Right)
-                .FirstOrDefault(x => x.UserName == username.Text.Trim() && x.Password == Utils.CryptographyMD5(password.Text.Trim()));
+                .FirstOrDefault(x => x.UserName == username.Text.Trim() && x.Password == CommonService.CryptographyMD5(password.Text.Trim()));
 
             if (user == null)
             {

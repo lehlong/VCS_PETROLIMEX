@@ -1,5 +1,4 @@
-﻿using DMS.CORE;
-using Python.Runtime;
+﻿using Python.Runtime;
 using System.Diagnostics;
 using VCS.APP.Areas.ConfigApp;
 using VCS.APP.Areas.History;
@@ -10,6 +9,7 @@ using VCS.Areas.CheckIn;
 using VCS.Areas.CheckOut;
 using VCS.Areas.Home;
 using VCS.Areas.Login;
+using VCS.DbContext.Common;
 
 namespace VCS
 {

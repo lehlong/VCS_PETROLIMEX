@@ -1,22 +1,18 @@
 ﻿using System.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
 using VCS.APP.Utilities;
 using System.Text.Json;
-using DMS.CORE;
 using Microsoft.Extensions.Configuration;
 using VCS.Services;
 using Emgu.CV;
 using Emgu.CV.Util;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using DMS.CORE.Entities.AD;
 using VCS.Areas.Alert;
-using Microsoft.AspNetCore.Http;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System.Text;
 using Python.Runtime;
+using System.Security.Cryptography;
+using VCS.DbContext.Entities.AD;
 
 namespace VCS.APP.Services
 {
@@ -529,6 +525,18 @@ namespace VCS.APP.Services
             
         }
         #endregion
+
+        public static string CryptographyMD5(string source)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(source);
+            byte[] bytHash = MD5.HashData(buffer);
+            string result = string.Empty;
+            foreach (byte a in bytHash)
+            {
+                result += int.Parse(a.ToString(), System.Globalization.NumberStyles.HexNumber).ToString();
+            }
+            return result;
+        }
     }
 
     public class ResultDectect

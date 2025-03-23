@@ -1,8 +1,4 @@
-﻿using DMS.CORE;
-using DMS.CORE.Entities.BU;
-using DMS.CORE.Entities.MD;
-using DocumentFormat.OpenXml;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using VCS.APP.Areas.PrintStt;
@@ -10,6 +6,9 @@ using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
 using VCS.Areas.ViewAllCamera;
+using VCS.DbContext.Common;
+using VCS.DbContext.Entities.BU;
+using VCS.DbContext.Entities.MD;
 using VCS.Services;
 
 namespace VCS.Areas.CheckIn

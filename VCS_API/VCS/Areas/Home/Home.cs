@@ -1,21 +1,10 @@
-﻿using DMS.CORE;
-using DMS.CORE.Entities.MD;
-using DocumentFormat.OpenXml.Office2010.PowerPoint;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using LibVLCSharp.WinForms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Utilities;
 using VCS.Areas.ViewAllCamera;
-using Media = LibVLCSharp.Shared.Media;
+using VCS.DbContext.Common;
+using VCS.DbContext.Entities.MD;
 
 namespace VCS.Areas.Home
 {

@@ -1,9 +1,9 @@
-﻿using DMS.CORE.Entities.AD;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VCS.DbContext.Entities.AD;
 
 namespace VCS.APP.Utilities
 {

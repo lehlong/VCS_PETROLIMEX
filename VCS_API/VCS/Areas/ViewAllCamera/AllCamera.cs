@@ -1,17 +1,6 @@
-﻿using DMS.CORE.Entities.MD;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using LibVLCSharp.WinForms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using VCS.APP.Utilities;
-using MediaPlayer = LibVLCSharp.Shared.MediaPlayer;
+using VCS.DbContext.Entities.MD;
 
 namespace VCS.APP.Areas.ViewAllCamera
 {

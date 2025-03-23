@@ -1,16 +1,6 @@
-﻿using DMS.CORE.Entities.MD;
-using LibVLCSharp.Forms;
-using LibVLCSharp.Shared;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using LibVLCSharp.Shared;
 using VCS.APP.Utilities;
+using VCS.DbContext.Entities.MD;
 
 namespace VCS.Areas.ViewAllCamera
 {

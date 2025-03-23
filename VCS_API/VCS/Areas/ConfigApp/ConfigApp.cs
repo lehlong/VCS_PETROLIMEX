@@ -1,25 +1,9 @@
-﻿using DMS.CORE;
-using DMS.CORE.Entities.AD;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
 using System.Text.Json.Nodes;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.ServiceProcess;
 using VCS.APP.Utilities;
-using System;
-
-using System.Diagnostics;
-using System.Threading;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 using Microsoft.Win32;
+using VCS.DbContext.Common;
 
 namespace VCS.APP.Areas.ConfigApp
 {

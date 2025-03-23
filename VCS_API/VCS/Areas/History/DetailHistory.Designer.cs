@@ -1,5 +1,4 @@
-﻿using NPOI.SS.Formula.Functions;
-
+﻿
 namespace VCS.APP.Areas.History
 {
     partial class DetailHistory

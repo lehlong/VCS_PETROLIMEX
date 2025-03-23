@@ -1,20 +1,8 @@
-﻿using DMS.CORE;
-using DMS.CORE.Entities.BU;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Office2013.Word;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using VCS.APP.Areas.PrintStt;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
+using VCS.DbContext.Common;
 using VCS.Services;
 
 namespace VCS.APP.Areas.History

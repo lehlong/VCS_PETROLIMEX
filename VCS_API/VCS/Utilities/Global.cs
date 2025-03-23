@@ -1,11 +1,6 @@
-﻿using DMS.CORE.Entities.MD;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using Microsoft.ML.OnnxRuntime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VCS.DbContext.Entities.MD;
 
 namespace VCS.APP.Utilities
 {

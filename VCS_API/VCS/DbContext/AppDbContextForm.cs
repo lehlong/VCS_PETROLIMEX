@@ -1,17 +1,11 @@
-﻿using DMS.CORE.Common;
-using DMS.CORE.Entities.AD;
-using DMS.CORE.Entities.BU;
-using DMS.CORE.Entities.MD;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using VCS.DbContext.Entities.AD;
+using VCS.DbContext.Entities.BU;
+using VCS.DbContext.Entities.MD;
 
-namespace DMS.CORE
+namespace VCS.DbContext.Common
 {
-    public class AppDbContextForm : DbContext
+    public class AppDbContextForm : Microsoft.EntityFrameworkCore.DbContext
     {
         public AppDbContextForm(DbContextOptions<AppDbContextForm> options) : base(options) { }
 
