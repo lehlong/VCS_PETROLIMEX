@@ -58,14 +58,18 @@ namespace VCS.Areas.Home
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            foreach (var player in _mediaPlayers.Values)
-            {
-                player?.Stop();
-                player?.Dispose();
-            }
-            _mediaPlayers.Clear();
-
             base.OnFormClosing(e);
+
+            Task.Run(() =>
+            {
+                foreach (var player in _mediaPlayers.Values)
+                {
+                    player?.Stop();
+                    player?.Dispose();
+                }
+                _mediaPlayers.Clear();
+
+            });
         }
 
         private void btnViewAllIn_Click(object sender, EventArgs e)

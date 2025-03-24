@@ -75,9 +75,12 @@ namespace VCS.Areas.CheckOut
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            _mediaPlayer?.Stop();
-            _mediaPlayer?.Dispose();
             base.OnFormClosing(e);
+            Task.Run(() =>
+            {
+                _mediaPlayer?.Stop();
+                _mediaPlayer?.Dispose();
+            });
         }
         #endregion
 

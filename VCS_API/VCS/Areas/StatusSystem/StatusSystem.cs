@@ -115,8 +115,8 @@ namespace VCS.APP.Areas.StatusSystem
             UpdateRAMInfo();
             UpdateCPUInfo();
             UpdateStorageInfo();
-            UpdateGPUInfo();
             CheckStatusSystem();
+            UpdateGPUInfo();
         }
         private void btnClean_Click(object sender, EventArgs e)
         {

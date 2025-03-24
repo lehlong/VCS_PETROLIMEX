@@ -74,7 +74,6 @@
             password.Size = new Size(196, 22);
             password.TabIndex = 10;
             password.UseSystemPasswordChar = true;
-            password.KeyDown += password_KeyDown;
             // 
             // username
             // 
@@ -85,7 +84,6 @@
             username.Name = "username";
             username.Size = new Size(196, 22);
             username.TabIndex = 9;
-            username.KeyDown += username_KeyDown;
             // 
             // pictureBox1
             // 

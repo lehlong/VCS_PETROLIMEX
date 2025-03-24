@@ -1,5 +1,4 @@
-﻿using IWshRuntimeLibrary;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Python.Runtime;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
@@ -10,18 +9,26 @@ namespace VCS.Areas.Login
     public partial class Login : Form
     {
         private readonly AppDbContextForm _dbContext;
-
         public Login(AppDbContextForm dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
-            CreateDesktopShortcut();
             LoadSavedCredentials();
+            AttachKeyDownEvents();
         }
 
         private void btnLogin_Click(object sender, EventArgs e) => LoginProcess();
-        private void username_KeyDown(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) LoginProcess(); }
-        private void password_KeyDown(object sender, KeyEventArgs e) { if (e.KeyCode == Keys.Enter) LoginProcess(); }
+
+        private void AttachKeyDownEvents()
+        {
+            username.KeyDown += HandleEnterKey;
+            password.KeyDown += HandleEnterKey;
+        }
+
+        private void HandleEnterKey(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) LoginProcess();
+        }
 
         private void LoadSavedCredentials()
         {
@@ -31,36 +38,51 @@ namespace VCS.Areas.Login
 
         private async void LoginProcess()
         {
-            if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrWhiteSpace(password.Text))
             {
                 CommonService.Alert("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!", Alert.Alert.enumType.Error);
                 return;
             }
 
+            string hashedPassword = CommonService.CryptographyMD5(password.Text.Trim());
+
             var user = _dbContext.TblAdAccount
-                .Include(x => x.Account_AccountGroups).ThenInclude(x => x.AccountGroup).ThenInclude(x => x.ListAccountGroupRight).ThenInclude(x => x.Right)
-                .Include(x => x.AccountRights).ThenInclude(x => x.Right)
-                .FirstOrDefault(x => x.UserName == username.Text.Trim() && x.Password == CommonService.CryptographyMD5(password.Text.Trim()));
+                .AsNoTracking()
+                .Include(x => x.Account_AccountGroups)
+                    .ThenInclude(x => x.AccountGroup)
+                        .ThenInclude(x => x.ListAccountGroupRight)
+                            .ThenInclude(x => x.Right)
+                .Include(x => x.AccountRights)
+                    .ThenInclude(x => x.Right)
+                .FirstOrDefault(x => x.UserName == username.Text.Trim() && x.Password == hashedPassword);
 
             if (user == null)
             {
                 CommonService.Alert("Tài khoản hoặc mật khẩu không đúng!", Alert.Alert.enumType.Error);
                 return;
             }
+
             if (user.AccountType != "III")
             {
                 CommonService.Alert("Hệ thống chỉ dành cho nhân viên bảo vệ!", Alert.Alert.enumType.Error);
                 return;
             }
 
+            var main = new Main(_dbContext);
+
+            // Đăng nhập thành công
             ProfileUtilities.User = user;
-            CommonService.LoadUserConfig();
             CommonService.LoadUserPermissions(user);
             SaveCredentials();
-            Global.lstCamera = _dbContext.TblMdCamera.Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode).ToList();
+
+            Global.lstCamera = _dbContext.TblMdCamera
+                .AsNoTracking()
+                .Where(x => x.WarehouseCode == user.WarehouseCode && x.OrgCode == user.OrganizeCode)
+                .ToList();
+
             CommonService.Alert("Đăng nhập thành công!", Alert.Alert.enumType.Success);
 
-            new Main(_dbContext).Show();
+            main.Show();
             this.Hide();
         }
 
@@ -69,27 +91,6 @@ namespace VCS.Areas.Login
             Properties.Settings.Default.UserName = username.Text;
             Properties.Settings.Default.Password = password.Text;
             Properties.Settings.Default.Save();
-        }
-
-        private void CreateDesktopShortcut()
-        {
-            string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "VCS.lnk");
-            if (System.IO.File.Exists(shortcutPath)) return;
-
-            try
-            {
-                WshShell shell = new WshShell();
-                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
-                shortcut.TargetPath = Application.ExecutablePath;
-                shortcut.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
-                shortcut.Description = "Hệ thống VCS";
-                shortcut.IconLocation = Application.ExecutablePath;
-                shortcut.Save();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Không thể tạo shortcut phần mềm: {ex.Message}");
-            }
         }
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e)

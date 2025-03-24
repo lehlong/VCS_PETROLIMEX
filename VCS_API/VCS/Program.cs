@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +10,8 @@ using VCS.APP.Utilities;
 using Microsoft.ML.OnnxRuntime;
 using Python.Runtime;
 using VCS.DbContext.Common;
+using IWshRuntimeLibrary;
+using VCS.Areas.Startup;
 
 namespace VCS
 {
@@ -20,131 +20,92 @@ namespace VCS
         [STAThread]
         static void Main()
         {
-            if (IsApplicationRunning())
+            if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Application.ExecutablePath)).Length > 1)
             {
                 MessageBox.Show("Ứng dụng đã đang chạy!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Application.Exit();
                 return;
             }
-
-            string exePath = AppDomain.CurrentDomain.BaseDirectory;
-            Directory.SetCurrentDirectory(exePath);
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            InitializeLibVLC();
-            LoadOnnxModel();
-            InitializePython();
-            LoadDbContext();
+            using (Startup s = new Startup())
+            {
+                s.Show();
+                Application.DoEvents();
+                try { InitializeSystem(); } catch (Exception ex) { MessageBox.Show($"Lỗi khởi tạo hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            }
+            using var host = CreateHostBuilder().Build();
+            using var scope = host.Services.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContextForm>>().CreateDbContext();
+            Application.Run(new Login(dbContext));
         }
-        static void LoadDbContext()
+
+        static void InitializeSystem()
+        {
+            string exePath = AppDomain.CurrentDomain.BaseDirectory;
+            Directory.SetCurrentDirectory(exePath);
+            Core.Initialize();
+            Global._libVLC = new LibVLC("--network-caching=50", "--live-caching=50", "--file-caching=50", "--drop-late-frames", "--skip-frames", "--clock-jitter=0", "--clock-synchro=0", "--no-audio", "--rtsp-tcp");
+            Global._session = new InferenceSession(Path.Combine(exePath, "checkpoints", "license_plate_onnx", "model.onnx"));
+            InitializePython(exePath);
+            CreateDesktopShortcut();
+            LoadUserConfig();
+            using var host = CreateHostBuilder().Build();
+            using var scope = host.Services.CreateScope();
+            var dbContextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContextForm>>();
+            using var dbContext = dbContextFactory.CreateDbContext();
+            if (!dbContext.Database.CanConnect()) Console.WriteLine("Failed to connect to database.");
+        }
+
+        static void InitializePython(string exePath)
+        {
+            string pythonDll = Path.Combine(exePath, "LicensePlateService", "venv", "python312.dll");
+            if (!System.IO.File.Exists(pythonDll)) throw new FileNotFoundException($"Không tìm thấy Python DLL: {pythonDll}");
+            Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
+            if (!PythonEngine.IsInitialized) PythonEngine.Initialize();
+            using (Py.GIL())
+            {
+                Global.np = Py.Import("numpy");
+                Global.cv2 = Py.Import("cv2");
+                string scriptPath = Path.Combine(exePath, "LicensePlateService", "app.py");
+                if (!System.IO.File.Exists(scriptPath)) throw new FileNotFoundException($"Không tìm thấy app.py: {scriptPath}");
+                dynamic sys = Py.Import("sys");
+                sys.path.append(Path.GetDirectoryName(scriptPath));
+                Global.ocr_module = Py.Import("app");
+            }
+        }
+
+        static void CreateDesktopShortcut()
+        {
+            string shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "VCS.lnk");
+            if (System.IO.File.Exists(shortcutPath)) return;
+            try
+            {
+                var shell = new WshShell();
+                var shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+                shortcut.TargetPath = Application.ExecutablePath;
+                shortcut.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                shortcut.Description = "VCS System";
+                shortcut.IconLocation = Application.ExecutablePath;
+                shortcut.Save();
+            }
+            catch (Exception ex) { MessageBox.Show($"Không thể tạo shortcut phần mềm: {ex.Message}"); }
+        }
+
+        static void LoadUserConfig()
         {
             try
             {
-
-                var host = CreateHostBuilder().Build();
-                using var scope = host.Services.CreateScope();
-                var services = scope.ServiceProvider;
-                var dbContextFactory = services.GetRequiredService<IDbContextFactory<AppDbContextForm>>();
-                using var dbContext = dbContextFactory.CreateDbContext();
-                Application.Run(new Login(dbContext));
+                var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
+                Global.SmoApiUsername = config["Setting:SmoApiUsername"];
+                Global.SmoApiPassword = config["Setting:SmoApiPassword"];
+                Global.SmoApiUrl = config["Setting:SmoApiUrl"];
+                Global.PathSaveFile = config["Setting:PathSaveFile"];
+                Global.VcsUrl = config["Setting:VcsUrl"];
+                Global.CropWidth = string.IsNullOrEmpty(config["Setting:CropImagesWidth"]) ? 0 : Math.Max(0, Convert.ToUInt32(config["Setting:CropImagesWidth"]));
+                Global.CropHeight = string.IsNullOrEmpty(config["Setting:CropImagesHeight"]) ? 0 : Math.Max(0, Convert.ToUInt32(config["Setting:CropImagesHeight"]));
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải DbContext: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        static void InitializeLibVLC()
-        {
-            try
-            {
-                Core.Initialize();
-                Global._libVLC = new LibVLC(
-                    "--network-caching=50", 
-                    "--live-caching=50", 
-                    "--file-caching=50",
-                    "--drop-late-frames",
-                    "--skip-frames",
-                    "--clock-jitter=0", 
-                    "--clock-synchro=0",
-                    "--no-audio",
-                    "--rtsp-tcp");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi khởi tạo LibVLC: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        static void LoadOnnxModel()
-        {
-            try
-            {
-                Global._session = new InferenceSession($"{Environment.CurrentDirectory}\\checkpoints\\license_plate_onnx\\model.onnx");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải model ONNX: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        static bool IsApplicationRunning()
-        {
-            string appName = System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath);
-            Process[] processes = Process.GetProcessesByName(appName);
-            return processes.Length > 1;
-        }
-        static void InitializePython()
-        {
-            try
-            {
-                // Lấy đường dẫn Python từ biến môi trường, hoặc sử dụng đường dẫn mặc định
-                string pythonPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\venv";
-                string pythonDll = Path.Combine(pythonPath, "python312.dll");
-
-                if (!File.Exists(pythonDll))
-                {
-                    throw new FileNotFoundException($"Không tìm thấy thư viện Python: {pythonDll}");
-                }
-
-                // Cài đặt biến môi trường
-                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pythonDll);
-
-                if (!PythonEngine.IsInitialized)
-                {
-                    PythonEngine.Initialize();
-                }
-
-                using (Py.GIL())
-                {
-                    // Import các thư viện cần thiết
-                    Global.np = Py.Import("numpy");
-                    Global.cv2 = Py.Import("cv2");
-
-                    // Import module chứa hàm OCR
-                    string scriptPath = $"{Environment.CurrentDirectory}\\LicensePlateService\\app.py";
-                    string scriptDir = Path.GetDirectoryName(scriptPath);
-
-                    if (!File.Exists(scriptPath))
-                    {
-                        throw new FileNotFoundException($"Không tìm thấy tệp Python OCR script: {scriptPath}");
-                    }
-
-                    dynamic sys = Py.Import("sys");
-                    sys.path.append(scriptDir);
-                    Global.ocr_module = Py.Import("app");
-                }
-            }
-            catch (FileNotFoundException fileEx)
-            {
-                Console.WriteLine($"Lỗi tệp: {fileEx.Message}");
-            }
-            catch (PythonException pyEx)
-            {
-                Console.WriteLine($"Lỗi từ Python: {pyEx.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi không xác định: {ex.Message}");
-            }
+            catch (Exception ex) { MessageBox.Show($"Lỗi khởi tạo cấu hình: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         static IHostBuilder CreateHostBuilder() =>
