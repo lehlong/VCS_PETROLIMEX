@@ -4,11 +4,11 @@
       <nz-page-header-extra>
         <nz-space [nzWrap]="true" class="gap-[5px]">
           <nz-space>
-            <app-input-clear *nzSpaceItem placeholder="Tên tài xế" [(value)]="filter.vehicleName"></app-input-clear>
-            <app-input-clear *nzSpaceItem placeholder="Biển số xe" [(value)]="filter.vehicleCode"></app-input-clear>
-            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.fromDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Từ ngày">
+            <app-input-clear *nzSpaceItem placeholder="Tên tài xế" [(value)]="filter.vehicleName" (enterEvent)="search()"></app-input-clear>
+            <app-input-clear *nzSpaceItem placeholder="Biển số xe" [(value)]="filter.vehicleCode" (enterEvent)="search()"></app-input-clear>
+            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.fromDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Từ ngày" [nzDisabledDate]="disabledFromDate" (ngModelChange)="search()">
             </nz-date-picker>
-            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.toDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Đến ngày">
+            <nz-date-picker *nzSpaceItem [(ngModel)]="filter.toDate" nzFormat="dd/MM/yyyy" nzPlaceHolder="Đến ngày" [nzDisabledDate]="disabledToDate" (ngModelChange)="search()">
             </nz-date-picker>
             <button *nzSpaceItem (click)="search()" class="flex !items-center !border-l-1" nzType="primary" nz-button
               nzType="primary">

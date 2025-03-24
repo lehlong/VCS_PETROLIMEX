@@ -47,7 +47,7 @@ namespace DMS.BUSINESS.Services.BU
 
                 if (filter.ToDate.HasValue)
                 {
-                    query = query.Where(x => x.TimeCheckout <= filter.ToDate.Value);
+                    query = query.Where(x => x.CreateDate <= filter.ToDate.Value);
                 }
 
                 if (!string.IsNullOrWhiteSpace(filter.KeyWord))

@@ -14,8 +14,8 @@ export class HeaderFilter extends BaseFilter {
     NoteOut?: string;
     NoteIn?: string;
     isActive?: boolean | string | null;
-    fromDate?: Date;
-    toDate?: Date;
+    fromDate?: Date | null;
+    toDate?: Date | null;
     SortColumn: string = '';
     IsDescending: boolean = true;
 }

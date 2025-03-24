@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let i of headerTable.data">
-                    <td nzAlign="center">{{i.stt}}</td>
+                    <td nzAlign="center">{{formatNumber(i.stt)}}</td>
                     <td>{{i.vehicleName}}</td>
                     <td nzAlign="center">{{i.vehicleCode}}</td>
                     <td nzAlign="center">{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>

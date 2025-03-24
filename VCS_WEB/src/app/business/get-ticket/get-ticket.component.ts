@@ -58,7 +58,9 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     const UserInfo = this.globalService.getUserInfo()
     this.userName = UserInfo?.userName
   }
-
+  formatNumber(value: number): string {
+    return value ? value.toString().padStart(2, '0') : '00';
+  }
   ngOnInit() {
     this.getList();
     //setInterval(() => { this.getList(); }, 5000)

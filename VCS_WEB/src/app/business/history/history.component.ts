@@ -58,17 +58,40 @@ validateForm: FormGroup = this.fb.group({
 
   ngOnInit(): void {
     this.search()
+    
   }
+  formatDate(date: Date): string {
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  disabledFromDate = (current: Date): boolean => {
+  if (this.filter.toDate) {
+    return current > this.filter.toDate;
+  }
+  return false;
+};
 
-
+disabledToDate = (current: Date): boolean => {
+  if (this.filter.fromDate) {
+    return current < this.filter.fromDate;
+  }
+  return false;
+};
   search() {
+    const filterToSend = { ...this.filter } as any;
+    filterToSend.fromDate = this.filter.fromDate ? this.formatDate(this.filter.fromDate) : null;
+    filterToSend.toDate = this.filter.toDate ? this.formatDate(this.filter.toDate) : null;
     this.isSubmit = false
-    this._service.searchHeader(this.filter).subscribe({
+    this._service.searchHeader(filterToSend).subscribe({
+      
       next: (data) => {
         this.paginationResult = data
       },
       error: (response) => {
-        console.error('Lỗi khi lấy dữ liệu:', response, this.filter)
+        console.error('Lỗi khi lấy dữ liệu:', response, filterToSend)
       },
     })
   }

@@ -36,6 +36,9 @@ export class OrderDisplayComponent implements OnInit {
 
   constructor(private _service: OrderService, private route: ActivatedRoute,) {
   }
+  formatNumber(value: number): string {
+    return value ? value.toString().padStart(2, '0') : '00';
+  }
 
   ngOnInit() {
     this.toggleFullscreen(true);
