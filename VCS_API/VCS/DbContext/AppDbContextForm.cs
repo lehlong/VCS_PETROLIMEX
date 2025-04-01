@@ -67,6 +67,7 @@ namespace VCS.DbContext.Common
 
         #region System Manage
         public DbSet<TblAdAccount> TblAdAccount { get; set; }
+        public DbSet<TblAdSmsConfig> TblAdSmsConfig { get; set; }
         #endregion
 
         #region Business Unit
@@ -75,7 +76,7 @@ namespace VCS.DbContext.Common
         public DbSet<TblBuDetailTgbx> TblBuDetailTgbx { get; set; }
         public DbSet<TblBuDetailDO> TblBuDetailDO { get; set; }
         public DbSet<TblBuDetailMaterial> TblBuDetailMaterial { get; set; }
-        public DbSet<TblBuQueue> TblBuQueue { get; set; }
+        public DbSet<TblBuSmsQueue> TblBuSmsQueue { get; set; }
         public DbSet<TblBuImage> TblBuImage { get; set; }
         #endregion
 

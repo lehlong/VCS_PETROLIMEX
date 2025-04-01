@@ -19,8 +19,8 @@ namespace DMS.BUSINESS.Services.AD
         Task UpdateInformation(AccountUpdateInformationDto dto);
         Task<IList<AccountDto>> GetAll(AccountFilterLite filter);
         Task<AccountTreeRightDto> GetByIdWithRightTree(object id);
-//Task<PagedResponseDto> GetByType(AccountFilter filter);
-      //  Task<byte[]> ExportASO(AccountFilter filter);
+        Task<TblAdSmsConfig> GetSMS();
+        Task UpdateSMS(TblAdSmsConfig data);
     }
 
     public class AccountService(AppDbContext dbContext, IMapper mapper, IHubContext<RefreshServiceHub> hubContext) : GenericService<TblAdAccount, AccountDto>(dbContext, mapper), IAccountService
@@ -363,6 +363,16 @@ namespace DMS.BUSINESS.Services.AD
                 Status = false;
                 Exception = ex;
             }
+        }
+
+        public async Task<TblAdSmsConfig> GetSMS()
+        {
+            return _dbContext.TblAdSmsConfig.Find("SMS");
+        }
+        public async Task UpdateSMS(TblAdSmsConfig data)
+        {
+            _dbContext.TblAdSmsConfig.Update(data);
+            _dbContext.SaveChanges();
         }
 
         //public async Task<PagedResponseDto> GetByType(AccountFilter filter)

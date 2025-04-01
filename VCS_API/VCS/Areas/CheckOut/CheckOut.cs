@@ -300,6 +300,27 @@ namespace VCS.Areas.CheckOut
             i.StatusVehicle = "04";
             i.NoteOut = txtNoteOut.Text;
             _dbContext.TblBuHeader.Update(i);
+
+            var w = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode);
+
+            if (w.Is_sms_out == true)
+            {
+                var sms = _dbContext.TblAdSmsConfig.Find("SMS");
+                foreach (var _do in lstCheckDoTgbx)
+                {
+                    var data = CommonService.GetDetailDO(_do);
+                    _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Phone = data.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
+                        SmsContent = sms.SmsOut.Replace("[KHACH_HANG]", data.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", data.DATA.LIST_DO.FirstOrDefault().DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
+                        IsSend = false,
+                        IsActive = true,
+                        Count = 0,
+                    });
+                }
+            }
+
             _dbContext.SaveChanges();
 
             lstPathImageCapture.Add(IMGPATH);

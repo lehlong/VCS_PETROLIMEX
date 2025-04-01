@@ -559,6 +559,9 @@ namespace VCS.Areas.CheckIn
             && q.OrgCode == ProfileUtilities.User.OrganizeCode).ToList();
             _stt = stt.Count() == 0 ? 1 : stt.Max(x => x.STT) + 1;
 
+            var sms = _dbContext.TblAdSmsConfig.Find("SMS");
+            var w = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode);
+
             if (string.IsNullOrEmpty(selectedHeaderId))
             {
                 var headerId = Guid.NewGuid().ToString();
@@ -594,6 +597,7 @@ namespace VCS.Areas.CheckIn
                         TaiXe = _do?.TAI_XE,
                         NguonHang = _do?.NGUON_HANG,
                     });
+
                     foreach (var l in i.DATA.LIST_DO.FirstOrDefault().LIST_MATERIAL)
                     {
                         _dbContext.TblBuDetailMaterial.Add(new TblBuDetailMaterial
@@ -684,6 +688,24 @@ namespace VCS.Areas.CheckIn
                     CreateBy = ProfileUtilities.User.UserName,
                 });
             }
+
+            foreach (var i in _lstDOSAP)
+            {
+                if (w.Is_sms_in == true)
+                {
+                    _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Phone = i.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
+                        SmsContent = sms.SmsIn.Replace("[KHACH_HANG]", i.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
+                        IsSend = false,
+                        IsActive = true,
+                        Count = 0,
+                    });
+                }
+            }
+
+
             _dbContext.SaveChanges();
 
             lstPathImageCapture.Add(IMGPATH);
@@ -905,20 +927,7 @@ namespace VCS.Areas.CheckIn
                         });
                     }
                 }
-
-                var queue = _dbContext.TblBuQueue
-                    .FirstOrDefault(x => x.HeaderId == selectedHeaderId);
-                if (queue != null && queue.VehicleCode != txtLicensePlate.Text)
-                {
-                    queue.VehicleCode = txtLicensePlate.Text;
-                    var name = _dbContext.TblMdVehicle
-                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPbatch +
-                        _dbContext.TblMdVehicle
-                        .FirstOrDefault(v => v.Code == txtLicensePlate.Text)?.OicPtrip ?? "";
-                    queue.Name = name;
-                    _dbContext.TblBuQueue.Update(queue);
-                }
-
+               
                 _dbContext.SaveChanges();
                 CommonService.Alert("Cập nhật thông tin thành công!", Alert.Alert.enumType.Success);
 
