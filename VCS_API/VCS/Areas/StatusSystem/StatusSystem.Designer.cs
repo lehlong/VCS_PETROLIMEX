@@ -76,7 +76,6 @@ namespace VCS.APP.Areas.StatusSystem
             pictureBox6 = new PictureBox();
             label12 = new Label();
             button1 = new Button();
-            btnViewAll = new Button();
             panel1.SuspendLayout();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -102,7 +101,6 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(btnViewAll);
             panel1.Controls.Add(btnUpdateSystem);
             panel1.Controls.Add(panel8);
             panel1.Controls.Add(btnClean);
@@ -618,24 +616,6 @@ namespace VCS.APP.Areas.StatusSystem
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // btnViewAll
-            // 
-            btnViewAll.BackColor = Color.Gold;
-            btnViewAll.Cursor = Cursors.Hand;
-            btnViewAll.FlatStyle = FlatStyle.Flat;
-            btnViewAll.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnViewAll.ForeColor = Color.White;
-            btnViewAll.Image = Properties.Resources.icons8_application_18;
-            btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.Location = new Point(502, 21);
-            btnViewAll.Name = "btnViewAll";
-            btnViewAll.Padding = new Padding(6, 0, 0, 0);
-            btnViewAll.Size = new Size(42, 40);
-            btnViewAll.TabIndex = 50;
-            btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
-            btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnViewAll.UseVisualStyleBackColor = false;
-            // 
             // StatusSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -727,6 +707,5 @@ namespace VCS.APP.Areas.StatusSystem
         private Label label6;
         private Label tdhe5;
         private Button btnUpdateSystem;
-        private Button btnViewAll;
     }
 }

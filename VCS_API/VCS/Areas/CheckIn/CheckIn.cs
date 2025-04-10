@@ -102,6 +102,7 @@ namespace VCS.Areas.CheckIn
 
             this.Controls.Clear();
             InitializeComponent();
+            txtLicensePlate.Enabled = CommonService.HasPermission("R415") ? true : false;
             StreamCamera();
             GetListQueue();
         }
@@ -324,7 +325,7 @@ namespace VCS.Areas.CheckIn
                 CommonService.Alert("Đã có thông tin! Vui lòng thử lệnh xuất khác!", Alert.Alert.enumType.Error);
                 return;
             }
-            var dataDetail = CommonService.GetDetailDO(txtNumberDO.Text.Trim());
+            var dataDetail = CommonService.GetDetailDO(txtNumberDO.Text.Trim(), "0");
             if (!dataDetail.STATUS)
             {
                 CommonService.Alert("Số lệnh xuất không tồn tại hoặc đã hết hạn!", Alert.Alert.enumType.Error);

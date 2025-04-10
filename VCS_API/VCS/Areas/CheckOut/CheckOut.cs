@@ -284,13 +284,14 @@ namespace VCS.Areas.CheckOut
                 }
                 foreach (var o in lstPathImageCapture)
                 {
+                    if (string.IsNullOrEmpty(o)) continue;
                     _dbContext.TblBuImage.Add(new TblBuImage
                     {
                         Id = Guid.NewGuid().ToString(),
                         HeaderId = selectedValue,
                         InOut = "out",
-                        Path = string.IsNullOrEmpty(o) ? "" : o.Replace(Global.PathSaveFile, ""),
-                        FullPath = string.IsNullOrEmpty(o) ? "" : o,
+                        Path = o.Replace(Global.PathSaveFile, ""),
+                        FullPath = o,
                         IsPlate = false,
                         IsActive = true
                     });
@@ -311,11 +312,12 @@ namespace VCS.Areas.CheckOut
                     var sms = _dbContext.TblAdSmsConfig.Find("SMS");
                     foreach (var _do in lstCheckDoTgbx)
                     {
-                        var data = CommonService.GetDetailDO(_do);
+                        var data = CommonService.GetDetailDO(_do, "1");
+                        if (data.DATA == null) continue;
                         _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
                         {
                             Id = Guid.NewGuid().ToString(),
-                            Phone = data.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
+                            Phone = data.DATA.LIST_DO.FirstOrDefault()?.PHONE ?? "",
                             SmsContent = sms.SmsOut.Replace("[PHUONG_TIEN]", txtLicensePlate.Text).Replace("[KHACH_HANG]", data.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
                             IsSend = false,
                             IsActive = true,
@@ -330,41 +332,46 @@ namespace VCS.Areas.CheckOut
                 lstPathImageCapture.Add(PLATEPATH);
                 CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
 
-                if (IsCancel)
+                try
                 {
-                    var model = new PostStatusVehicleToSMO
+                    if (IsCancel)
                     {
-                        VEHICLE = txtLicensePlate.Text,
-                        TYPE = "CANCEL",
-                        LIST_DO = string.Join(",", lstCheckDoCheckIn),
-                        DATE_INFO = DateTime.Now,
-                    };
-                    CommonService.PostStatusVehicleToSMO(model);
-                }
-                else
-                {
-                    var model = new PostStatusVehicleToSMO
-                    {
-                        VEHICLE = txtLicensePlate.Text,
-                        TYPE = "OUT",
-                        LIST_DO = string.Join(",", lstCheckDoTgbx),
-                        DATE_INFO = DateTime.Now,
-                    };
-                    CommonService.PostStatusVehicleToSMO(model);
-
-                    var diff = lstCheckDoCheckIn.Except(lstCheckDoTgbx).ToList();
-                    if (diff.Count() > 0)
-                    {
-                        var model_cancel = new PostStatusVehicleToSMO
+                        var model = new PostStatusVehicleToSMO
                         {
                             VEHICLE = txtLicensePlate.Text,
                             TYPE = "CANCEL",
-                            LIST_DO = string.Join(",", diff),
+                            LIST_DO = string.Join(",", lstCheckDoCheckIn),
                             DATE_INFO = DateTime.Now,
                         };
-                        CommonService.PostStatusVehicleToSMO(model_cancel);
+                        CommonService.PostStatusVehicleToSMO(model);
+                    }
+                    else
+                    {
+                        var model = new PostStatusVehicleToSMO
+                        {
+                            VEHICLE = txtLicensePlate.Text,
+                            TYPE = "OUT",
+                            LIST_DO = string.Join(",", lstCheckDoTgbx),
+                            DATE_INFO = DateTime.Now,
+                        };
+                        CommonService.PostStatusVehicleToSMO(model);
+
+                        var diff = lstCheckDoCheckIn.Except(lstCheckDoTgbx).ToList();
+                        if (diff.Count() > 0)
+                        {
+                            var model_cancel = new PostStatusVehicleToSMO
+                            {
+                                VEHICLE = txtLicensePlate.Text,
+                                TYPE = "CANCEL",
+                                LIST_DO = string.Join(",", diff),
+                                DATE_INFO = DateTime.Now,
+                            };
+                            CommonService.PostStatusVehicleToSMO(model_cancel);
+                        }
                     }
                 }
+                catch (Exception ex) { }
+
 
 
                 CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
@@ -525,14 +532,10 @@ namespace VCS.Areas.CheckOut
                 var status = false;
                 if (isCheck)
                 {
-                    if (isHasInvoice)
-                    {
-                        var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
-                        text = res.STATUS ? $"ĐÃ XUẤT HOÁ ĐƠN" : $"CHƯA XUẤT HOÁ ĐƠN";
-                        status = res.STATUS;
-                    }
+                    var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
+                    text = res.STATUS ? $"ĐÃ XUẤT HOÁ ĐƠN" : $"CHƯA XUẤT HOÁ ĐƠN";
+                    status = res.STATUS;
                 }
-
 
                 int yPosition = panelCheckOut.Controls.OfType<Panel>().Any()
                     ? panelCheckOut.Controls.OfType<Panel>().Max(p => p.Bottom) + 6

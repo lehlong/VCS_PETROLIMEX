@@ -146,7 +146,7 @@ namespace VCS.APP.Services
             }
         }
 
-        public static DOSAPDataDto GetDetailDO(string number)
+        public static DOSAPDataDto GetDetailDO(string number, string isOnlyInfo)
         {
             try
             {
@@ -157,7 +157,8 @@ namespace VCS.APP.Services
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    var request = new HttpRequestMessage(HttpMethod.Get, $"{Global.SmoApiUrl}PO/GetDO?doNumber={number}");
+                    var r = isOnlyInfo == "1" ? $"{Global.SmoApiUrl}PO/GetDO?doNumber={number}&isOnlyInfo={isOnlyInfo}" : $"{Global.SmoApiUrl}PO/GetDO?doNumber={number}";
+                    var request = new HttpRequestMessage(HttpMethod.Get, r);
                     HttpResponseMessage response = client.Send(request);
                     if (response.IsSuccessStatusCode)
                     {
