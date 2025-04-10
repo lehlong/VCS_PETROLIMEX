@@ -10,6 +10,7 @@ using DMS.BUSINESS.Services.HUB;
 using Common;
 using Common.Util;
 using DMS.BUSINESS.Common.Enum;
+using DMS.CORE.Entities.MD;
 
 namespace DMS.BUSINESS.Services.AD
 {
@@ -21,6 +22,7 @@ namespace DMS.BUSINESS.Services.AD
         Task<AccountTreeRightDto> GetByIdWithRightTree(object id);
         Task<TblAdSmsConfig> GetSMS();
         Task UpdateSMS(TblAdSmsConfig data);
+        Task ResetPassword(string username);
     }
 
     public class AccountService(AppDbContext dbContext, IMapper mapper, IHubContext<RefreshServiceHub> hubContext) : GenericService<TblAdAccount, AccountDto>(dbContext, mapper), IAccountService
@@ -373,6 +375,21 @@ namespace DMS.BUSINESS.Services.AD
         {
             _dbContext.TblAdSmsConfig.Update(data);
             _dbContext.SaveChanges();
+        }
+        public async Task ResetPassword(string username)
+        {
+            try
+            {
+                var user = _dbContext.TblAdAccount.Find(username);
+                user.Password = Utils.CryptographyMD5($"{username}@123");
+                _dbContext.TblAdAccount.Update(user);
+                _dbContext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                Status = false;
+                Exception = ex;
+            }
         }
 
         //public async Task<PagedResponseDto> GetByType(AccountFilter filter)

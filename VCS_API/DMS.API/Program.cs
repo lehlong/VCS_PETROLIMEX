@@ -191,7 +191,8 @@ await scope.ServiceProvider.GetRequiredService<ISystemTraceService>().StartServi
 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 var backgroundJobService = new BackgroundJobService(dbContext);
 var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
-recurringJobManager.AddOrUpdate("write-line-every-10s", () => backgroundJobService.UpdateOrder(), "*/10 * * * * *");
+recurringJobManager.AddOrUpdate("OrderViehicle", () => backgroundJobService.UpdateOrder(), "*/10 * * * * *");
+recurringJobManager.AddOrUpdate("SendSMS", () => backgroundJobService.SendSMSJobs(), "*/10 * * * * *");
 
 app.UseMiddleware<ActionLoggingMiddleware>();
 app.MapHub<SystemTraceServiceHub>("/SystemTrace");

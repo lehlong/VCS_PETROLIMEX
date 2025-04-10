@@ -24,6 +24,10 @@ export class AccountService {
     return this.commonService.put('Account/Update', params)
   }
 
+  resetPassword(username: any): Observable<any> {
+    return this.commonService.put(`Account/ResetPassword?username=${username}`, {})
+  }
+
   exportExcel(params: any): Observable<any> {
     return this.commonService.downloadFile('Partner/Export', params)
   }

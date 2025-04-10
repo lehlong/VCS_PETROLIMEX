@@ -62,11 +62,11 @@ namespace VCS.Areas.Login
                 return;
             }
 
-            if (user.AccountType != "III")
-            {
-                CommonService.Alert("Hệ thống chỉ dành cho nhân viên bảo vệ!", Alert.Alert.enumType.Error);
-                return;
-            }
+            //if (user.AccountType != "III")
+            //{
+            //    CommonService.Alert("Hệ thống chỉ dành cho nhân viên bảo vệ!", Alert.Alert.enumType.Error);
+            //    return;
+            //}
 
             var main = new Main(_dbContext);
 

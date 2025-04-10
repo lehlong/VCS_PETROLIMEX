@@ -37,7 +37,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
     driverName: '',
     custmerName: '',
     chuyenVt: '',
-    detail: []
+    details: []
   }
   TICKET_RIGHTS = TICKET_RIGHTS
   @ViewChild('printSection') printSection!: ElementRef;
@@ -187,13 +187,12 @@ export class GetTicketComponent implements OnInit, OnDestroy {
   }
 
   printTicket(headerId: string) {
-
     this._service.GetTicket(headerId).subscribe({
       next: (data) => {
         this.ticketDetail = data;
         var sum = 0;
-        for (var i = 0; i < data.detail.length; i++) {
-          sum += data.detail[i].tongDuXuat
+        for (var i = 0; i < data.details.length; i++) {
+          sum += data.details[i].dungTich
         }
         this.ticketDetail.sum = sum;
 

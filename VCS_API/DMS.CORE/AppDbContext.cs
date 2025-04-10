@@ -5,6 +5,7 @@ using DMS.CORE.Entities.MD;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SMO.Core.Entities.BU;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -129,6 +130,7 @@ namespace DMS.CORE
 
         #region Business Unit
         public DbSet<TblBuHeader> TblBuHeader { get; set; }
+        public DbSet<TblBuTgbxTicket> TblBuTgbxTicket { get; set; }
         public DbSet<TblBuHeaderTgbx> TblBuHeaderTgbx { get; set; }
         public DbSet<TblBuDetailTgbx> TblBuDetailTgbx { get; set; }
         public DbSet<TblBuDetailDO> TblBuDetailDO { get; set; }
@@ -136,6 +138,7 @@ namespace DMS.CORE
         public DbSet<TblBuQueue> TblBuQueue { get; set; }
         public DbSet<TblBuImage> TblBuImage { get; set; }
         public DbSet<TblBuOrder> TblBuOrders  { get; set; }
+        public DbSet<TblBuSmsQueue> TblBuSmsQueue { get; set; }
         #endregion
 
         #region Master Data

@@ -134,5 +134,10 @@ namespace VCS.APP.Areas.StatusSystem
         {
             MessageBox.Show($"Lỗi hệ thống: {ex.Message}\n\nChi tiết: {ex.InnerException?.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void btnUpdateSystem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -38,6 +38,8 @@ namespace VCS.Areas.CheckIn
             resetTimer.Interval = 500;
             resetTimer.Tick += ResetTimer_Tick;
             txtNumberDO.Focus();
+            txtLicensePlate.Enabled = CommonService.HasPermission("R415") ? true : false;
+           
         }
 
         private void CheckIn_Load(object sender, EventArgs e)
@@ -689,22 +691,21 @@ namespace VCS.Areas.CheckIn
                 });
             }
 
-            foreach (var i in _lstDOSAP)
+            if (w.Is_sms_in == true)
             {
-                if (w.Is_sms_in == true)
+                foreach (var i in _lstDOSAP)
                 {
                     _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
                     {
                         Id = Guid.NewGuid().ToString(),
                         Phone = i.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
-                        SmsContent = sms.SmsIn.Replace("[KHACH_HANG]", i.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
+                        SmsContent = sms.SmsIn.Replace("[PHUONG_TIEN]", txtLicensePlate.Text).Replace("[KHACH_HANG]", i.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", i.DATA.LIST_DO.FirstOrDefault().DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
                         IsSend = false,
                         IsActive = true,
                         Count = 0,
                     });
                 }
             }
-
 
             _dbContext.SaveChanges();
 
@@ -927,7 +928,7 @@ namespace VCS.Areas.CheckIn
                         });
                     }
                 }
-               
+
                 _dbContext.SaveChanges();
                 CommonService.Alert("Cập nhật thông tin thành công!", Alert.Alert.enumType.Success);
 
@@ -995,7 +996,7 @@ namespace VCS.Areas.CheckIn
                 string croppedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
 
                 // Chụp ảnh
-                player.TakeSnapshot(0, snapshotPath, Global.CropWidth, Global.CropHeight);
+                player.TakeSnapshot(0, snapshotPath, 0, 0);
                 if (!File.Exists(snapshotPath))
                 {
                     CommonService.Alert("Không thể chụp ảnh!", Alert.Alert.enumType.Error);

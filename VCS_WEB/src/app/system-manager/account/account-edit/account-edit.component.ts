@@ -129,7 +129,7 @@ export class AccountEditComponent {
       this.validateForm.patchValue({ warehouseCode: null });
     }
   }
-  
+
 
   changeSaleType(value: string) { }
 
@@ -478,5 +478,14 @@ export class AccountEditComponent {
     this.validateForm.reset()
     // const partnerIdControl = this.validateForm.get('partnerId')
     // partnerIdControl!.setValidators([])
+  }
+
+  resetPassword() {
+    console.log(this.userName)
+    this._service.resetPassword(this.userName).subscribe({
+      next: (data) => {
+        console.log(data)
+      }
+    })
   }
 }

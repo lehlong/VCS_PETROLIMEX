@@ -75,6 +75,7 @@ namespace VCS.APP.Areas.StatusSystem
             pictureBox6 = new PictureBox();
             label12 = new Label();
             button1 = new Button();
+            btnUpdateSystem = new Button();
             panel1.SuspendLayout();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -100,6 +101,7 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnUpdateSystem);
             panel1.Controls.Add(panel8);
             panel1.Controls.Add(btnClean);
             panel1.Controls.Add(panel10);
@@ -592,6 +594,28 @@ namespace VCS.APP.Areas.StatusSystem
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // btnUpdateSystem
+            // 
+            btnUpdateSystem.BackColor = Color.Green;
+            btnUpdateSystem.Cursor = Cursors.Hand;
+            btnUpdateSystem.FlatAppearance.BorderSize = 0;
+            btnUpdateSystem.FlatStyle = FlatStyle.Flat;
+            btnUpdateSystem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnUpdateSystem.ForeColor = Color.White;
+            btnUpdateSystem.Image = (Image)resources.GetObject("btnUpdateSystem.Image");
+            btnUpdateSystem.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUpdateSystem.Location = new Point(305, 21);
+            btnUpdateSystem.Margin = new Padding(4);
+            btnUpdateSystem.Name = "btnUpdateSystem";
+            btnUpdateSystem.Padding = new Padding(6, 0, 0, 0);
+            btnUpdateSystem.Size = new Size(190, 40);
+            btnUpdateSystem.TabIndex = 49;
+            btnUpdateSystem.Text = "Cập nhật phần mềm";
+            btnUpdateSystem.TextAlign = ContentAlignment.MiddleLeft;
+            btnUpdateSystem.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUpdateSystem.UseVisualStyleBackColor = false;
+            btnUpdateSystem.Click += btnUpdateSystem_Click;
+            // 
             // StatusSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -682,5 +706,6 @@ namespace VCS.APP.Areas.StatusSystem
         private PictureBox pictureBox1;
         private Label label6;
         private Label tdhe5;
+        private Button btnUpdateSystem;
     }
 }

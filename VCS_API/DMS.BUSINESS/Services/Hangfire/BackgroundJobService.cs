@@ -12,9 +12,18 @@ namespace DMS.BUSINESS.Services.Hangfire
     public class BackgroundJobService
     {
         private AppDbContext _dbContext;
+        private SMSInfo _config;
         public BackgroundJobService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
+            _config = new SMSInfo
+            {
+                UrlSMS = "http://ams.tinnhanthuonghieu.vn:8009/bulkapi",
+                Username = "smsbrand_xangdauna",
+                Password = "xd@258369",
+                CpCode = "XANGDAUNA",
+                ServiceId = "CtyXdauN.an"
+            };
         }
 
         #region Tích hợp với tự động hoá -> kiểm tra trạng thái -> xoá xe ở đầu nếu đã xử lý
@@ -129,7 +138,7 @@ namespace DMS.BUSINESS.Services.Hangfire
                         Console.WriteLine(ex.ToString());
                     }
 
-                    var material =i.GoodsCode.Substring(12);
+                    var material = i.GoodsCode.Substring(12);
                     var query = $"SELECT so_ptien FROM BX_BangMaLenh " +
                         $"WHERE so_ptien='{vehicle}' " +
                         $"AND Trang_thai_lenh= '4' " +
@@ -173,5 +182,100 @@ namespace DMS.BUSINESS.Services.Hangfire
         }
         #endregion
 
+        #region Gửi tin nhắn
+        public async Task SendSMSJobs()
+        {
+            try
+            {
+                _dbContext.ChangeTracker.Clear();
+                var lstQueueSMS = _dbContext.TblBuSmsQueue.Where(x => x.IsSend == false).ToList();
+                foreach (var s in lstQueueSMS)
+                {
+                    var status = await SendSMS(ConvertPhoneNumber(s.Phone.Replace(" ", "")), s.SmsContent);
+                    if (status)
+                    {
+                        s.IsSend = true;
+                        _dbContext.TblBuSmsQueue.Update(s);
+                        _dbContext.SaveChanges();
+                        Console.WriteLine("Gửi tin nhắn thành công!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Lỗi không gửi được tin nhắn");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public string ConvertPhoneNumber(string phoneNumber)
+        {
+            if (!string.IsNullOrEmpty(phoneNumber) && phoneNumber.StartsWith("0") && phoneNumber.Length > 1)
+            {
+                return "84" + phoneNumber.Substring(1);
+            }
+            return phoneNumber;
+        }
+
+        public async Task<bool> SendSMS(string phone, string content)
+        {
+            try
+            {
+                string soapRequest = $@"
+                    <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:impl='http://impl.bulkSms.ws/'>
+                       <soapenv:Header/>
+                       <soapenv:Body>
+                          <impl:wsCpMt>
+                             <User>{_config.Username}</User>
+                             <Password>{_config.Password}</Password>
+                             <CPCode>{_config.CpCode}</CPCode>
+                             <RequestID>1</RequestID>
+                             <UserID>{phone}</UserID>
+                             <ReceiverID>{phone}</ReceiverID>
+                             <ServiceID>{_config.ServiceId}</ServiceID>
+                             <CommandCode>bulksms</CommandCode>
+                             <Content>{content}</Content>
+                             <ContentType>1</ContentType>
+                          </impl:wsCpMt>
+                       </soapenv:Body>
+                    </soapenv:Envelope>";
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("SOAPAction", "wsCpMt");
+                    HttpContent contentData = new StringContent(soapRequest, Encoding.UTF8, "text/xml");
+
+                    HttpResponseMessage response = await client.PostAsync(_config.UrlSMS, contentData);
+                    var res = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(res))
+                    {
+                        if (res.Contains("<result>1</result>"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi không gửi được SMS! Chi tiết {ex.Message}");
+                return false;
+            }
+
+        }
+        #endregion
+
+    }
+
+    public class SMSInfo
+    {
+        public string? UrlSMS { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+        public string? CpCode { get; set; }
+        public string? ServiceId { get; set; }
     }
 }

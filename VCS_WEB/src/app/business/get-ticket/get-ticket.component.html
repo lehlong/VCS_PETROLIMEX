@@ -86,7 +86,7 @@
                                 nzPopoverPlacement="top"></span></button> -->
 
 
-                        <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nz-button (click)="updateStatus(i,'05')"
+                        <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nzDanger nz-button (click)="updateStatus(i,'05')" style="margin-left: 22px;"
                             *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '04' && i.statusProcess != '05'" nz-popover
                             nzPopoverTitle="Không xử lý" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                             nzPopoverPlacement="top"><span nz-icon nzType="close" nzTheme="outline"></span></button>
@@ -151,7 +151,7 @@
     <div nz-row [nzGutter]="16">
         <div nz-col class="gutter-row" [nzSpan]="12">
             <div class="inner-box">
-                <div>Khách hàng: {{ticketDetail.customerName}}</div>
+                <div>Khách hàng: {{ticketDetail.custmerName}}</div>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="12">
@@ -174,17 +174,17 @@
             <th>Nhiệt độ thực tế (oC)</th>
             <th>Giàn<br>Họng</th>
         </tr>
-        <tr *ngFor="let i of ticketDetail.detail">
+        <tr *ngFor="let i of ticketDetail.details">
             <td>{{i.soLenh}}</td>
-            <td>46</td>
-            <td>{{i.maHangHoa}}</td>
-            <td>{{i.beXuat}}</td>
-            <td>002</td>
-            <td style="text-align: right;">{{i.tongDuXuat | number}}</td>
+            <td>{{i.maTdh}}</td>
+            <td>{{i.hangHoa}}</td>
+            <td>{{i.maBe}}</td>
+            <td>{{i.ngan}}</td>
+            <td style="text-align: right;">{{i.dungTich | number}}</td>
             <td></td>
             <td></td>
-            <td></td>
-            <td>{{i.orderName}}</td>
+            <td style="text-align: right;">{{i.nhietDo | number}}</td>
+            <td *ngIf="i.rowspan != 1" [rowSpan]="i.rowspan">{{i.gianHong}}</td>
         </tr>
 
         <tr>

@@ -1,5 +1,6 @@
 ﻿using LibVLCSharp.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using VCS.APP.Areas.ViewAllCamera;
 using VCS.APP.Services;
@@ -247,125 +248,133 @@ namespace VCS.Areas.CheckOut
             }
         }
 
-        
+
 
         private void CheckOutProcess()
         {
-            ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
-            string selectedValue = selectedItem.Value;
-            if (!string.IsNullOrEmpty(IMGPATH))
+            try
             {
-                _dbContext.TblBuImage.Add(new TblBuImage
+                ComboBoxItem selectedItem = (ComboBoxItem)selectVehicle.SelectedItem;
+                string selectedValue = selectedItem.Value;
+                if (!string.IsNullOrEmpty(IMGPATH))
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = selectedValue,
-                    Path = IMGPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = IMGPATH,
-                    InOut = "out",
-                    IsPlate = false,
-                    IsActive = true,
-                });
-            }
-            if (!string.IsNullOrEmpty(PLATEPATH))
-            {
-                _dbContext.TblBuImage.Add(new TblBuImage
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = selectedValue,
-                    Path = PLATEPATH.Replace(Global.PathSaveFile, ""),
-                    FullPath = PLATEPATH,
-                    InOut = "out",
-                    IsPlate = true,
-                    IsActive = true
-                });
-            }
-            foreach (var o in lstPathImageCapture)
-            {
-                _dbContext.TblBuImage.Add(new TblBuImage
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    HeaderId = selectedValue,
-                    InOut = "out",
-                    Path = string.IsNullOrEmpty(o) ? "" : o.Replace(Global.PathSaveFile, ""),
-                    FullPath = string.IsNullOrEmpty(o) ? "" : o,
-                    IsPlate = false,
-                    IsActive = true
-                });
-            }
-            var i = _dbContext.TblBuHeader.Find(selectedValue);
-            var lstCheckDoCheckIn = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).Select(x => x.Do1Sap).Distinct().ToList();
-            var lstCheckDoTgbx = _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).Select(x => x.SoLenh).Distinct().ToList();
-            i.IsCheckout = true;
-            i.TimeCheckout = DateTime.Now;
-            i.StatusVehicle = "04";
-            i.NoteOut = txtNoteOut.Text;
-            _dbContext.TblBuHeader.Update(i);
-
-            var w = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode);
-
-            if (w.Is_sms_out == true)
-            {
-                var sms = _dbContext.TblAdSmsConfig.Find("SMS");
-                foreach (var _do in lstCheckDoTgbx)
-                {
-                    var data = CommonService.GetDetailDO(_do);
-                    _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
+                    _dbContext.TblBuImage.Add(new TblBuImage
                     {
                         Id = Guid.NewGuid().ToString(),
-                        Phone = data.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
-                        SmsContent = sms.SmsOut.Replace("[KHACH_HANG]", data.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", data.DATA.LIST_DO.FirstOrDefault().DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
-                        IsSend = false,
+                        HeaderId = selectedValue,
+                        Path = IMGPATH.Replace(Global.PathSaveFile, ""),
+                        FullPath = IMGPATH,
+                        InOut = "out",
+                        IsPlate = false,
                         IsActive = true,
-                        Count = 0,
                     });
                 }
-            }
-
-            _dbContext.SaveChanges();
-
-            lstPathImageCapture.Add(IMGPATH);
-            lstPathImageCapture.Add(PLATEPATH);
-            CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
-
-            if (IsCancel)
-            {
-                var model = new PostStatusVehicleToSMO
+                if (!string.IsNullOrEmpty(PLATEPATH))
                 {
-                    VEHICLE = txtLicensePlate.Text,
-                    TYPE = "CANCEL",
-                    LIST_DO = string.Join(",", lstCheckDoCheckIn),
-                    DATE_INFO = DateTime.Now,
-                };
-                CommonService.PostStatusVehicleToSMO(model);
-            }
-            else
-            {
-                var model = new PostStatusVehicleToSMO
+                    _dbContext.TblBuImage.Add(new TblBuImage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = selectedValue,
+                        Path = PLATEPATH.Replace(Global.PathSaveFile, ""),
+                        FullPath = PLATEPATH,
+                        InOut = "out",
+                        IsPlate = true,
+                        IsActive = true
+                    });
+                }
+                foreach (var o in lstPathImageCapture)
                 {
-                    VEHICLE = txtLicensePlate.Text,
-                    TYPE = "OUT",
-                    LIST_DO = string.Join(",", lstCheckDoTgbx),
-                    DATE_INFO = DateTime.Now,
-                };
-                CommonService.PostStatusVehicleToSMO(model);
+                    _dbContext.TblBuImage.Add(new TblBuImage
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        HeaderId = selectedValue,
+                        InOut = "out",
+                        Path = string.IsNullOrEmpty(o) ? "" : o.Replace(Global.PathSaveFile, ""),
+                        FullPath = string.IsNullOrEmpty(o) ? "" : o,
+                        IsPlate = false,
+                        IsActive = true
+                    });
+                }
+                var i = _dbContext.TblBuHeader.Find(selectedValue);
+                var lstCheckDoCheckIn = _dbContext.TblBuDetailDO.Where(x => x.HeaderId == selectedValue).Select(x => x.Do1Sap).Distinct().ToList();
+                var lstCheckDoTgbx = _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == selectedValue).Select(x => x.SoLenh).Distinct().ToList();
+                i.IsCheckout = true;
+                i.TimeCheckout = DateTime.Now;
+                i.StatusVehicle = "04";
+                i.NoteOut = txtNoteOut.Text;
+                _dbContext.TblBuHeader.Update(i);
 
-                var diff = lstCheckDoCheckIn.Except(lstCheckDoTgbx).ToList();
-                if (diff.Count() > 0)
+                var w = _dbContext.TblMdWarehouse.Find(ProfileUtilities.User.WarehouseCode);
+
+                if (w.Is_sms_out == true)
                 {
-                    var model_cancel = new PostStatusVehicleToSMO
+                    var sms = _dbContext.TblAdSmsConfig.Find("SMS");
+                    foreach (var _do in lstCheckDoTgbx)
+                    {
+                        var data = CommonService.GetDetailDO(_do);
+                        _dbContext.TblBuSmsQueue.Add(new TblBuSmsQueue
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Phone = data.DATA.LIST_DO.FirstOrDefault()?.PHONE.Replace(" ", "") ?? "",
+                            SmsContent = sms.SmsOut.Replace("[PHUONG_TIEN]", txtLicensePlate.Text).Replace("[KHACH_HANG]", data.DATA.LIST_DO.FirstOrDefault()?.CUSTOMER_NAME).Replace("[LENH_XUAT]", data.DATA.LIST_DO.FirstOrDefault()?.DO_NUMBER).Replace("[THOI_GIAN]", DateTime.Now.ToString("dd/MM/yyyy hh:mm")),
+                            IsSend = false,
+                            IsActive = true,
+                            Count = 0,
+                        });
+                    }
+                }
+
+                _dbContext.SaveChanges();
+
+                lstPathImageCapture.Add(IMGPATH);
+                lstPathImageCapture.Add(PLATEPATH);
+                CommonService.UploadImagesServer(lstPathImageCapture.Where(s => !string.IsNullOrWhiteSpace(s) && s != "undefined").ToList());
+
+                if (IsCancel)
+                {
+                    var model = new PostStatusVehicleToSMO
                     {
                         VEHICLE = txtLicensePlate.Text,
                         TYPE = "CANCEL",
-                        LIST_DO = string.Join(",", diff),
+                        LIST_DO = string.Join(",", lstCheckDoCheckIn),
                         DATE_INFO = DateTime.Now,
                     };
-                    CommonService.PostStatusVehicleToSMO(model_cancel);
+                    CommonService.PostStatusVehicleToSMO(model);
                 }
+                else
+                {
+                    var model = new PostStatusVehicleToSMO
+                    {
+                        VEHICLE = txtLicensePlate.Text,
+                        TYPE = "OUT",
+                        LIST_DO = string.Join(",", lstCheckDoTgbx),
+                        DATE_INFO = DateTime.Now,
+                    };
+                    CommonService.PostStatusVehicleToSMO(model);
+
+                    var diff = lstCheckDoCheckIn.Except(lstCheckDoTgbx).ToList();
+                    if (diff.Count() > 0)
+                    {
+                        var model_cancel = new PostStatusVehicleToSMO
+                        {
+                            VEHICLE = txtLicensePlate.Text,
+                            TYPE = "CANCEL",
+                            LIST_DO = string.Join(",", diff),
+                            DATE_INFO = DateTime.Now,
+                        };
+                        CommonService.PostStatusVehicleToSMO(model_cancel);
+                    }
+                }
+
+
+                CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
+                ResetForm();
+            }
+            catch (Exception ex)
+            {
+                CommonService.Alert($"Lỗi! Vui lòng khởi động lại hệ thống!", Alert.Alert.enumType.Error);
             }
 
-
-            CommonService.Alert($"Cho xe ra khỏi kho thành công!", Alert.Alert.enumType.Success);
-            ResetForm();
         }
 
         private void ResetForm()
@@ -419,15 +428,12 @@ namespace VCS.Areas.CheckOut
                 string selectedValue = selectedItem.Value;
                 if (string.IsNullOrEmpty(selectedValue)) return;
 
-                // Thực hiện xử lý nặng trong một thread khác để không chặn UI
                 var detail = await Task.Run(() => GetCheckInDetail(selectedValue));
                 if (detail == null) return;
 
-                // Xóa các panel cũ trên UI trong luồng chính
                 panelCheckIn.Controls.Clear();
                 panelCheckOut.Controls.Clear();
 
-                // Append CheckIn Panels
                 await Task.Run(() =>
                 {
                     foreach (var doSap in detail.ListDOSAP)
@@ -450,7 +456,7 @@ namespace VCS.Areas.CheckOut
                         foreach (var doSap in lstDo)
                         {
                             var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
-                            Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien)));
+                            Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien, false)));
                         }
                     });
                 }
@@ -504,24 +510,27 @@ namespace VCS.Areas.CheckOut
                     foreach (var doSap in lstDo)
                     {
                         var lstData = detailTgbx.Where(x => x.SoLenh == doSap).ToList();
-                        Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien)));
+                        Invoke(new Action(() => AppendPanelDetailChechkOut(lstData, headerTgbx.FirstOrDefault()?.MaPhuongTien, true)));
                     }
                 });
             }
 
         }
 
-        private void AppendPanelDetailChechkOut(List<TblBuDetailTgbx> data, string vehicleCode)
+        private void AppendPanelDetailChechkOut(List<TblBuDetailTgbx> data, string vehicleCode, bool isCheck)
         {
             try
             {
-                var text = "Không xử lý hoặc chưa có ticket!";
+                var text = "";
                 var status = false;
-                if (isHasInvoice)
+                if (isCheck)
                 {
-                    var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
-                    text = res.STATUS ? $"ĐÃ XUẤT HOÁ ĐƠN" : $"CHƯA XUẤT HOÁ ĐƠN";
-                    status = res.STATUS;
+                    if (isHasInvoice)
+                    {
+                        var res = CommonService.CheckInvoice(data.FirstOrDefault().SoLenh);
+                        text = res.STATUS ? $"ĐÃ XUẤT HOÁ ĐƠN" : $"CHƯA XUẤT HOÁ ĐƠN";
+                        status = res.STATUS;
+                    }
                 }
 
 
@@ -601,7 +610,7 @@ namespace VCS.Areas.CheckOut
 
                 foreach (var item in data)
                 {
-                    var materials = _dbContext.TblMdGoods.Find("00000000000" + item.MaHangHoa.Replace(" ","").Trim());
+                    var materials = _dbContext.TblMdGoods.Find("00000000000" + item.MaHangHoa.Replace(" ", "").Trim());
                     string materialName = materials?.Name ?? "Unknown";
                     dataTable.Rows.Add(data.FirstOrDefault().SoLenh, vehicleCode, materialName, $"{item.TongDuXuat?.ToString("#,#")} ({item.DonViTinh})");
                 }

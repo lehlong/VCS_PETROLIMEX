@@ -41,7 +41,7 @@ namespace DMS.CORE.Entities.BU
         public decimal? TongDuXuat { get; set; }
 
         [Column("MaHangHoa", TypeName = "NVARCHAR(18)")]
-        public string MaHangHoa { get; set; }
+        public string? MaHangHoa { get; set; }
 
         [Column("DonViTinh", TypeName = "NVARCHAR(3)")]
         public string? DonViTinh { get; set; }

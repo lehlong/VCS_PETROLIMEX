@@ -1,9 +1,8 @@
-﻿using VCS.DbContext.Common;
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DMS.CORE.Common;
 
-namespace VCS.DbContext.Entities.BU
+namespace SMO.Core.Entities.BU
 {
     [Table("T_BU_SMS_QUEUE")]
     public class TblBuSmsQueue : BaseEntity

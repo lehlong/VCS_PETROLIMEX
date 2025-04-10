@@ -109,6 +109,26 @@ namespace DMS.API.Controllers.MD
             return Ok(transferObject);
         }
 
+        [HttpPut("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromQuery] string username)
+        {
+            var transferObject = new TransferObject();
+            await _service.ResetPassword(username);
+            if (_service.Status)
+            {
+                transferObject.Status = true;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0103", _service);
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0104", _service);
+            }
+            return Ok(transferObject);
+        }
+
         [HttpDelete("Delete/{userName}")]
         public async Task<IActionResult> Delete(string userName)
         {
