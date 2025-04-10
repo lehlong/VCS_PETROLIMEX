@@ -1,2 +1,0 @@
-Version=1.0.0
-Url=http://10.6.8.16/UpdateSystem/VCS_APP.rar

@@ -1,209 +1,208 @@
 <div class="container-list">
-    <div class="site-page-header-ghost-wrapper">
-        <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket" class="site-page-header">
-            <nz-page-header-extra>
-                <nz-space [nzWrap]="true" class="gap-[5px]">
-                    <button (click)="getList()" class="!flex !items-center" nzType="primary" nz-button>
-                        <span nz-icon nzType="sync"></span> Làm mới
-                    </button>
-                </nz-space>
-            </nz-page-header-extra>
-        </nz-page-header>
-    </div>
-    <div class="overflow-auto flex-grow">
-        <nz-table [nzData]="lstOrder" #headerTable>
-            <thead>
-                <tr>
-                    <th nzWidth="40px" nzAlign="center">STT</th>
-                    <th>Tài xế</th>
-                    <th nzAlign="center">Biển số</th>
-                    <th nzAlign="center">Thời gian vào</th>
-                    <th>Ghi chú</th>
-                    <th nzAlign="center">Trạng thái</th>
-                    <th nzAlign="center" nzWidth="500">Thực hiện</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i of headerTable.data">
-                    <td nzAlign="center">{{formatNumber(i.stt)}}</td>
-                    <td>{{i.vehicleName}}</td>
-                    <td nzAlign="center">{{i.vehicleCode}}</td>
-                    <td nzAlign="center">{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
-                    <td>
-                        <textarea [(ngModel)]="i.noteIn" (change)="updateStatus(i,i.statusProcess)"></textarea>
-                    </td>
-                    <td nzAlign="center">
-                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='00'">
-                            <span nz-icon nzType="close-circle"></span>
-                            <span>Chưa xử lý</span>
-                        </nz-tag>
-                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='01'">
-                            <span nz-icon nzType="right" nzTheme="outline"></span>
-                            <span>Đã mời xe vào</span>
-                        </nz-tag>
-                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='02'">
-                            <span nz-icon nzType="close-circle"></span>
-                            <span>Chưa có ticket</span>
-                        </nz-tag>
-                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='03'">
-                            <span nz-icon nzType="check" nzTheme="outline"></span>
-                            <span>Đã xếp xe</span>
-                        </nz-tag>
-                        <nz-tag nzColor="success" *ngIf="i.statusProcess=='04'">
-                            <span nz-icon nzType="check" nzTheme="outline"></span>
-                            <span>Đã xử lý</span>
-                        </nz-tag>
-                        <nz-tag nzColor="error" *ngIf="i.statusProcess=='05'">
-                            <span nz-icon nzType="close-circle"></span>
-                            <span>Không xử lý</span>
-                        </nz-tag>
-                    </td>
+  <div class="site-page-header-ghost-wrapper">
+    <nz-page-header nzBackIcon nzTitle="THỨ TỰ LẤY TICKET" nzSubtitle="Xử lý ticket" class="site-page-header">
+      <nz-page-header-extra>
+        <nz-space [nzWrap]="true" class="gap-[5px]">
+          <button (click)="getList()" class="!flex !items-center" nzType="primary" nz-button>
+            <span nz-icon nzType="sync"></span> Làm mới
+          </button>
+        </nz-space>
+      </nz-page-header-extra>
+    </nz-page-header>
+  </div>
+  <div class="overflow-auto flex-grow">
+    <nz-table [nzData]="lstOrder" #headerTable>
+      <thead>
+        <tr>
+          <th nzWidth="40px" nzAlign="center">STT</th>
+          <th>Tài xế</th>
+          <th nzAlign="center">Biển số</th>
+          <th nzAlign="center">Thời gian vào</th>
+          <th>Ghi chú</th>
+          <th nzAlign="center">Trạng thái</th>
+          <th nzAlign="center" nzWidth="500">Thực hiện</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of headerTable.data">
+          <td nzAlign="center">{{formatNumber(i.stt)}}</td>
+          <td>{{i.vehicleName}}</td>
+          <td nzAlign="center">{{i.vehicleCode}}</td>
+          <td nzAlign="center">{{i.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+          <td>
+            <textarea [(ngModel)]="i.noteIn" (change)="updateStatus(i,i.statusProcess)"></textarea>
+          </td>
+          <td nzAlign="center">
+            <nz-tag nzColor="error" *ngIf="i.statusProcess=='00'">
+              <span nz-icon nzType="close-circle"></span>
+              <span>Chưa xử lý</span>
+            </nz-tag>
+            <nz-tag nzColor="success" *ngIf="i.statusProcess=='01'">
+              <span nz-icon nzType="right" nzTheme="outline"></span>
+              <span>Đã mời xe vào</span>
+            </nz-tag>
+            <nz-tag nzColor="error" *ngIf="i.statusProcess=='02'">
+              <span nz-icon nzType="close-circle"></span>
+              <span>Chưa có ticket</span>
+            </nz-tag>
+            <nz-tag nzColor="success" *ngIf="i.statusProcess=='03'">
+              <span nz-icon nzType="check" nzTheme="outline"></span>
+              <span>Đã xếp xe</span>
+            </nz-tag>
+            <nz-tag nzColor="success" *ngIf="i.statusProcess=='04'">
+              <span nz-icon nzType="check" nzTheme="outline"></span>
+              <span>Đã xử lý</span>
+            </nz-tag>
+            <nz-tag nzColor="error" *ngIf="i.statusProcess=='05'">
+              <span nz-icon nzType="close-circle"></span>
+              <span>Không xử lý</span>
+            </nz-tag>
+          </td>
 
-                    <td nzAlign="center">
-                        <button [appPermission]="TICKET_RIGHTS.INVITE_VEHICLE" nz-button (click)="updateStatus(i,'01')"
-                            *ngIf="i.statusProcess == '00' || i.statusProcess == '01'" nz-popover
-                            nzPopoverTitle="Mời xe vào" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
-                            nzPopoverPlacement="top">
-                            <span nz-icon nzType="right" nzTheme="outline"></span></button>
+          <td nzAlign="center">
+            <button [appPermission]="TICKET_RIGHTS.INVITE_VEHICLE" nz-button (click)="updateStatus(i,'01')"
+              *ngIf="i.statusProcess == '00' || i.statusProcess == '01'" nz-popover nzPopoverTitle="Mời xe vào"
+              [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
+              <span nz-icon nzType="right" nzTheme="outline"></span></button>
 
-                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button (click)="updateOrder(i)"
-                            nz-popover *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '03'" nzPopoverTitle="Kiểm tra ticket và Xếp xe"
-                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
-                            <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
-
-
-                        <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button nz-popover
-                            *ngIf=" i.statusProcess == '03' && i.statusProcess != '05'" (click)="printTicket(i.id)" nzPopoverTitle="In ticket"
-                            [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName" nzPopoverPlacement="top">
-                            <span nz-icon nzType="printer" nzTheme="outline">
-                            </span></button>
+            <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button (click)="updateOrder(i)" nz-popover
+              *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '03'"
+              nzPopoverTitle="Kiểm tra ticket và Xếp xe" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+              nzPopoverPlacement="top">
+              <span nz-icon nzType="ordered-list" nzTheme="outline"></span></button>
 
 
-                        <!-- <button  [appPermission]="TICKET_RIGHTS.PROCESSED" nz-button (click)="updateStatus(i,'04')"
+            <button [appPermission]="TICKET_RIGHTS.CHECK_PRINT_TICKET" nz-button nz-popover
+              *ngIf=" i.statusProcess == '03' && i.statusProcess != '05'" (click)="printTicket(i.id)"
+              nzPopoverTitle="In ticket" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+              nzPopoverPlacement="top">
+              <span nz-icon nzType="printer" nzTheme="outline">
+              </span></button>
+
+
+            <!-- <button  [appPermission]="TICKET_RIGHTS.PROCESSED" nz-button (click)="updateStatus(i,'04')"
                             *ngIf="i.statusProcess != '04' && i.statusProcess != '05'"><span nz-icon nzType="check"
                                 nzTheme="outline" nz-popover nzPopoverTitle="Đã xử lý"
                                 [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
                                 nzPopoverPlacement="top"></span></button> -->
 
 
-                        <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nzDanger nz-button (click)="updateStatus(i,'05')" style="margin-left: 22px;"
-                            *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '04' && i.statusProcess != '05'" nz-popover
-                            nzPopoverTitle="Không xử lý" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
-                            nzPopoverPlacement="top"><span nz-icon nzType="close" nzTheme="outline"></span></button>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
-    </div>
+            <button [appPermission]="TICKET_RIGHTS.NOT_PROCESSED" nzDanger nz-button (click)="updateStatus(i,'05')"
+              style="margin-left: 22px;"
+              *ngIf=" i.statusProcess == '01' || i.statusProcess == '02' && i.statusProcess != '04' && i.statusProcess != '05'"
+              nz-popover nzPopoverTitle="Không xử lý" [nzPopoverContent]="i.vehicleCode + ' - ' + i.vehicleName"
+              nzPopoverPlacement="top"><span nz-icon nzType="close" nzTheme="outline"></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
 </div>
 
 <div class="div-print" #printSection id="printSection" style="display: none;">
-    <div nz-row [nzGutter]="16">
-        <div nz-col class="gutter-row" [nzSpan]="12">
-            <div class="inner-box">
-                <span style="margin-left: 12px;float: left;">Đơn vị: {{ticketDetail.companyName}}</span>
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="12">
-            <div class="inner-box">
-                <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span
-                        style="font-weight: normal;">{{ticketDetail.ticketNumber}}</span></span>
-            </div>
-        </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzSpan]="12">
+      <div class="inner-box">
+        <span style="margin-left: 12px;float: left;">Đơn vị: {{ticketDetail.companyName}}</span>
+      </div>
     </div>
-
-    <div nz-row [nzGutter]="16" style="margin-bottom: 4px;">
-        <div nz-col class="gutter-row" [nzSpan]="4">
-            <div class="inner-box">
-                <img src="assets/img/petrolimex-small.png" style="width: 62px;margin: 8px 24px;">
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="16"
-            style="text-align: center;align-items: center;display: inline-grid;">
-            <div class="inner-box">
-                <div style="font-weight: bold;font-size: 20px;">TÍCH KÊ XUẤT HÀNG ĐƯỜNG BỘ</div>
-                <div>{{ticketDetail.dateTime}}</div>
-
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="4">
-            <div class="inner-box"></div>
-        </div>
+    <div nz-col class="gutter-row" [nzSpan]="12">
+      <div class="inner-box">
+        <span style="float: right;margin-right: 12px;font-weight:bold;">Số tích kê: <span
+            style="font-weight: normal;">{{ticketDetail.ticketNumber}}</span></span>
+      </div>
     </div>
+  </div>
 
-    <div nz-row [nzGutter]="16">
-        <div nz-col class="gutter-row" [nzSpan]="8">
-            <div class="inner-box">
-                <span>Số P.tiện: </span>
-                <span style="font-weight: bold;">{{ticketDetail.vehicle}}</span>
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="8">
-            <div class="inner-box">
-                <span>Người V.chuyển: </span>
-                <span style="font-weight: bold;">{{ticketDetail.driverName}}</span>
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="8">
-            <div style="float: right;margin-right: 12px;">PT Bán: {{ticketDetail.ptBan}}</div>
-        </div>
+  <div nz-row [nzGutter]="16" style="margin-bottom: 4px;">
+    <div nz-col class="gutter-row" [nzSpan]="4">
+      <div class="inner-box">
+        <img src="assets/img/petrolimex-small.png" style="width: 62px;margin: 8px 24px;">
+      </div>
     </div>
-    <div nz-row [nzGutter]="16">
-        <div nz-col class="gutter-row" [nzSpan]="12">
-            <div class="inner-box">
-                <div>Khách hàng: {{ticketDetail.custmerName}}</div>
-            </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="12">
-            <div class="inner-box">
-                <div style="float: right;margin-right: 12px;">Chuyến v/tải: {{ticketDetail.chuyenVt}}</div>
-            </div>
-        </div>
+    <div nz-col class="gutter-row" [nzSpan]="16" style="text-align: center;align-items: center;display: inline-grid;">
+      <div class="inner-box">
+        <div style="font-weight: bold;font-size: 20px;">TÍCH KÊ XUẤT HÀNG ĐƯỜNG BỘ</div>
+        <div>{{ticketDetail.dateTime}}</div>
+
+      </div>
     </div>
-
-    <table style="width: 100%;margin-top: 12px;" id="tbl-print">
-        <tr>
-            <th style="width: fit-content;">Số lệnh</th>
-            <th style="width: 42px;">Mã tự động hoá</th>
-            <th style="width: 120px;">Tên hàng hoá</th>
-            <th style="width: 42px;">Mã bể</th>
-            <th style="width: 42px;">Thứ tự ngăn</th>
-            <th>Dung tích ngăn</th>
-            <th>Mã số lượng kế/họng xuất</th>
-            <th>Lượng xuất thực tế</th>
-            <th>Nhiệt độ thực tế (oC)</th>
-            <th>Giàn<br>Họng</th>
-        </tr>
-        <tr *ngFor="let i of ticketDetail.details">
-            <td>{{i.soLenh}}</td>
-            <td>{{i.maTdh}}</td>
-            <td>{{i.hangHoa}}</td>
-            <td>{{i.maBe}}</td>
-            <td>{{i.ngan}}</td>
-            <td style="text-align: right;">{{i.dungTich | number}}</td>
-            <td></td>
-            <td></td>
-            <td style="text-align: right;">{{i.nhietDo | number}}</td>
-            <td *ngIf="i.rowspan != 0" [rowSpan]="i.rowspan">{{i.gianHong}}</td>
-        </tr>
-
-        <tr>
-            <td colspan="3" style="font-weight: bold; text-align: center;">Tổng dung tích:</td>
-            <td colspan="2" style="font-weight: bold;"></td>
-            <td style="font-weight: bold;text-align: right;">{{ticketDetail.sum | number}}</td>
-            <td colspan="5"></td>
-        </tr>
-    </table>
-
-    <div nz-row [nzGutter]="16" style="margin-top: 12px;">
-        <div nz-col class="gutter-row" [nzSpan]="24">
-            <div class="inner-box" style="font-weight: bold;">
-                <span style="margin-right: 36px;margin-left: 30px;">Người lập</span>
-                <span style="margin-right: 36px">Người phê duyệt</span>
-                <span style="margin-right: 36px">Người xuất hàng</span>
-                <span style="margin-right: 36px">Người giám sát</span>
-                <span style="margin-right: 36px">Người nhận hàng</span>
-            </div>
-        </div>
+    <div nz-col class="gutter-row" [nzSpan]="4">
+      <div class="inner-box"></div>
     </div>
+  </div>
+
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <div class="inner-box">
+        <span>Số P.tiện: </span>
+        <span style="font-weight: bold;">{{ticketDetail.vehicle}}</span>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <div class="inner-box">
+        <span>Người V.chuyển: </span>
+        <span style="font-weight: bold;">{{ticketDetail.driverName}}</span>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <div style="float: right;margin-right: 12px;">PT Bán: {{ticketDetail.ptBan}}</div>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col class="gutter-row" [nzSpan]="12">
+      <div class="inner-box">
+        <div>Khách hàng: {{ticketDetail.custmerName}}</div>
+      </div>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="12">
+      <div class="inner-box">
+        <div style="float: right;margin-right: 12px;">Chuyến v/tải: {{ticketDetail.chuyenVt}}</div>
+      </div>
+    </div>
+  </div>
+
+  <table style="width: 100%;margin-top: 8px;" id="tbl-print">
+    <tr>
+      <th style="width: fit-content;">Số lệnh</th>
+      <th style="width: 42px;">Mã tự động hoá</th>
+      <th style="width: 120px;">Tên hàng hoá</th>
+      <th style="width: 42px;">Mã bể</th>
+      <th style="width: 42px;">Thứ tự ngăn</th>
+      <th>Dung tích ngăn</th>
+      <th>Lượng xuất thực tế</th>
+      <th>Nhiệt độ thực tế (oC)</th>
+      <th>Họng xuất</th>
+    </tr>
+    <tr *ngFor="let i of ticketDetail.details">
+      <td>{{i.soLenh}}</td>
+      <td style="font-weight: bold;">{{i.maTdh}}</td>
+      <td>{{i.hangHoa}}</td>
+      <td>{{i.maBe}}</td>
+      <td>{{i.ngan}}</td>
+      <td style="text-align: right;">{{i.dungTich | number}}</td>
+      <td></td>
+      <td style="text-align: right;">{{i.nhietDo | number}}</td>
+      <td>{{i.gianHong}}</td>
+    </tr>
+
+    <tr>
+      <td colspan="3" style="font-weight: bold; text-align: center;">Tổng dung tích:</td>
+      <td colspan="2" style="font-weight: bold;"></td>
+      <td style="font-weight: bold;text-align: right;">{{ticketDetail.sum | number}}</td>
+      <td colspan="4"></td>
+    </tr>
+  </table>
+
+  <div nz-row [nzGutter]="16" style="margin-top: 12px;">
+    <div nz-col class="gutter-row" [nzSpan]="24">
+      <div class="inner-box" style="font-weight: bold;">
+        <span style="margin-right: 36px;margin-left: 30px;">Người lập</span>
+        <span style="margin-right: 36px">Người phê duyệt</span>
+        <span style="margin-right: 36px">Người xuất hàng</span>
+        <span style="margin-right: 36px">Người giám sát</span>
+        <span style="margin-right: 36px">Người nhận hàng</span>
+      </div>
+    </div>
+  </div>
 </div>

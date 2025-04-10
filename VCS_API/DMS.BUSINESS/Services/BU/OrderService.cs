@@ -455,7 +455,7 @@ namespace DMS.BUSINESS.Services.BU
                     o.OrderVehicle = o.OrderVehicle + "," + header.VehicleCode;
                     _dbContext.TblMdPumpThroat.Update(o);
 
-                    i.OrderName = _dbContext.TblMdPumpRig.Find(o.PumpRigCode)?.Name + " " + o.Name;
+                    i.OrderName = o.Name;
                     _dbContext.TblBuDetailTgbx.Update(i);
                 }
                 _dbContext.SaveChanges();
@@ -554,7 +554,7 @@ namespace DMS.BUSINESS.Services.BU
                         d.Details.Add(_t);
                     }
                 }
-                d.Details = d.Details.OrderBy(x => x.SoLenh).ThenBy(x => x.HangHoa).ThenBy(x =>x.Ngan).ToList();
+                d.Details = d.Details.OrderBy(x =>x.Ngan).ToList();
                 return d;
 
             }

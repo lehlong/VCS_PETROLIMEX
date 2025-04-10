@@ -192,25 +192,33 @@ export class GetTicketComponent implements OnInit, OnDestroy {
         this.ticketDetail = data;
         var sum = 0;
         for (var i = 0; i < data.details.length; i++) {
-          sum += data.details[i].dungTich
+          sum += data.details[i].dungTich;
         }
         this.ticketDetail.sum = sum;
 
         setTimeout(() => {
           let printContent = this.printSection.nativeElement.innerHTML;
-          let originalContent = document.body.innerHTML;
 
-          document.body.innerHTML = printContent;
+          // Thêm style font-family vào nội dung in
+          let style = `
+            <style>
+              body {
+                font-family: 'Times New Roman', Times, serif !important;
+              }
+            </style>
+          `;
+
+          let originalContent = document.body.innerHTML;
+          document.body.innerHTML = style + printContent;
           window.print();
           document.body.innerHTML = originalContent;
           window.location.reload();
-        }, 200)
-
+        }, 200);
       },
       error: (err) => {
         console.error('Error fetching orders:', err);
       }
     });
-
   }
+
 }
