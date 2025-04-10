@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div nz-row [nzGutter]="16" style="margin-bottom: 12px;">
+    <div nz-row [nzGutter]="16" style="margin-bottom: 4px;">
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <img src="assets/img/petrolimex-small.png" style="width: 62px;margin: 8px 24px;">
@@ -184,7 +184,7 @@
             <td></td>
             <td></td>
             <td style="text-align: right;">{{i.nhietDo | number}}</td>
-            <td *ngIf="i.rowspan != 1" [rowSpan]="i.rowspan">{{i.gianHong}}</td>
+            <td *ngIf="i.rowspan != 0" [rowSpan]="i.rowspan">{{i.gianHong}}</td>
         </tr>
 
         <tr>

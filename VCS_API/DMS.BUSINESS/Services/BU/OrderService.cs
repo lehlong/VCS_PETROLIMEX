@@ -472,15 +472,65 @@ namespace DMS.BUSINESS.Services.BU
             {
                 var i = _dbContext.TblBuHeader.Find(headerId);
                 var tgbx = _dbContext.TblBuHeaderTgbx.FirstOrDefault(x => x.HeaderId == headerId);
+                var w = _dbContext.TblMdWarehouse.Find(i.WarehouseCode);
+
+                #region Lấy thông tin khách hàng
+                var query = $"SELECT * FROM tblKhachHang WHERE MaKhachHang = '{tgbx.MaKhachHang}'";
+                DataTable tbl = new DataTable();
+
+                using (SqlConnection con = new SqlConnection(w.Tgbx))
+                {
+                    await con.OpenAsync();
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            await Task.Run(() => adapter.Fill(tbl));
+                        }
+                    }
+                }
+                string tenKhachHang = string.Empty;
+
+                if (tbl.Rows.Count > 0)
+                {
+                    tenKhachHang = tbl.Rows[0]["TenKhachHang"]?.ToString();
+                }
+                #endregion
+
+                #region Lấy số ticket
+                var query1 = $"SELECT * FROM tblTichke WHERE SoLenh = '{tgbx.SoLenh}'";
+                DataTable tbl1 = new DataTable();
+
+                using (SqlConnection con = new SqlConnection(w.Tgbx))
+                {
+                    await con.OpenAsync();
+                    using (SqlCommand cmd = new SqlCommand(query1, con))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            await Task.Run(() => adapter.Fill(tbl1));
+                        }
+                    }
+                }
+                string soTicket = string.Empty;
+
+                if (tbl.Rows.Count > 0)
+                {
+                    soTicket = tbl1.Rows[0]["SoTichKe"]?.ToString();
+                }
+                #endregion
                 var d = new TicketModel
                 {
                     CompanyName = _dbContext.tblAdOrganize.Find(i.CompanyCode).Name,
                     DateTime = $"Ngày {DateTime.Now.Day} tháng {DateTime.Now.Month} năm {DateTime.Now.Year}",
                     Vehicle = i.VehicleCode,
                     DriverName = tgbx?.NguoiVanChuyen,
-                    PtBan = tgbx?.MaPhuongThucBan,
-                    CustmerName = tgbx?.MaKhachHang,
+                    PtBan = $"{tgbx?.MaPhuongThucBan} - {_dbContext.TblMdSalesMethod.Find(tgbx?.MaPhuongThucBan)?.Name}",
+                    CustmerName = $"{tgbx?.MaKhachHang} - {tenKhachHang} - {tgbx.DiemTraHang}",
                     ChuyenVt = tgbx?.LoaiPhieu,
+                    TicketNumber = soTicket
                 };
                 var tgbxDetail = _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).OrderBy(x => x.SoLenh).ThenBy(x => x.MaHangHoa).ToList();
                 foreach (var _d in tgbxDetail)
@@ -499,11 +549,12 @@ namespace DMS.BUSINESS.Services.BU
                             DungTich = t.SoLuongDuXuat,
                             NhietDo = t.NhietDo,
                             GianHong = _d.OrderName,
-                            Rowspan = (index == 0) ? detail.Count : 1
+                            Rowspan = (index == 0) ? detail.Count : 0
                         };
                         d.Details.Add(_t);
                     }
                 }
+                d.Details = d.Details.OrderBy(x => x.SoLenh).ThenBy(x => x.HangHoa).ThenBy(x =>x.Ngan).ToList();
                 return d;
 
             }
@@ -527,6 +578,7 @@ namespace DMS.BUSINESS.Services.BU
                         SoLenh = row["SoLenh"] != DBNull.Value ? row["SoLenh"].ToString() : string.Empty,
                         MaDonVi = row["MaDonVi"] != DBNull.Value ? row["MaDonVi"].ToString() : string.Empty,
                         MaNguon = row["MaNguon"] != DBNull.Value ? row["MaNguon"].ToString() : string.Empty,
+                        DiemTraHang = row["DiemTraHang"] != DBNull.Value ? row["DiemTraHang"].ToString() : string.Empty,
                         LoaiPhieu = row["LoaiPhieu"] != DBNull.Value ? row["LoaiPhieu"].ToString() : string.Empty,
                         MaKho = row["MaKho"] != DBNull.Value ? row["MaKho"].ToString() : string.Empty,
                         MaVanChuyen = row["MaVanChuyen"] != DBNull.Value ? row["MaVanChuyen"].ToString() : string.Empty,

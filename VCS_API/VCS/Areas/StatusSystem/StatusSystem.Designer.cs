@@ -32,6 +32,7 @@ namespace VCS.APP.Areas.StatusSystem
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusSystem));
             panel1 = new Panel();
+            btnUpdateSystem = new Button();
             panel8 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
@@ -75,7 +76,7 @@ namespace VCS.APP.Areas.StatusSystem
             pictureBox6 = new PictureBox();
             label12 = new Label();
             button1 = new Button();
-            btnUpdateSystem = new Button();
+            btnViewAll = new Button();
             panel1.SuspendLayout();
             panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -101,6 +102,7 @@ namespace VCS.APP.Areas.StatusSystem
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnViewAll);
             panel1.Controls.Add(btnUpdateSystem);
             panel1.Controls.Add(panel8);
             panel1.Controls.Add(btnClean);
@@ -117,6 +119,28 @@ namespace VCS.APP.Areas.StatusSystem
             panel1.Name = "panel1";
             panel1.Size = new Size(1334, 770);
             panel1.TabIndex = 0;
+            // 
+            // btnUpdateSystem
+            // 
+            btnUpdateSystem.BackColor = Color.Green;
+            btnUpdateSystem.Cursor = Cursors.Hand;
+            btnUpdateSystem.FlatAppearance.BorderSize = 0;
+            btnUpdateSystem.FlatStyle = FlatStyle.Flat;
+            btnUpdateSystem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnUpdateSystem.ForeColor = Color.White;
+            btnUpdateSystem.Image = (Image)resources.GetObject("btnUpdateSystem.Image");
+            btnUpdateSystem.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUpdateSystem.Location = new Point(305, 21);
+            btnUpdateSystem.Margin = new Padding(4);
+            btnUpdateSystem.Name = "btnUpdateSystem";
+            btnUpdateSystem.Padding = new Padding(6, 0, 0, 0);
+            btnUpdateSystem.Size = new Size(190, 40);
+            btnUpdateSystem.TabIndex = 49;
+            btnUpdateSystem.Text = "Cập nhật phần mềm";
+            btnUpdateSystem.TextAlign = ContentAlignment.MiddleLeft;
+            btnUpdateSystem.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUpdateSystem.UseVisualStyleBackColor = false;
+            btnUpdateSystem.Click += btnUpdateSystem_Click;
             // 
             // panel8
             // 
@@ -594,27 +618,23 @@ namespace VCS.APP.Areas.StatusSystem
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // btnUpdateSystem
+            // btnViewAll
             // 
-            btnUpdateSystem.BackColor = Color.Green;
-            btnUpdateSystem.Cursor = Cursors.Hand;
-            btnUpdateSystem.FlatAppearance.BorderSize = 0;
-            btnUpdateSystem.FlatStyle = FlatStyle.Flat;
-            btnUpdateSystem.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUpdateSystem.ForeColor = Color.White;
-            btnUpdateSystem.Image = (Image)resources.GetObject("btnUpdateSystem.Image");
-            btnUpdateSystem.ImageAlign = ContentAlignment.MiddleLeft;
-            btnUpdateSystem.Location = new Point(305, 21);
-            btnUpdateSystem.Margin = new Padding(4);
-            btnUpdateSystem.Name = "btnUpdateSystem";
-            btnUpdateSystem.Padding = new Padding(6, 0, 0, 0);
-            btnUpdateSystem.Size = new Size(190, 40);
-            btnUpdateSystem.TabIndex = 49;
-            btnUpdateSystem.Text = "Cập nhật phần mềm";
-            btnUpdateSystem.TextAlign = ContentAlignment.MiddleLeft;
-            btnUpdateSystem.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnUpdateSystem.UseVisualStyleBackColor = false;
-            btnUpdateSystem.Click += btnUpdateSystem_Click;
+            btnViewAll.BackColor = Color.Gold;
+            btnViewAll.Cursor = Cursors.Hand;
+            btnViewAll.FlatStyle = FlatStyle.Flat;
+            btnViewAll.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnViewAll.ForeColor = Color.White;
+            btnViewAll.Image = Properties.Resources.icons8_application_18;
+            btnViewAll.ImageAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.Location = new Point(502, 21);
+            btnViewAll.Name = "btnViewAll";
+            btnViewAll.Padding = new Padding(6, 0, 0, 0);
+            btnViewAll.Size = new Size(42, 40);
+            btnViewAll.TabIndex = 50;
+            btnViewAll.TextAlign = ContentAlignment.MiddleLeft;
+            btnViewAll.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnViewAll.UseVisualStyleBackColor = false;
             // 
             // StatusSystem
             // 
@@ -707,5 +727,6 @@ namespace VCS.APP.Areas.StatusSystem
         private Label label6;
         private Label tdhe5;
         private Button btnUpdateSystem;
+        private Button btnViewAll;
     }
 }

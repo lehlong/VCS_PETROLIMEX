@@ -996,7 +996,7 @@ namespace VCS.Areas.CheckIn
                 string croppedPath = Path.Combine(snapshotDir, $"{Guid.NewGuid()}.jpg");
 
                 // Chụp ảnh
-                player.TakeSnapshot(0, snapshotPath, 0, 0);
+                player.TakeSnapshot(0, snapshotPath, Global.CropWidth, Global.CropHeight);
                 if (!File.Exists(snapshotPath))
                 {
                     CommonService.Alert("Không thể chụp ảnh!", Alert.Alert.enumType.Error);

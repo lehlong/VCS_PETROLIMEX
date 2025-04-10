@@ -143,6 +143,7 @@ namespace DMS.CORE
 
         #region Master Data
         public DbSet<TblMdCamera> TblMdCamera { get; set; }
+        public DbSet<TblMdSalesMethod> TblMdSalesMethod { get; set; }
         public DbSet<TblMdPumpRig> TblMdPumpRig { get; set; }
         public DbSet<TblMdPumpThroat> TblMdPumpThroat { get; set; }
         public DbSet<TblMdGoods> TblMdGoods { get; set; }

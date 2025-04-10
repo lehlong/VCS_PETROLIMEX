@@ -4,6 +4,7 @@ using System.Management;
 using VCS.APP.Services;
 using VCS.APP.Utilities;
 using VCS.DbContext.Common;
+using Microsoft.Extensions.Configuration;
 
 namespace VCS.APP.Areas.StatusSystem
 {
@@ -137,7 +138,65 @@ namespace VCS.APP.Areas.StatusSystem
 
         private void btnUpdateSystem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (MessageBox.Show("Bạn có chắc chắn muốn cập nhật hệ thống không?", 
+                    "Xác nhận cập nhật", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    return;
+                }
 
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                var updateUrl = configuration.GetSection("Setting:UpdateUrl").Value;
+                if (string.IsNullOrEmpty(updateUrl))
+                {
+                    throw new Exception("Không tìm thấy đường dẫn cập nhật trong file cấu hình!");
+                }
+
+                var updateProcess = new Process();
+                updateProcess.StartInfo.FileName = "powershell.exe";
+                updateProcess.StartInfo.Arguments = "-NoExit -Command \"& {" +
+                    "Write-Host 'UPDATING VCS SYSTEM' -ForegroundColor Yellow; " +
+                    "$ProgressPreference = 'Continue'; " +
+                    "Write-Host ''; " +
+                    "Write-Host 'Connecting...' -ForegroundColor Cyan; " +
+                    "$hostPath = '" + updateUrl + "'; " +
+                    "try {" +
+                    "    Write-Host 'Download file update...' -ForegroundColor Cyan; " +
+                    "    Invoke-WebRequest -Uri $hostPath -OutFile 'update.zip' -TimeoutSec 60; " +
+                    "    if (Test-Path 'update.zip') { " +
+                    "        Write-Host 'Installing...' -ForegroundColor Cyan; " +
+                    "        Expand-Archive -Path 'update.zip' -DestinationPath '.' -Force; " +
+                    "        Remove-Item 'update.zip' -Force; " +
+                    "        Write-Host ''; " +
+                    "        Write-Host 'SUCCESS!' -ForegroundColor Green; " +
+                    "        Write-Host 'Press any key to close...' -ForegroundColor Yellow; " +
+                    "        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); " +
+                    "        exit 0; " +
+                    "    } else { " +
+                    "        throw 'Không tải được gói cập nhật!' " +
+                    "    }" +
+                    "} catch {" +
+                    "    Write-Host ('LỖI: ' + $_.Exception.Message) -ForegroundColor Red; " +
+                    "    Write-Host 'Press any key to close...' -ForegroundColor Yellow; " +
+                    "    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown'); " +
+                    "    exit 1; " +
+                    "}}\"";
+                updateProcess.StartInfo.UseShellExecute = true;
+                updateProcess.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                updateProcess.StartInfo.CreateNoWindow = false;
+
+                updateProcess.Start();
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+            }
         }
     }
 }
