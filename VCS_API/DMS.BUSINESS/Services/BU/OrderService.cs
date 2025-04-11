@@ -38,6 +38,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<TblBuOrder>> UpdateOrderCome(OrderUpdateDto orderDto);
         Task Order(OrderDto orderDto);
         Task<bool> CheckTicket(string headerId);
+        Task<bool> ReCheckTicket(string headerId);
         Task<bool> UpdateOrder(string headerId);
         Task<TicketModel> GetTicket(string headerId);
         List<TblBuHeaderTgbx> ConvertToHeader(DataTable dataTable, string headerId);
@@ -425,6 +426,38 @@ namespace DMS.BUSINESS.Services.BU
                     await _dbContext.SaveChangesAsync();
                     return false;
                 }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> ReCheckTicket(string headerId)
+        {
+            try
+            {
+                var i = _dbContext.TblBuHeader.Find(headerId);
+                if (i == null) return false;
+
+                i.IsPrint = false;
+                _dbContext.TblBuHeader.Update(i);
+
+                await _dbContext.TblBuHeaderTgbx.Where(x => x.HeaderId == headerId).ExecuteDeleteAsync();
+                await _dbContext.TblBuDetailTgbx.Where(x => x.HeaderId == headerId).ExecuteDeleteAsync();
+                await _dbContext.TblBuTgbxTicket.Where(x => x.HeaderId == headerId).ExecuteDeleteAsync();
+                var lstOrder = await _dbContext.TblMdPumpThroat.ToListAsync();
+                foreach (var o in lstOrder)
+                {
+                    if (!string.IsNullOrEmpty(o.OrderVehicle))
+                    {
+                        o.OrderVehicle = o.OrderVehicle.Replace(i.VehicleCode, "");
+                        _dbContext.TblMdPumpThroat.Update(o);
+                    }
+                }
+                _dbContext.SaveChanges();
+
+                return true;
             }
             catch (Exception ex)
             {

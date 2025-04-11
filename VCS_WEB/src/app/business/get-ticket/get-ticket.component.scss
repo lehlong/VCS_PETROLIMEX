@@ -1,52 +1,57 @@
 td>button {
-    margin-left: 6px;
+  margin-left: 6px;
 }
 
 td>textarea {
-    width: 100%;
-    border: none;
-    background: transparent;
-}
-td>textarea:focus {
-    outline: none;
-    border: none;
+  width: 100%;
+  border: none;
+  background: transparent;
 }
 
-.div-print, .div-print * {
-    width: 680px;
-    height: 480px;
-    border: solid 1px black;
-    padding: 12px;
-    font-family: 'Times New Roman', Times, serif !important;
-    font-size: 16px !important;
+td>textarea:focus {
+  outline: none;
+  border: none;
+}
+
+.div-print,
+.div-print * {
+  width: 680px;
+  height: 480px;
+  border: solid 1px black;
+  padding: 12px;
+  font-family: 'Times New Roman', Times, serif !important;
+  font-size: 16px !important;
 }
 
 @media print {
-    body * {
-        visibility: hidden;
-        font-family: 'Times New Roman', Times, serif !important;
-        font-size: 16px !important;
-    }
+  body * {
+    visibility: hidden;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 16px !important;
+  }
 
-    #printSection,
-    #printSection * {
-        visibility: visible;
-        font-family: 'Times New Roman', Times, serif !important;
-        font-size: 16px !important;
-    }
+  #printSection,
+  #printSection * {
+    visibility: visible;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 16px !important;
+  }
 
-    #printSection {
-        position: absolute;
-        left: 0;
-        top: 0;
-        font-family: 'Times New Roman', Times, serif !important;
-        font-size: 16px !important;
-    }
+  #printSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 16px !important;
+  }
 }
 
-#tbl-print th,#tbl-print td {
-    border: solid 1px black;
-}
+#tbl-print th,
 #tbl-print td {
-    padding: 4px 6px;
+  border: solid 1px black;
 }
+
+#tbl-print td {
+  padding: 4px 6px;
+}
+

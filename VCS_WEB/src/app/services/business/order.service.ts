@@ -57,13 +57,16 @@ export class OrderService {
     return this.commonService.put('Order/UpdateOrderCome', params);
   }
   // Ticket
+  reCheckTicket(headerId: string): Observable<any> {
+    return this.commonService.get(`Order/ReCheckTicket?headerId=${headerId}`);
+  }
   CheckTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/CheckTicket?headerId=${headerId}`);
   }
   GetTicket(headerId: string): Observable<any> {
     return this.commonService.get(`Order/GetTicket?headerId=${headerId}`)
   }
-  
+
   // SignalR Methods
   public async initializeConnection(): Promise<void> {
     try {
