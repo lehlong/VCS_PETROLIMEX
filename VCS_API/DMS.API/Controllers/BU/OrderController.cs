@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using DMS.API.AppCode.Attribute;
 using DMS.CORE.Entities.MD;
 using DMS.CORE.Entities.BU;
+using static DMS.BUSINESS.Models.ReportModel;
 
 namespace DMS.API.Controllers.BU
 {
@@ -282,7 +283,26 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
-
+        [HttpGet("BaoCaoChiTietXe")]
+        public async Task<IActionResult> BaoCaoChiTietXe([FromQuery] FilterReport filter)
+        {
+            var transferObject = new TransferObject();
+            var r = await _service.BaoCaoXeChiTiet(filter);
+            if (_service.Status)
+            {
+                transferObject.Status = true;
+                transferObject.Data = r;
+                transferObject.MessageObject.MessageType = MessageType.Success;
+                transferObject.GetMessage("0100", _service); // Thêm mới thành công
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0101", _service); // Thêm mới thất bại
+            }
+            return Ok(transferObject);
+        }
 
 
 

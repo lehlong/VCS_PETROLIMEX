@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NPOI.HSSF.Record.Chart;
+using static DMS.BUSINESS.Models.ReportModel;
 
 
 namespace DMS.BUSINESS.Services.BU
@@ -45,6 +46,7 @@ namespace DMS.BUSINESS.Services.BU
         List<TblBuDetailTgbx> ConvertToDetail(DataTable dataTable, string headerId);
         Task<List<string>> AsyncUploadFile(List<IFormFile> files, List<string> filePath);
         Task UpdateStatus(TblBuHeader header);
+        Task<List<BaoCaoChiTietXeModel>> BaoCaoXeChiTiet(FilterReport filter);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -874,6 +876,45 @@ namespace DMS.BUSINESS.Services.BU
             }
         }
 
-       
+        public async Task<List<BaoCaoChiTietXeModel>> BaoCaoXeChiTiet(FilterReport filter)
+        {
+            try
+            {
+                var query = _dbContext.TblBuHeader.AsQueryable();
+
+                if (!string.IsNullOrEmpty(filter.WarehouseCode))
+                {
+                    query = query.Where(x => x.WarehouseCode == filter.WarehouseCode);
+                }
+
+                query = query.Where(x => x.TimeCheckout.HasValue && x.TimeCheckout.Value.Date == filter.Time.Date);
+
+
+
+                var filtered = await query
+                    .Where(x => x.TimeCheckout != null)
+                    .ToListAsync();
+
+                // Group theo giờ và tính số lượng các loại xe
+                var result = filtered
+                    .GroupBy(x => x.TimeCheckout.Value.Hour)
+                    .Select(g => new BaoCaoChiTietXeModel
+                    {
+                        Hour = g.Key,
+                        XeVao = g.Count(x => x.StatusVehicle == "02"), // Đếm các xe vào (StatusVehicle = "02")
+                        XeRa = g.Count(x => x.StatusVehicle == "04"),  // Đếm các xe ra (StatusVehicle = "04")
+                        XeKhongHopLe = g.Count(x => x.StatusProcess == "05") // Đếm các xe không hợp lệ (StatusProcess = "05")
+                    })
+                    .OrderBy(x => x.Hour)
+                    .ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new List<BaoCaoChiTietXeModel>();  // Return an empty list in case of an error
+            }
+        }
+
     }
 }
