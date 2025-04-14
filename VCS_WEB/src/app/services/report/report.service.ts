@@ -11,4 +11,7 @@ export class ReportService {
   getBaoCaoChiTietXe(params: any): Observable<any> {
     return this.commonService.get('Order/BaoCaoChiTietXe', params)
   }
+  downloadFile(params: any): Observable<any> {
+    return this.commonService.downloadFile('Order/Download', params);
+  }
 }

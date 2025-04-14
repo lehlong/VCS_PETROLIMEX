@@ -25,6 +25,9 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NPOI.HSSF.Record.Chart;
+using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using static DMS.BUSINESS.Models.ReportModel;
 
 
@@ -47,6 +50,7 @@ namespace DMS.BUSINESS.Services.BU
         Task<List<string>> AsyncUploadFile(List<IFormFile> files, List<string> filePath);
         Task UpdateStatus(TblBuHeader header);
         Task<List<BaoCaoChiTietXeModel>> BaoCaoXeChiTiet(FilterReport filter);
+        Task<byte[]> ExportExcelBaoCaoXeChiTiet(FilterReport filter);
     }
     public class OrderService : GenericService<TblBuOrder, OrderDto>, IOrderService
     {
@@ -915,6 +919,102 @@ namespace DMS.BUSINESS.Services.BU
                 return new List<BaoCaoChiTietXeModel>();  // Return an empty list in case of an error
             }
         }
+        public async Task<byte[]> ExportExcelBaoCaoXeChiTiet(FilterReport filter)
+        {
+            try
+            {
+                var data = await BaoCaoXeChiTiet(filter);
+
+                byte[] fileBytes;
+
+                IWorkbook workbook = new XSSFWorkbook();
+                ISheet sheet = workbook.CreateSheet("Báo cáo xe chi tiết");
+
+                // Font in đậm cho header
+                IFont boldFont = workbook.CreateFont();
+                boldFont.IsBold = true;
+
+                // Style cho header (border + in đậm + căn giữa)
+                ICellStyle headerStyle = workbook.CreateCellStyle();
+                headerStyle.BorderTop = BorderStyle.Thin;
+                headerStyle.BorderBottom = BorderStyle.Thin;
+                headerStyle.BorderLeft = BorderStyle.Thin;
+                headerStyle.BorderRight = BorderStyle.Thin;
+                headerStyle.Alignment = HorizontalAlignment.Center;
+                headerStyle.VerticalAlignment = VerticalAlignment.Center;
+                headerStyle.SetFont(boldFont);
+
+                // Style cho cell thường (có border + căn giữa)
+                ICellStyle borderStyle = workbook.CreateCellStyle();
+                borderStyle.BorderTop = BorderStyle.Thin;
+                borderStyle.BorderBottom = BorderStyle.Thin;
+                borderStyle.BorderLeft = BorderStyle.Thin;
+                borderStyle.BorderRight = BorderStyle.Thin;
+                borderStyle.Alignment = HorizontalAlignment.Center;
+                borderStyle.VerticalAlignment = VerticalAlignment.Center;
+
+                // Tạo dòng tiêu đề
+                var header = sheet.CreateRow(0);
+                string[] titles = { "STT", "Giờ", "Xe vào", "Xe ra", "Xe không hợp lệ" };
+
+                for (int i = 0; i < titles.Length; i++)
+                {
+                    var cell = header.CreateCell(i);
+                    cell.SetCellValue(titles[i]);
+                    cell.CellStyle = headerStyle;
+                }
+
+                // Dữ liệu
+                int rowIndex = 1;
+                foreach (var item in data)
+                {
+                    var row = sheet.CreateRow(rowIndex);
+
+                    var cell0 = row.CreateCell(0);
+                    cell0.SetCellValue(rowIndex);
+                    cell0.CellStyle = borderStyle;
+
+                    var cell1 = row.CreateCell(1);
+                    cell1.SetCellValue(item.Hour);
+                    cell1.CellStyle = borderStyle;
+
+                    var cell2 = row.CreateCell(2);
+                    cell2.SetCellValue(item.XeVao);
+                    cell2.CellStyle = borderStyle;
+
+                    var cell3 = row.CreateCell(3);
+                    cell3.SetCellValue(item.XeRa);
+                    cell3.CellStyle = borderStyle;
+
+                    var cell4 = row.CreateCell(4);
+                    cell4.SetCellValue(item.XeKhongHopLe);
+                    cell4.CellStyle = borderStyle;
+
+                    rowIndex++;
+                }
+
+                // Auto size các cột
+                for (int i = 0; i < titles.Length; i++)
+                {
+                    sheet.AutoSizeColumn(i);
+                }
+
+                using (var ms = new MemoryStream())
+                {
+                    workbook.Write(ms, true);
+                    fileBytes = ms.ToArray();
+                }
+
+                return await Task.FromResult(fileBytes);
+            }
+            catch (Exception ex)
+            {
+                Status = false;
+                Exception = ex;
+                return null;
+            }
+        }
+
 
     }
 }

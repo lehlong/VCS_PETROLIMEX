@@ -304,7 +304,20 @@ namespace DMS.API.Controllers.BU
             return Ok(transferObject);
         }
 
+        [HttpGet("Download")]
+        public async Task<IActionResult> DownloadExcel([FromQuery] FilterReport filter)
+        {
+            try
+            {
+                var fileBytes = await _service.ExportExcelBaoCaoXeChiTiet(filter);
+                var fileName = "BaoCaoXeChiTiet.xlsx";
 
-
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

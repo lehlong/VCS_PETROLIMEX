@@ -1,1 +1,79 @@
-<p>bao-cao-san-pham-tong-hop works!</p>
+<div class="container-list">
+    <div class="site-page-header-ghost-wrapper">
+      <nz-page-header nzBackIcon nzTitle="Báo cáo xe tổng hợp" class="site-page-header">
+        <nz-page-header-extra>
+          <nz-space [nzWrap]="true" class="gap-[5px]">
+            <nz-space style="align-items: center;">
+  
+            <!-- <div class="header" nz-row nzJustify="end" [nzJustify]="'center'"> -->
+              <nz-select *nzSpaceItem nzShowSearch nzAllowClear nzPlaceHolder="Chọn kho" [(ngModel)]="selectedValue">
+                <nz-option [nzLabel]="'Tất cả'" [nzValue]="null"></nz-option>
+                <nz-option *ngFor="let item of lstWareHouse" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+              </nz-select>
+  
+              <nz-date-picker *nzSpaceItem [(ngModel)]="fDate" (ngModelChange)="onChange($event)"></nz-date-picker>
+  
+              <nz-date-picker *nzSpaceItem [(ngModel)]="tDate" (ngModelChange)="onChange($event)"></nz-date-picker>
+  
+              <button *nzSpaceItem nz-button nzType="primary" (click)="search()">Tìm kiếm</button>
+            <!-- </div> -->
+          </nz-space>
+  
+          </nz-space>
+        </nz-page-header-extra>
+      </nz-page-header>
+    </div>
+  
+  
+        <nz-tabset [nzSize]="'large'" (nzSelectedIndexChange)="onTabChange($event)">
+          <nz-tab nzTitle="Số liệu xe tổng hợp">
+  
+            <nz-table style="width: 100%;" [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed"
+              [nzShowPagination]="false" [nzFrontPagination]="false" #headerTable [nzData]="lstData">
+              <thead>
+                <tr>
+                  <th nzWidth="30px">STT</th>
+                  <th nzAlign="center" nzWidth="100px">
+                    Giờ
+                  </th>
+                  <th nzAlign="center" nzWidth="100px">
+                    Xe vào
+                  </th>
+                  <th nzAlign="center" nzWidth="100px">
+                    Xe ra
+                  </th>
+                  <th nzAlign="center" nzWidth="100px">
+                    Xe không hợp lệ
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of lstData; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{data.hour}}</td>
+                  <td>{{data.xeRa}}</td>
+                  <td>{{data.xeVao}}</td>
+                  <td>{{data.xeKhongHopLe}}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+  
+          </nz-tab>
+          <nz-tab nzTitle="Biểu đồ xe tổng hợp">
+  
+  
+            <div class="chart-container">
+              <div id="lineChart" style="width: 100%;height: 100%;"></div>
+            </div>
+  
+          </nz-tab>
+        </nz-tabset>
+
+      </div>
+  
+      <!-- <div *ngIf="paginationResult?.data" class="flex justify-end p-[10px] border-t border-custom-gray border-solid">
+      <nz-pagination nzShowSizeChanger [nzPageIndex]="filter.currentPage" [nzTotal]="paginationResult.totalRecord"
+        [nzPageSize]="filter.pageSize" (nzPageIndexChange)="pageIndexChange($event)"
+        (nzPageSizeChange)="pageSizeChange($event)"></nz-pagination>
+    </div> -->
+  

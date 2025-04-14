@@ -86,8 +86,8 @@ export class BaoCaoXeChiTietComponent {
   drawChart(): void {
     const data = new google.visualization.DataTable();
     data.addColumn('number', 'Giờ');
-    data.addColumn('number', 'Xe ra');
     data.addColumn('number', 'Xe vào');
+    data.addColumn('number', 'Xe ra');
     data.addColumn('number', 'Xe không hợp lệ');
   
     const chartData: [number, number, number, number][] = [];
@@ -105,10 +105,10 @@ export class BaoCaoXeChiTietComponent {
     const xeVao = item ? Number(item.xeVao) : 0;
     const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
 
-    chartData.push([hour, xeRa, xeVao, khongHopLe]);
+    chartData.push([hour,xeVao,xeRa, khongHopLe]);
 
     // Tìm max trong 3 loại
-    maxValue = Math.max(maxValue, xeRa, xeVao, khongHopLe);
+    maxValue = Math.max(maxValue, xeVao,xeRa, khongHopLe);
   }
 
   // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
@@ -177,5 +177,33 @@ export class BaoCaoXeChiTietComponent {
   onChange(result: Date): void {
     console.log('onChange: ', result);
   }
+  downloadFileExcel() {
+    const filter: any = {
+      Time: this.date?.toISOString()
+    };
+    if (this.selectedValue!=null) {
+      filter.WarehouseCode = this.selectedValue;
+    }
+    this._service.downloadFile(filter).subscribe({
+      next: (response) => {
+        // Tạo blob
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   
+        // Tạo URL
+        const url = window.URL.createObjectURL(blob);
+  
+        // Tạo link
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'BaoCaoXeChiTiet.xlsx'; // Hoặc lấy từ header
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.log('Lỗi:', error);
+      }
+    });
+  } 
 }

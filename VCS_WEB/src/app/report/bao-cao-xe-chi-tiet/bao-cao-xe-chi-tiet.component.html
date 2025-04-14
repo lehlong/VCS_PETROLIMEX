@@ -15,23 +15,24 @@
             ></nz-option>
           </nz-select>
             <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
-            <button nz-button nzType="primary" (click)="search()">Tìm kiếm</button>
+            <button nz-button nzType="primary" (click)="search()" style="margin: 0px;">Tìm kiếm</button>
+            <button class="excel-btn" (click)="downloadFileExcel()">Xuất Excel</button>
         </div>
       <nz-table style="width: 100%;" [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed" [nzShowPagination]="false"
         [nzFrontPagination]="false" #headerTable [nzData]="lstData">
         <thead>
           <tr>
             <th nzWidth="30px">STT</th>
-            <th nzAlign="center" nzWidth="100px">
+            <th nzWidth="100px">
               Giờ
             </th>
-            <th nzAlign="center" nzWidth="100px">
+            <th nzWidth="100px">
               Xe vào
             </th>
-            <th nzAlign="center" nzWidth="100px">
+            <th nzWidth="100px">
               Xe ra
             </th>
-            <th nzAlign="center" nzWidth="100px">
+            <th nzWidth="100px">
               Xe không hợp lệ
             </th>
           </tr>
@@ -40,8 +41,8 @@
           <tr *ngFor="let data of lstData; let i = index">
             <td>{{i + 1}}</td>
             <td>{{data.hour}}</td>
-            <td>{{data.xeRa}}</td>
             <td>{{data.xeVao}}</td>
+            <td>{{data.xeRa}}</td>
             <td>{{data.xeKhongHopLe}}</td>
           </tr>
         </tbody>
