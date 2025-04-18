@@ -81,6 +81,5 @@ namespace DMS.API.Controllers.BU
 
             return Ok(new {Status = true, Message = "Đẩy ảnh lên server thành công!" });
         }
-
     }
 }

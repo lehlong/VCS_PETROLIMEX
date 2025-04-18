@@ -1,0 +1,61 @@
+<div class="wrap">
+    <div class="chart-container">
+        <div class="header">
+            <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Chọn kho"
+            [(ngModel)]="selectedValue"
+          >
+            <nz-option [nzLabel]="'Tất cả'" [nzValue]="null"></nz-option>
+            <nz-option
+              *ngFor="let item of lstWareHouse"
+              [nzLabel]="item.name"
+              [nzValue]="item.code"
+            ></nz-option>
+          </nz-select>
+            <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+            <button nz-button nzType="primary" (click)="search()" style="margin: 0px;">Tìm kiếm</button>
+            <button class="excel-btn" (click)="downloadFileExcel()">Xuất Excel</button>
+        </div>
+      <nz-table style="width: 100%;" [nzScroll]="{ x: 'max-content' }" nzTableLayout="fixed" [nzShowPagination]="false"
+        [nzFrontPagination]="false" #headerTable [nzData]="lstData">
+        <thead>
+          <tr>
+            <th nzWidth="30px">STT</th>
+            <th nzWidth="100px">
+              Giờ
+            </th>
+            <th nzWidth="100px">
+              Xe vào
+            </th>
+            <th nzWidth="100px">
+              Xe ra
+            </th>
+            <th nzWidth="100px">
+              Xe không hợp lệ
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of lstData; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{data.hour}}</td>
+            <td>{{data.xeVao}}</td>
+            <td>{{data.xeRa}}</td>
+            <td>{{data.xeKhongHopLe}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+      <div class="chart-container">
+        <div id="lineChart" style="width: 100%;height: 100%;"></div>
+      </div>
+    </div>
+  
+    <!-- <div *ngIf="paginationResult?.data" class="flex justify-end p-[10px] border-t border-custom-gray border-solid">
+      <nz-pagination nzShowSizeChanger [nzPageIndex]="filter.currentPage" [nzTotal]="paginationResult.totalRecord"
+        [nzPageSize]="filter.pageSize" (nzPageIndexChange)="pageIndexChange($event)"
+        (nzPageSizeChange)="pageSizeChange($event)"></nz-pagination>
+    </div> -->
+  
