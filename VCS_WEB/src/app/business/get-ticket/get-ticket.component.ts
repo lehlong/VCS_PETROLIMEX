@@ -238,6 +238,7 @@ export class GetTicketComponent implements OnInit, OnDestroy {
             <style>
               body {
                 font-family: 'Times New Roman', Times, serif !important;
+                font-size: 16px !important;
               }
             </style>
           `

@@ -132,19 +132,19 @@
   </div>
 
   <div nz-row [nzGutter]="16">
-    <div nz-col class="gutter-row" [nzSpan]="8">
+    <div nz-col class="gutter-row" [nzSpan]="6">
       <div class="inner-box">
         <span>Số P.tiện: </span>
         <span style="font-weight: bold;">{{ticketDetail.vehicle}}</span>
       </div>
     </div>
-    <div nz-col class="gutter-row" [nzSpan]="8">
+    <div nz-col class="gutter-row" [nzSpan]="9">
       <div class="inner-box">
         <span>Người V.chuyển: </span>
         <span style="font-weight: bold;">{{ticketDetail.driverName}}</span>
       </div>
     </div>
-    <div nz-col class="gutter-row" [nzSpan]="8">
+    <div nz-col class="gutter-row" [nzSpan]="9">
       <div style="float: right;margin-right: 12px;">PT Bán: {{ticketDetail.ptBan}}</div>
     </div>
   </div>
@@ -163,14 +163,14 @@
 
   <table style="width: 100%;margin-top: 8px;" id="tbl-print">
     <tr>
-      <th style="width: fit-content;">Số lệnh</th>
-      <th style="width: 42px;">Mã tự động hoá</th>
-      <th style="width: 120px;">Tên hàng hoá</th>
-      <th style="width: 42px;">Mã bể</th>
-      <th style="width: 42px;">Thứ tự ngăn</th>
-      <th>Dung tích ngăn</th>
-      <th>Lượng xuất thực tế</th>
-      <th>Nhiệt độ thực tế (oC)</th>
+      <th>Số lệnh</th>
+      <th>Mã tự <br>động<br> hoá</th>
+      <th>Tên hàng hoá</th>
+      <th>Mã bể</th>
+      <th>Thứ <br> tự <br> ngăn</th>
+      <th>Dung <br> tích<br> ngăn</th>
+      <th>Lượng xuất<br> thực tế</th>
+      <th>Nhiệt độ <br> thực tế <br> (oC)</th>
       <th>Họng xuất</th>
     </tr>
     <tr *ngFor="let i of ticketDetail.details">
