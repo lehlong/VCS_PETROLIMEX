@@ -16,7 +16,7 @@ declare const google: any; // Khai báo biến global từ google chart
   styleUrl: './bao-cao-xe-chi-tiet.component.scss'
 })
 export class BaoCaoXeChiTietComponent {
- filter = new HeaderFilter();
+  filter = new HeaderFilter();
   paginationResult = new PaginationResult();
   isSubmit: boolean = false;
   loading: boolean = false;
@@ -47,7 +47,7 @@ export class BaoCaoXeChiTietComponent {
     this.getWarehouse();
     this.date = new Date();
   }
-  getWarehouse(){
+  getWarehouse() {
     this._WarehouseService.getByOrg(this.companyCode).subscribe({
       next: (data) => {
         this.lstWareHouse = data;
@@ -89,37 +89,37 @@ export class BaoCaoXeChiTietComponent {
     data.addColumn('number', 'Xe vào');
     data.addColumn('number', 'Xe ra');
     data.addColumn('number', 'Xe không hợp lệ');
-  
+
     const chartData: [number, number, number, number][] = [];
-  
+
     const dataMap = new Map<number, any>();
     this.lstData.forEach(item => {
       dataMap.set(Number(item.hour), item);
     });
-  
+
     let maxValue = 0;
 
-  for (let hour = 0; hour <= 23; hour++) {
-    const item = dataMap.get(hour);
-    const xeRa = item ? Number(item.xeRa) : 0;
-    const xeVao = item ? Number(item.xeVao) : 0;
-    const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
+    for (let hour = 0; hour <= 23; hour++) {
+      const item = dataMap.get(hour);
+      const xeRa = item ? Number(item.xeRa) : 0;
+      const xeVao = item ? Number(item.xeVao) : 0;
+      const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
 
-    chartData.push([hour,xeVao,xeRa, khongHopLe]);
+      chartData.push([hour, xeVao, xeRa, khongHopLe]);
 
-    // Tìm max trong 3 loại
-    maxValue = Math.max(maxValue, xeVao,xeRa, khongHopLe);
-  }
+      // Tìm max trong 3 loại
+      maxValue = Math.max(maxValue, xeVao, xeRa, khongHopLe);
+    }
 
-  // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
-  const ticks: number[] = [];
-  for (let i = 0; i <= maxValue; i++) {
-    ticks.push(i);
-  }
+    // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
+    const ticks: number[] = [];
+    for (let i = 0; i <= maxValue; i++) {
+      ticks.push(i);
+    }
 
-    
+
     data.addRows(chartData);
-  
+
     const options = {
       title: 'Số lượng xe theo từng loại trong ngày',
       hAxis: {
@@ -134,20 +134,20 @@ export class BaoCaoXeChiTietComponent {
         textStyle: { fontSize: 12 },
         ticks: ticks
       },
-      legend: { position: 'top' }, 
+      legend: { position: 'top' },
       series: {
         0: { color: 'red' },    // Xe ra
         1: { color: 'blue' },   // Xe vào
         2: { color: 'orange' }  // Không hợp lệ
       }
     };
-  
+
     const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
     chart.draw(data, options);
   }
-  
-  
-  
+
+
+
   formatDate(date: Date): string {
     if (!date) return '';
     const year = date.getFullYear();
@@ -177,21 +177,22 @@ export class BaoCaoXeChiTietComponent {
   onChange(result: Date): void {
     console.log('onChange: ', result);
   }
+
   downloadFileExcel() {
     const filter: any = {
       Time: this.date?.toISOString()
     };
-    if (this.selectedValue!=null) {
+    if (this.selectedValue != null) {
       filter.WarehouseCode = this.selectedValue;
     }
     this._service.downloadFile(filter).subscribe({
       next: (response) => {
         // Tạo blob
         const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  
+
         // Tạo URL
         const url = window.URL.createObjectURL(blob);
-  
+
         // Tạo link
         const a = document.createElement('a');
         a.href = url;
@@ -205,5 +206,5 @@ export class BaoCaoXeChiTietComponent {
         console.log('Lỗi:', error);
       }
     });
-  } 
+  }
 }

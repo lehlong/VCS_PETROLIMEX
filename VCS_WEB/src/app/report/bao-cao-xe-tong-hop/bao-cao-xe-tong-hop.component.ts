@@ -5,6 +5,8 @@ import { ShareModule } from '../../shared/share-module';
 import { ReportService } from '../../services/report/report.service';
 import { GlobalService } from '../../services/global.service';
 import { WarehouseService } from '../../services/master-data/warehouse.service';
+import { HeaderService } from '../../services/business/header.service';
+import { ReportModel } from '../../models/bussiness/report.model';
 
 declare const google: any; // Khai báo biến global từ google chart
 
@@ -16,7 +18,7 @@ declare const google: any; // Khai báo biến global từ google chart
   styleUrl: './bao-cao-xe-tong-hop.component.scss'
 })
 export class BaoCaoXeTongHopComponent {
- filter = new HeaderFilter();
+  filter = new ReportModel();
   paginationResult = new PaginationResult();
   isSubmit: boolean = false;
   loading: boolean = false;
@@ -25,16 +27,19 @@ export class BaoCaoXeTongHopComponent {
   tDate: Date | null = null;
   fDate: Date | null = null;
   lstWareHouse: any[] = []
+  lstBcXeTongHop: any[] = []
   WareHouse: any
   companyCode?: string = localStorage.getItem('companyCode')?.toString()
+
   constructor(
     private _service: ReportService,
+    private _serviceHeader: HeaderService,
     private _WarehouseService: WarehouseService,
     private globalService: GlobalService,
   ) {
     this.globalService.setBreadcrumb([
       {
-        name: 'Báo cáo chi tổng hợp',
+        name: 'Báo cáo xe tổng hợp',
         path: 'report/bao-cao-xe-tong-hop',
       },
     ]);
@@ -44,11 +49,12 @@ export class BaoCaoXeTongHopComponent {
   }
 
   ngOnInit(): void {
-    this.search();
     this.getWarehouse();
+    this.getLstBaoCao();
     this.fDate = new Date();
   }
-  getWarehouse(){
+
+  getWarehouse() {
     this._WarehouseService.getByOrg(this.companyCode).subscribe({
       next: (data) => {
         this.lstWareHouse = data;
@@ -58,35 +64,42 @@ export class BaoCaoXeTongHopComponent {
       },
     });
   }
-  search() {
-    const filterToSend = { ...this.filter } as any;
-    filterToSend.fromDate = this.filter.fromDate ? this.formatDate(this.filter.fromDate) : null;
-    filterToSend.toDate = this.filter.toDate ? this.formatDate(this.filter.toDate) : null;
 
-    this.isSubmit = false;
+  getLstBaoCao() {
+    this.filter = {
+      warehouseCode: this.selectedValue,
+      fDate: this.fDate ? this.formatDate(this.fDate) : null,
+      tDate: this.tDate ? this.formatDate(this.tDate) : null
+    } as ReportModel;
+    this._service.baoCaoXeTongHop(this.filter).subscribe({
 
-    const filter = {
-      WarehouseCode: this.selectedValue,
-      Time: this.fDate?.toISOString()
-    };
-
-    this._service.getBaoCaoChiTietXe(filter).subscribe({
       next: (data) => {
         this.lstData = data;
+        console.log(this.lstData);
 
         // Load Google Chart và vẽ biểu đồ
         google.charts.load('current', { packages: ['corechart', 'line'] });  // Đổi sang corechart
-        google.charts.setOnLoadCallback(() => this.drawChart());
+        google.charts.setOnLoadCallback(() => {
+          setTimeout(() => {
+            this.drawChart()
+          }, 5);
+        });
       },
       error: (response) => {
-        console.error('Lỗi khi lấy dữ liệu:', response, filterToSend);
+        console.error(response);
       },
     });
   }
 
+  reset() {
+      this.selectedValue = ""
+      this.fDate = null
+      this.tDate =  null
+    this.getLstBaoCao()
+  }
   drawChart(): void {
     const data = new google.visualization.DataTable();
-    data.addColumn('number', 'Giờ');
+    data.addColumn('number', 'ngày');
     data.addColumn('number', 'Xe ra');
     data.addColumn('number', 'Xe vào');
     data.addColumn('number', 'Xe không hợp lệ');
@@ -95,28 +108,43 @@ export class BaoCaoXeTongHopComponent {
 
     const dataMap = new Map<number, any>();
     this.lstData.forEach(item => {
-      dataMap.set(Number(item.hour), item);
+      dataMap.set(Number(item.date), item);
+
+
     });
 
     let maxValue = 0;
 
-  for (let hour = 0; hour <= 23; hour++) {
-    const item = dataMap.get(hour);
-    const xeRa = item ? Number(item.xeRa) : 0;
-    const xeVao = item ? Number(item.xeVao) : 0;
-    const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
+this.lstData.forEach(e => {
+  const item = dataMap.get(e.date);
 
-    chartData.push([hour, xeRa, xeVao, khongHopLe]);
+  const xeRa = item ? Number(item.xeRa) : 0;
+  const xeVao = item ? Number(item.xeVao) : 0;
+  const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
 
-    // Tìm max trong 3 loại
-    maxValue = Math.max(maxValue, xeRa, xeVao, khongHopLe);
-  }
+  chartData.push([e, xeRa, xeVao, khongHopLe]);
 
-  // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
-  const ticks: number[] = [];
-  for (let i = 0; i <= maxValue; i++) {
-    ticks.push(i);
-  }
+  // Tìm max trong 3 loại
+  maxValue = Math.max(maxValue, xeRa, xeVao, khongHopLe);
+});
+
+    for (let hour = 0; hour <= 23; hour++) {
+      const item = dataMap.get(hour);
+      const xeRa = item ? Number(item.xeRa) : 0;
+      const xeVao = item ? Number(item.xeVao) : 0;
+      const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
+
+      chartData.push([hour, xeRa, xeVao, khongHopLe]);
+
+      // Tìm max trong 3 loại
+      maxValue = Math.max(maxValue, xeRa, xeVao, khongHopLe);
+    }
+
+    // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
+    const ticks: number[] = [];
+    for (let i = 0; i <= maxValue; i++) {
+      ticks.push(i);
+    }
 
 
     data.addRows(chartData);
@@ -157,26 +185,33 @@ export class BaoCaoXeTongHopComponent {
     return `${year}-${month}-${day}`;
   }
 
-  disabledFromDate = (current: Date): boolean => {
-    if (this.filter.toDate) {
-      return current > this.filter.toDate;
-    }
-    return false;
-  };
-
-  pageSizeChange(size: number): void {
-    this.filter.currentPage = 1;
-    this.filter.pageSize = size;
-    this.search();
-  }
-
-  pageIndexChange(index: number): void {
-    this.filter.currentPage = index;
-    this.search();
-  }
 
   onChange(result: Date): void {
     console.log('onChange: ', result);
   }
 
+  downloadFileExcel() {
+    const filter: any = {
+      Time: this.fDate?.toISOString()
+    };
+    if (this.selectedValue != null) {
+      filter.WarehouseCode = this.selectedValue;
+    }
+    this._service.ExportExcelBaoCaoXeTongHop(filter).subscribe({
+      next: (response) => {
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'BaoCaoXeTongHop.xlsx'; // Hoặc lấy từ header
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.log('Lỗi:', error);
+      }
+    });
+  }
 }

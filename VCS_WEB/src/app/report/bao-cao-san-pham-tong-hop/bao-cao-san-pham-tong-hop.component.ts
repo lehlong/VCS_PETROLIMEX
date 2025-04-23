@@ -5,6 +5,9 @@ import { ShareModule } from '../../shared/share-module';
 import { ReportService } from '../../services/report/report.service';
 import { GlobalService } from '../../services/global.service';
 import { WarehouseService } from '../../services/master-data/warehouse.service';
+import { ReportModel } from '../../models/bussiness/report.model';
+import { HeaderService } from '../../services/business/header.service';
+import { GoodsService } from '../../services/master-data/goods.service';
 
 declare const google: any; // Khai báo biến global từ google chart
 @Component({
@@ -15,7 +18,7 @@ declare const google: any; // Khai báo biến global từ google chart
   styleUrl: './bao-cao-san-pham-tong-hop.component.scss'
 })
 export class BaoCaoSanPhamTongHopComponent {
-filter = new HeaderFilter();
+  filter = new ReportModel();
   paginationResult = new PaginationResult();
   isSubmit: boolean = false;
   loading: boolean = false;
@@ -24,17 +27,20 @@ filter = new HeaderFilter();
   tDate: Date | null = null;
   fDate: Date | null = null;
   lstWareHouse: any[] = []
+  lstGoods: any[] = []
   WareHouse: any
   companyCode?: string = localStorage.getItem('companyCode')?.toString()
   constructor(
     private _service: ReportService,
+    private _serviceHeader: HeaderService,
+    private _serviceGoods: GoodsService,
     private _WarehouseService: WarehouseService,
     private globalService: GlobalService,
   ) {
     this.globalService.setBreadcrumb([
       {
-        name: 'Báo cáo chi tổng hợp',
-        path: 'report/bao-cao-xe-tong-hop',
+        name: 'Báo cáo sản phẩm tổng hợp',
+        path: 'report/bao-cao-san-pham-tong-hop',
       },
     ]);
     this.globalService.getLoading().subscribe((value) => {
@@ -43,11 +49,12 @@ filter = new HeaderFilter();
   }
 
   ngOnInit(): void {
-    this.search();
+    this.getLstBaoCao();
     this.getWarehouse();
+    this.getGoods();
     this.fDate = new Date();
   }
-  getWarehouse(){
+  getWarehouse() {
     this._WarehouseService.getByOrg(this.companyCode).subscribe({
       next: (data) => {
         this.lstWareHouse = data;
@@ -57,24 +64,38 @@ filter = new HeaderFilter();
       },
     });
   }
-  search() {
-    const filterToSend = { ...this.filter } as any;
-    filterToSend.fromDate = this.filter.fromDate ? this.formatDate(this.filter.fromDate) : null;
-    filterToSend.toDate = this.filter.toDate ? this.formatDate(this.filter.toDate) : null;
-
-    this.isSubmit = false;
-
-    const filter = {
-      WarehouseCode: this.selectedValue,
-      Time: this.fDate?.toISOString()
-    };
-
-    this._service.getBaoCaoChiTietXe(filter).subscribe({
+  getGoods() {
+    this._serviceGoods.getall().subscribe({
       next: (data) => {
-        this.lstData = data;
+        this.lstGoods = data;
       },
       error: (response) => {
-        console.error('Lỗi khi lấy dữ liệu:', response, filterToSend);
+        console.error(response);
+      },
+    });
+  }
+  getLstBaoCao() {
+    this.filter = {
+      warehouseCode: this.selectedValue,
+      fDate: this.fDate ? this.formatDate(this.fDate) : null,
+      tDate: this.tDate ? this.formatDate(this.tDate) : null
+    } as ReportModel;
+    this._service.baoCaoSanPhamTongHop(this.filter).subscribe({
+
+      next: (data) => {
+        this.lstData = data;
+        console.log(this.lstData);
+
+        // Load Google Chart và vẽ biểu đồ
+        google.charts.load('current', { packages: ['corechart', 'line'] });  // Đổi sang corechart
+        google.charts.setOnLoadCallback(() => {
+          setTimeout(() => {
+            this.drawChart()
+          }, 5);
+        });
+      },
+      error: (response) => {
+        console.error(response);
       },
     });
   }
@@ -82,11 +103,12 @@ filter = new HeaderFilter();
   drawChart(): void {
     const data = new google.visualization.DataTable();
     data.addColumn('number', 'Giờ');
-    data.addColumn('number', 'Xe vào');
-    data.addColumn('number', 'Xe ra');
-    data.addColumn('number', 'Xe không hợp lệ');
+    this.lstGoods.forEach(e => {
+      data.addColumn('number', e.name);
 
-    const chartData: [number, number, number, number][] = [];
+    });
+
+    const chartData: (number | null)[][] = []; // Mảng động
 
     const dataMap = new Map<number, any>();
     this.lstData.forEach(item => {
@@ -94,24 +116,43 @@ filter = new HeaderFilter();
     });
 
     let maxValue = 0;
+    this.lstData.forEach(e => {
+      const item = dataMap.get(e.date);
+      const rowData: (number | null)[] = [e.date]; // Khởi tạo hàng với giờ
 
-  for (let hour = 0; hour <= 23; hour++) {
-    const item = dataMap.get(hour);
-    const xeVao = item ? Number(item.xeVao) : 0;
-    const xeRa = item ? Number(item.xeRa) : 0;
-    const khongHopLe = item ? Number(item.xeKhongHopLe) : 0;
+      // Thêm các giá trị cho từng loại hàng hóa
+      this.lstGoods.forEach(g => {
 
-    chartData.push([hour, xeVao, xeRa, khongHopLe]);
+          const goodsValue = item?.priceGoods.find((p: { goodsCode: any; }) => p.goodsCode === g.code)?.price || 0;
 
-    // Tìm max trong 3 loại
-    maxValue = Math.max(maxValue, xeVao, xeRa, khongHopLe);
-  }
+          rowData.push(goodsValue);
+          maxValue = Math.max(maxValue, goodsValue); // Cập nhật maxValue
 
-  // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
-  const ticks: number[] = [];
-  for (let i = 0; i <= maxValue; i++) {
-    ticks.push(i);
-  }
+      });
+
+      chartData.push(rowData);
+    });
+    // for (let hour = 0; hour <= 23; hour++) {
+    //   const item = dataMap.get(hour);
+    //   const rowData: (number | null)[] = [hour]; // Khởi tạo hàng với giờ
+
+    //   // Thêm các giá trị cho từng loại hàng hóa
+    //   this.lstGoods.forEach(e => {
+    //     const goodsValue = item?.priceGoods.find((g: { goodsCode: any; }) => g.goodsCode === e.goodsCode)?.price || 0;
+    //     rowData.push(goodsValue);
+    //     maxValue = Math.max(maxValue, goodsValue); // Cập nhật maxValue
+    //   });
+
+    //   chartData.push(rowData);
+    //   // Tìm max trong 3 loại
+    //   // maxValue = Math.max(maxValue, xeVao, xeRa, khongHopLe);
+    // }
+
+    // Tạo mảng ticks: [0, 1, 2, ..., maxValue]
+    const ticks: number[] = [];
+    for (let i = 0; i <= maxValue; i++) {
+      ticks.push(i);
+    }
 
 
     data.addRows(chartData);
@@ -119,27 +160,30 @@ filter = new HeaderFilter();
     const options = {
       title: 'Số lượng xe theo từng loại trong ngày',
       hAxis: {
-        ticks: Array.from({ length: 24 }, (_, i) => ({ v: i, f: i })),
-        textStyle: { fontSize: 12 },
-        showTextEvery: 1,
-        maxAlternation: 1,
-        maxTextLines: 1,
+          ticks: Array.from({ length: 24 }, (_, i) => ({ v: i, f: `${i}` })),
+          textStyle: { fontSize: 12 },
+          showTextEvery: 1,
+          maxAlternation: 1,
+          maxTextLines: 1,
       },
       vAxis: {
-        minValue: 0,
-        textStyle: { fontSize: 12 },
-        ticks: ticks
+          minValue: 0,
+          textStyle: { fontSize: 12 },
+          ticks: Array.from({ length: maxValue + 1 }, (_, i) => i),
       },
-      legend: { position: 'top' },
+      legend: {
+          position: 'right', // Di chuyển legend sang bên phải
+          alignment: 'center' // Căn giữa
+      },
       series: {
-        0: { color: 'red' },
-        1: { color: 'blue' },
-        2: { color: 'orange' }
+          0: { color: 'green' },
+          1: { color: 'red' },
+          2: { color: 'blue' }
       }
-    };
+  };
 
     const chart = new google.visualization.LineChart(document.getElementById('lineChart'));
-    chart.draw(data, options);
+    chart.draw(data, { ...options, width: 800, height: 400 });
   }
 
 
@@ -152,23 +196,23 @@ filter = new HeaderFilter();
     return `${year}-${month}-${day}`;
   }
 
-  disabledFromDate = (current: Date): boolean => {
-    if (this.filter.toDate) {
-      return current > this.filter.toDate;
-    }
-    return false;
-  };
+  // disabledFromDate = (current: Date): boolean => {
+  //   if (this.filter.toDate) {
+  //     return current > this.filter.toDate;
+  //   }
+  //   return false;
+  // };
 
-  pageSizeChange(size: number): void {
-    this.filter.currentPage = 1;
-    this.filter.pageSize = size;
-    this.search();
-  }
+  // pageSizeChange(size: number): void {
+  //   this.filter.currentPage = 1;
+  //   this.filter.pageSize = size;
+  //   this.search();
+  // }
 
-  pageIndexChange(index: number): void {
-    this.filter.currentPage = index;
-    this.search();
-  }
+  // pageIndexChange(index: number): void {
+  //   this.filter.currentPage = index;
+  //   this.search();
+  // }
 
   onChange(result: Date): void {
     console.log('onChange: ', result);
@@ -178,7 +222,7 @@ filter = new HeaderFilter();
     if (index === 1) {
       // Đảm bảo google charts được load rồi mới gọi drawChart
       google.charts.load('current', { packages: ['corechart', 'line'] });
-  
+
       google.charts.setOnLoadCallback(() => {
         setTimeout(() => {
           this.drawChart();
@@ -187,4 +231,34 @@ filter = new HeaderFilter();
     }
   }
 
+  downloadFileExcel() {
+    const filter: any = {
+      fDate: this.fDate?.toISOString(),
+      tDate: this.tDate?.toISOString() ?? null
+    };
+    if (this.selectedValue != null) {
+      filter.WarehouseCode = this.selectedValue;
+    }
+    this._service.ExportExcelBaoCaoSanPhamTongHop(filter).subscribe({
+      next: (response) => {
+        // Tạo blob
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Tạo URL
+        const url = window.URL.createObjectURL(blob);
+
+        // Tạo link
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'BaoCaoSanPhamTongHop.xlsx'; // Hoặc lấy từ header
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.log('Lỗi:', error);
+      }
+    });
+  }
 }

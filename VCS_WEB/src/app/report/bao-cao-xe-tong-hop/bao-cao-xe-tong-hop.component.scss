@@ -12,10 +12,10 @@
 nz-select {
   width: 200px;
 }
-[nz-button] {
-  margin-right: 8px;
-  margin-bottom: 12px;
-}
+// [nz-button] {
+//   margin-right: 8px;
+//   margin-bottom: 12px;
+// }
 .header{
   display: flex;
   justify-content: flex-end;
@@ -41,6 +41,10 @@ td>button {
   margin-left: 6px;
 }
 
+.btn-excel{
+  background-color: #008B45;
+  border-color: #008B45;
+}
 td>textarea {
   width: 100%;
   border: none;

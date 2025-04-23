@@ -5,6 +5,7 @@ using DMS.BUSINESS.Services.BU;
 using DMS.BUSINESS.Services.MD;
 using DMS.BUSINESS.Filter.BU;
 using Microsoft.AspNetCore.Mvc;
+using static DMS.BUSINESS.Models.ReportModel;
 
 namespace DMS.API.Controllers.BU
 {
@@ -80,6 +81,24 @@ namespace DMS.API.Controllers.BU
             }
 
             return Ok(new {Status = true, Message = "Đẩy ảnh lên server thành công!" });
+        }
+
+        [HttpPost("BaoCaoXeTongHop")]
+        public async Task<IActionResult> BaoCaoXeTongHop([FromQuery] FilterReport filter)
+        {
+            var transferObject = new TransferObject();
+            var result = await _service.getBaoCaoXeTongHop(filter);
+            if (_service.Status)
+            {
+                transferObject.Data = result;
+            }
+            else
+            {
+                transferObject.Status = false;
+                transferObject.MessageObject.MessageType = MessageType.Error;
+                transferObject.GetMessage("0001", _service);
+            }
+            return Ok(transferObject);
         }
     }
 }
