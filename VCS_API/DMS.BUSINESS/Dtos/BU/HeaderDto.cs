@@ -49,6 +49,7 @@ namespace DMS.BUSINESS.Dtos.BU
         public string? NoteIn { get; set; }
         [Description("Ghi chú cổng ra")]
         public string? NoteOut { get; set; }
+        public bool? IsXeDauKeo { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<TblBuHeader, HeaderDto>().ReverseMap();

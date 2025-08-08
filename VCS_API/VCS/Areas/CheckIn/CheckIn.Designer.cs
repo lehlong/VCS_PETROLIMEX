@@ -48,6 +48,7 @@
             panel4 = new Panel();
             viewStream = new LibVLCSharp.WinForms.VideoView();
             panel5 = new Panel();
+            isXeDauKeo = new CheckBox();
             viewCameraFullscreen = new Button();
             panel1 = new Panel();
             txtVehicleName = new TextBox();
@@ -357,6 +358,7 @@
             // 
             panel5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel5.BackColor = Color.White;
+            panel5.Controls.Add(isXeDauKeo);
             panel5.Controls.Add(viewCameraFullscreen);
             panel5.Controls.Add(panel1);
             panel5.Controls.Add(label1);
@@ -372,6 +374,18 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(514, 469);
             panel5.TabIndex = 7;
+            // 
+            // isXeDauKeo
+            // 
+            isXeDauKeo.AutoSize = true;
+            isXeDauKeo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            isXeDauKeo.Location = new Point(164, 16);
+            isXeDauKeo.Name = "isXeDauKeo";
+            isXeDauKeo.Size = new Size(105, 25);
+            isXeDauKeo.TabIndex = 22;
+            isXeDauKeo.Text = "Xe đầu kéo";
+            isXeDauKeo.UseVisualStyleBackColor = true;
+            isXeDauKeo.CheckedChanged += isXeDauKeo_CheckedChanged;
             // 
             // viewCameraFullscreen
             // 
@@ -624,5 +638,6 @@
         private Label label1;
         private Button viewCameraFullscreen;
         private APP.Utilities.BorderlessComboBox selectVehicle;
+        private CheckBox isXeDauKeo;
     }
 }

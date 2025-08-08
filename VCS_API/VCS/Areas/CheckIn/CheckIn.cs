@@ -38,8 +38,8 @@ namespace VCS.Areas.CheckIn
             resetTimer.Interval = 500;
             resetTimer.Tick += ResetTimer_Tick;
             txtNumberDO.Focus();
-            txtLicensePlate.Enabled = CommonService.HasPermission("R415") ? true : false;
-           
+            txtLicensePlate.Enabled = false;
+
         }
 
         private void CheckIn_Load(object sender, EventArgs e)
@@ -580,6 +580,7 @@ namespace VCS.Areas.CheckIn
                     Stt = _stt,
                     StatusProcess = "00",
                     StatusVehicle = "02",
+                    IsXeDauKeo = this.isXeDauKeo.Checked,
                 });
                 foreach (var i in _lstDOSAP)
                 {
@@ -1120,6 +1121,12 @@ namespace VCS.Areas.CheckIn
                     .FirstOrDefault();
                 txtVehicleName.Text = vehicleInfo != null ? $"{vehicleInfo.OicPbatch}{vehicleInfo.OicPtrip}" : string.Empty;
             }
+        }
+
+        private void isXeDauKeo_CheckedChanged(object sender, EventArgs e)
+        {
+            this.txtLicensePlate.Enabled = this.isXeDauKeo.Checked;
+            this.txtLicensePlate.Text = null;
         }
     }
 }

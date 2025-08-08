@@ -46,5 +46,7 @@ namespace DMS.CORE.Entities.BU
 
         [Column("NOTE_OUT", TypeName = "NVARCHAR(500)")]
         public string? NoteOut { get; set; }
+        [Column("IS_XE_DAU_KEO")]
+        public bool? IsXeDauKeo { get; set; }
     }
 }
